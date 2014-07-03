@@ -1,0 +1,165 @@
+/* 
+  Localizable.strings
+  TCLAir
+
+  Created by yang on 4/11/14.
+  Copyright (c) 2014 BroadLink. All rights reserved.
+*/
+
+//空气质量指数
+"airQiality" = "Air quality index";
+"childMessage" = "Child-Lock mode state, not other options!";
+"autoMessage" = "Automatic mode state, not speed options!";
+"Manual" = "Manual";
+"Automatic" = "Automatic";
+"SleepOff" = "Sleep off";
+"SleepOn" = "Sleep on";
+"TheChildLock" = "The child lock";
+"TheChildLockOff" = "The child lock off";
+"speedSelection"= "Wind Speed";
+"timerTitle"="Setting";
+"timeCancel"="Timer Cancel";
+"timeClose"="Timer Close";
+"hour"="hour";
+"minute"="minute";
+"save"="Save";
+"close"= "Close";
+"open"= "Open";
+"File"= "File";
+"AboutTitle" = "About BeiAngAir";
+
+"Release to refresh..." = "Release to refresh...";
+"Pull down to refresh..." = "Pulling down to refresh...";
+"Loading..." = "Loading...";
+"Last Updated" = "Last updated";
+
+"AuthViewControllerUsernamePlaceholder" = "Username";
+"AuthViewControllerPasswordPlaceholder" = "Login password";
+"AuthViewControllerSavePasswordText" = "Remember the password";
+"AuthViewControllerRegistText" = "Register";
+"AuthViewControllerLoginText" = "Login";
+
+"RegistViewControllerTitle" = "Register";
+"RegistViewControllerUsernameLabel" = "Username";
+"RegistViewControllerUsernamePlaceholder" = "6-12 letters or characters";
+"RegistViewControllerPasswordLabel" = "Password";
+"RegistViewControllerPasswordPlaceholder" = "6-12 letters or characters";
+"RegistViewControllerCheckLabel" = "Confirm";
+"RegistViewControllerCheckPlaceholder" = "Enter the password again";
+"RegistViewControllerPhoneLabel" = "Phone";
+"RegistViewControllerPhonePlaceholder" = "Please enter the phone number";
+"RegistViewControllerEmailLabel" = "Email";
+"RegistViewControllerEmailPlaceholder" = "Please enter the email address";
+"RegistViewControllerUserAgreementText" = "User agreement";
+"RegistViewControllerUsernameError" = "Please enter 6-12 letters or characters of account";
+"RegistViewControllerPasswordError" = "Please enter 6-12 letters or characters of the password";
+"RegistViewControllerPasswordCheckError" = "The two passwords you entered do not match";
+"RegistViewControllerPhoneNumberError" = "Mobile number error";
+"RegistViewControllerEmailFormatError" = "Email format error";
+"RegistViewControllerUserAgreementError" = "Please agree to the user agreement";
+
+"UserAgreementViewControllerTitle" = "User agreement";
+
+"DeviceInfoEditViewControllerTitle" = "Modify the name";
+"DeviceInfoEditViewControllerNameLabel" = "Name:";
+"DeviceInfoEditViewControllerNamePlaceholder" = "Please input device name";
+"DeviceInfoEditViewControllerLockLabel" = "Lock device:";
+"DeviceInfoEditViewControllerMacLabel" = "Mac:";
+"DeviceInfoEditViewControllerNumberLabel" = "Machine Code:";
+"DeviceInfoEditViewControllerOKButton" = "OK";
+
+"DeviceListViewControllerTitle" = "Device List";
+"DeviceListViewControllerAddText" = "Add device";
+"DeviceListViewControllerAirQualityCloseText" = "Closed";
+"DeviceListViewControllerAirQualityLabel" = "Air";
+"DeviceListViewControllerAirQualityBest" = "Excellent";
+"DeviceListViewControllerAirQualityGood" = "Good";
+"DeviceListViewControllerAirQualityNormal" = "Poor";
+"DeviceListViewControllerAirQualityBad" = "Bad";
+
+"BindViewControllerTitle" = "Activate the device";
+"BindViewControllerNumberLabel" = "Machine Code:";
+"BindViewControllerNumberPlaceholder" = "Manually enter or scan";
+"BindViewControllerNameLabel" = "Device name:";
+"BindViewControllerNamePlaceholder" = "Please input device name";
+"BindViewControllerOK" = "OK";
+
+"SwitchViewControllerOpenButtonText" = "Click to open";
+"SwitchViewControllerAirQualityLabel" = "AQI";
+
+"AirQualityViewControllerWeatherLabelLoading" = "Retrieving...";
+"AirQualityViewControllerWeatherLabelFailed" = "Retrieving failed";
+"AirQualityViewControllerAirQualityBest" = "Excellent";
+"AirQualityViewControllerAirQualityGood" = "Good";
+"AirQualityViewControllerAirQualityNormal" = "Poor";
+"AirQualityViewControllerAirQualityBad" = "Bad";
+"AirQualityViewControllerRoomAirQualityLabel" = "Indoor air quality";
+"AirQualityViewControllerCityAirQualityLabel" = "AQI";
+"AirQualityViewControllerLvWangLabel" = "Filter information";
+"AirQualityViewControllerSilenceButtonText" = "ECO";
+"AirQualityViewControllerAutoButtonText" = "AUTO";
+"AirQualityViewControllerKillButtonText" = "UV";
+"AirQualityViewControllerWindSpeedText" = "SPEED";
+"AirQualityViewControllerTimerHourText" = "Hour";
+"AirQualityViewControllerWindSpeedTitleLabel" = "Level";
+"AirQualityViewControllerTimerTitleLabel" = "TIMER";
+"AirQualityViewControllerTimerUnitText" = "hour";
+"AirQualityViewControllerWindLevel1" = "Level 1";
+"AirQualityViewControllerWindLevel2" = "Level 2";
+"AirQualityViewControllerWindLevel3" = "Level 3";
+"AirQualityViewControllerWindLevel4" = "Level 4";
+
+"DeviceErrorViewControllerTitle" = "Failure Error";
+"DeviceErrorViewControllerMotorFailed" = "Motor is fault";
+"DeviceErrorViewControllerAirSensorFailed" = "Air quality sensor fault";
+"DeviceErrorViewControllerServiceText" = "Please contact customer service center:4008-123456-5";
+
+"FilterInfoViewControllerTitle" = "Filter case";
+"FilterInfoViewControllerOverTimeLabel" = "Remaining time";
+"FilterInfoViewControllerOverTimeUnit" = "hour";
+"FilterInfoViewControllerBuyWebsiteLabel" = "Buy website";
+"FilterInfoViewControllerWebsiteAddress" = "http://www.beiangtech.com";
+"FilterInfoViewControllerServicePhoneLabel" = "Service telephone";
+"FilterInfoViewControllerPhoneNumberLabel" = "0512-62925562";
+"FilterInfoViewControllerAddress" = "Suzhou beyond Technology Co. Ltd.";
+"FilterInfoViewControllerCompanyAddress" = "Address: Suzhou Industrial Park Jin Fang Road No. 11";
+
+"SmartConfigViewControllerTitle" = "Add device";
+"SmartConfigViewControllerAddLabelText" = "Add a new device to the WIFI network";
+"SmartConfigViewControllerSSIDLabelText" = "WiFi SSID:";
+"SmartConfigViewControllerPWDLabelText" = "Password:";
+"SmartConfigViewControllerShowPasswordText" = "Show password";
+"SmartConfigViewControllerConfigButtonText" = "Start the configuration";
+"SmartConfigViewControllerConfigLabelText" = "Configuration may need a minute，Please wait a moment...";
+"SmartconfigViewControllerConfigSuccessText" = "Configuration is successful";
+
+
+/*ErrorString*/
+"NetworkErrorCode-1" = "Authentication failed, please join local network and refresh device";
+"NetworkErrorCode-2" = "Connection interrupted, please go back device list and login again";
+"NetworkErrorCode-3" = "Device offline, please check your network";
+"NetworkErrorCode-4" = "Command not supported";
+"NetworkErrorCode-5" = "storage error";
+"NetworkErrorCode-6" = "data error";
+"NetworkErrorCode-7" = "Please get the certification again";
+"NetworkErrorCode-100" = "time out";
+"NetworkErrorCode-101" = "device not exist";
+"NetworkErrorCode-102" = "storage error";
+"NetworkErrorCode-103" = "not initialized";
+"NetworkErrorCode-104" = "network paused";
+"NetworkErrorCode-105" = "data error";
+"NetworkErrorCodeOthers" = "Login error, please exit and login again";
+
+/*AirQualityIndex*/
+"AirQualityIndexLess50" = "Very Good";
+"AirQualityIndexLess100" = "Good";
+"AirQualityIndexLess150" = "Light pollution";
+"AirQualityIndexLess200" = "Moderate pollution";
+"AirQualityIndexLess300" = "Severe pollution";
+"AirQualityIndexLess500" = "Serious pollution";
+
+"take_a_photo" = "Take A Photo";
+"choose_from_album" = "Choose From Album";
+"DeviceInfoOpenCameraFailed" = "DeviceInfoOpenCameraFailed";
+"DeviceInfoOpenAblumFailed" = "DeviceInfoOpenAblumFailed";
+"Cancel" = "Cancel";

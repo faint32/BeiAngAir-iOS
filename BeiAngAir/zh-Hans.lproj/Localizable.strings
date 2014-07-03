@@ -1,0 +1,181 @@
+/* 
+  Localizable.strings
+  TCLAir
+
+  Created by yang on 4/11/14.
+  Copyright (c) 2014 BroadLink. All rights reserved.
+*/
+
+"UIAlertViewTitleSuccess" = "Success";
+"UIAlertViewtitleFailed" = "Failed";
+"UIAlertViewOKButton" = "OK";
+
+"DeviceListTitle" = "Device List";
+
+"UartDataTitle" = "Uart Data";
+
+"SendDataLabelText" = "Send data:";
+
+"RecvDataLabelText" = "Received data:";
+
+"SendDataButtonTitle" = "Send";
+
+//空气质量指数
+"airQiality" = "空气质量指数";
+"childMessage" = "儿童锁打开状态，不能进行其他操作！";
+"autoMessage" = "自动模式状态，不能进行风速选择！";
+"Manual" = "手动";
+"Automatic" = "自动";
+"SleepOff" = "睡眠关";
+"SleepOn" = "睡眠开";
+"TheChildLock" = "儿童锁开";
+"TheChildLockOff" = "儿童锁关";
+"speedSelection"= "风速选择";
+"timerTitle"="设置定时";
+"timeOpen"="定时开机";
+"timeClose"="定时关机";
+"hour"="小时";
+"minute"="分钟";
+"save"="保存";
+"close"= "后定时关机";
+"open"= "后定时开机";
+"File"= "档";
+"AboutTitle" = "关于贝昂";
+
+"Release to refresh..." = "放开后刷新...";
+"Pull down to refresh..." = "下拉刷新...";
+"Loading..." = "正在刷新...";
+"Last Updated" = "最后更新于";
+
+"AuthViewControllerUsernamePlaceholder" = "用户名";
+"AuthViewControllerPasswordPlaceholder" = "登录密码";
+"AuthViewControllerSavePasswordText" = "记住密码";
+"AuthViewControllerRegistText" = "立即注册";
+"AuthViewControllerLoginText" = "登录";
+
+"RegistViewControllerTitle" = "注册";
+"RegistViewControllerUsernameLabel" = "用户名";
+"RegistViewControllerUsernamePlaceholder" = "6-12位字母或字符组成的账号";
+"RegistViewControllerPasswordLabel" = "密码";
+"RegistViewControllerPasswordPlaceholder" = "6-12位字母或字符组成的密码";
+"RegistViewControllerCheckLabel" = "确认密码";
+"RegistViewControllerCheckPlaceholder" = "再次输入密码";
+"RegistViewControllerPhoneLabel" = "手机号";
+"RegistViewControllerPhonePlaceholder" = "请输入手机号";
+"RegistViewControllerEmailLabel" = "邮箱";
+"RegistViewControllerEmailPlaceholder" = "请输入邮箱";
+"RegistViewControllerUserAgreementText" = "用户协议";
+"RegistViewControllerUsernameError" = "6-12位字母或字符组成的账号";
+"RegistViewControllerPasswordError" = "6-12位字母或字符组成的密码";
+"RegistViewControllerPasswordCheckError" = "两次密码不一致";
+"RegistViewControllerPhoneNumberError" = "手机号码错误";
+"RegistViewControllerEmailFormatError" = "邮箱格式错误";
+"RegistViewControllerUserAgreementError" = "请先同意用户协议";
+
+"UserAgreementViewControllerTitle" = "用户协议";
+
+"DeviceInfoEditViewControllerTitle" = "修改名称";
+"DeviceInfoEditViewControllerNameLabel" = "名称:";
+"DeviceInfoEditViewControllerNamePlaceholder" = "请输入设备名称";
+"DeviceInfoEditViewControllerLockLabel" = "锁定设备:";
+"DeviceInfoEditViewControllerMacLabel" = "Mac:";
+"DeviceInfoEditViewControllerNumberLabel" = "机身编码:";
+"DeviceInfoEditViewControllerOKButton" = "确定";
+
+"DeviceListViewControllerTitle" = "设备管理";
+"DeviceListViewControllerAddText" = "添加设备";
+"DeviceListViewControllerAirQualityCloseText" = "未开启";
+"DeviceListViewControllerAirQualityLabel" = "空气";
+"DeviceListViewControllerAirQualityBest" = "优";
+"DeviceListViewControllerAirQualityGood" = "良";
+"DeviceListViewControllerAirQualityNormal" = "一般";
+"DeviceListViewControllerAirQualityBad" = "较差";
+
+"BindViewControllerTitle" = "激活设备";
+"BindViewControllerNumberLabel" = "机身编码:";
+"BindViewControllerNumberPlaceholder" = "请手动输入或扫描";
+"BindViewControllerNameLabel" = "设备名称:";
+"BindViewControllerNamePlaceholder" = "请输入设备名称";
+"BindViewControllerOK" = "确定";
+
+"SwitchViewControllerOpenButtonText" = "点击开启";
+"SwitchViewControllerAirQualityLabel" = "空气指数";
+
+"AirQualityViewControllerWeatherLabelLoading" = "获取中...";
+"AirQualityViewControllerWeatherLabelFailed" = "获取失败";
+"AirQualityViewControllerAirQualityBest" = "优";
+"AirQualityViewControllerAirQualityGood" = "良";
+"AirQualityViewControllerAirQualityNormal" = "一般";
+"AirQualityViewControllerAirQualityBad" = "较差";
+"AirQualityViewControllerRoomAirQualityLabel" = "室内空气质量";
+"AirQualityViewControllerCityAirQualityLabel" = "空气指数";
+"AirQualityViewControllerLvWangLabel" = "滤网信息";
+"AirQualityViewControllerSilenceButtonText" = "节能";
+"AirQualityViewControllerAutoButtonText" = "自动";
+"AirQualityViewControllerKillButtonText" = "杀菌";
+"AirQualityViewControllerWindSpeedText" = "风量";
+"AirQualityViewControllerTimerHourText" = "小时";
+"AirQualityViewControllerWindSpeedTitleLabel" = "风量";
+"AirQualityViewControllerTimerTitleLabel" = "定时";
+"AirQualityViewControllerTimerUnitText" = "小时";
+"AirQualityViewControllerWindLevel1" = "1档";
+"AirQualityViewControllerWindLevel2" = "2档";
+"AirQualityViewControllerWindLevel3" = "3档";
+"AirQualityViewControllerWindLevel4" = "4档";
+
+"DeviceErrorViewControllerTitle" = "故障错误";
+"DeviceErrorViewControllerMotorFailed" = "电机存在故障";
+"DeviceErrorViewControllerAirSensorFailed" = "空气质量传感器存在故障";
+"DeviceErrorViewControllerServiceText" = "请联系客户服务中心:4008-123456-5";
+
+"FilterInfoViewControllerTitle" = "滤网情况";
+"FilterInfoViewControllerOverTimeLabel" = "剩余时间";
+"FilterInfoViewControllerOverTimeUnit" = "小时";
+"FilterInfoViewControllerBuyWebsiteLabel" = "购买网站";
+"FilterInfoViewControllerWebsiteAddress" = "http://www.beiangtech.com";
+"FilterInfoViewControllerServicePhoneLabel" = "服务电话";
+"FilterInfoViewControllerPhoneNumberLabel" = "0512-62925562";
+"FilterInfoViewControllerAddress" = "苏州贝昂科技有限公司";
+"FilterInfoViewControllerCompanyAddress" = "地址：苏州工业园区金芳路11号";
+
+"SmartConfigViewControllerTitle" = "添加设备";
+"SmartConfigViewControllerAddLabelText" = "添加一个新设备到WIFI网络";
+"SmartConfigViewControllerSSIDLabelText" = "WiFi名称:";
+"SmartConfigViewControllerPWDLabelText" = "WiFi密码:";
+"SmartConfigViewControllerShowPasswordText" = "显示密码";
+"SmartConfigViewControllerConfigButtonText" = "开始配置";
+"SmartConfigViewControllerConfigLabelText" = "配置有可能需要1分钟,请稍等...";
+"SmartconfigViewControllerConfigSuccessText" = "配置成功";
+
+
+/*ErrorString*/
+"NetworkErrorCode-1" = "认证失败，请进入局域网重新刷新设备。";
+"NetworkErrorCode-2" = "连接中断，请返回设备列表 登录。";
+"NetworkErrorCode-3" = "设备不在线，请检查设备网络是否正常。";
+"NetworkErrorCode-4" = "不支持的命令类型。";
+"NetworkErrorCode-5" = "空间已满";
+"NetworkErrorCode-6" = "数据异常";
+"NetworkErrorCode-7" = "请重新获取认证";
+"NetworkErrorCode-100" = "网络超时";
+"NetworkErrorCode-101" = "设备不存在";
+"NetworkErrorCode-102" = "分配不到内存";
+"NetworkErrorCode-103" = "网络未初始化";
+"NetworkErrorCode-104" = "网络暂停";
+"NetworkErrorCode-105" = "数据异常";
+"NetworkErrorCodeOthers" = "登陆异常，请退出重新登录。";
+
+/*AirQualityIndex*/
+"AirQualityIndex0" = "无污染";
+"AirQualityIndexLess50" = "优";
+"AirQualityIndexLess100" = "良";
+"AirQualityIndexLess150" = "轻度污染";
+"AirQualityIndexLess200" = "中度污染";
+"AirQualityIndexLess300" = "重度污染";
+"AirQualityIndexLess500" = "严重污染";
+"AirQualityIndexMore500" = "爆表";
+
+"take_a_photo" = "拍照";
+"choose_from_album" = "从相册中选";
+"DeviceInfoOpenCameraFailed"="打开相机失败";
+"DeviceInfoOpenAblumFailed"="打开相册失败";
+"Cancel" = "取消";
