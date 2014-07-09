@@ -20,7 +20,6 @@
 #import "CustomNaviBarView.h"
 #import "CustomNavigationController.h"
 #import "BLFMDBSqlite.h"
-#import "UILabel+Attribute.h"
 #import "Toast+UIView.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BLCustomHUD+UIWindow.h"

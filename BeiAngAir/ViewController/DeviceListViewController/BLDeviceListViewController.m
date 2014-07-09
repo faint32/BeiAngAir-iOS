@@ -14,7 +14,6 @@
 #import "BLNetwork.h"
 #import "BLFMDBSqlite.h"
 #import "EGORefreshTableHeaderView.h"
-#import "UILabel+Attribute.h"
 #import "Toast+UIView.h"
 #import "BLAirQualityViewController.h"
 #import "ASIHTTPRequest.h"
