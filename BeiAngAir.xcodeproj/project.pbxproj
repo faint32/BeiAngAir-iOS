@@ -56,7 +56,6 @@
 		BAAE38C3194089EE002C97C8 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38B5194089EE002C97C8 /* SBJsonTokeniser.m */; };
 		BAAE38C4194089EE002C97C8 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38B7194089EE002C97C8 /* SBJsonUTF8Stream.m */; };
 		BAAE38C5194089EE002C97C8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38B9194089EE002C97C8 /* SBJsonWriter.m */; };
-		BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38DD1940A9C6002C97C8 /* PICircularProgressView.m */; };
 		BAAE3EFD1949CA2A004054D2 /* libBLNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA69793E1949613B000B184F /* libBLNetwork.a */; };
 		BAB3897B193DA4AD00975805 /* BLModuleInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51BA18F7F5620068893E /* BLModuleInfomation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB3897C193DA4AD00975805 /* BLFMDBSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51BD18F7F61C0068893E /* BLFMDBSqlite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -293,8 +292,6 @@
 		BAAE38B7194089EE002C97C8 /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
 		BAAE38B8194089EE002C97C8 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		BAAE38B9194089EE002C97C8 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		BAAE38DC1940A9C6002C97C8 /* PICircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PICircularProgressView.h; sourceTree = "<group>"; };
-		BAAE38DD1940A9C6002C97C8 /* PICircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PICircularProgressView.m; sourceTree = "<group>"; };
 		BAB38968193D75EE00975805 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		BAB38969193D75EE00975805 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		BAB3896A193D75EE00975805 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
@@ -459,7 +456,6 @@
 				BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */,
 				BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */,
 				BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */,
-				BAAE38DB1940A9C6002C97C8 /* PICircularProgressView */,
 				BAAE38A0194089EE002C97C8 /* SBJson */,
 				BAB38967193D75EE00975805 /* MMDrawerController */,
 				2FAE51CF18F813180068893E /* UILabel+Attribute */,
@@ -694,15 +690,6 @@
 			path = SBJson;
 			sourceTree = "<group>";
 		};
-		BAAE38DB1940A9C6002C97C8 /* PICircularProgressView */ = {
-			isa = PBXGroup;
-			children = (
-				BAAE38DC1940A9C6002C97C8 /* PICircularProgressView.h */,
-				BAAE38DD1940A9C6002C97C8 /* PICircularProgressView.m */,
-			);
-			path = PICircularProgressView;
-			sourceTree = "<group>";
-		};
 		BAB38967193D75EE00975805 /* MMDrawerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -935,7 +922,6 @@
 				BAB38996193DA4AD00975805 /* FMResultSet.m in Sources */,
 				BAFA38251941862A001DB631 /* BLCustomHUD+UIWindow.m in Sources */,
 				BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */,
-				BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */,
 				BAB38998193DA4AD00975805 /* ASIAuthenticationDialog.m in Sources */,
 				BAB38999193DA4AD00975805 /* ASIDataCompressor.m in Sources */,
 				BAB3899A193DA4AD00975805 /* ASIDataDecompressor.m in Sources */,
