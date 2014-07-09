@@ -1,4 +1,5 @@
 PODS:
+  - iCarousel (1.7.6)
   - JSONKit (1.5pre)
   - MBProgressHUD (0.8)
   - MMProgressHUD (0.2.2)
@@ -7,6 +8,7 @@ PODS:
     - MBProgressHUD (~> 0.8)
 
 DEPENDENCIES:
+  - iCarousel (~> 1.7.6)
   - JSONKit (~> 1.5pre)
   - MBProgressHUD (~> 0.8)
   - MMProgressHUD (~> 0.2.2)
@@ -14,6 +16,7 @@ DEPENDENCIES:
   - ZBUtilities (~> 0.0.3)
 
 SPEC CHECKSUMS:
+  iCarousel: c35a4e26b3c657847e523012b593e70ddbd84992
   JSONKit: efef3bbd3372ff33f96b9c6f34cf4fe18e74ab69
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   MMProgressHUD: 47a0f18cafc2998b1a2174e42cb097b9aac6090b
