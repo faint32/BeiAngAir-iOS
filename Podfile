@@ -3,3 +3,4 @@ platform :ios, '5.0'
 inhibit_all_warnings!
 pod 'ZBUtilities', '~> 0.0.3'
 pod 'MBProgressHUD', '~> 0.8'
+pod 'MMProgressHUD', '~> 0.2.2'
