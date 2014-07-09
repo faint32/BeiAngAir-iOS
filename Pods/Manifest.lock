@@ -1,17 +1,23 @@
 PODS:
+  - JSONKit (1.5pre)
   - MBProgressHUD (0.8)
   - MMProgressHUD (0.2.2)
+  - Reachability (3.1.1)
   - ZBUtilities (0.0.4):
     - MBProgressHUD (~> 0.8)
 
 DEPENDENCIES:
+  - JSONKit (~> 1.5pre)
   - MBProgressHUD (~> 0.8)
   - MMProgressHUD (~> 0.2.2)
+  - Reachability (~> 3.1.1)
   - ZBUtilities (~> 0.0.3)
 
 SPEC CHECKSUMS:
+  JSONKit: efef3bbd3372ff33f96b9c6f34cf4fe18e74ab69
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   MMProgressHUD: 47a0f18cafc2998b1a2174e42cb097b9aac6090b
+  Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
   ZBUtilities: 30a3c15d49e8d06e3118f1a2f65b362744bb47ba
 
 COCOAPODS: 0.33.1

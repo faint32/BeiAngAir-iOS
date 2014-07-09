@@ -81,7 +81,6 @@
 		BAB38994193DA4AD00975805 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51AE18F7F4E00068893E /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38995193DA4AD00975805 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51B018F7F4E00068893E /* FMDatabaseQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38996193DA4AD00975805 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51B218F7F4E00068893E /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB38997193DA4AD00975805 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE519218F7D2230068893E /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38998193DA4AD00975805 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE514318F7D1340068893E /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38999193DA4AD00975805 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE514618F7D1340068893E /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB3899A193DA4AD00975805 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE514818F7D1340068893E /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -104,7 +103,6 @@
 		BAB389AB193DA4AD00975805 /* ASIS3ObjectRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE517118F7D1340068893E /* ASIS3ObjectRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389AC193DA4AD00975805 /* ASIS3Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE517318F7D1340068893E /* ASIS3Request.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389AD193DA4AD00975805 /* ASIS3ServiceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE517518F7D1340068893E /* ASIS3ServiceRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE517818F7D1340068893E /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE502F18F78C470068893E /* BLAppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389B0193DA4AD00975805 /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE513218F7C18E0068893E /* UtilityFunc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389B1193DA4AD00975805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE502B18F78C470068893E /* main.m */; };
@@ -225,10 +223,6 @@
 		2FAE517318F7D1340068893E /* ASIS3Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIS3Request.m; sourceTree = "<group>"; };
 		2FAE517418F7D1340068893E /* ASIS3ServiceRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIS3ServiceRequest.h; sourceTree = "<group>"; };
 		2FAE517518F7D1340068893E /* ASIS3ServiceRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIS3ServiceRequest.m; sourceTree = "<group>"; };
-		2FAE517718F7D1340068893E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		2FAE517818F7D1340068893E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		2FAE519118F7D2230068893E /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		2FAE519218F7D2230068893E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2FAE519418F7D29F0068893E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		2FAE519618F7D32B0068893E /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = usr/lib/libz.1.dylib; sourceTree = SDKROOT; };
 		2FAE519918F7D4F00068893E /* BLDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceListViewController.h; path = DeviceListViewController/BLDeviceListViewController.h; sourceTree = "<group>"; };
@@ -492,9 +486,7 @@
 				2FAE51CF18F813180068893E /* UILabel+Attribute */,
 				2FAE51C918F810540068893E /* EGORefreshTableHeaderView */,
 				2FAE51A618F7F4E00068893E /* FMDB */,
-				2FAE519018F7D2230068893E /* Reachability */,
 				2FAE514118F7D1340068893E /* ASIHTTPRequest */,
-				2FAE517618F7D1340068893E /* JSONKit */,
 				2FAE511E18F7BD620068893E /* BroadLink */,
 			);
 			path = 3rd;
@@ -651,24 +643,6 @@
 				2FAE517518F7D1340068893E /* ASIS3ServiceRequest.m */,
 			);
 			path = S3;
-			sourceTree = "<group>";
-		};
-		2FAE517618F7D1340068893E /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				2FAE517718F7D1340068893E /* JSONKit.h */,
-				2FAE517818F7D1340068893E /* JSONKit.m */,
-			);
-			path = JSONKit;
-			sourceTree = "<group>";
-		};
-		2FAE519018F7D2230068893E /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				2FAE519118F7D2230068893E /* Reachability.h */,
-				2FAE519218F7D2230068893E /* Reachability.m */,
-			);
-			path = Reachability;
 			sourceTree = "<group>";
 		};
 		2FAE51A618F7F4E00068893E /* FMDB */ = {
@@ -1002,7 +976,6 @@
 				BAB38995193DA4AD00975805 /* FMDatabaseQueue.m in Sources */,
 				BAB38996193DA4AD00975805 /* FMResultSet.m in Sources */,
 				BAFA38251941862A001DB631 /* BLCustomHUD+UIWindow.m in Sources */,
-				BAB38997193DA4AD00975805 /* Reachability.m in Sources */,
 				BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */,
 				BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */,
 				BAB38998193DA4AD00975805 /* ASIAuthenticationDialog.m in Sources */,
@@ -1033,7 +1006,6 @@
 				BAFA381519416FF9001DB631 /* BLFilterViewController.m in Sources */,
 				BAAE38C0194089EE002C97C8 /* SBJsonStreamWriter.m in Sources */,
 				BAB389AD193DA4AD00975805 /* ASIS3ServiceRequest.m in Sources */,
-				BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */,
 				BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */,
 				BAB389B0193DA4AD00975805 /* UtilityFunc.m in Sources */,
 				BAAE38BE194089EE002C97C8 /* SBJsonStreamParserAdapter.m in Sources */,
