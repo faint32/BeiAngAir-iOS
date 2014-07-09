@@ -1,0 +1,14 @@
+PODS:
+  - MBProgressHUD (0.8)
+  - ZBUtilities (0.0.4):
+    - MBProgressHUD (~> 0.8)
+
+DEPENDENCIES:
+  - MBProgressHUD (~> 0.8)
+  - ZBUtilities (~> 0.0.3)
+
+SPEC CHECKSUMS:
+  MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
+  ZBUtilities: 30a3c15d49e8d06e3118f1a2f65b362744bb47ba
+
+COCOAPODS: 0.33.1
