@@ -9,7 +9,6 @@
 #import "BLAirQualityViewController.h"
 #import "GlobalDefine.h"
 #import "BLAppDelegate.h"
-#import "UIImage+Retina4.h"
 #import "Toast+UIView.h"
 #import "BLFilterViewController.h"
 #import "BLDeviceErrorViewController.h"
@@ -28,7 +27,6 @@
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "MMExampleDrawerVisualStateManager.h"
-#import "UIImage+Retina4.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "BLNetwork.h"

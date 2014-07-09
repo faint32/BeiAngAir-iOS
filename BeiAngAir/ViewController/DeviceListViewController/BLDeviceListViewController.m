@@ -22,7 +22,6 @@
 #import "BLDeviceInfoEditViewController.h"
 #import "CustomNaviBarView.h"
 #import "MMProgressHUD.h"
-
 #import "UIViewController+MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BLCustomHUD+UIWindow.h"
@@ -30,7 +29,6 @@
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "MMExampleDrawerVisualStateManager.h"
-#import "UIImage+Retina4.h"
 
 @interface BLAirQualityInfo : NSObject
 
