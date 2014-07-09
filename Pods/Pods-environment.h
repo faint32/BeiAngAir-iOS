@@ -31,6 +31,12 @@
 #define COCOAPODS_VERSION_MINOR_Reachability 1
 #define COCOAPODS_VERSION_PATCH_Reachability 1
 
+// Toast
+#define COCOAPODS_POD_AVAILABLE_Toast
+#define COCOAPODS_VERSION_MAJOR_Toast 2
+#define COCOAPODS_VERSION_MINOR_Toast 2
+#define COCOAPODS_VERSION_PATCH_Toast 0
+
 // ZBUtilities
 #define COCOAPODS_POD_AVAILABLE_ZBUtilities
 #define COCOAPODS_VERSION_MAJOR_ZBUtilities 0

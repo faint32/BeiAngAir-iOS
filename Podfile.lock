@@ -4,6 +4,7 @@ PODS:
   - MBProgressHUD (0.8)
   - MMProgressHUD (0.2.2)
   - Reachability (3.1.1)
+  - Toast (2.2)
   - ZBUtilities (0.0.4):
     - MBProgressHUD (~> 0.8)
 
@@ -13,6 +14,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.8)
   - MMProgressHUD (~> 0.2.2)
   - Reachability (~> 3.1.1)
+  - Toast (~> 2.2)
   - ZBUtilities (~> 0.0.3)
 
 SPEC CHECKSUMS:
@@ -21,6 +23,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   MMProgressHUD: 47a0f18cafc2998b1a2174e42cb097b9aac6090b
   Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
+  Toast: dcf6e9f10369291f9c22feae1bed93c9ed3d84a2
   ZBUtilities: 30a3c15d49e8d06e3118f1a2f65b362744bb47ba
 
 COCOAPODS: 0.33.1
