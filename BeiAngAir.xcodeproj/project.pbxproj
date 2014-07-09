@@ -128,13 +128,6 @@
 		BAFA37F419415FC6001DB631 /* time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA37AE19415FC6001DB631 /* time@2x.png */; };
 		BAFA37F719415FC6001DB631 /* wind@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA37B119415FC6001DB631 /* wind@2x.png */; };
 		BAFA381519416FF9001DB631 /* BLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA381419416FF9001DB631 /* BLFilterViewController.m */; };
-		BAFA381F1941862A001DB631 /* bl_custom_hud_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */; };
-		BAFA38201941862A001DB631 /* bl_custom_hud_btn_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38181941862A001DB631 /* bl_custom_hud_btn_no@2x.png */; };
-		BAFA38211941862A001DB631 /* bl_custom_hud_btn_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38191941862A001DB631 /* bl_custom_hud_btn_yes@2x.png */; };
-		BAFA38221941862A001DB631 /* bl_custom_hud_hint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA381A1941862A001DB631 /* bl_custom_hud_hint@2x.png */; };
-		BAFA38231941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA381B1941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png */; };
-		BAFA38241941862A001DB631 /* bl_custom_hud_timer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA381C1941862A001DB631 /* bl_custom_hud_timer@2x.png */; };
-		BAFA38251941862A001DB631 /* BLCustomHUD+UIWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA381E1941862A001DB631 /* BLCustomHUD+UIWindow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -333,14 +326,6 @@
 		BAFA37B119415FC6001DB631 /* wind@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wind@2x.png"; sourceTree = "<group>"; };
 		BAFA381319416FF9001DB631 /* BLFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLFilterViewController.h; path = FilterInfoViewController/BLFilterViewController.h; sourceTree = "<group>"; };
 		BAFA381419416FF9001DB631 /* BLFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLFilterViewController.m; path = FilterInfoViewController/BLFilterViewController.m; sourceTree = "<group>"; };
-		BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_bg@2x.png"; sourceTree = "<group>"; };
-		BAFA38181941862A001DB631 /* bl_custom_hud_btn_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_btn_no@2x.png"; sourceTree = "<group>"; };
-		BAFA38191941862A001DB631 /* bl_custom_hud_btn_yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_btn_yes@2x.png"; sourceTree = "<group>"; };
-		BAFA381A1941862A001DB631 /* bl_custom_hud_hint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_hint@2x.png"; sourceTree = "<group>"; };
-		BAFA381B1941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_textfield_bg@2x.png"; sourceTree = "<group>"; };
-		BAFA381C1941862A001DB631 /* bl_custom_hud_timer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_timer@2x.png"; sourceTree = "<group>"; };
-		BAFA381D1941862A001DB631 /* BLCustomHUD+UIWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BLCustomHUD+UIWindow.h"; sourceTree = "<group>"; };
-		BAFA381E1941862A001DB631 /* BLCustomHUD+UIWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BLCustomHUD+UIWindow.m"; sourceTree = "<group>"; };
 		FF1DA3096CF646B5A3726C44 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -447,7 +432,6 @@
 		2FAE511C18F7BBDA0068893E /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
-				BAFA38161941862A001DB631 /* BLCustomHUD */,
 				BAFA375A19415211001DB631 /* CustomNavigationBar */,
 				BAFA3754194151E9001DB631 /* BLZSIndicatorProgress.h */,
 				BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */,
@@ -709,21 +693,6 @@
 			path = CustomNavigationBar;
 			sourceTree = "<group>";
 		};
-		BAFA38161941862A001DB631 /* BLCustomHUD */ = {
-			isa = PBXGroup;
-			children = (
-				BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */,
-				BAFA38181941862A001DB631 /* bl_custom_hud_btn_no@2x.png */,
-				BAFA38191941862A001DB631 /* bl_custom_hud_btn_yes@2x.png */,
-				BAFA381A1941862A001DB631 /* bl_custom_hud_hint@2x.png */,
-				BAFA381B1941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png */,
-				BAFA381C1941862A001DB631 /* bl_custom_hud_timer@2x.png */,
-				BAFA381D1941862A001DB631 /* BLCustomHUD+UIWindow.h */,
-				BAFA381E1941862A001DB631 /* BLCustomHUD+UIWindow.m */,
-			);
-			path = BLCustomHUD;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -788,11 +757,9 @@
 				BAFA37D719415FC6001DB631 /* home_logo@2x.png in Resources */,
 				BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */,
 				BAFA37E819415FC6001DB631 /* power_on_press@2x.png in Resources */,
-				BAFA38211941862A001DB631 /* bl_custom_hud_btn_yes@2x.png in Resources */,
 				BA292E5B19481B4400599D49 /* enter@2x.png in Resources */,
 				BA8910301945B32800C16953 /* weather_layout_color_bg@2x.png in Resources */,
 				BAFA37DA19415FC6001DB631 /* lock_off_press@2x.png in Resources */,
-				BAFA38231941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png in Resources */,
 				2FAE502A18F78C470068893E /* InfoPlist.strings in Resources */,
 				2F8D24BE18FD1E6600716750 /* on@2x.png in Resources */,
 				BAFA37DB19415FC6001DB631 /* lock_off@2x.png in Resources */,
@@ -806,7 +773,6 @@
 				2F40FD3818FAFF1000505B6E /* point3@2x.png in Resources */,
 				BAFA37E919415FC6001DB631 /* power_on@2x.png in Resources */,
 				BA89102F1945B32800C16953 /* btn_point@2x.png in Resources */,
-				BAFA38221941862A001DB631 /* bl_custom_hud_hint@2x.png in Resources */,
 				BAFA37E719415FC6001DB631 /* power_off@2x.png in Resources */,
 				BAFA37DF19415FC6001DB631 /* night_off@2x.png in Resources */,
 				BAFA37D419415FC6001DB631 /* hand_on_press@2x.png in Resources */,
@@ -814,7 +780,6 @@
 				BAFA37E619415FC6001DB631 /* power_off_press@2x.png in Resources */,
 				2FAE503218F78C470068893E /* Images.xcassets in Resources */,
 				2F40FD3C18FAFFED00505B6E /* seekbar_btn@2x.png in Resources */,
-				BAFA38241941862A001DB631 /* bl_custom_hud_timer@2x.png in Resources */,
 				BAFA37DE19415FC6001DB631 /* night_off_press@2x.png in Resources */,
 				BAFA37D619415FC6001DB631 /* home_control_bg.png in Resources */,
 				BAFA37DD19415FC6001DB631 /* lock_on@2x.png in Resources */,
@@ -827,8 +792,6 @@
 				BA839F8B194AB7670010750B /* btn_normal@2x.png in Resources */,
 				2F8D24BD18FD1E6600716750 /* off@2x.png in Resources */,
 				BAFA37B819415FC6001DB631 /* auto_on@2x.png in Resources */,
-				BAFA38201941862A001DB631 /* bl_custom_hud_btn_no@2x.png in Resources */,
-				BAFA381F1941862A001DB631 /* bl_custom_hud_bg@2x.png in Resources */,
 				2FAE51C818F80F950068893E /* right@2x.png in Resources */,
 				BAFA37E119415FC6001DB631 /* night_on@2x.png in Resources */,
 			);
@@ -906,7 +869,6 @@
 				BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */,
 				BAB38995193DA4AD00975805 /* FMDatabaseQueue.m in Sources */,
 				BAB38996193DA4AD00975805 /* FMResultSet.m in Sources */,
-				BAFA38251941862A001DB631 /* BLCustomHUD+UIWindow.m in Sources */,
 				BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */,
 				BAB38998193DA4AD00975805 /* ASIAuthenticationDialog.m in Sources */,
 				BAB38999193DA4AD00975805 /* ASIDataCompressor.m in Sources */,
