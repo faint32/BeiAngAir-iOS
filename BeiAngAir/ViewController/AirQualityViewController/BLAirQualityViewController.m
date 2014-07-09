@@ -24,7 +24,6 @@
 #import "UIViewController+MMDrawerController.h"
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
-#import "MMExampleDrawerVisualStateManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "BLNetwork.h"

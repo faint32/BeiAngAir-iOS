@@ -64,11 +64,6 @@
 		BAB38984193DA4AD00975805 /* BLAirQualityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51DB18F81D3D0068893E /* BLAirQualityViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38985193DA4AD00975805 /* BLSmartConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51A018F7E1950068893E /* BLSmartConfigViewController.m */; };
 		BAB38986193DA4AD00975805 /* BLDeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE519A18F7D4F00068893E /* BLDeviceListViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB38987193DA4AD00975805 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB38969193D75EE00975805 /* MMDrawerBarButtonItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB38988193DA4AD00975805 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3896B193D75EE00975805 /* MMDrawerController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB38989193DA4AD00975805 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3896D193D75EE00975805 /* MMDrawerVisualState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB3898A193DA4AD00975805 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3896F193D75EE00975805 /* MMExampleDrawerVisualStateManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB3898B193DA4AD00975805 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB38971193D75EE00975805 /* UIViewController+MMDrawerController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38990193DA4AD00975805 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51CC18F810540068893E /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38991193DA4AD00975805 /* FMDatabase+InMemoryOnDiskIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51A818F7F4E00068893E /* FMDatabase+InMemoryOnDiskIO.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38992193DA4AD00975805 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51AA18F7F4E00068893E /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -282,16 +277,6 @@
 		BAAE38B7194089EE002C97C8 /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
 		BAAE38B8194089EE002C97C8 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		BAAE38B9194089EE002C97C8 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		BAB38968193D75EE00975805 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
-		BAB38969193D75EE00975805 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
-		BAB3896A193D75EE00975805 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
-		BAB3896B193D75EE00975805 /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
-		BAB3896C193D75EE00975805 /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
-		BAB3896D193D75EE00975805 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
-		BAB3896E193D75EE00975805 /* MMExampleDrawerVisualStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMExampleDrawerVisualStateManager.h; sourceTree = "<group>"; };
-		BAB3896F193D75EE00975805 /* MMExampleDrawerVisualStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMExampleDrawerVisualStateManager.m; sourceTree = "<group>"; };
-		BAB38970193D75EE00975805 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
-		BAB38971193D75EE00975805 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		BAFA3754194151E9001DB631 /* BLZSIndicatorProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLZSIndicatorProgress.h; sourceTree = "<group>"; };
 		BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSIndicatorProgress.m; sourceTree = "<group>"; };
 		BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLZSProgressLayer.h; sourceTree = "<group>"; };
@@ -438,7 +423,6 @@
 				BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */,
 				BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */,
 				BAAE38A0194089EE002C97C8 /* SBJson */,
-				BAB38967193D75EE00975805 /* MMDrawerController */,
 				2FAE51C918F810540068893E /* EGORefreshTableHeaderView */,
 				2FAE51A618F7F4E00068893E /* FMDB */,
 				2FAE514118F7D1340068893E /* ASIHTTPRequest */,
@@ -661,23 +645,6 @@
 			path = SBJson;
 			sourceTree = "<group>";
 		};
-		BAB38967193D75EE00975805 /* MMDrawerController */ = {
-			isa = PBXGroup;
-			children = (
-				BAB38968193D75EE00975805 /* MMDrawerBarButtonItem.h */,
-				BAB38969193D75EE00975805 /* MMDrawerBarButtonItem.m */,
-				BAB3896A193D75EE00975805 /* MMDrawerController.h */,
-				BAB3896B193D75EE00975805 /* MMDrawerController.m */,
-				BAB3896C193D75EE00975805 /* MMDrawerVisualState.h */,
-				BAB3896D193D75EE00975805 /* MMDrawerVisualState.m */,
-				BAB3896E193D75EE00975805 /* MMExampleDrawerVisualStateManager.h */,
-				BAB3896F193D75EE00975805 /* MMExampleDrawerVisualStateManager.m */,
-				BAB38970193D75EE00975805 /* UIViewController+MMDrawerController.h */,
-				BAB38971193D75EE00975805 /* UIViewController+MMDrawerController.m */,
-			);
-			path = MMDrawerController;
-			sourceTree = "<group>";
-		};
 		BAFA375A19415211001DB631 /* CustomNavigationBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -848,15 +815,10 @@
 				BAB38986193DA4AD00975805 /* BLDeviceListViewController.m in Sources */,
 				BAAE38BC194089EE002C97C8 /* SBJsonStreamParser.m in Sources */,
 				BAFA3758194151E9001DB631 /* BLZSIndicatorProgress.m in Sources */,
-				BAB38987193DA4AD00975805 /* MMDrawerBarButtonItem.m in Sources */,
 				BAFA3759194151E9001DB631 /* BLZSProgressLayer.m in Sources */,
-				BAB38988193DA4AD00975805 /* MMDrawerController.m in Sources */,
 				BAAE38C5194089EE002C97C8 /* SBJsonWriter.m in Sources */,
-				BAB38989193DA4AD00975805 /* MMDrawerVisualState.m in Sources */,
-				BAB3898A193DA4AD00975805 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				BAFA376719415211001DB631 /* CustomNaviBarView.m in Sources */,
 				BAAE38C3194089EE002C97C8 /* SBJsonTokeniser.m in Sources */,
-				BAB3898B193DA4AD00975805 /* UIViewController+MMDrawerController.m in Sources */,
 				BAAE38C4194089EE002C97C8 /* SBJsonUTF8Stream.m in Sources */,
 				BAB38990193DA4AD00975805 /* EGORefreshTableHeaderView.m in Sources */,
 				BAFA376919415211001DB631 /* CustomViewController.m in Sources */,

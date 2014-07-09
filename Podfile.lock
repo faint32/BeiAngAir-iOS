@@ -2,6 +2,18 @@ PODS:
   - iCarousel (1.7.6)
   - JSONKit (1.5pre)
   - MBProgressHUD (0.8)
+  - MMDrawerController (0.5.6):
+    - MMDrawerController/Core
+    - MMDrawerController/MMDrawerBarButtonItem
+    - MMDrawerController/MMDrawerVisualStates
+    - MMDrawerController/Subclass
+  - MMDrawerController/Core (0.5.6)
+  - MMDrawerController/MMDrawerBarButtonItem (0.5.6):
+    - MMDrawerController/Core
+  - MMDrawerController/MMDrawerVisualStates (0.5.6):
+    - MMDrawerController/Core
+  - MMDrawerController/Subclass (0.5.6):
+    - MMDrawerController/Core
   - MMProgressHUD (0.2.2)
   - Reachability (3.1.1)
   - Toast (2.2)
@@ -12,6 +24,7 @@ DEPENDENCIES:
   - iCarousel (~> 1.7.6)
   - JSONKit (~> 1.5pre)
   - MBProgressHUD (~> 0.8)
+  - MMDrawerController (~> 0.5.6)
   - MMProgressHUD (~> 0.2.2)
   - Reachability (~> 3.1.1)
   - Toast (~> 2.2)
@@ -21,6 +34,7 @@ SPEC CHECKSUMS:
   iCarousel: c35a4e26b3c657847e523012b593e70ddbd84992
   JSONKit: efef3bbd3372ff33f96b9c6f34cf4fe18e74ab69
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
+  MMDrawerController: 4bae84535ca7a5f4cb55a66a001e6035c3571677
   MMProgressHUD: 47a0f18cafc2998b1a2174e42cb097b9aac6090b
   Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
   Toast: dcf6e9f10369291f9c22feae1bed93c9ed3d84a2

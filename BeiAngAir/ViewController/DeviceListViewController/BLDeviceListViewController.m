@@ -26,7 +26,6 @@
 #import "CustomNavigationController.h"
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
-#import "MMExampleDrawerVisualStateManager.h"
 
 @interface BLAirQualityInfo : NSObject
 
