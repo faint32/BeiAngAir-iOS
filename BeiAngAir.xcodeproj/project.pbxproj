@@ -401,7 +401,7 @@
 				2FAE51BA18F7F5620068893E /* BLModuleInfomation.m */,
 				2FAE51BC18F7F61C0068893E /* BLFMDBSqlite.h */,
 				2FAE51BD18F7F61C0068893E /* BLFMDBSqlite.m */,
-				2FAE512518F7BDEB0068893E /* ViewController */,
+				2FAE512518F7BDEB0068893E /* Controllers */,
 				2FAE511C18F7BBDA0068893E /* 3rd */,
 				2FAE503118F78C470068893E /* Images.xcassets */,
 				2FAE502618F78C470068893E /* Supporting Files */,
@@ -457,9 +457,11 @@
 			path = BroadLink;
 			sourceTree = "<group>";
 		};
-		2FAE512518F7BDEB0068893E /* ViewController */ = {
+		2FAE512518F7BDEB0068893E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2FAE519918F7D4F00068893E /* BLDeviceListViewController.h */,
+				2FAE519A18F7D4F00068893E /* BLDeviceListViewController.m */,
 				BAAE389A1940854A002C97C8 /* BLAboutViewController.h */,
 				BAAE389B1940854A002C97C8 /* BLAboutViewController.m */,
 				2F811F9519023A0500411FA4 /* BLDeviceErrorViewController.h */,
@@ -472,9 +474,8 @@
 				2FAE51DB18F81D3D0068893E /* BLAirQualityViewController.m */,
 				2FAE519F18F7E1950068893E /* BLSmartConfigViewController.h */,
 				2FAE51A018F7E1950068893E /* BLSmartConfigViewController.m */,
-				2FAE519918F7D4F00068893E /* BLDeviceListViewController.h */,
-				2FAE519A18F7D4F00068893E /* BLDeviceListViewController.m */,
 			);
+			name = Controllers;
 			path = ViewController;
 			sourceTree = "<group>";
 		};
