@@ -15,6 +15,8 @@
 #import "JSONKit.h"
 #import "BLNetwork.h"
 
+#define TOAST_DURATION  0.8f
+
 @interface BLDeviceInfoEditViewController () <UITextFieldDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     BLAppDelegate *appDelegate;
