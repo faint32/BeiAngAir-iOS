@@ -40,6 +40,11 @@
     return self;
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<mac: %@, type: %@, name: %@, key: %@>", self.mac, self.type, self.name, self.key];
+}
+
 @end
 
 

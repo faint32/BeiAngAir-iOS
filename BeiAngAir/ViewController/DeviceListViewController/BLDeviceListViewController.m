@@ -22,7 +22,6 @@
 #import "BLDeviceInfoEditViewController.h"
 #import "CustomNaviBarView.h"
 #import "MMProgressHUD.h"
-
 #import "UIViewController+MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BLCustomHUD+UIWindow.h"
@@ -63,16 +62,13 @@
     BLAppDelegate *appDelegate;
     BLFMDBSqlite *sqlite;
     dispatch_queue_t networkQueue;
-    
     EGORefreshTableHeaderView *_refreshTableView;  
     BOOL _reloading;
 }
+
 @property (nonatomic, strong) BLNetwork *networkAPI;
-//@property (nonatomic, strong) BeiAngNetworkUnit *beiAngAirNetwork;
 @property (nonatomic, strong) UITableView *tableView;
-/*Refresh device list timer*/
 @property (nonatomic, strong) NSTimer *refreshTimer;
-/*Device status array.*/
 @property (nonatomic, strong) NSMutableArray *statusArray;
 @property (nonatomic, strong) NSMutableArray *deviceArray;
 
@@ -83,22 +79,13 @@
 - (void)dealloc
 {
     [super dealloc];
-    [self setTableView:nil];
-    [self setStatusArray:nil];
-    _networkAPI = nil;
-//    _beiAngAirNetwork = nil;
     dispatch_release(networkQueue);
-    [_refreshTimer invalidate];
-    _refreshTimer = nil;
-    _deviceArray = nil;
-    _statusArray = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -116,9 +103,9 @@
     [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
     _deviceArray = [[NSMutableArray alloc] init];
     NSMutableArray *muTableArray = [[NSMutableArray alloc] initWithArray:[sqlite getAllModuleInfo]];
-    NSLog(@"muTableArray = %d",muTableArray.count);
     for (BLModuleInfomation *tmp in muTableArray) {
         BLDeviceInfo *deviceInfo = tmp.info;
+		NSLog(@"deviceInfo: %@", deviceInfo);
         [_deviceArray addObject:deviceInfo];
     }
     _statusArray = [[NSMutableArray alloc] init];
@@ -236,7 +223,6 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-/*Refresh Device List.*/
 - (void)refreshDeviceList
 {
     dispatch_async(networkQueue, ^{
@@ -271,7 +257,7 @@
                 BOOL tmp = NO;
                 for (int j = 0; j < array.count; j++) {
                     BLDeviceInfo *infoTmp = [array objectAtIndex:j];
-                    if(infoTmp.mac == info.mac)
+                    if([infoTmp.mac isEqualToString:info.mac])
                     {
                         tmp = YES;
                         if(![infoTmp.name isEqualToString:info.name] || infoTmp.lock != info.lock)
@@ -497,7 +483,6 @@
     return scaledImage;    
 }
 
-#pragma mark -
 #pragma mark - UITableView Datasource Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -550,20 +535,15 @@
     static NSString *cellIdentifier = @"TclAirDeviceListCell";
     
     UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (nil == cell)
-    {
+    if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         [cell.contentView setFrame:CGRectMake(0.0f, 0.0f, cell.frame.size.width, 94.0f)];
         [cell setBackgroundColor:[UIColor whiteColor]];
-    }
-    else
-    {
-        for (UIView *view in [cell.contentView subviews])
-        {
+    } else {
+        for (UIView *view in [cell.contentView subviews]) {
             [view removeFromSuperview];
         }
-        for (UIView *view in [cell.imageView subviews])
-        {
+        for (UIView *view in [cell.imageView subviews]) {
             [view removeFromSuperview];
         }
         [cell.accessoryView removeFromSuperview];
@@ -575,7 +555,6 @@
         NSString * documentsDirectory = [paths objectAtIndex:0];
         NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", info.mac]];
         UIImage *image = [UIImage imageWithContentsOfFile:path];
-//    [cell.imageView setImage:image];
         CGRect viewFrame = cell.imageView.frame;
         viewFrame.origin.x = 10.0f;
         viewFrame.origin.y = (94.0f - 62.5) * 0.5f;
@@ -589,7 +568,6 @@
         [button addTarget:self action:@selector(editButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:button];
     }
-//    path = [[NSBundle mainBundle] pathForResource:@"right@2x" ofType:@"png"];
     UIImage *image = [UIImage imageNamed:@"right@2x.png"];
     CGRect viewFrame = CGRectZero;
     viewFrame.origin.x = cell.contentView.frame.size.width - 36.f;
@@ -761,8 +739,6 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-
-#pragma mark -  
 #pragma mark Data Source Loading / Reloading Methods  
 //开始重新加载时调用的方法  
 - (void)reloadTableViewDataSource{  
@@ -779,7 +755,6 @@
     [_refreshTableView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];        
 }  
 
-#pragma mark -  
 #pragma mark Background operation  
 //这个方法运行于子线程中，完成获取刷新数据的操作  
 -(void)doInBackground  
@@ -794,7 +769,6 @@
     });  
 }
 
-#pragma mark -  
 #pragma mark EGORefreshTableHeaderDelegate Methods  
 //下拉被触发调用的委托方法  
 -(void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view  
@@ -814,7 +788,6 @@
     return [NSDate date];  
 }  
 
-#pragma mark -   
 #pragma mark UIScrollViewDelegate Methods  
 //滚动控件的委托方法  
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView  
