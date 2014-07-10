@@ -94,7 +94,7 @@
     
     NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString * documentsDirectory = [paths objectAtIndex:0];
-    NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", appDelegate.deviceInfo.mac]];
+    NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", self.deviceInfo.mac]];
     image = [UIImage imageWithContentsOfFile:imagePath];
     viewFrame = headerView.frame;
     viewFrame.origin.y += viewFrame.size.height + 20.0f;
@@ -144,7 +144,7 @@
     [_nameTextField setPlaceholder:NSLocalizedString(@"DeviceInfoEditViewControllerNamePlaceholder", nil)];
     [_nameTextField setAutoresizesSubviews:YES];
     [_nameTextField setReturnKeyType:UIReturnKeyDone];
-    [_nameTextField setText:appDelegate.deviceInfo.name];
+    [_nameTextField setText:self.deviceInfo.name];
     [_nameTextField addTarget:self action:@selector(keywindowHidden:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [nameView addSubview:_nameTextField];
     
@@ -177,7 +177,7 @@
     image = [UIImage imageWithContentsOfFile:path];
     [_lockButton setImage:image forState:UIControlStateSelected];
     [_lockButton addTarget:self action:@selector(lockButtonclicked:) forControlEvents:UIControlEventTouchUpInside];
-    [_lockButton setSelected:appDelegate.deviceInfo.lock];
+    [_lockButton setSelected:self.deviceInfo.lock];
     [lockView addSubview:_lockButton];
     
     viewFrame = lockView.frame;
@@ -204,7 +204,7 @@
     [macValueLabel setBackgroundColor:[UIColor clearColor]];
     [macValueLabel setTextColor:[UIColor blackColor]];
     [macValueLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    [macValueLabel setText:appDelegate.deviceInfo.mac];
+    [macValueLabel setText:self.deviceInfo.mac];
     [macView addSubview:macValueLabel];
     
     //确定按钮
@@ -265,7 +265,7 @@
 {
     dispatch_async(networkQueue, ^{
         BLDeviceInfo *deviceInfo = [[BLDeviceInfo alloc] init];
-        deviceInfo = appDelegate.deviceInfo;
+        deviceInfo = self.deviceInfo;
         
         NSString *string = [_nameTextField text];
 //        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
@@ -275,7 +275,7 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:[NSNumber numberWithInt:13] forKey:@"api_id"];
         [dic setObject:@"device_update" forKey:@"command"];
-        [dic setObject:appDelegate.deviceInfo.mac forKey:@"mac"];
+        [dic setObject:self.deviceInfo.mac forKey:@"mac"];
         [dic setObject:string forKey:@"name"];
         [dic setObject:[NSNumber numberWithInt:deviceInfo.lock] forKey:@"lock"];
         NSData *requestData = [dic JSONData];
@@ -284,16 +284,16 @@
         if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                appDelegate.deviceInfo = deviceInfo;
+                self.deviceInfo = deviceInfo;
                 BLModuleInfomation *moduleInfomation = [[BLModuleInfomation alloc] init];
-                moduleInfomation.info = appDelegate.deviceInfo;
+                moduleInfomation.info = self.deviceInfo;
                 [sqlite insertOrUpdateModuleInfo:moduleInfomation];
                 for (int i=0; i<appDelegate.deviceArray.count; i++)
                 {
                     BLDeviceInfo *info = [appDelegate.deviceArray objectAtIndex:i];
-                    if (info.mac == appDelegate.deviceInfo.mac)
+                    if (info.mac == self.deviceInfo.mac)
                     {
-                        [appDelegate.deviceArray replaceObjectAtIndex:i withObject:appDelegate.deviceInfo];
+                        [appDelegate.deviceArray replaceObjectAtIndex:i withObject:self.deviceInfo];
                         break;
                     }
                 }
@@ -339,7 +339,7 @@
         // 拷贝图片
         NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString * documentsDirectory = [paths objectAtIndex:0];
-        NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", appDelegate.deviceInfo.mac]];
+        NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", self.deviceInfo.mac]];
         [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
     }
 }

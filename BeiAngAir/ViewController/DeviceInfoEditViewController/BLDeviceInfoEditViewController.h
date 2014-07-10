@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface BLDeviceInfoEditViewController : UIViewController
+
+@property (nonatomic, strong) BLDeviceInfo *deviceInfo;
 
 @end

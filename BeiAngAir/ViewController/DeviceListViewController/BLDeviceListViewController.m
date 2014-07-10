@@ -583,21 +583,17 @@
         NSLog(@"%@", [dic JSONString]);
         NSData *response = [_networkAPI requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-        if (code == 0)
-        {
+        if (code == 0) {
             [MMProgressHUD dismiss];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
                 BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
-                appDelegate.currentAirInfo = recvInfo;
-                appDelegate.deviceInfo = info;
-                //详细界面
                 BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
+				airQualityViewController.currentAirInfo = recvInfo;
+				airQualityViewController.deviceInfo = info;
                 [self.navigationController pushViewController:airQualityViewController animated:YES];
             });
-        }
-        else
-        {
+        } else {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 [MMProgressHUD dismiss];
                 [self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
@@ -610,8 +606,8 @@
 - (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
 {
     BLDeviceInfo *info = [appDelegate.deviceArray objectAtIndex:recognizer.view.tag];
-    appDelegate.deviceInfo = info;
     BLDeviceInfoEditViewController *vc = [[BLDeviceInfoEditViewController alloc] init];
+	vc.deviceInfo = info;
     [self presentViewController:vc animated:YES completion:nil];
 }
 

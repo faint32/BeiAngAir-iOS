@@ -10,4 +10,8 @@
 #import "CustomViewController.h"
 
 @interface BLAirQualityViewController : CustomViewController
+
+@property (nonatomic, strong) BeiAngReceivedDataInfo *currentAirInfo;
+@property (nonatomic, strong) BLDeviceInfo *deviceInfo;
+
 @end

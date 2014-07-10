@@ -258,7 +258,7 @@
     NSString *pathUnCheck = [[NSBundle mainBundle] pathForResource:@"btn_point@2x" ofType:@"png"];
     UIImage *imageUnCheck = [UIImage imageWithContentsOfFile:pathUnCheck];
     //判断当前是那个按钮选择s
-    if(appDelegate.currentAirInfo.switchStatus)
+    if(self.currentAirInfo.switchStatus)
     {
         _lastSelectedButton = _buttonClose;
         //有定时
@@ -364,10 +364,10 @@
         tmpInfo.switchStatus = 0;
     }
     //定时任务设置
-    tmpInfo.childLockState = appDelegate.currentAirInfo.childLockState;
-    [tmpInfo setAutoOrHand:appDelegate.currentAirInfo.autoOrHand];
-    tmpInfo.sleepState = appDelegate.currentAirInfo.sleepState;
-    tmpInfo.gearState = appDelegate.currentAirInfo.gearState;
+    tmpInfo.childLockState = self.currentAirInfo.childLockState;
+    [tmpInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
+    tmpInfo.sleepState = self.currentAirInfo.sleepState;
+    tmpInfo.gearState = self.currentAirInfo.gearState;
     
     //发送数据
     dispatch_async(networkQueue, ^{
@@ -383,7 +383,7 @@
                 BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] init];
                 //数据转换
                 recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
-                appDelegate.currentAirInfo = recvInfo;
+                self.currentAirInfo = recvInfo;
                 [_refreshInfoTimer invalidate];
                 _refreshInfoTimer = nil;
                 //更新数据库
@@ -411,7 +411,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[NSNumber numberWithInt:9000] forKey:@"api_id"];
     [dic setObject:@"passthrough" forKey:@"command"];
-    [dic setObject:appDelegate.deviceInfo.mac forKey:@"mac"];
+    [dic setObject:self.deviceInfo.mac forKey:@"mac"];
     [dic setObject:@"bytes" forKey:@"format"];
     
     NSMutableArray *dataArray = [[NSMutableArray alloc ]init];
@@ -605,7 +605,7 @@
     //-- 获取每个iCarousel的值
     [countDownHourIndicator setPercent:iHourPickerFrom.currentItemIndex maxPercent:24 animated:YES];
     [countDownMiniteIndicator setPercent:iMinPickerFrom.currentItemIndex maxPercent:60 animated:YES];
-    if(!appDelegate.currentAirInfo.switchStatus)
+    if(!self.currentAirInfo.switchStatus)
         _labelSelected.text = [NSString stringWithFormat:@"%d%@%d%@%@",iHourPickerFrom.currentItemIndex,NSLocalizedString(@"hour", nil),iMinPickerFrom.currentItemIndex,NSLocalizedString(@"minute", nil),NSLocalizedString(@"open", nil)];
     else
         _labelSelected.text = [NSString stringWithFormat:@"%d%@%d%@%@",iHourPickerFrom.currentItemIndex,NSLocalizedString(@"hour", nil),iMinPickerFrom.currentItemIndex,NSLocalizedString(@"minute", nil),NSLocalizedString(@"close", nil)];

@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "CustomViewController.h"
-@class BeiAngReceivedDataInfo;
+#import "BeiAngReceivedDataInfo.h"
 
 @interface BLFilterViewController : CustomViewController
+
+@property (nonatomic, strong) BeiAngReceivedDataInfo *currentAirInfo;
+@property (nonatomic, strong) BLDeviceInfo *deviceInfo;
+
 @end

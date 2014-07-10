@@ -21,5 +21,6 @@
 #import	"BLTimerInfomation.h"
 #import	"BeiAngSendDataInfo.h"
 #import	"BeiAngReceivedDataInfo.h"
+#import "ClassAirQualityInfo.h"
 
 #endif

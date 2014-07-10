@@ -19,35 +19,6 @@
 #import "SBJson.h"
 #import <AVFoundation/AVFoundation.h>
 
-@implementation ClassAirQualityInfo
-
-- (void)dealloc
-{
-    [super dealloc];
-    [self setCityCode:nil];
-    [self setCityName:nil];
-    [self setWeather:nil];
-    [self setTemperateStrings:nil];
-    [self setAirQualityLevel:nil];
-    [self setAirQualityString:nil];
-}
-
-- (id)init
-{
-    self = [super init];
-    if (self)
-    {
-        _cityCode = @"";
-        _cityName = @"";
-        _weather = @"";
-        _temperateStrings= @"";
-        _airQualityString= @"";
-        _airQualityLevel= @"";
-    }
-    return self;
-}
-@end
-
 @interface BLAppDelegate () <CLLocationManagerDelegate, MKMapViewDelegate>
 {
     BLFMDBSqlite *sqlite;
@@ -71,14 +42,6 @@
 - (void)dealloc
 {
     [super dealloc];
-    [self setWindow:nil];
-    [self setDeviceArray:nil];
-    [self setDeviceInfo:nil];
-    [self setCurrentAirInfo:nil];
-    [self setLocManager:nil];
-    [self setGeocoder:nil];
-    [_refreshLocation invalidate];
-    _refreshLocation = nil;
     dispatch_release(httpQueue);
     dispatch_release(cityQueue);
     dispatch_release(networkQueue);

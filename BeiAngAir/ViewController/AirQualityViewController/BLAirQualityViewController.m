@@ -281,8 +281,8 @@
     NSString *pathOnOff;
     NSString *pathOnOffClick;
     //判断开关按钮
-    NSLog(@"switchStatus = %d",appDelegate.currentAirInfo.switchStatus);
-    if(appDelegate.currentAirInfo.switchStatus)
+    NSLog(@"switchStatus = %d", self.currentAirInfo.switchStatus);
+    if(self.currentAirInfo.switchStatus)
     {
         pathOnOff = [[NSBundle mainBundle] pathForResource:@"power_on@2x" ofType:@"png"];
         pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"power_on_press@2x" ofType:@"png"];
@@ -309,8 +309,7 @@
     //手动按钮
     _handOrAutoButton  = [UIButton buttonWithType:UIButtonTypeCustom];
     //判断手动还是自动按钮
-    if(appDelegate.currentAirInfo.autoOrHand)
-    {
+    if(self.currentAirInfo.autoOrHand) {
         pathOnOff = [[NSBundle mainBundle] pathForResource:@"auto_on@2x" ofType:@"png"];
         pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"auto_on_press@2x" ofType:@"png"];
         _handOrAutoButton.selected = YES;
@@ -336,12 +335,9 @@
     //手动自动标题
     viewFrame.origin.y = _handOrAutoButton.frame.size.height + _handOrAutoButton.frame.origin.y;
     _handOrAutoLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    if(appDelegate.currentAirInfo.autoOrHand)
-    {
+    if(self.currentAirInfo.autoOrHand) {
         [_handOrAutoLabel setText:NSLocalizedString(@"Automatic", nil)];
-    }
-    else
-    {
+	} else {
         [_handOrAutoLabel setText:NSLocalizedString(@"Manual", nil)];
     }
     [_handOrAutoLabel setFont:[UIFont systemFontOfSize:13.f]];
@@ -358,7 +354,7 @@
     //睡眠按钮
     UIButton *sleepButton  = [UIButton buttonWithType:UIButtonTypeCustom];
     //判断睡眠按钮
-    if(appDelegate.currentAirInfo.sleepState)
+    if(self.currentAirInfo.sleepState)
     {
         pathOnOff = [[NSBundle mainBundle] pathForResource:@"night_on@2x" ofType:@"png"];
         pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"night_on_press@2x" ofType:@"png"];
@@ -385,7 +381,7 @@
     //睡眠标题
     viewFrame.origin.y = sleepButton.frame.size.height + sleepButton.frame.origin.y;
     _sleepLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    if(appDelegate.currentAirInfo.sleepState)
+    if(self.currentAirInfo.sleepState)
     {
         [_sleepLabel setText:NSLocalizedString(@"SleepOn", nil)];
     }
@@ -407,7 +403,7 @@
     //儿童锁按钮
     _childLockButton  = [UIButton buttonWithType:UIButtonTypeCustom];
     //判断儿童锁按钮
-    if(appDelegate.currentAirInfo.childLockState)
+    if(self.currentAirInfo.childLockState)
     {
         pathOnOff = [[NSBundle mainBundle] pathForResource:@"lock_on@2x" ofType:@"png"];
         pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"lock_on_press@2x" ofType:@"png"];
@@ -434,7 +430,7 @@
     //儿童锁标题
     viewFrame.origin.y = _childLockButton.frame.size.height + _childLockButton.frame.origin.y;
     _childLockLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    if(appDelegate.currentAirInfo.childLockState)
+    if(self.currentAirInfo.childLockState)
     {
         [_childLockLabel setText:NSLocalizedString(@"TheChildLock", nil)];
     }
@@ -509,7 +505,7 @@
         [slider setMinimumTrackTintColor:RGB(0x13, 0xb3, 0x5c)];
         [slider setMaximumValue:3.0f];
         [slider setMinimumValue:1.0f];
-        [slider setValue:appDelegate.currentAirInfo.gearState];
+        [slider setValue:self.currentAirInfo.gearState];
         path = [[NSBundle mainBundle] pathForResource:@"seekbar_btn@2x" ofType:@"png"];
         image = [UIImage imageWithContentsOfFile:path];
         [slider setThumbImage:image forState:UIControlStateNormal];
@@ -561,6 +557,8 @@
 {
     //定时界面
     BLFilterViewController *filterInfoViewController = [[BLFilterViewController alloc] init];
+	filterInfoViewController.currentAirInfo = self.currentAirInfo;
+	filterInfoViewController.deviceInfo = self.deviceInfo;
     [self.navigationController pushViewController:filterInfoViewController animated:YES];
 }
 
@@ -670,7 +668,7 @@
 - (void)allButtonClicked:(UIButton *)button
 {
     //判断是否开机状态
-    if(!appDelegate.currentAirInfo.switchStatus && button.tag != 1)
+    if(!self.currentAirInfo.switchStatus && button.tag != 1)
     {
         //关机状态就返回
         return;
@@ -697,35 +695,35 @@
         {
             //开关按钮
             [sendInfo setSwitchStatus:!button.selected];
-            [sendInfo setAutoOrHand:appDelegate.currentAirInfo.autoOrHand];
-            sendInfo.sleepState = appDelegate.currentAirInfo.sleepState;
-            sendInfo.childLockState = appDelegate.currentAirInfo.childLockState;
+            [sendInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
+            sendInfo.sleepState = self.currentAirInfo.sleepState;
+            sendInfo.childLockState = self.currentAirInfo.childLockState;
         }
         else if (button.tag == 2)
         {
             //自动或者手动按钮
             [sendInfo setAutoOrHand:!button.selected];
-            sendInfo.switchStatus = appDelegate.currentAirInfo.switchStatus;
-            sendInfo.sleepState = appDelegate.currentAirInfo.sleepState;
-            sendInfo.childLockState = appDelegate.currentAirInfo.childLockState;
+            sendInfo.switchStatus = self.currentAirInfo.switchStatus;
+            sendInfo.sleepState = self.currentAirInfo.sleepState;
+            sendInfo.childLockState = self.currentAirInfo.childLockState;
         }
         else if (button.tag == 3)
         {
             //睡眠按钮
             sendInfo.sleepState = !button.selected;
-            sendInfo.switchStatus = appDelegate.currentAirInfo.switchStatus;
-            [sendInfo setAutoOrHand:appDelegate.currentAirInfo.autoOrHand];
-            sendInfo.childLockState = appDelegate.currentAirInfo.childLockState;
+            sendInfo.switchStatus = self.currentAirInfo.switchStatus;
+            [sendInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
+            sendInfo.childLockState = self.currentAirInfo.childLockState;
         }
         else if(button.tag == 4)
         {
             //儿童锁按钮
             sendInfo.childLockState = !button.selected;
-            sendInfo.switchStatus = appDelegate.currentAirInfo.switchStatus;
-            [sendInfo setAutoOrHand:appDelegate.currentAirInfo.autoOrHand];
-            sendInfo.sleepState = appDelegate.currentAirInfo.sleepState;
+            sendInfo.switchStatus = self.currentAirInfo.switchStatus;
+            [sendInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
+            sendInfo.sleepState = self.currentAirInfo.sleepState;
         }
-        sendInfo.gearState = appDelegate.currentAirInfo.gearState;
+        sendInfo.gearState = self.currentAirInfo.gearState;
         
         //数据透传
         NSData *response =[self sendDataCommon:sendInfo];
@@ -737,7 +735,7 @@
             BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] init];
             //数据转换
             recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
-            appDelegate.currentAirInfo = recvInfo;
+            self.currentAirInfo = recvInfo;
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSString *stringSwitchState;
                 NSString *stringSwitchClick;
@@ -745,7 +743,7 @@
                 if(button.tag == 2)
                 {
                     //手动或者自动按钮
-                    if(appDelegate.currentAirInfo.autoOrHand)
+                    if(self.currentAirInfo.autoOrHand)
                     {
                         stringSwitchState = [[NSBundle mainBundle] pathForResource:@"auto_on@2x" ofType:@"png"];
                         stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"auto_on_press@2x" ofType:@"png"];
@@ -763,7 +761,7 @@
                 else if (button.tag == 1)
                 {
                     //判断开关按钮
-                    if(appDelegate.currentAirInfo.switchStatus)
+                    if(self.currentAirInfo.switchStatus)
                     {
                         stringSwitchState = [[NSBundle mainBundle] pathForResource:@"power_on@2x" ofType:@"png"];
                         stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"power_on_press@2x" ofType:@"png"];
@@ -779,7 +777,7 @@
                 else if (button.tag == 3)
                 {
                     //判断睡眠按钮
-                    if(appDelegate.currentAirInfo.sleepState)
+                    if(self.currentAirInfo.sleepState)
                     {
                         stringSwitchState = [[NSBundle mainBundle] pathForResource:@"night_on@2x" ofType:@"png"];
                         stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"night_on_press@2x" ofType:@"png"];
@@ -797,7 +795,7 @@
                 else if (button.tag == 4)
                 {
                     //判断儿童锁按钮
-                    if(appDelegate.currentAirInfo.childLockState)
+                    if(self.currentAirInfo.childLockState)
                     {
                         stringSwitchState = [[NSBundle mainBundle] pathForResource:@"lock_on@2x" ofType:@"png"];
                         stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"lock_on_press@2x" ofType:@"png"];
@@ -835,7 +833,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:[NSNumber numberWithInt:9000] forKey:@"api_id"];
     [dic setObject:@"passthrough" forKey:@"command"];
-    [dic setObject:appDelegate.deviceInfo.mac forKey:@"mac"];
+    [dic setObject:self.deviceInfo.mac forKey:@"mac"];
     [dic setObject:@"bytes" forKey:@"format"];
     
     NSMutableArray *dataArray = [[NSMutableArray alloc ]init];
@@ -907,10 +905,10 @@
     dispatch_async(networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
         BeiAngSendDataInfo *sendInfo = [[BeiAngSendDataInfo alloc] init];
-        sendInfo.childLockState = appDelegate.currentAirInfo.childLockState;
-        sendInfo.switchStatus = appDelegate.currentAirInfo.switchStatus;
-        [sendInfo setAutoOrHand:appDelegate.currentAirInfo.autoOrHand];
-        sendInfo.sleepState = appDelegate.currentAirInfo.sleepState;
+        sendInfo.childLockState = self.currentAirInfo.childLockState;
+        sendInfo.switchStatus = self.currentAirInfo.switchStatus;
+        [sendInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
+        sendInfo.sleepState = self.currentAirInfo.sleepState;
         sendInfo.gearState = speed;
         //数据透传
         NSData *response =[self sendDataCommon:sendInfo];
@@ -922,7 +920,7 @@
             BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] init];
             //数据转换
             recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
-            appDelegate.currentAirInfo = recvInfo;
+            self.currentAirInfo = recvInfo;
         }
         else
         {
