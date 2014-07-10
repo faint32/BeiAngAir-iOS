@@ -13,9 +13,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) NSMutableArray *deviceArray;
 @property (strong, nonatomic) ClassAirQualityInfo *airQualityInfoClass;
-@property (strong, nonatomic) NSString *cityCodeStrings;
 
 @end
 

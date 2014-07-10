@@ -285,7 +285,6 @@
                 [_deviceArray removeAllObjects];
                 _deviceArray = array;
                 [self getDeviceInfoList];
-                appDelegate.deviceArray = array;
                 [self.tableView reloadData];
             });
         }
@@ -552,7 +551,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    BLDeviceInfo *info = [appDelegate.deviceArray objectAtIndex:indexPath.row];
+    BLDeviceInfo *info = [_deviceArray objectAtIndex:indexPath.row];
     
     dispatch_async(networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
@@ -605,7 +604,7 @@
 
 - (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
 {
-    BLDeviceInfo *info = [appDelegate.deviceArray objectAtIndex:recognizer.view.tag];
+    BLDeviceInfo *info = [_deviceArray objectAtIndex:recognizer.view.tag];
     BLDeviceInfoEditViewController *vc = [[BLDeviceInfoEditViewController alloc] init];
 	vc.deviceInfo = info;
     [self presentViewController:vc animated:YES completion:nil];

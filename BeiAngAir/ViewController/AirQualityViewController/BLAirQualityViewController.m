@@ -958,7 +958,8 @@
                 appDelegate.airQualityInfoClass.cityName = [[[placemark.addressDictionary objectForKey:@"City"] componentsSeparatedByString:@"市"] objectAtIndex:0];
                 _address.text = appDelegate.airQualityInfoClass.cityName;
                 //城市code
-                appDelegate.airQualityInfoClass.cityCode = [[appDelegate.cityCodeStrings objectFromJSONString] objectForKey:[[appDelegate.airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
+				
+                appDelegate.airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[appDelegate.airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
                 NSLog(@"cityCode = %d",appDelegate.airQualityInfoClass.cityCode.length);
                 //如果名称不相同则一般为英文
                 //取得空气质量
@@ -1004,7 +1005,7 @@
             appDelegate.airQualityInfoClass.cityName = [[[[weatherInfo objectForKey:@"addressComponent"] objectForKey:@"city"] componentsSeparatedByString:@"市"] objectAtIndex:0];
             _address.text = appDelegate.airQualityInfoClass.cityName;
             //城市code
-            appDelegate.airQualityInfoClass.cityCode = [[appDelegate.cityCodeStrings objectFromJSONString] objectForKey:[[appDelegate.airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
+            appDelegate.airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[appDelegate.airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
             if(appDelegate.airQualityInfoClass.cityCode.length > 0)
             {
                 //定时

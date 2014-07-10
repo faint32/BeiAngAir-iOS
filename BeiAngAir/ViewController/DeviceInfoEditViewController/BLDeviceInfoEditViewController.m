@@ -285,22 +285,23 @@
         NSLog(@"[[[responseData objectFromJSONData] = %d",[[[responseData objectFromJSONData] objectForKey:@"code"] intValue]);
         if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0)
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.deviceInfo = deviceInfo;
-                BLModuleInfomation *moduleInfomation = [[BLModuleInfomation alloc] init];
-                moduleInfomation.info = self.deviceInfo;
-                [sqlite insertOrUpdateModuleInfo:moduleInfomation];
-                for (int i=0; i<appDelegate.deviceArray.count; i++)
-                {
-                    BLDeviceInfo *info = [appDelegate.deviceArray objectAtIndex:i];
-                    if (info.mac == self.deviceInfo.mac)
-                    {
-                        [appDelegate.deviceArray replaceObjectAtIndex:i withObject:self.deviceInfo];
-                        break;
-                    }
-                }
-                [self dismissViewControllerAnimated:YES completion:nil];
-            });
+			//TODO: 这里逻辑不太对，不需要把deviceArray存到appDelegate的变量里作为全局变量来使用
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                self.deviceInfo = deviceInfo;
+//                BLModuleInfomation *moduleInfomation = [[BLModuleInfomation alloc] init];
+//                moduleInfomation.info = self.deviceInfo;
+//                [sqlite insertOrUpdateModuleInfo:moduleInfomation];
+//                for (int i=0; i<appDelegate.deviceArray.count; i++)
+//                {
+//                    BLDeviceInfo *info = [appDelegate.deviceArray objectAtIndex:i];
+//                    if (info.mac == self.deviceInfo.mac)
+//                    {
+//                        [appDelegate.deviceArray replaceObjectAtIndex:i withObject:self.deviceInfo];
+//                        break;
+//                    }
+//                }
+//                [self dismissViewControllerAnimated:YES completion:nil];
+//            });
         }
         else
         {

@@ -67,7 +67,6 @@
 
 - (void)initVariable
 {
-    _cityCodeStrings = [NSString citiesCodeString];
     _latitude = 0.0f;
     _longitude = 0.0f;
     _airQualityInfoClass = [[ClassAirQualityInfo alloc] init];
@@ -210,7 +209,7 @@
                 //城市名称
                 _airQualityInfoClass.cityName = [[[placemark.addressDictionary objectForKey:@"City"] componentsSeparatedByString:@"市"] objectAtIndex:0];
                 //城市code
-                _airQualityInfoClass.cityCode = [[_cityCodeStrings objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
+                _airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
                 NSLog(@"cityCode = %d",_airQualityInfoClass.cityCode.length);
                 //如果名称不相同则一般为英文
                 //取得空气质量
@@ -260,7 +259,7 @@
         {
             _airQualityInfoClass.cityName = [[[[weatherInfo objectForKey:@"addressComponent"] objectForKey:@"city"] componentsSeparatedByString:@"市"] objectAtIndex:0];
             //城市code
-            _airQualityInfoClass.cityCode = [[_cityCodeStrings objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
+            _airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
             if(_airQualityInfoClass.cityCode.length > 0)
             {
                 //定时
