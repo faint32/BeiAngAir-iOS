@@ -181,11 +181,8 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-
-#pragma mark -
 #pragma mark - BLLinkLabel Delegate
 - (void)linkLabel:(BLLinkLabel *)label touchesWithTag:(NSInteger)tag
 {

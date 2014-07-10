@@ -24,6 +24,12 @@
 		2FAE51C418F808DE0068893E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE51C318F808DE0068893E /* SystemConfiguration.framework */; };
 		2FAE51CD18F810540068893E /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FAE51CA18F810540068893E /* blueArrow@2x.png */; };
 		2FAE51D418F8145B0068893E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE51D318F8145B0068893E /* CoreText.framework */; };
+		7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C705196E67DE0001561F /* BLAirQualityInfo.m */; };
+		7700C709196E690F0001561F /* BLDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C708196E690F0001561F /* BLDeviceInfo.m */; };
+		7700C70C196E69960001561F /* WeatherInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C70B196E69960001561F /* WeatherInfo.m */; };
+		7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C70E196E69FA0001561F /* BLTimerInfomation.m */; };
+		7700C712196E6A350001561F /* BeiAngSendDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C711196E6A350001561F /* BeiAngSendDataInfo.m */; };
+		7700C715196E6A530001561F /* BeiAngReceivedDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C714196E6A530001561F /* BeiAngReceivedDataInfo.m */; };
 		BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA89102519458F5700C16953 /* BeiAngAir-Info.plist */; };
 		BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE389B1940854A002C97C8 /* BLAboutViewController.m */; };
 		BAAE389F19408651002C97C8 /* BLLinkLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE389E19408651002C97C8 /* BLLinkLabel.m */; };
@@ -231,6 +237,18 @@
 		2FAE51DB18F81D3D0068893E /* BLAirQualityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAirQualityViewController.m; path = AirQualityViewController/BLAirQualityViewController.m; sourceTree = "<group>"; };
 		2FAE51DE18F81E690068893E /* UIImage+Retina4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Retina4.h"; sourceTree = "<group>"; };
 		2FAE51DF18F81E690068893E /* UIImage+Retina4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Retina4.m"; sourceTree = "<group>"; };
+		7700C704196E67DE0001561F /* BLAirQualityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLAirQualityInfo.h; sourceTree = "<group>"; };
+		7700C705196E67DE0001561F /* BLAirQualityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLAirQualityInfo.m; sourceTree = "<group>"; };
+		7700C707196E690F0001561F /* BLDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLDeviceInfo.h; sourceTree = "<group>"; };
+		7700C708196E690F0001561F /* BLDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLDeviceInfo.m; sourceTree = "<group>"; };
+		7700C70A196E69960001561F /* WeatherInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherInfo.h; sourceTree = "<group>"; };
+		7700C70B196E69960001561F /* WeatherInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherInfo.m; sourceTree = "<group>"; };
+		7700C70D196E69FA0001561F /* BLTimerInfomation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTimerInfomation.h; sourceTree = "<group>"; };
+		7700C70E196E69FA0001561F /* BLTimerInfomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTimerInfomation.m; sourceTree = "<group>"; };
+		7700C710196E6A350001561F /* BeiAngSendDataInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeiAngSendDataInfo.h; sourceTree = "<group>"; };
+		7700C711196E6A350001561F /* BeiAngSendDataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeiAngSendDataInfo.m; sourceTree = "<group>"; };
+		7700C713196E6A530001561F /* BeiAngReceivedDataInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeiAngReceivedDataInfo.h; sourceTree = "<group>"; };
+		7700C714196E6A530001561F /* BeiAngReceivedDataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeiAngReceivedDataInfo.m; sourceTree = "<group>"; };
 		BA69793D1949613B000B184F /* BLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNetwork.h; sourceTree = "<group>"; };
 		BA69793E1949613B000B184F /* libBLNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLNetwork.a; sourceTree = "<group>"; };
 		BA8910281945905E00C16953 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/BeiAngAir-Info.plist"; sourceTree = "<group>"; };
@@ -397,10 +415,9 @@
 				2FAE513218F7C18E0068893E /* UtilityFunc.m */,
 				BAAE389D19408651002C97C8 /* BLLinkLabel.h */,
 				BAAE389E19408651002C97C8 /* BLLinkLabel.m */,
-				2FAE51B918F7F5620068893E /* BLModuleInfomation.h */,
-				2FAE51BA18F7F5620068893E /* BLModuleInfomation.m */,
 				2FAE51BC18F7F61C0068893E /* BLFMDBSqlite.h */,
 				2FAE51BD18F7F61C0068893E /* BLFMDBSqlite.m */,
+				7700C703196E67B10001561F /* Models */,
 				2FAE512518F7BDEB0068893E /* Controllers */,
 				2FAE511C18F7BBDA0068893E /* 3rd */,
 				2FAE503118F78C470068893E /* Images.xcassets */,
@@ -633,6 +650,27 @@
 			path = "UIImage+Retina4";
 			sourceTree = "<group>";
 		};
+		7700C703196E67B10001561F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7700C707196E690F0001561F /* BLDeviceInfo.h */,
+				7700C708196E690F0001561F /* BLDeviceInfo.m */,
+				7700C704196E67DE0001561F /* BLAirQualityInfo.h */,
+				7700C705196E67DE0001561F /* BLAirQualityInfo.m */,
+				7700C70A196E69960001561F /* WeatherInfo.h */,
+				7700C70B196E69960001561F /* WeatherInfo.m */,
+				2FAE51B918F7F5620068893E /* BLModuleInfomation.h */,
+				2FAE51BA18F7F5620068893E /* BLModuleInfomation.m */,
+				7700C70D196E69FA0001561F /* BLTimerInfomation.h */,
+				7700C70E196E69FA0001561F /* BLTimerInfomation.m */,
+				7700C710196E6A350001561F /* BeiAngSendDataInfo.h */,
+				7700C711196E6A350001561F /* BeiAngSendDataInfo.m */,
+				7700C713196E6A530001561F /* BeiAngReceivedDataInfo.h */,
+				7700C714196E6A530001561F /* BeiAngReceivedDataInfo.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		BAAE38A0194089EE002C97C8 /* SBJson */ = {
 			isa = PBXGroup;
 			children = (
@@ -859,16 +897,21 @@
 				BAB38994193DA4AD00975805 /* FMDatabasePool.m in Sources */,
 				BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */,
 				BAFA3750194151D3001DB631 /* MMProgressHUDViewController.m in Sources */,
+				7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */,
 				BAB38995193DA4AD00975805 /* FMDatabaseQueue.m in Sources */,
 				BAB38996193DA4AD00975805 /* FMResultSet.m in Sources */,
 				BAFA38251941862A001DB631 /* BLCustomHUD+UIWindow.m in Sources */,
+				7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */,
 				BAFA374F194151D3001DB631 /* MMProgressHUDOverlayView.m in Sources */,
 				BAB38997193DA4AD00975805 /* Reachability.m in Sources */,
 				BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */,
 				BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */,
 				BAFA374B194151D3001DB631 /* MMHud.m in Sources */,
 				BAB38998193DA4AD00975805 /* ASIAuthenticationDialog.m in Sources */,
+				7700C715196E6A530001561F /* BeiAngReceivedDataInfo.m in Sources */,
+				7700C712196E6A350001561F /* BeiAngSendDataInfo.m in Sources */,
 				BAFA3752194151D3001DB631 /* MMRadialProgressView.m in Sources */,
+				7700C70C196E69960001561F /* WeatherInfo.m in Sources */,
 				BAB38999193DA4AD00975805 /* ASIDataCompressor.m in Sources */,
 				BAB3899A193DA4AD00975805 /* ASIDataDecompressor.m in Sources */,
 				BAAE38BF194089EE002C97C8 /* SBJsonStreamParserState.m in Sources */,
@@ -894,6 +937,7 @@
 				BAB389A8193DA4AD00975805 /* ASIS3Bucket.m in Sources */,
 				BAB389A9193DA4AD00975805 /* ASIS3BucketObject.m in Sources */,
 				BAB389AA193DA4AD00975805 /* ASIS3BucketRequest.m in Sources */,
+				7700C709196E690F0001561F /* BLDeviceInfo.m in Sources */,
 				BAB389AB193DA4AD00975805 /* ASIS3ObjectRequest.m in Sources */,
 				BAFA3751194151D3001DB631 /* MMProgressHUDWindow.m in Sources */,
 				BAB389AC193DA4AD00975805 /* ASIS3Request.m in Sources */,

@@ -31,32 +31,6 @@
 #import "MMExampleDrawerVisualStateManager.h"
 #import "UIImage+Retina4.h"
 
-@interface BLAirQualityInfo : NSObject
-
-@property (nonatomic, strong) NSString *mac;
-@property (nonatomic, assign) int hour;
-@property (nonatomic, assign) int minute;
-@property (nonatomic, assign) int sleepState;
-@property (nonatomic, assign) int switchState;
-@property (nonatomic, assign) BOOL isRefresh;
-
-@end
-
-@implementation BLAirQualityInfo
-
-- (void)dealloc
-{
-    [super dealloc];
-    [self setMac:nil];
-    [self setHour:0];
-    [self setMinute:0];
-    [self setSleepState:0];
-    [self setSwitchState:0];
-    [self setIsRefresh:NO];
-}
-
-@end
-
 @interface BLDeviceListViewController () <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate>
 {
     BLAppDelegate *appDelegate;
@@ -533,114 +507,46 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"TclAirDeviceListCell";
-    
-    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-        [cell.contentView setFrame:CGRectMake(0.0f, 0.0f, cell.frame.size.width, 94.0f)];
-        [cell setBackgroundColor:[UIColor whiteColor]];
-    } else {
-        for (UIView *view in [cell.contentView subviews]) {
-            [view removeFromSuperview];
-        }
-        for (UIView *view in [cell.imageView subviews]) {
-            [view removeFromSuperview];
-        }
-        [cell.accessoryView removeFromSuperview];
+		cell.backgroundColor = [UIColor whiteColor];
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
+	
     //设备信息
     BLDeviceInfo *info = [_deviceArray objectAtIndex:indexPath.row];
-    @autoreleasepool {
-        NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString * documentsDirectory = [paths objectAtIndex:0];
-        NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", info.mac]];
-        UIImage *image = [UIImage imageWithContentsOfFile:path];
-        CGRect viewFrame = cell.imageView.frame;
-        viewFrame.origin.x = 10.0f;
-        viewFrame.origin.y = (94.0f - 62.5) * 0.5f;
-        viewFrame.size = CGSizeMake(62.5, 62.5);
-        UIButton *button = [[UIButton alloc] initWithFrame:viewFrame];
-        [button setBackgroundColor:[UIColor clearColor]];
-        [button setTag:indexPath.row];
-        [button.layer setMasksToBounds:YES];
-        [button.layer setCornerRadius:button.frame.size.width / 2.f];
-        [button setImage:image forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(editButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:button];
-    }
-    UIImage *image = [UIImage imageNamed:@"right@2x.png"];
-    CGRect viewFrame = CGRectZero;
-    viewFrame.origin.x = cell.contentView.frame.size.width - 36.f;
-    viewFrame.origin.y = (cell.contentView.frame.size.height - 36.f) * 0.5f;
-    viewFrame.size = CGSizeMake(36.f, 36.f);
-    UIImageView *infoImageView = [[UIImageView alloc] initWithFrame:viewFrame];
-    [infoImageView setBackgroundColor:[UIColor clearColor]];
-    [infoImageView setImage:image];
-    [cell.contentView addSubview:infoImageView];
-    
-    viewFrame = CGRectZero;
-    viewFrame.origin.x = 72.5 + 10.0f;
-    viewFrame.origin.y = 20.0f;
-    viewFrame.size = CGSizeMake(220, 22.0f);
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    [textLabel setBackgroundColor:[UIColor clearColor]];
-    [textLabel setText:info.name];
-    [textLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    [textLabel setTextColor:RGB(0x33, 0x33, 0x33)];
-    [cell.contentView addSubview:textLabel];
+	NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString * documentsDirectory = [paths objectAtIndex:0];
+	NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", info.mac]];
+	UIImage *image = [UIImage imageWithContentsOfFile:path];
+	cell.imageView.image = image;
+	cell.imageView.userInteractionEnabled = YES;
+	cell.imageView.tag = indexPath.row;
+	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editDeviceAvatar:)];
+	[cell.imageView addGestureRecognizer:tapGestureRecognizer];
+	
+	cell.textLabel.text = info.name;
     //设备的信息
     @synchronized(_statusArray)
     {
-    for (int i=0; i<_statusArray.count; i++)
-    {
-        BLAirQualityInfo *stInfo = [_statusArray objectAtIndex:i];
-        if ([stInfo.mac isEqualToString:info.mac] && stInfo.isRefresh)
-        {
-            viewFrame.origin.y += viewFrame.size.height + 1.0f;
-            viewFrame.size.height = 15.f;
-            UILabel *label = [[UILabel alloc] initWithFrame:viewFrame];
-            viewFrame.origin.y += viewFrame.size.height + 1.0f;
-            UILabel *labelRunTime = [[UILabel alloc] initWithFrame:viewFrame];
-            [label setBackgroundColor:[UIColor clearColor]];
-            [label setLineBreakMode:NSLineBreakByWordWrapping];
-            [label setFont:[UIFont systemFontOfSize:11.0f]];
-            [labelRunTime setBackgroundColor:[UIColor clearColor]];
-            [labelRunTime setLineBreakMode:NSLineBreakByWordWrapping];
-            [labelRunTime setFont:[UIFont systemFontOfSize:11.0f]];
-            if (stInfo.switchState == 1)
-            {
-                if(stInfo.sleepState == 1)
-                    [label setText:@"睡眠开"];
-                else
-                    [label setText:@"睡眠关"];
-            }
-            else
-            {
-                [label setText:@"设备已关闭"];
-            }
-            [labelRunTime setText:[NSString stringWithFormat:@"设备已运行%d小时%d分钟 ",stInfo.hour,stInfo.minute]];
-            viewFrame = [label textRectForBounds:viewFrame limitedToNumberOfLines:1];
-            viewFrame.origin.x = textLabel.frame.origin.x;
-            viewFrame.origin.y = label.frame.origin.y;
-            viewFrame.size.width = 220;
-            [label setFrame:viewFrame];
-            
-            viewFrame = [labelRunTime textRectForBounds:viewFrame limitedToNumberOfLines:1];
-            viewFrame.origin.x = textLabel.frame.origin.x;
-            viewFrame.origin.y = labelRunTime.frame.origin.y;
-            viewFrame.size.width = 220;
-            [labelRunTime setFrame:viewFrame];
-            
-            [cell.contentView addSubview:label];
-            [cell.contentView addSubview:labelRunTime];
-        }
-        }
+		for (int i=0; i<_statusArray.count; i++) {
+			BLAirQualityInfo *stInfo = [_statusArray objectAtIndex:i];
+			if ([stInfo.mac isEqualToString:info.mac] && stInfo.isRefresh) {
+				NSString *status = NSLocalizedString(@"设备已关闭", nil);
+				if (stInfo.switchState == 1) {
+					status = stInfo.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
+				}
+				
+				NSString *runTime = [NSString stringWithFormat:@"设备已运行%d小时%d分钟", stInfo.hour, stInfo.minute];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%@\n%@", status, runTime];
+			}
+		}
     }
     
     return cell;
 }
 
-#pragma mark -
 #pragma mark - UITableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -730,10 +636,9 @@
 }
 
 
-- (void)editButtonClicked:(UIButton *)button
+- (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
 {
-    //设备编辑页面
-    BLDeviceInfo *info = [appDelegate.deviceArray objectAtIndex:button.tag];
+    BLDeviceInfo *info = [appDelegate.deviceArray objectAtIndex:recognizer.view.tag];
     appDelegate.deviceInfo = info;
     BLDeviceInfoEditViewController *vc = [[BLDeviceInfoEditViewController alloc] init];
     [self presentViewController:vc animated:YES completion:nil];

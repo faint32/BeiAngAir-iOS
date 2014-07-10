@@ -13,4 +13,13 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+
+//Models
+#import	"BLAirQualityInfo.h"
+#import "BLDeviceInfo.h"
+#import	"WeatherInfo.h"
+#import	"BLTimerInfomation.h"
+#import	"BeiAngSendDataInfo.h"
+#import	"BeiAngReceivedDataInfo.h"
+
 #endif
