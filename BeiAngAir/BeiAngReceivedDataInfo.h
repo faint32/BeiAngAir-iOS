@@ -41,4 +41,6 @@
 //湿度: 不带符号数，0~100(0x39:57%)
 @property (nonatomic, assign) uint8_t humidity;
 
+- (instancetype)initWithData:(NSArray *)data;
+
 @end
