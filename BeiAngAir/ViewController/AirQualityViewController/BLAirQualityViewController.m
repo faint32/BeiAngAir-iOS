@@ -662,32 +662,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //顶部视图
-    [self setTopView:nil];
-    //温度
-    [self setWeatherLabel:nil];
-    //点击风速弹出的视图
-    [self setBackView:nil];
-    //空气质量指数
-    [self setAirQualityLabel:nil];
-    //开关按钮
-    [self setSwitchButton:nil];
-    //手动或者自动按钮
-    [self setHandOrAutoButton:nil];
-    //手动自动标题
-    [self setHandOrAutoLabel:nil];
-    //睡眠开关标题
-    [self setSleepLabel:nil];
-    //儿童锁开关标题
-    [self setChildLockLabel:nil];
-    [self setAddress:nil];
-    [self setLeftTimerLabel:nil];
-    [self setLocManager:nil];
-    [self setGeocoder:nil];
-    [_refreshInfoTimer invalidate];
-    _refreshInfoTimer = nil;
-    [_refreshLocationInfo invalidate];
-    _refreshLocationInfo = nil;
     dispatch_release(networkQueue);
     dispatch_release(httpQueue);
 }
