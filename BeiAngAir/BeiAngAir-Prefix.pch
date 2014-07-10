@@ -23,4 +23,7 @@
 #import	"BeiAngReceivedDataInfo.h"
 #import "ClassAirQualityInfo.h"
 
+//Categories
+#import	"NSString+BeiAng.h"
+
 #endif

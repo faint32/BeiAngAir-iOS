@@ -31,6 +31,7 @@
 		7700C712196E6A350001561F /* BeiAngSendDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C711196E6A350001561F /* BeiAngSendDataInfo.m */; };
 		7700C715196E6A530001561F /* BeiAngReceivedDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C714196E6A530001561F /* BeiAngReceivedDataInfo.m */; };
 		7700C718196E85690001561F /* ClassAirQualityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C717196E85690001561F /* ClassAirQualityInfo.m */; };
+		7700C720196E87F90001561F /* NSString+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C71F196E87F90001561F /* NSString+BeiAng.m */; };
 		BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA89102519458F5700C16953 /* BeiAngAir-Info.plist */; };
 		BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE389B1940854A002C97C8 /* BLAboutViewController.m */; };
 		BAAE389F19408651002C97C8 /* BLLinkLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE389E19408651002C97C8 /* BLLinkLabel.m */; };
@@ -252,6 +253,8 @@
 		7700C714196E6A530001561F /* BeiAngReceivedDataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeiAngReceivedDataInfo.m; sourceTree = "<group>"; };
 		7700C716196E85690001561F /* ClassAirQualityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassAirQualityInfo.h; sourceTree = "<group>"; };
 		7700C717196E85690001561F /* ClassAirQualityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassAirQualityInfo.m; sourceTree = "<group>"; };
+		7700C71E196E87F90001561F /* NSString+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BeiAng.h"; sourceTree = "<group>"; };
+		7700C71F196E87F90001561F /* NSString+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+BeiAng.m"; sourceTree = "<group>"; };
 		BA69793D1949613B000B184F /* BLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNetwork.h; sourceTree = "<group>"; };
 		BA69793E1949613B000B184F /* libBLNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLNetwork.a; sourceTree = "<group>"; };
 		BA8910281945905E00C16953 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/BeiAngAir-Info.plist"; sourceTree = "<group>"; };
@@ -420,6 +423,7 @@
 				BAAE389E19408651002C97C8 /* BLLinkLabel.m */,
 				2FAE51BC18F7F61C0068893E /* BLFMDBSqlite.h */,
 				2FAE51BD18F7F61C0068893E /* BLFMDBSqlite.m */,
+				7700C719196E86C90001561F /* Categories */,
 				7700C703196E67B10001561F /* Models */,
 				2FAE512518F7BDEB0068893E /* Controllers */,
 				2FAE511C18F7BBDA0068893E /* 3rd */,
@@ -674,6 +678,15 @@
 				7700C717196E85690001561F /* ClassAirQualityInfo.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		7700C719196E86C90001561F /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				7700C71E196E87F90001561F /* NSString+BeiAng.h */,
+				7700C71F196E87F90001561F /* NSString+BeiAng.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		BAAE38A0194089EE002C97C8 /* SBJson */ = {
@@ -954,6 +967,7 @@
 				BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */,
 				BAB389B0193DA4AD00975805 /* UtilityFunc.m in Sources */,
 				BAAE38BE194089EE002C97C8 /* SBJsonStreamParserAdapter.m in Sources */,
+				7700C720196E87F90001561F /* NSString+BeiAng.m in Sources */,
 				BAFA374D194151D3001DB631 /* MMProgressHUD+Class.m in Sources */,
 				BAB389B1193DA4AD00975805 /* main.m in Sources */,
 			);
