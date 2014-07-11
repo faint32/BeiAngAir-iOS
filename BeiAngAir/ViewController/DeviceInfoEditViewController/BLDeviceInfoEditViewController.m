@@ -203,16 +203,12 @@
     [macView addSubview:macValueLabel];
     
     //确定按钮
-	image = [UIImage imageNamed:@"btn_normal"];
-//    viewFrame = numberView.frame;
     viewFrame.origin.x = (self.view.frame.size.width - macValueLabel.frame.size.width) / 2.f;
-    viewFrame.origin.y = self.view.frame.size.height - image.size.height - 20;
-    viewFrame.size = image.size;
-    viewFrame.size.width = macValueLabel.frame.size.width;
+    viewFrame.origin.y = CGRectGetMaxY(macValueLabel.frame) + 10;
+    viewFrame.size.width = self.view.bounds.size.width;
+	viewFrame.size.height = 40;
     UIButton *okButton = [[UIButton alloc] initWithFrame:viewFrame];
-    [okButton setBackgroundColor:[UIColor clearColor]];
-    [okButton setImage:image forState:UIControlStateNormal];
-    [okButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, -image.size.width, 0.0f, 0.0f)];
+    [okButton setBackgroundColor:[UIColor themeBlue]];
     [okButton setTitle:NSLocalizedString(@"DeviceInfoEditViewControllerOKButton", nil) forState:UIControlStateNormal];
     [okButton setTitleColor:RGB(0xff, 0xff, 0xff) forState:UIControlStateNormal];
     [okButton addTarget:self action:@selector(okButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -258,21 +254,11 @@
 - (void)okButtonClicked:(UIButton *)button
 {
     dispatch_async(networkQueue, ^{
-        BLDeviceInfo *deviceInfo = [[BLDeviceInfo alloc] init];
-        deviceInfo = self.deviceInfo;
-        
-        NSString *string = [_nameTextField text];
-//        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-        [deviceInfo setName:_nameTextField.text];
-        [deviceInfo setLock:_lockButton.isSelected];
-        
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:[NSNumber numberWithInt:13] forKey:@"api_id"];
-        [dic setObject:@"device_update" forKey:@"command"];
-        [dic setObject:self.deviceInfo.mac forKey:@"mac"];
-        [dic setObject:string forKey:@"name"];
-        [dic setObject:[NSNumber numberWithInt:deviceInfo.lock] forKey:@"lock"];
-        NSData *requestData = [dic JSONData];
+        NSString *name = [_nameTextField text];
+        [self.deviceInfo setName:name];
+        [self.deviceInfo setLock:_lockButton.isSelected];
+		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:self.deviceInfo.mac name:name lock:@(self.deviceInfo.lock)];
+        NSData *requestData = [dictionary JSONData];
         NSData *responseData = [networkAPI requestDispatch:requestData];
         NSLog(@"[[[responseData objectFromJSONData] = %d",[[[responseData objectFromJSONData] objectForKey:@"code"] intValue]);
         if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0)

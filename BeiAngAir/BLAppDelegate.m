@@ -81,16 +81,10 @@
     countAirQuality = 0;
     
     dispatch_async(networkQueue, ^{
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:[NSNumber numberWithInt:1] forKey:@"api_id"];
-        [dic setObject:@"network_init" forKey:@"command"];
-        //#warning Please input your license here.
-        [dic setObject:@"+Y3Y41U+V0tMiadtlZIbLmbFAUyNEQnpQaUHLqDJz7Xlcfks6IXYFkKT7/yKy4e8RCK6EtXcIz9NIfzDPgxK5be3RdBxHkaKwzhvA3ew4jM/D/Md2Bk=" forKey:@"license"];
-        //#warning Please input your type_license.
-        [dic setObject:@"B2w12IIQC+pidbD8IOavKTfjpeGbMVRubwNdGEbIn5j43nHKuwgx+/UoASwbcEEM" forKey:@"type_license"];
-        NSData *sendData = [dic JSONData];
-        NSLog(@"%@", sendData);
-        /*Send data.*/
+		NSString *license = @"+Y3Y41U+V0tMiadtlZIbLmbFAUyNEQnpQaUHLqDJz7Xlcfks6IXYFkKT7/yKy4e8RCK6EtXcIz9NIfzDPgxK5be3RdBxHkaKwzhvA3ew4jM/D/Md2Bk=";
+		NSString *typeLicense = @"B2w12IIQC+pidbD8IOavKTfjpeGbMVRubwNdGEbIn5j43nHKuwgx+/UoASwbcEEM";
+		NSDictionary *dictionary = [NSDictionary dictionaryNetworkInitWithLicense:license typeLicense:typeLicense];
+        NSData *sendData = [dictionary JSONData];
         NSData *response = [_network requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         NSString *msg = [[response objectFromJSONData] objectForKey:@"msg"];

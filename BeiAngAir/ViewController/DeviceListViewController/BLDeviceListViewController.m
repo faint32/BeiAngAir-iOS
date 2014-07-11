@@ -9,7 +9,6 @@
 #import "BLDeviceListViewController.h"
 #import "GlobalDefine.h"
 #import "BLSmartConfigViewController.h"
-#import "BLAppDelegate.h"
 #import "BLNetwork.h"
 #import "EGORefreshTableHeaderView.h"
 #import "UILabel+Attribute.h"
@@ -30,7 +29,6 @@
 
 @interface BLDeviceListViewController () <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate>
 {
-    BLAppDelegate *appDelegate;
     dispatch_queue_t networkQueue;
     EGORefreshTableHeaderView *_refreshTableView;  
     BOOL _reloading;
@@ -38,7 +36,6 @@
 
 @property (nonatomic, strong) BLNetwork *networkAPI;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSTimer *refreshTimer;
 @property (nonatomic, strong) NSMutableArray *statusArray;
 @property (nonatomic, strong) NSArray *deviceArray;
 
@@ -63,8 +60,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    appDelegate = (BLAppDelegate *)[[UIApplication sharedApplication] delegate];
+	
     _networkAPI = [[BLNetwork alloc] init];
 //    _beiAngAirNetwork = [BeiAngNetworkUnit sharedNetworkAPI];
     networkQueue = dispatch_queue_create("BLDeviceListViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
@@ -151,7 +147,6 @@
     [_tableView setShowsHorizontalScrollIndicator:NO];
     [_tableView.layer setBorderColor:RGBA(0x00, 0x00, 0x00, 0.3f).CGColor];
     [_tableView.layer setBorderWidth:0.5f];
-    [self setExtraCellLineHidden:_tableView];
     [self.view addSubview:_tableView];
     
     if (_refreshTableView == nil) {  
@@ -167,38 +162,29 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-    _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(refreshDeviceList) userInfo:nil repeats:YES];
-    [_refreshTimer fire];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [_refreshTimer invalidate];
-    _refreshTimer = nil;
+	
+	//TODO: 先去掉定时刷新
+    //_refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(refreshDeviceList) userInfo:nil repeats:YES];
+    //[_refreshTimer fire];
 }
 
 - (void)addNewDevice
 {
-    BLSmartConfigViewController *controller = [[BLSmartConfigViewController alloc] initWithNibName:nil bundle:nil];
-    [self presentViewController:controller animated:YES completion:nil];
+	BLSmartConfigViewController *controller = [[BLSmartConfigViewController alloc] initWithNibName:nil bundle:nil];
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)refreshDeviceList
 {
     dispatch_async(networkQueue, ^{
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:[NSNumber numberWithInt:11] forKey:@"api_id"];
-        [dic setObject:@"probe_list" forKey:@"command"];
-        NSData *sendData = [dic JSONData];
-        
-        /*Send data*/
+		NSDictionary *dictionary = [NSDictionary dictionaryProbeList];
+        NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0)
@@ -276,7 +262,6 @@
             }
             /*Refresh tableView*/
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_deviceArray removeAllObjects];
                 _deviceArray = array;
                 [self getDeviceInfoList];
                 [self.tableView reloadData];
@@ -289,27 +274,19 @@
 - (void)getDeviceInfoList
 {
     int i;
-    @synchronized(_statusArray)
-    {
-        for (i=0; i<_statusArray.count; i++)
-        {
+    @synchronized(_statusArray) {
+        for (i=0; i<_statusArray.count; i++) {
             BLAirQualityInfo *stInfo = [_statusArray objectAtIndex:i];
-            if (!stInfo.isRefresh)
-            {
-                NSString *state = @"";
-                NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-                [dic setObject:[NSNumber numberWithInt:16] forKey:@"api_id"];
-                [dic setObject:@"device_state" forKey:@"command"];
-                [dic setObject:stInfo.mac forKey:@"mac"];
-                NSData *requestData = [dic JSONData];
+            if (!stInfo.isRefresh) {
+				NSDictionary *dictionary = [NSDictionary dictionaryDeviceStateWithMAC:stInfo.mac];
+                NSData *requestData = [dictionary JSONData];
                 NSData *responseData = [_networkAPI requestDispatch:requestData];
-                if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0)
-                {
+				NSString *state = @"";
+                if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
                     state = [[responseData objectFromJSONData] objectForKey:@"status"];
                 }
                 //设备不在线
-                if ([state isEqualToString:@"OFFLINE"] || [state isEqualToString:@"NOT_INIT"])
-                {
+                if ([state isEqualToString:@"OFFLINE"] || [state isEqualToString:@"NOT_INIT"]) {
                     stInfo.hour = 0;
                     stInfo.minute = 0;
                     [stInfo setIsRefresh:NO];
@@ -317,40 +294,15 @@
                     [stInfo setSwitchState:0];
                     [_statusArray replaceObjectAtIndex:i withObject:stInfo];
                     [_tableView reloadData];
-                }
-                else if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"])
-                {
+                } else if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
                     dispatch_async(networkQueue, ^{
                         //数据透传
-                        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-                        [dic setObject:[NSNumber numberWithInt:9000] forKey:@"api_id"];
-                        [dic setObject:@"passthrough" forKey:@"command"];
-                        [dic setObject:stInfo.mac forKey:@"mac"];
-                        [dic setObject:@"bytes" forKey:@"format"];
-                        
-                        NSMutableArray *dataArray = [[NSMutableArray alloc ]init];
-                        for (int i = 0; i <= 24; i++)
-                        {
-                            if( i == 0)
-                                [dataArray addObject:[NSNumber numberWithInt:0xfe]];
-                            else if( i == 1)
-                                [dataArray addObject:[NSNumber numberWithInt:0x45]];
-                            else if( i == 23)
-                                [dataArray addObject:[NSNumber numberWithInt:0x00]];
-                            else if( i == 24)
-                                [dataArray addObject:[NSNumber numberWithInt:0xaa]];
-                            else
-                                [dataArray addObject:[NSNumber numberWithInt:0x00]];
-                        }
-                        [dic setObject:dataArray forKey:@"data"];
-                        
-                        NSData *sendData = [dic JSONData];
+						NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:stInfo.mac];
+                        NSData *sendData = [dictionary JSONData];
                         NSData *response = [_networkAPI requestDispatch:sendData];
                         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-                        if (code == 0)
-                        {
+                        if (code == 0) {
                             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-                            
                             //判断数据是否相等
                             if(stInfo.sleepState != [array[7] intValue] || stInfo.switchState != [array[4] intValue] || stInfo.hour != [array[9] intValue] || stInfo.minute != [array[10] intValue])
                             {
@@ -374,15 +326,11 @@
 
 - (void)getNewModuleInfo:(BLDeviceInfo *)info
 {
-	NSString *imagePath = [NSString deviceAvatarPathWithMAC:info.mac];
-    UIImage *image;
-    long infoID;
-    
     if (![info.type isEqualToString:[NSString stringWithFormat:@"%d",BROADLINK_BeiAngAir]])
         return;
-	
-    image = [UIImage imageNamed:@"device_icon"];
-    [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
+	NSString *imagePath = [NSString deviceAvatarPathWithMAC:info.mac];
+	UIImage *image = [UIImage imageNamed:@"device_icon"];
+	[UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
 	
 //    infoID = [sqlite getMaxInfoID] + 1;
 //	BLModuleInfomation *moduleInfo;
@@ -399,52 +347,13 @@
 - (void)addDeviceInfo:(BLDeviceInfo *)info
 {
     dispatch_async(networkQueue, ^{
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        
-        [dic setObject:[NSNumber numberWithInt:12] forKey:@"api_id"];
-        [dic setObject:@"device_add" forKey:@"command"];
-        [dic setObject:info.mac forKey:@"mac"];
-        [dic setObject:info.name forKey:@"name"];
-        [dic setObject:info.type forKey:@"type"];
-        [dic setObject:[NSNumber numberWithInt:info.lock] forKey:@"lock"];
-        [dic setObject:[NSNumber numberWithUnsignedInt:info.password] forKey:@"password"];
-        [dic setObject:[NSNumber numberWithInt:info.terminal_id] forKey:@"id"];
-        [dic setObject:[NSNumber numberWithInt:info.sub_device] forKey:@"subdevice"];
-        [dic setObject:info.key forKey:@"key"];
-        
-        NSData *sendData = [dic JSONData];
-        NSLog(@"%@", sendData);
-        /*Send data*/
+		NSDictionary *dictionary = [NSDictionary dictionaryDeviceAddWithMAC:info.mac name:info.name type:info.type lock:@(info.lock) password:@(info.password) terminalID:@(info.terminal_id) subDevice:@(info.sub_device) key:info.key];
+        NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
-        if ([[[response objectFromJSONData] objectForKey:@"code"] intValue] == 0)
-        {
+        if ([[[response objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
             NSLog(@"Add device:%@ success", info.mac);
         }
     });
-}
-
-/*该方法仅为了解决UITableView多余的分割线*/
-- (void)setExtraCellLineHidden:(UITableView *)tableView
-{
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
-    [tableView setTableHeaderView:view];
-}
-
-- (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size
-{    
-    // 创建一个bitmap的context    
-    // 并把它设置成为当前正在使用的context    
-    UIGraphicsBeginImageContext(size);    
-    // 绘制改变大小的图片    
-    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];    
-    // 从当前context中创建一个改变大小后的图片    
-    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();    
-    // 使当前的context出堆栈    
-    UIGraphicsEndImageContext();    
-    // 返回新的改变大小后的图片    
-    return scaledImage;    
 }
 
 #pragma mark - UITableView Datasource Delegate
@@ -460,7 +369,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 94.0f;
+    return 80.0f;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -474,18 +383,14 @@
     {
         dispatch_async(networkQueue, ^{
             BLDeviceInfo *info = [_deviceArray objectAtIndex:indexPath.row];
-            NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-            
-            [dic setObject:[NSNumber numberWithInt:14] forKey:@"api_id"];
-            [dic setObject:@"device_delete" forKey:@"command"];
-            [dic setObject:info.mac forKey:@"mac"];
-            NSData *sendData = [dic JSONData];
-            /*Send data.*/
+			NSDictionary *dictionary = [NSDictionary dictionaryDeviceDeleteWithMAC:info.mac];
+            NSData *sendData = [dictionary JSONData];
             NSData *response = [_networkAPI requestDispatch:sendData];
+			NSMutableArray *willRemove = [NSMutableArray arrayWithArray:_deviceArray];
             int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-            if (code == 0)
-            {
-                [_deviceArray removeObjectAtIndex:indexPath.row];
+            if (code == 0) {
+				[willRemove removeObjectAtIndex:indexPath.row];
+				_deviceArray = [NSArray arrayWithArray:willRemove];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [tableView reloadData];
                 });
@@ -545,30 +450,8 @@
     dispatch_async(networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
         //数据透传
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:[NSNumber numberWithInt:9000] forKey:@"api_id"];
-        [dic setObject:@"passthrough" forKey:@"command"];
-        [dic setObject:info.mac forKey:@"mac"];
-        [dic setObject:@"bytes" forKey:@"format"];
-        
-        NSMutableArray *dataArray = [[NSMutableArray alloc ]init];
-        for (int i = 0; i <= 24; i++)
-        {
-            if( i == 0)
-                [dataArray addObject:[NSNumber numberWithInt:0xfe]];
-            else if( i == 1)
-                [dataArray addObject:[NSNumber numberWithInt:0x45]];
-            else if( i == 23)
-                [dataArray addObject:[NSNumber numberWithInt:0x00]];
-            else if( i == 24)
-                [dataArray addObject:[NSNumber numberWithInt:0xaa]];
-            else
-                [dataArray addObject:[NSNumber numberWithInt:0x00]];
-        }
-        [dic setObject:dataArray forKey:@"data"];
-        
-        NSData *sendData = [dic JSONData];
-        NSLog(@"%@", [dic JSONString]);
+		NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:info.mac];
+        NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0) {

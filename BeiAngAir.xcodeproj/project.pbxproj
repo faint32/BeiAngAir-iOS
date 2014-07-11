@@ -35,6 +35,7 @@
 		771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07EA196F897600B41955 /* UIImage+BeiAng.m */; };
 		771F07EE196F975300B41955 /* UIColor+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07ED196F975300B41955 /* UIColor+BeiAng.m */; };
 		771F07F5196FABCF00B41955 /* WifiInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F4196FABCF00B41955 /* WifiInfo.m */; };
+		771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */; };
 		BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA89102519458F5700C16953 /* BeiAngAir-Info.plist */; };
 		BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE389B1940854A002C97C8 /* BLAboutViewController.m */; };
 		BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A2194089EE002C97C8 /* NSObject+SBJson.m */; };
@@ -235,6 +236,8 @@
 		771F07ED196F975300B41955 /* UIColor+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BeiAng.m"; sourceTree = "<group>"; };
 		771F07F3196FABCF00B41955 /* WifiInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WifiInfo.h; sourceTree = "<group>"; };
 		771F07F4196FABCF00B41955 /* WifiInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WifiInfo.m; sourceTree = "<group>"; };
+		771F07F6196FCFC800B41955 /* NSDictionary+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+BeiAng.h"; sourceTree = "<group>"; };
+		771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+BeiAng.m"; sourceTree = "<group>"; };
 		BA69793D1949613B000B184F /* BLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNetwork.h; sourceTree = "<group>"; };
 		BA69793E1949613B000B184F /* libBLNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLNetwork.a; sourceTree = "<group>"; };
 		BA8910281945905E00C16953 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/BeiAngAir-Info.plist"; sourceTree = "<group>"; };
@@ -628,6 +631,8 @@
 		7700C719196E86C90001561F /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				771F07F6196FCFC800B41955 /* NSDictionary+BeiAng.h */,
+				771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */,
 				7700C71E196E87F90001561F /* NSString+BeiAng.h */,
 				7700C71F196E87F90001561F /* NSString+BeiAng.m */,
 				771F07E9196F897600B41955 /* UIImage+BeiAng.h */,
@@ -840,6 +845,7 @@
 				BAAE38C1194089EE002C97C8 /* SBJsonStreamWriterAccumulator.m in Sources */,
 				BAAE38BB194089EE002C97C8 /* SBJsonParser.m in Sources */,
 				BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */,
+				771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */,
 				BAFA3750194151D3001DB631 /* MMProgressHUDViewController.m in Sources */,
 				7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */,
 				7700C718196E85690001561F /* ClassAirQualityInfo.m in Sources */,

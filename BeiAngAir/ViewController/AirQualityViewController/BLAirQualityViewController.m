@@ -795,41 +795,8 @@
 //发送数据
 -(NSData *)sendDataCommon:(BeiAngSendDataInfo *)sendInfo
 {
-    //数据透传
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:[NSNumber numberWithInt:9000] forKey:@"api_id"];
-    [dic setObject:@"passthrough" forKey:@"command"];
-    [dic setObject:self.deviceInfo.mac forKey:@"mac"];
-    [dic setObject:@"bytes" forKey:@"format"];
-    
-    NSMutableArray *dataArray = [[NSMutableArray alloc ]init];
-    for (int i = 0; i <= 24; i++)
-    {
-        if( i == 0)
-            [dataArray addObject:[NSNumber numberWithInt:0xfe]];
-        else if( i == 1)
-            [dataArray addObject:[NSNumber numberWithInt:0x41]];
-        else if( i == 4)
-            [dataArray addObject:[NSNumber numberWithInt:sendInfo.switchStatus]];
-        else if( i == 5)
-            [dataArray addObject:[NSNumber numberWithInt:sendInfo.autoOrHand]];
-        else if( i == 6)
-            [dataArray addObject:[NSNumber numberWithInt:sendInfo.gearState]];
-        else if( i == 7)
-            [dataArray addObject:[NSNumber numberWithInt:sendInfo.sleepState]];
-        else if( i == 8)
-            [dataArray addObject:[NSNumber numberWithInt:sendInfo.childLockState]];
-        else if( i == 23)
-            [dataArray addObject:[NSNumber numberWithInt:0x00]];
-        else if( i == 24)
-            [dataArray addObject:[NSNumber numberWithInt:0xaa]];
-        else
-            [dataArray addObject:[NSNumber numberWithInt:0x00]];
-    }
-    [dic setObject:dataArray forKey:@"data"];
-    
-    NSData *sendData = [dic JSONData];
-    NSLog(@"%@", [dic JSONString]);
+	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.deviceInfo.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
+    NSData *sendData = [dictionary JSONData];
     NSData *response = [networkAPI requestDispatch:sendData];
     return response;
 }

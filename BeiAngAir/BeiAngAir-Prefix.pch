@@ -25,6 +25,7 @@
 #import "WifiInfo.h"
 
 //Categories
+#import "NSDictionary+BeiAng.h"
 #import	"NSString+BeiAng.h"
 #import	"UIImage+BeiAng.h"
 #import "UIColor+BeiAng.h"

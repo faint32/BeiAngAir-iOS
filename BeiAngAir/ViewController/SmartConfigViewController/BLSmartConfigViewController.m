@@ -14,15 +14,10 @@
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 @interface BLSmartConfigViewController () <UITextFieldDelegate,UIAlertViewDelegate>
-{
-    BLNetwork *configAPI;
-}
 
-@property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UITextField *ssidTextField;
 @property (nonatomic, strong) UITextField *passwordTextField;
-@property (nonatomic, strong) UIView *waitingView;
-@property (nonatomic, strong) UIButton *configButton;
+@property (nonatomic, strong) BLNetwork *configAPI;
 
 @end
 
@@ -32,6 +27,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+		self.title = NSLocalizedString(@"SmartConfigViewControllerTitle", nil);
+		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
     }
     return self;
 }
@@ -39,57 +36,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	self.view.backgroundColor = [UIColor whiteColor];
+    _configAPI = [[BLNetwork alloc] init];
 	
-    configAPI = [[BLNetwork alloc] init];
-    
-    [self.view setBackgroundColor:RGB(246.0f, 246.0f, 246.0f)];
-    
-    CGRect viewFrame = CGRectZero;
-    viewFrame.origin.x = 0.0f;
-    viewFrame.origin.y = 0.0f;
-    viewFrame.size.width = self.view.frame.size.width;
-    viewFrame.size.height = 44.0f + ((IsiOS7Later) ? 20.0f : 0.0f);
-    _headerView = [[UIView alloc] initWithFrame:viewFrame];
-    [_headerView setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:_headerView];
-    
-    viewFrame = _headerView.frame;
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    [titleLabel setBackgroundColor:[UIColor clearColor]];
-    [titleLabel setFont:[UIFont systemFontOfSize:20.0f]];
-    [titleLabel setTextColor:RGB(0x13, 0xb3, 0x5c)];
-    [titleLabel setText:NSLocalizedString(@"SmartConfigViewControllerTitle", nil)];
-    viewFrame = [titleLabel textRectForBounds:viewFrame limitedToNumberOfLines:1];
-    viewFrame.origin.x = (_headerView.frame.size.width - viewFrame.size.width) * 0.5f;
-    viewFrame.origin.y = (44.0f - viewFrame.size.height) * 0.5f + ((IsiOS7Later) ? 20.0f : 0.0f);
-    [titleLabel setFrame:viewFrame];
-    [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [_headerView addSubview:titleLabel];
+	CGRect viewFrame = CGRectZero;
+	viewFrame.origin.y = 80;
+	viewFrame.size.width = self.view.bounds.size.width;
+	viewFrame.size.height = 40;
 	
-	
-	//TODO: 
-//	
-//	
-//	
-//    UIImage *image = [UIImage imageNamed:@"left"];
-//    viewFrame = CGRectZero;
-//    viewFrame.origin.x = 10.0f;
-//    viewFrame.size = image.size;
-//    viewFrame.origin.y = ((IsiOS7Later) ? 20.0f : 0.0f) + (44.0f - image.size.height) * 0.5f;
-//    UIButton *backButton = [[UIButton alloc] initWithFrame:viewFrame];
-//    [backButton setBackgroundColor:[UIColor clearColor]];
-//    [backButton setImage:image forState:UIControlStateNormal];
-//    [backButton addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-//    [_headerView addSubview:backButton];
-	
-    viewFrame = _headerView.frame;
-    viewFrame.origin.y += viewFrame.size.height + 50.0f;
-    viewFrame.origin.x = 30.0f;
     UILabel *addLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    [addLabel setBackgroundColor:[UIColor clearColor]];
     [addLabel setTextColor:[UIColor grayColor]];
     [addLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    [addLabel setTextAlignment:NSTextAlignmentLeft];
+    [addLabel setTextAlignment:NSTextAlignmentCenter];
     [addLabel setText:NSLocalizedString(@"SmartConfigViewControllerAddLabelText", nil)];
     [self.view addSubview:addLabel];
 
@@ -143,7 +101,7 @@
     [_passwordTextField setSecureTextEntry:YES];
     [_passwordTextField becomeFirstResponder];
     //passwordText背景颜色
-    _passwordTextField.background=image;
+    _passwordTextField.background = image;
 	
 	WifiInfo *wifiInfo = [WifiInfo wifiInfoWithSSID:_ssidTextField.text];
 	_passwordTextField.text = wifiInfo.password;
@@ -175,43 +133,21 @@
     [showPasswordButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, viewFrame.size.width - image.size.width)];
     [self.view addSubview:showPasswordButton];
 	
-    image = [UIImage imageNamed:@"btn_normal"];
-    viewFrame.origin.x = (self.view.frame.size.width - image.size.width) * 0.5f;
-    viewFrame.origin.y = self.view.frame.size.height - image.size.height - 20.0f;
-    viewFrame.size = image.size;
-    _configButton = [[UIButton alloc] initWithFrame:viewFrame];
-    [_configButton setBackgroundColor:[UIColor clearColor]];
-    [_configButton setBackgroundImage:image forState:UIControlStateNormal];
-    [_configButton setTitle:NSLocalizedString(@"SmartConfigViewControllerConfigButtonText", nil) forState:UIControlStateNormal];
-    [_configButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
-    [_configButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_configButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [_configButton addTarget:self action:@selector(configButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_configButton];
-}
-
-/*获取当前连接的wifi网络名称，如果未连接，则为nil*/
-- (NSString *)getCurrentWiFiSSID
-{
-    CFArrayRef ifs = CNCopySupportedInterfaces();       //得到支持的网络接口 eg. "en0", "en1"
-    
-    if (ifs == NULL)
-        return nil;
-    
-    CFDictionaryRef info = CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(ifs, 0));
-    
-    CFRelease(ifs);
-    
-    if (info == NULL)
-        return nil;
-    
-    NSDictionary *dic = (__bridge_transfer NSDictionary *)info;
-    
-    // If ssid is not exist.
-    if ([dic isEqual:nil])
-        return nil;
-    NSString *ssid = [dic objectForKey:@"SSID"];
-    return ssid;
+    viewFrame.origin.x = 0;
+    viewFrame.origin.y = CGRectGetMaxY(showPasswordButton.frame) + 15;
+	viewFrame.size.width = self.view.bounds.size.width;
+	viewFrame.size.height = 40;
+    UIButton *configButton = [[UIButton alloc] initWithFrame:viewFrame];
+    [configButton setBackgroundColor:[UIColor themeBlue]];
+    [configButton setTitle:NSLocalizedString(@"SmartConfigViewControllerConfigButtonText", nil) forState:UIControlStateNormal];
+    [configButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
+    [configButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [configButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [configButton addTarget:self action:@selector(configButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:configButton];
+	
+	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+	[self.view addGestureRecognizer:tapGestureRecognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -219,13 +155,26 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)backButtonClicked
+/*获取当前连接的wifi网络名称，如果未连接，则为nil*/
+- (NSString *)getCurrentWiFiSSID
 {
-    //释放内存
-    for (UIView *v in [_waitingView subviews])
-        [v removeFromSuperview];
-    [_waitingView removeFromSuperview];
-    //取消配置
+	CFArrayRef ifs = CNCopySupportedInterfaces();       //得到支持的网络接口 eg. "en0", "en1"
+	if (ifs == NULL)
+		return nil;
+	CFDictionaryRef info = CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(ifs, 0));
+	CFRelease(ifs);
+	if (info == NULL)
+		return nil;
+	NSDictionary *dic = (__bridge_transfer NSDictionary *)info;
+	// If ssid is not exist.
+	if ([dic isEqual:nil])
+		return nil;
+	NSString *ssid = [dic objectForKey:@"SSID"];
+	return ssid;
+}
+
+- (void)dismiss
+{
     [self cancelConfig];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -233,13 +182,13 @@
 - (void)configButtonClicked
 {
 	CGRect viewFrame = CGRectZero;
-	viewFrame.origin.y = _headerView.frame.origin.y + _headerView.frame.size.height;
+	viewFrame.origin.y = 80;
 	viewFrame.size.width = self.view.frame.size.width;
 	viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y;
-	_waitingView = [[UIView alloc] initWithFrame:viewFrame];
-	[_waitingView setBackgroundColor:[UIColor whiteColor]];
-	[self.view addSubview:_waitingView];
-	viewFrame = _waitingView.frame;
+	UIView *waitingView = [[UIView alloc] initWithFrame:viewFrame];
+	[waitingView setBackgroundColor:[UIColor whiteColor]];
+	[self.view addSubview:waitingView];
+	viewFrame = waitingView.frame;
 	viewFrame.origin.x = 20.0f;
 	viewFrame.size.width -= 40.0f;
 	UILabel *configLabel = [[UILabel alloc] initWithFrame:viewFrame];
@@ -249,15 +198,15 @@
 	[configLabel setText:NSLocalizedString(@"SmartConfigViewControllerConfigLabelText", nil)];
 	[configLabel setNumberOfLines:3];
 	viewFrame = [configLabel textRectForBounds:viewFrame limitedToNumberOfLines:3];
-	viewFrame.origin.x = (_waitingView.frame.size.width - viewFrame.size.width) * 0.5f;
-	viewFrame.origin.y = (_waitingView.frame.size.height - viewFrame.size.height) * 0.5f - 30.0f;
+	viewFrame.origin.x = (waitingView.frame.size.width - viewFrame.size.width) * 0.5f;
+	viewFrame.origin.y = (waitingView.frame.size.height - viewFrame.size.height) * 0.5f - 30.0f;
 	[configLabel setFrame:viewFrame];
 	[configLabel setTextAlignment:NSTextAlignmentCenter];
-	[_waitingView addSubview:configLabel];
+	[waitingView addSubview:configLabel];
 	UIImage *image = [UIImage imageNamed:@"wait"];
 	viewFrame = configLabel.frame;
 	viewFrame.origin.y += viewFrame.size.height + 10.0f;
-	viewFrame.origin.x = (_waitingView.frame.size.width - image.size.width) * 0.5f;
+	viewFrame.origin.x = (waitingView.frame.size.width - image.size.width) * 0.5f;
 	viewFrame.size = image.size;
 	UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewFrame];
 	[imageView setBackgroundColor:[UIColor clearColor]];
@@ -268,7 +217,7 @@
 	rotationAnimation.cumulative = YES;  
 	rotationAnimation.repeatCount = NSIntegerMax;  
 	[imageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
-	[_waitingView addSubview:imageView];
+	[waitingView addSubview:imageView];
 
 	if (_ssidTextField.text.length && _passwordTextField.text.length) {
 		WifiInfo *wifiInfo = [[WifiInfo alloc] init];
@@ -283,58 +232,35 @@
 - (void)startConfig
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:[NSNumber numberWithInt:10000] forKey:@"api_id"];
-        [dic setObject:@"easyconfig" forKey:@"command"];
-        [dic setObject:_ssidTextField.text forKey:@"ssid"];
-        [dic setObject:_passwordTextField.text forKey:@"password"];
-//#warning If your device is v1, this field set 0.
-        [dic setObject:[NSNumber numberWithInt:1] forKey:@"broadlinkv2"];
-//#warning This filed is your route's gateway address.
-        [dic setObject:@"" forKey:@"dst"];
-        
-        NSData *requestData = [dic JSONData];
-        
-        NSData *responseData = [configAPI requestDispatch:requestData];
-        NSLog(@"%@", [responseData objectFromJSONData]);
-        
+		NSDictionary *dictionary = [NSDictionary dictionaryEashConfigWithSSID:_ssidTextField.text password:_passwordTextField.text];
+        NSData *requestData = [dictionary JSONData];
+        NSData *responseData = [_configAPI requestDispatch:requestData];
         dispatch_async(dispatch_get_main_queue(), ^{
-			
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[[responseData objectFromJSONData] objectForKey:@"msg"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alertView show];
         });
     });
 }
 
+/*Cancel config*/
+- (void)cancelConfig
+{
+	NSDictionary *dictionary = [NSDictionary dictionaryCancelEashConfig];
+	NSData *requestData = [dictionary JSONData];
+	[_configAPI requestDispatch:requestData];
+}
+
 #pragma marks -- UIAlertViewDelegate --
 //根据被点击按钮的索引处理点击事件
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self backButtonClicked];
-}
-
-/*Cancel config*/
-- (void)cancelConfig
-{
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:[NSNumber numberWithInt:10001] forKey:@"api_id"];
-    [dic setObject:@"cancel_easyconfig" forKey:@"command"];
-    
-    NSData *requestData = [dic JSONData];
-    
-    NSData *responseData = [configAPI requestDispatch:requestData];
-    NSLog(@"%@", [responseData objectFromJSONData]);
+    [self dismiss];
 }
 
 - (void)showPasswordButtonClicked:(UIButton *)button
 {
     [button setSelected:![button isSelected]];
     [_passwordTextField setSecureTextEntry:![button isSelected]];
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self textFieldShouldReturn:nil];
 }
 
 #pragma mark - UITextField Delegate
@@ -350,8 +276,7 @@
     [UIView commitAnimations];
     [self.view endEditing:YES];
     
-    if ([textField isEqual:_passwordTextField])
-    {
+    if ([textField isEqual:_passwordTextField]) {
         [self configButtonClicked];
     }
     return YES;
