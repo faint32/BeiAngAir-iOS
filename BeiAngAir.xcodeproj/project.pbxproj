@@ -32,6 +32,7 @@
 		7700C715196E6A530001561F /* BeiAngReceivedDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C714196E6A530001561F /* BeiAngReceivedDataInfo.m */; };
 		7700C718196E85690001561F /* ClassAirQualityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C717196E85690001561F /* ClassAirQualityInfo.m */; };
 		7700C720196E87F90001561F /* NSString+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C71F196E87F90001561F /* NSString+BeiAng.m */; };
+		771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07EA196F897600B41955 /* UIImage+BeiAng.m */; };
 		BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA89102519458F5700C16953 /* BeiAngAir-Info.plist */; };
 		BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE389B1940854A002C97C8 /* BLAboutViewController.m */; };
 		BAAE389F19408651002C97C8 /* BLLinkLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE389E19408651002C97C8 /* BLLinkLabel.m */; };
@@ -255,6 +256,8 @@
 		7700C717196E85690001561F /* ClassAirQualityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassAirQualityInfo.m; sourceTree = "<group>"; };
 		7700C71E196E87F90001561F /* NSString+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BeiAng.h"; sourceTree = "<group>"; };
 		7700C71F196E87F90001561F /* NSString+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+BeiAng.m"; sourceTree = "<group>"; };
+		771F07E9196F897600B41955 /* UIImage+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+BeiAng.h"; sourceTree = "<group>"; };
+		771F07EA196F897600B41955 /* UIImage+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BeiAng.m"; sourceTree = "<group>"; };
 		BA69793D1949613B000B184F /* BLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNetwork.h; sourceTree = "<group>"; };
 		BA69793E1949613B000B184F /* libBLNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLNetwork.a; sourceTree = "<group>"; };
 		BA8910281945905E00C16953 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/BeiAngAir-Info.plist"; sourceTree = "<group>"; };
@@ -685,6 +688,8 @@
 			children = (
 				7700C71E196E87F90001561F /* NSString+BeiAng.h */,
 				7700C71F196E87F90001561F /* NSString+BeiAng.m */,
+				771F07E9196F897600B41955 /* UIImage+BeiAng.h */,
+				771F07EA196F897600B41955 /* UIImage+BeiAng.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -918,6 +923,7 @@
 				7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */,
 				BAB38995193DA4AD00975805 /* FMDatabaseQueue.m in Sources */,
 				7700C718196E85690001561F /* ClassAirQualityInfo.m in Sources */,
+				771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */,
 				BAB38996193DA4AD00975805 /* FMResultSet.m in Sources */,
 				BAFA38251941862A001DB631 /* BLCustomHUD+UIWindow.m in Sources */,
 				7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */,

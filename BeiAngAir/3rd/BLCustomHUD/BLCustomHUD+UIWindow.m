@@ -57,9 +57,8 @@ enum
     [bgView setTag:0xbeaf];
     [bgView setBackgroundColor:[UIColor colorWithRed:0x40/255.0f green:0x40/255.0f blue:0x40/255.0f alpha:0.8f]];
     [self addSubview:bgView];
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_bg@2x" ofType:@"png"];
-    UIImage *bgImage = [UIImage imageWithContentsOfFile:path];
+	
+    UIImage *bgImage = [UIImage imageNamed:@"bl_custom_hud_bg"];
     CGRect viewFrame = CGRectZero;
     viewFrame.origin.x = (self.frame.size.width - bgImage.size.width) / 2.0f;
     viewFrame.origin.y = (self.frame.size.height - bgImage.size.height) / 2.0f;
@@ -104,9 +103,8 @@ enum
         viewFrame.origin.y = 45.0f + (bgImageView.frame.size.height - 105.0f - viewFrame.size.height) / 2.0f;
         [messageLabel setFrame:viewFrame];
     }
-    
-    path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_btn_yes@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"bl_custom_hud_btn_yes"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = 0 + 12.5f;
     viewFrame.origin.y = (bgImageView.frame.size.height - image.size.height - 12.5f);
@@ -116,9 +114,8 @@ enum
     [okButton setImage:image forState:UIControlStateNormal];
     [okButton addTarget:self action:@selector(okButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bgImageView addSubview:okButton];
-    
-    path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_btn_no@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"bl_custom_hud_btn_no"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = (bgImageView.frame.size.width - image.size.width - 12.5f);
     viewFrame.origin.y = (bgImageView.frame.size.height - image.size.height - 12.5f);
@@ -158,9 +155,8 @@ enum
     [bgView setTag:0xbeaf];
     [bgView setBackgroundColor:[UIColor colorWithRed:0x40/255.0f green:0x40/255.0f blue:0x40/255.0f alpha:0.8f]];
     [self addSubview:bgView];
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_bg@2x" ofType:@"png"];
-    UIImage *bgImage = [UIImage imageWithContentsOfFile:path];
+	
+    UIImage *bgImage = [UIImage imageNamed:@"bl_custom_hud_bg"];
     CGRect viewFrame = CGRectZero;
     viewFrame.origin.x = (self.frame.size.width - bgImage.size.width) / 2.0f;
     viewFrame.origin.y = (self.frame.size.height - bgImage.size.height) / 2.0f;
@@ -179,9 +175,8 @@ enum
     [titleImageView setBackgroundColor:[UIColor clearColor]];
     [titleImageView setImage:image];
     [bgImageView addSubview:titleImageView];
-    
-    path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_btn_yes@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"bl_custom_hud_btn_yes"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = 0 + 12.5f;
     viewFrame.origin.y = (bgImageView.frame.size.height - image.size.height - 12.5f);
@@ -191,9 +186,8 @@ enum
     [okButton setImage:image forState:UIControlStateNormal];
     [okButton addTarget:self action:@selector(okButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bgImageView addSubview:okButton];
-    
-    path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_btn_no@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"bl_custom_hud_btn_no"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = (bgImageView.frame.size.width - image.size.width - 12.5f);
     viewFrame.origin.y = (bgImageView.frame.size.height - image.size.height - 12.5f);
@@ -300,9 +294,8 @@ enum
     [bgView setTag:0xbeaf];
     [bgView setBackgroundColor:[UIColor colorWithRed:0x40/255.0f green:0x40/255.0f blue:0x40/255.0f alpha:0.8f]];
     [self addSubview:bgView];
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_bg@2x" ofType:@"png"];
-    UIImage *bgImage = [UIImage imageWithContentsOfFile:path];
+	
+    UIImage *bgImage = [UIImage imageNamed:@"bl_custom_hud_bg"];
     CGRect viewFrame = CGRectZero;
     viewFrame.origin.x = (self.frame.size.width - bgImage.size.width) / 2.0f;
     viewFrame.origin.y = (self.frame.size.height - bgImage.size.height) / 2.0f;
@@ -333,9 +326,8 @@ enum
     viewFrame = [messageLabel textRectForBounds:viewFrame limitedToNumberOfLines:0];
     [messageLabel setFrame:viewFrame];
     [bgImageView addSubview:messageLabel];
-    
-    path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_textfield_bg@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"bl_custom_hud_textfield_bg"];
     viewFrame = messageLabel.frame;
     viewFrame.origin.x = (bgImageView.frame.size.width - (image.size.width - 40.0f)) * 0.5f;
     viewFrame.origin.y += viewFrame.size.height + 10.0f;
@@ -374,9 +366,8 @@ enum
         viewFrame.origin.y = 45.0f + (bgImageView.frame.size.height - 105.0f - viewFrame.size.height) / 2.0f;
         [messageLabel setFrame:viewFrame];
     }
-    
-    path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_btn_yes@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"bl_custom_hud_btn_yes"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = 0 + 12.5f;
     viewFrame.origin.y = (bgImageView.frame.size.height - image.size.height - 12.5f);
@@ -386,9 +377,8 @@ enum
     [okButton setImage:image forState:UIControlStateNormal];
     [okButton addTarget:self action:@selector(okButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bgImageView addSubview:okButton];
-    
-    path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_btn_no@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"bl_custom_hud_btn_no"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = (bgImageView.frame.size.width - image.size.width - 12.5f);
     viewFrame.origin.y = (bgImageView.frame.size.height - image.size.height - 12.5f);
@@ -434,9 +424,8 @@ enum
     [bgView setTag:0xbeaf];
     [bgView setBackgroundColor:[UIColor colorWithRed:0x40/255.0f green:0x40/255.0f blue:0x40/255.0f alpha:0.8f]];
     [self addSubview:bgView];
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_bg@2x" ofType:@"png"];
-    UIImage *bgImage = [UIImage imageWithContentsOfFile:path];
+	
+    UIImage *bgImage = [UIImage imageNamed:@"bl_custom_hud_bg"];
     CGRect viewFrame = CGRectZero;
     viewFrame.origin.x = (self.frame.size.width - bgImage.size.width) / 2.0f;
     viewFrame.origin.y = (self.frame.size.height - bgImage.size.height) / 2.0f;
@@ -455,9 +444,8 @@ enum
     [titleImageView setBackgroundColor:[UIColor clearColor]];
     [titleImageView setImage:image];
     [bgImageView addSubview:titleImageView];
-    
-    path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_btn_yes@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"bl_custom_hud_btn_yes"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = 0 + 12.5f;
     viewFrame.origin.y = (bgImageView.frame.size.height - image.size.height - 12.5f);
@@ -468,8 +456,7 @@ enum
     [okButton addTarget:self action:@selector(okButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bgImageView addSubview:okButton];
     
-    path = [[NSBundle mainBundle] pathForResource:@"bl_custom_hud_btn_no@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"bl_custom_hud_btn_no"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = (bgImageView.frame.size.width - image.size.width - 12.5f);
     viewFrame.origin.y = (bgImageView.frame.size.height - image.size.height - 12.5f);

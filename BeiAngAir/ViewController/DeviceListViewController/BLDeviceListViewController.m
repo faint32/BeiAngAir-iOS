@@ -130,8 +130,7 @@
     [label setFrame:viewFrame];
     [btnAddDevice addSubview:label];
     //图片
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"enter@2x" ofType:@"png"];
-    UIImage *image = [UIImage imageWithContentsOfFile:path];
+    UIImage *image = [UIImage imageNamed:@"enter"];
     viewFrame.origin.x = label.frame.size.width + label.frame.origin.x + 5;
     viewFrame.origin.y = (btnAddDevice.frame.size.height - image.size.height) / 2.f;
     viewFrame.size.width = image.size.width;
@@ -380,21 +379,15 @@
 
 - (void)getNewModuleInfo:(BLDeviceInfo *)info
 {
-    /*Create default icon*/
-    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString * documentsDirectory = [paths objectAtIndex:0];
-    NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", info.mac]];
-    NSString *path;
+	NSString *imagePath = [NSString deviceAvatarPathWithMAC:info.mac];
     UIImage *image;
     BLModuleInfomation *moduleInfo;
     long infoID;
     
     if (![info.type isEqualToString:[NSString stringWithFormat:@"%d",BROADLINK_BeiAngAir]])
         return;
-    
-    path = [[NSBundle mainBundle] pathForResource:@"device_icon@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
-    
+	
+    image = [UIImage imageNamed:@"device_icon"];
     [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
     
     infoID = [sqlite getMaxInfoID] + 1;
@@ -515,9 +508,7 @@
 	
     //设备信息
     BLDeviceInfo *info = [_deviceArray objectAtIndex:indexPath.row];
-	NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString * documentsDirectory = [paths objectAtIndex:0];
-	NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", info.mac]];
+	NSString *path = [NSString deviceAvatarPathWithMAC:info.mac];
 	UIImage *image = [UIImage imageWithContentsOfFile:path];
 	cell.imageView.image = image;
 	cell.imageView.userInteractionEnabled = YES;

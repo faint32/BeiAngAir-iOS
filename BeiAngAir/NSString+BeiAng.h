@@ -12,4 +12,6 @@
 
 + (instancetype)citiesCodeString;
 
++ (instancetype)deviceAvatarPathWithMAC:(NSString *)MAC;
+
 @end

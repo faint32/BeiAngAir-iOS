@@ -25,5 +25,6 @@
 
 //Categories
 #import	"NSString+BeiAng.h"
+#import	"UIImage+BeiAng.h"
 
 #endif

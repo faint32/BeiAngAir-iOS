@@ -89,8 +89,7 @@
     CGRect viewFrame = CGRectZero;
     
     //返回按钮
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"left@2x" ofType:@"png"];
-    UIImage *image = [UIImage imageWithContentsOfFile:path];
+    UIImage *image = [UIImage imageNamed:@"left"];
     viewFrame.origin.x = 0;
     viewFrame.origin.y = 20.f;
     viewFrame.size.width = image.size.width;
@@ -127,8 +126,7 @@
     [_buttonCancel setBackgroundColor:[UIColor whiteColor]];
     [_buttonCancel setTag:1];
     //定时取消图标
-    path = [[NSBundle mainBundle] pathForResource:@"btn_check@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"btn_check"];
     //定时取消文字
     viewFrame.origin.x = 10;
     viewFrame.origin.y = (60 - image.size.height) / 2.f;
@@ -167,8 +165,7 @@
     [_buttonClose addSubview:_labelClose];
     [_buttonClose setTag:2];
     //定时关机图标
-    path = [[NSBundle mainBundle] pathForResource:@"btn_point@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"btn_point"];
     viewFrame.origin.x = self.view.frame.size.width - image.size.width - 10;
     viewFrame.origin.y = (_buttonClose.frame.size.height - image.size.height) / 2.f;
     viewFrame.size.width = image.size.width;
@@ -253,10 +250,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSString *pathCheck = [[NSBundle mainBundle] pathForResource:@"btn_check@2x" ofType:@"png"];
-    UIImage *imageCheck = [UIImage imageWithContentsOfFile:pathCheck];
-    NSString *pathUnCheck = [[NSBundle mainBundle] pathForResource:@"btn_point@2x" ofType:@"png"];
-    UIImage *imageUnCheck = [UIImage imageWithContentsOfFile:pathUnCheck];
+    UIImage *imageCheck = [UIImage imageNamed:@"btn_check"];
+    UIImage *imageUnCheck = [UIImage imageNamed:@"btn_point"];
     //判断当前是那个按钮选择s
     if(self.currentAirInfo.switchStatus)
     {
@@ -466,10 +461,8 @@
     //判断没有点击
     if(_lastSelectedButton.tag == button.tag)
         return;
-    NSString *pathCheck = [[NSBundle mainBundle] pathForResource:@"btn_check@2x" ofType:@"png"];
-    UIImage *imageCheck = [UIImage imageWithContentsOfFile:pathCheck];
-    NSString *pathUnCheck = [[NSBundle mainBundle] pathForResource:@"btn_point@2x" ofType:@"png"];
-    UIImage *imageUnCheck = [UIImage imageWithContentsOfFile:pathUnCheck];
+    UIImage *imageCheck = [UIImage imageNamed:@"btn_check"];
+    UIImage *imageUnCheck = [UIImage imageNamed:@"btn_point"];
     //判断点击的按钮
     if(button.tag == 1)
     {

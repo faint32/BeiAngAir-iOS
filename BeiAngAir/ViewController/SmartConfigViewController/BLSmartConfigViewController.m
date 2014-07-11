@@ -12,12 +12,10 @@
 #import "JSONKit.h"
 #import "BLFMDBSqlite.h"
 #import "Toast+UIView.h"
-#import "BLAppDelegate.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 @interface BLSmartConfigViewController () <UITextFieldDelegate,UIAlertViewDelegate>
 {
-    BLAppDelegate *appDelegate;
     BLNetwork *configAPI;
     BLFMDBSqlite *sqlite;
 }
@@ -32,20 +30,10 @@
 
 @implementation BLSmartConfigViewController
 
-- (void)dealloc
-{
-    [self setHeaderView:nil];
-    [self setSsidTextField:nil];
-    [self setPasswordTextField:nil];
-    [self setWaitingView:nil];
-    _configButton = nil;
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -53,8 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    appDelegate = (BLAppDelegate *)[[UIApplication sharedApplication] delegate];
+	
     configAPI = [[BLNetwork alloc] init];
     sqlite = [BLFMDBSqlite sharedFMDBSqlite];
     
@@ -81,9 +68,8 @@
     [titleLabel setFrame:viewFrame];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_headerView addSubview:titleLabel];
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"left@2x" ofType:@"png"];
-    UIImage *image = [UIImage imageWithContentsOfFile:path];
+	
+    UIImage *image = [UIImage imageNamed:@"left"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = 10.0f;
     viewFrame.size = image.size;
@@ -127,8 +113,7 @@
     [_ssidTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_ssidTextField setDelegate:self];
     //passwordText背景颜色
-    path=[[NSBundle mainBundle] pathForResource:@"input_squre@2x" ofType:@"png"];
-    image=[UIImage imageWithContentsOfFile:path];
+    image=[UIImage imageNamed:@"input_squre"];
     _ssidTextField.background=image;
     [_ssidTextField setText:[self getCurrentWiFiSSID]];
     [self.view addSubview:_ssidTextField];
@@ -159,9 +144,8 @@
     _passwordTextField.background=image;
     [_passwordTextField setText:[sqlite getPasswordBySSID:_ssidTextField.text]];
     [self.view addSubview:_passwordTextField];
-    
-    path = [[NSBundle mainBundle] pathForResource:@"check_normal@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"check_normal"];
     viewFrame = _passwordTextField.frame;
     viewFrame.origin.y += viewFrame.size.height + 15.0f;
     viewFrame.size.height = 25.0f;
@@ -170,8 +154,7 @@
     [showPasswordButton setBackgroundColor:[UIColor clearColor]];
     [showPasswordButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, viewFrame.size.width - image.size.width)];
     [showPasswordButton setImage:image forState:UIControlStateNormal];
-    path = [[NSBundle mainBundle] pathForResource:@"check_press@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"check_press"];
     [showPasswordButton setImage:image forState:UIControlStateSelected];
     [showPasswordButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [showPasswordButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, image.size.width, 0.0f, -image.size.width)];
@@ -187,9 +170,8 @@
     [showPasswordButton setFrame:viewFrame];
     [showPasswordButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, viewFrame.size.width - image.size.width)];
     [self.view addSubview:showPasswordButton];
-    
-    path = [[NSBundle mainBundle] pathForResource:@"btn_normal@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+	
+    image = [UIImage imageNamed:@"btn_normal"];
     viewFrame.origin.x = (self.view.frame.size.width - image.size.width) * 0.5f;
     viewFrame.origin.y = self.view.frame.size.height - image.size.height - 20.0f;
     viewFrame.size = image.size;
@@ -224,16 +206,13 @@
     // If ssid is not exist.
     if ([dic isEqual:nil])
         return nil;
-    
     NSString *ssid = [dic objectForKey:@"SSID"];
-    
     return ssid;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)backButtonClicked
@@ -271,8 +250,7 @@
         [configLabel setFrame:viewFrame];
         [configLabel setTextAlignment:NSTextAlignmentCenter];
         [_waitingView addSubview:configLabel];
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"wait@2x" ofType:@"png"];
-        UIImage *image = [UIImage imageWithContentsOfFile:path];
+        UIImage *image = [UIImage imageNamed:@"wait"];
         viewFrame = configLabel.frame;
         viewFrame.origin.y += viewFrame.size.height + 10.0f;
         viewFrame.origin.x = (_waitingView.frame.size.width - image.size.width) * 0.5f;
@@ -313,6 +291,7 @@
         NSLog(@"%@", [responseData objectFromJSONData]);
         
         dispatch_async(dispatch_get_main_queue(), ^{
+			
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[[responseData objectFromJSONData] objectForKey:@"msg"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alertView show];
         });
@@ -323,7 +302,6 @@
 //根据被点击按钮的索引处理点击事件
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //返回前页面
     [self backButtonClicked];
 }
 
@@ -351,12 +329,10 @@
     [self textFieldShouldReturn:nil];
 }
 
-#pragma mark -
 #pragma mark - UITextField Delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ([textField isEqual:_ssidTextField])
-    {
+    if ([textField isEqual:_ssidTextField]) {
         [_passwordTextField resignFirstResponder];
         return NO;
     }
@@ -381,37 +357,12 @@
     [UIView setAnimationDuration:0.30f];
     float width = self.view.frame.size.width;
     float height = self.view.frame.size.height;
-    if(offset < 0)
-    {
+    if(offset < 0) {
         CGRect rect = CGRectMake(0.0f, offset,width,height);
         self.view.frame = rect;
     }
     [UIView commitAnimations];
     return YES;
 }
-
-//#pragma mark -
-//#pragma mark - BroadLinkConfig Delegate
-//- (void)broadlinkConifg:(BroadLinkConfig *)config result:(int)result
-//{
-//    if (![configAPI isEqual:config])
-//        return;
-//    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        if (result == 0)
-//        {
-//            [self dismissViewControllerAnimated:YES completion:^{
-//                [appDelegate.window makeToast:NSLocalizedString(@"SmartconfigViewControllerConfigSuccessText", nil) duration:0.8f position:@"bottom"];
-//            }];
-//        }
-//        else
-//        {
-//            for (UIView *v in [_waitingView subviews])
-//                [v removeFromSuperview];
-//            [_waitingView removeFromSuperview];
-//        }
-//        [_configButton setSelected:NO];
-//    });
-//}
 
 @end

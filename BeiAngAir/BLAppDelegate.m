@@ -221,6 +221,7 @@
                         return;
                     }
                     //定时
+					
                     _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getWeather:) userInfo:nil repeats:YES];
                     [_refreshLocation fire];
                 }
@@ -314,7 +315,6 @@
             if(_airQualityInfoClass.temperateStrings.length > 0)
             {
                 [_refreshLocation invalidate];
-                _refreshLocation = nil;
             }
         }
     });

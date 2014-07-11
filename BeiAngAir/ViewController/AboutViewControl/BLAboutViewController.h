@@ -10,6 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CustomViewController.h"
 
-@interface BLAboutViewController : CustomViewController
+@interface BLAboutViewController : UIViewController
 
 @end

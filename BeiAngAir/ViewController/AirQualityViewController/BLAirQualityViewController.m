@@ -83,32 +83,6 @@
 - (void)dealloc
 {
     [super dealloc];
-    //顶部视图
-    [self setTopView:nil];
-    //温度
-    [self setWeatherLabel:nil];
-    //点击风速弹出的视图
-    [self setBackView:nil];
-    //空气质量指数
-    [self setAirQualityLabel:nil];
-    //开关按钮
-    [self setSwitchButton:nil];
-    //手动或者自动按钮
-    [self setHandOrAutoButton:nil];
-    //手动自动标题
-    [self setHandOrAutoLabel:nil];
-    //睡眠开关标题
-    [self setSleepLabel:nil];
-    //儿童锁开关标题
-    [self setChildLockLabel:nil];
-    [self setAddress:nil];
-    [self setLeftTimerLabel:nil];
-    [self setLocManager:nil];
-    [self setGeocoder:nil];
-    [_refreshInfoTimer invalidate];
-    _refreshInfoTimer = nil;
-    [_refreshLocationInfo invalidate];
-    _refreshLocationInfo = nil;
     dispatch_release(networkQueue);
     dispatch_release(httpQueue);
 }
@@ -151,8 +125,7 @@
     [self.view addSubview:_topView];
     
     //左侧返回按钮
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"left@2x" ofType:@"png"];
-    UIImage *image = [UIImage imageWithContentsOfFile:path];
+    UIImage *image = [UIImage imageNamed:@"left@2x"];
     viewFrame.origin.x = 0;
     viewFrame.origin.y = 15;
     viewFrame.size = image.size;
@@ -163,8 +136,7 @@
     [self setNaviBarLeftBtn:leftButton];
     
     //右侧关于界面
-    path = [[NSBundle mainBundle] pathForResource:@"home_logo@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"home_logo@2x"];
     viewFrame.origin.x = self.view.frame.size.width - image.size.width / 2.f - 10;
     viewFrame.origin.y = leftButton.frame.origin.y;
     viewFrame.size.width = image.size.width / 2.f;
@@ -237,8 +209,7 @@
     [self.view addSubview:bottomView];
     
     //风速
-    path = [[NSBundle mainBundle] pathForResource:@"wind@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"wind@2x"];
     viewFrame.origin.x =  _address.frame.origin.x;
     viewFrame.origin.y = 10;
     viewFrame.size = CGSizeMake(47.f, 47.f);
@@ -249,8 +220,7 @@
     [bottomView addSubview:speedButton];
     
     //空气质量指数
-    path = [[NSBundle mainBundle] pathForResource:@"time@2x" ofType:@"png"];
-    UIImage *timeImage = [UIImage imageWithContentsOfFile:path];
+    UIImage *timeImage = [UIImage imageNamed:@"time@2x"];
     viewFrame.origin.x =  speedButton.frame.origin.x + speedButton.frame.size.width;
     viewFrame.origin.y = 10;
     viewFrame.size.width = self.view.frame.size.width - (47.f + _address.frame.origin.x) * 2;
@@ -284,18 +254,18 @@
     NSLog(@"switchStatus = %d", self.currentAirInfo.switchStatus);
     if(self.currentAirInfo.switchStatus)
     {
-        pathOnOff = [[NSBundle mainBundle] pathForResource:@"power_on@2x" ofType:@"png"];
-        pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"power_on_press@2x" ofType:@"png"];
+        pathOnOff = @"power_on@2x";
+        pathOnOffClick = @"power_on_press@2x";
         _switchButton.selected = YES;
     }
     else
     {
-        pathOnOff = [[NSBundle mainBundle] pathForResource:@"power_off@2x" ofType:@"png"];
-        pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"power_off_press@2x" ofType:@"png"];
+        pathOnOff = @"power_off@2x";
+        pathOnOffClick = @"power_off_press@2x";
         _switchButton.selected = NO;
     }
-    UIImage *imageSwitchState = [UIImage imageWithContentsOfFile:pathOnOff];
-    UIImage *imageSwitchClick = [UIImage imageWithContentsOfFile:pathOnOffClick];
+    UIImage *imageSwitchState = [UIImage imageNamed:pathOnOff];
+    UIImage *imageSwitchClick = [UIImage imageNamed:pathOnOffClick];
     viewFrame.origin.x =  (self.view.frame.size.width - imageSwitchState.size.width) / 2.f;
     viewFrame.origin.y = timerButton.frame.origin.y + timerButton.frame.size.height + 15.f;
     viewFrame.size = imageSwitchState.size;
@@ -310,18 +280,18 @@
     _handOrAutoButton  = [UIButton buttonWithType:UIButtonTypeCustom];
     //判断手动还是自动按钮
     if(self.currentAirInfo.autoOrHand) {
-        pathOnOff = [[NSBundle mainBundle] pathForResource:@"auto_on@2x" ofType:@"png"];
-        pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"auto_on_press@2x" ofType:@"png"];
+        pathOnOff = @"auto_on@2x";
+        pathOnOffClick = @"auto_on_press@2x";
         _handOrAutoButton.selected = YES;
     }
     else
     {
-        pathOnOff = [[NSBundle mainBundle] pathForResource:@"hand_on@2x" ofType:@"png"];
-        pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"hand_on_press@2x" ofType:@"png"];
+        pathOnOff = @"hand_on@2x";
+        pathOnOffClick = @"hand_on_press@2x";
         _handOrAutoButton.selected = NO;
     }
-    imageSwitchState = [UIImage imageWithContentsOfFile:pathOnOff];
-    imageSwitchClick = [UIImage imageWithContentsOfFile:pathOnOffClick];
+    imageSwitchState = [UIImage imageNamed:pathOnOff];
+    imageSwitchClick = [UIImage imageNamed:pathOnOffClick];
     viewFrame.origin.x =  _address.frame.origin.x;
     viewFrame.origin.y = _switchButton.frame.origin.y + _switchButton.frame.size.height;
     viewFrame.size = imageSwitchState.size;
@@ -356,18 +326,18 @@
     //判断睡眠按钮
     if(self.currentAirInfo.sleepState)
     {
-        pathOnOff = [[NSBundle mainBundle] pathForResource:@"night_on@2x" ofType:@"png"];
-        pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"night_on_press@2x" ofType:@"png"];
+        pathOnOff = @"night_on@2x";
+        pathOnOffClick = @"night_on_press@2x";
         sleepButton.selected = YES;
     }
     else
     {
-        pathOnOff = [[NSBundle mainBundle] pathForResource:@"night_off@2x" ofType:@"png"];
-        pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"night_off_press@2x" ofType:@"png"];
+        pathOnOff = @"night_off@2x";
+        pathOnOffClick = @"night_off_press@2x";
         sleepButton.selected = NO;
     }
-    imageSwitchState = [UIImage imageWithContentsOfFile:pathOnOff];
-    imageSwitchClick = [UIImage imageWithContentsOfFile:pathOnOffClick];
+    imageSwitchState = [UIImage imageNamed:pathOnOff];
+    imageSwitchClick = [UIImage imageNamed:pathOnOffClick];
     viewFrame.origin.x =  (self.view.frame.size.width - imageSwitchState.size.width) / 2.f;
     viewFrame.origin.y = _handOrAutoButton.frame.origin.y + _handOrAutoButton.frame.size.height * 2.f / 3.f;
     viewFrame.size = imageSwitchState.size;
@@ -405,18 +375,18 @@
     //判断儿童锁按钮
     if(self.currentAirInfo.childLockState)
     {
-        pathOnOff = [[NSBundle mainBundle] pathForResource:@"lock_on@2x" ofType:@"png"];
-        pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"lock_on_press@2x" ofType:@"png"];
+        pathOnOff = @"lock_on@2x";
+        pathOnOffClick = @"lock_on_press@2x";
         _childLockButton.selected = YES;
     }
     else
     {
-        pathOnOff = [[NSBundle mainBundle] pathForResource:@"lock_off@2x" ofType:@"png"];
-        pathOnOffClick = [[NSBundle mainBundle] pathForResource:@"lock_off_press@2x" ofType:@"png"];
+        pathOnOff = @"lock_off@2x";
+        pathOnOffClick = @"lock_off_press@2x";
         _childLockButton.selected = NO;
     }
-    imageSwitchState = [UIImage imageWithContentsOfFile:pathOnOff];
-    imageSwitchClick = [UIImage imageWithContentsOfFile:pathOnOffClick];
+    imageSwitchState = [UIImage imageNamed:pathOnOff];
+    imageSwitchClick = [UIImage imageNamed:pathOnOffClick];
     viewFrame.origin.x =  self.view.frame.size.width - imageSwitchState.size.width - _address.frame.origin.x;
     viewFrame.origin.y = _handOrAutoButton.frame.origin.y ;
     viewFrame.size = imageSwitchState.size;
@@ -497,8 +467,7 @@
         [view addSubview:label];
         
         //加热
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"point3@2x" ofType:@"png"];
-        UIImage *image = [UIImage imageWithContentsOfFile:path];
+        UIImage *image = [UIImage imageNamed:@"point3@2x"];
         UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(40, label.frame.size.height+label.frame.origin.y, self.view.frame.size.width - 80, 120)];
         [slider setBackgroundColor:[UIColor clearColor]];
         [slider setMaximumTrackTintColor:[UIColor grayColor]];
@@ -506,8 +475,7 @@
         [slider setMaximumValue:3.0f];
         [slider setMinimumValue:1.0f];
         [slider setValue:self.currentAirInfo.gearState];
-        path = [[NSBundle mainBundle] pathForResource:@"seekbar_btn@2x" ofType:@"png"];
-        image = [UIImage imageWithContentsOfFile:path];
+        image = [UIImage imageNamed:@"seekbar_btn@2x"];
         [slider setThumbImage:image forState:UIControlStateNormal];
         [slider setTag:3];
         [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventTouchUpInside];
@@ -745,15 +713,15 @@
                     //手动或者自动按钮
                     if(self.currentAirInfo.autoOrHand)
                     {
-                        stringSwitchState = [[NSBundle mainBundle] pathForResource:@"auto_on@2x" ofType:@"png"];
-                        stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"auto_on_press@2x" ofType:@"png"];
+                        stringSwitchState = @"auto_on@2x";
+                        stringSwitchClick = @"auto_on_press@2x";
                         [_handOrAutoLabel setText:NSLocalizedString(@"Automatic", nil)];
                         button.selected = YES;
                     }
                     else
                     {
-                        stringSwitchState = [[NSBundle mainBundle] pathForResource:@"hand_on@2x" ofType:@"png"];
-                        stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"hand_on_press@2x" ofType:@"png"];
+                        stringSwitchState = @"hand_on@2x";
+                        stringSwitchClick = @"hand_on_press@2x";
                         [_handOrAutoLabel setText:NSLocalizedString(@"Manual", nil)];
                         button.selected = NO;
                     }
@@ -763,14 +731,14 @@
                     //判断开关按钮
                     if(self.currentAirInfo.switchStatus)
                     {
-                        stringSwitchState = [[NSBundle mainBundle] pathForResource:@"power_on@2x" ofType:@"png"];
-                        stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"power_on_press@2x" ofType:@"png"];
+                        stringSwitchState = @"power_on@2x";
+                        stringSwitchClick = @"power_on_press@2x";
                         button.selected = YES;
                     }
                     else
                     {
-                        stringSwitchState = [[NSBundle mainBundle] pathForResource:@"power_off@2x" ofType:@"png"];
-                        stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"power_off_press@2x" ofType:@"png"];
+                        stringSwitchState = @"power_off@2x";
+                        stringSwitchClick = @"power_off_press@2x";
                         button.selected = NO;
                     }
                 }
@@ -779,15 +747,15 @@
                     //判断睡眠按钮
                     if(self.currentAirInfo.sleepState)
                     {
-                        stringSwitchState = [[NSBundle mainBundle] pathForResource:@"night_on@2x" ofType:@"png"];
-                        stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"night_on_press@2x" ofType:@"png"];
+                        stringSwitchState = @"night_on@2x";
+                        stringSwitchClick = @"night_on_press@2x";
                         [_sleepLabel setText:NSLocalizedString(@"SleepOn", nil)];
                         button.selected = YES;
                     }
                     else
                     {
-                        stringSwitchState = [[NSBundle mainBundle] pathForResource:@"night_off@2x" ofType:@"png"];
-                        stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"night_off_press@2x" ofType:@"png"];
+                        stringSwitchState = @"night_off@2x";
+                        stringSwitchClick = @"night_off_press@2x";
                         [_sleepLabel setText:NSLocalizedString(@"SleepOff", nil)];
                         button.selected = NO;
                     }
@@ -797,21 +765,21 @@
                     //判断儿童锁按钮
                     if(self.currentAirInfo.childLockState)
                     {
-                        stringSwitchState = [[NSBundle mainBundle] pathForResource:@"lock_on@2x" ofType:@"png"];
-                        stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"lock_on_press@2x" ofType:@"png"];
+                        stringSwitchState = @"lock_on@2x";
+                        stringSwitchClick = @"lock_on_press@2x";
                         [_childLockLabel setText:NSLocalizedString(@"TheChildLock", nil)];
                         button.selected = YES;
                     }
                     else
                     {
-                        stringSwitchState = [[NSBundle mainBundle] pathForResource:@"lock_off@2x" ofType:@"png"];
-                        stringSwitchClick = [[NSBundle mainBundle] pathForResource:@"lock_off_press@2x" ofType:@"png"];
+                        stringSwitchState = @"lock_off@2x";
+                        stringSwitchClick = @"lock_off_press@2x";
                         [_childLockLabel setText:NSLocalizedString(@"TheChildLockOff", nil)];
                         button.selected = NO;
                     }
                 }
-                UIImage *imageSwitchState = [UIImage imageWithContentsOfFile:stringSwitchState];
-                UIImage *imageSwitchClick = [UIImage imageWithContentsOfFile:stringSwitchClick];
+                UIImage *imageSwitchState = [UIImage imageNamed:stringSwitchState];
+                UIImage *imageSwitchClick = [UIImage imageNamed:stringSwitchClick];
                 [button setImage:imageSwitchState forState:UIControlStateNormal];
                 [button setImage:imageSwitchClick forState:UIControlStateHighlighted];
                 });
@@ -898,7 +866,6 @@
 - (void)setWindSpeed:(int)speed
 {
     static int old = 0;
-    
     if (old == speed)
         return;
     old = speed;
@@ -932,8 +899,8 @@
     });
 }
 
-#pragma mark -
 #pragma mark - CLLocationManager Delegate
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     //有数据的场合停止检索

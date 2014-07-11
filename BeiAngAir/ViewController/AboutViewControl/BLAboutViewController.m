@@ -23,7 +23,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+		self.title = NSLocalizedString(@"关于贝昂", nil);
     }
     return self;
 }
@@ -39,8 +39,7 @@
     
     //左边按钮
     CGRect viewFrame = CGRectZero;
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"left@2x" ofType:@"png"];
-    UIImage *image = [UIImage imageWithContentsOfFile:path];
+    UIImage *image = [UIImage imageNamed:@"left@2x"];
     viewFrame.origin.x = 10;
     viewFrame.origin.y = 15;
     viewFrame.size = image.size;
@@ -49,7 +48,7 @@
     [leftBtn setImage:image forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:leftBtn];
-    
+	
     //标题
     viewFrame.origin.x = leftBtn.frame.size.width + leftBtn.frame.origin.x;
     viewFrame.origin.y = leftBtn.frame.origin.y;
@@ -62,11 +61,10 @@
     [label setNumberOfLines:1];
     [label setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:label];
-    
+	
     //图标
     viewFrame = CGRectZero;
-    path = [[NSBundle mainBundle] pathForResource:@"home_logo@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"home_logo"];
     viewFrame.origin.y = leftBtn.frame.size.height + leftBtn.frame.origin.y + 50.0f;
     viewFrame.origin.x = (self.view.frame.size.width - image.size.width) / 2.0f;
     viewFrame.size = image.size;
@@ -75,21 +73,6 @@
     [logoImageView.layer setCornerRadius:10.0f];
     [logoImageView.layer setMasksToBounds:YES];
     [self.view addSubview:logoImageView];
-    
-//    viewFrame = logoImageView.frame;
-//    viewFrame.origin.x = 0.0f;
-//    viewFrame.origin.y += viewFrame.size.height + 5.0f;
-//    viewFrame.size = CGSizeMake(self.view.frame.size.width, 22.0f);
-//    UILabel *versionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-//    [versionLabel setBackgroundColor:[UIColor clearColor]];
-//    [versionLabel setTextColor:[UIColor whiteColor]];
-//    [versionLabel setTextAlignment:NSTextAlignmentCenter];
-//    [versionLabel setFont:[UIFont systemFontOfSize:14.0f]];
-//    [versionLabel setText:NSLocalizedString(@"APPVersion", nil)];
-//    viewFrame = [versionLabel textRectForBounds:viewFrame limitedToNumberOfLines:1];
-//    viewFrame.origin.x = (self.view.frame.size.width - viewFrame.size.width) / 2.0f;
-//    [versionLabel setFrame:viewFrame];
-//    [self.view addSubview:versionLabel];
     
     //服务电话
     viewFrame.origin.x = 0;

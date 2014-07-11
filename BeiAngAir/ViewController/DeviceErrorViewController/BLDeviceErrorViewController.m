@@ -33,9 +33,8 @@
     [super viewDidLoad];
     
     appDelegate = (BLAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"bg_g@2x" ofType:@"png"];
-    UIImage *image = [UIImage imageWithContentsOfFile:path];
+	
+    UIImage *image = [UIImage imageNamed:@"bg_g"];
     CGRect viewFrame = self.view.frame;
     viewFrame.origin = CGPointZero;
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:viewFrame];
@@ -43,8 +42,7 @@
     [backgroundImageView setImage:image];
     [self.view addSubview:backgroundImageView];
     
-    path = [[NSBundle mainBundle] pathForResource:@"return1@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"return1"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = 10.0f;
     viewFrame.size = image.size;

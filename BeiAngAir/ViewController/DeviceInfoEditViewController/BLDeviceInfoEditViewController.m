@@ -81,9 +81,8 @@
     [titleLabel setFrame:viewFrame];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [headerView addSubview:titleLabel];
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"left@2x" ofType:@"png"];
-    UIImage *image = [UIImage imageWithContentsOfFile:path];
+	
+    UIImage *image = [UIImage imageNamed:@"left"];
     viewFrame = CGRectZero;
     viewFrame.origin.x = 10.0f;
     viewFrame.size = image.size;
@@ -93,11 +92,9 @@
     [backButton setImage:image forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:backButton];
-    
-    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString * documentsDirectory = [paths objectAtIndex:0];
-    NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", self.deviceInfo.mac]];
-    image = [UIImage imageWithContentsOfFile:imagePath];
+	
+	NSString *path = [NSString deviceAvatarPathWithMAC:self.deviceInfo.mac];
+	image = [UIImage imageWithContentsOfFile:path];
     viewFrame = headerView.frame;
     viewFrame.origin.y += viewFrame.size.height + 20.0f;
     viewFrame.origin.x = (self.view.frame.size.width - 62.5) * 0.5f;
@@ -169,14 +166,12 @@
     [lockView addSubview:lockLabel];
     viewFrame = lockView.frame;
     viewFrame.origin = CGPointZero;
-    path = [[NSBundle mainBundle] pathForResource:@"off@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"off"];
     _lockButton = [[UIButton alloc] initWithFrame:viewFrame];
     [_lockButton setBackgroundColor:[UIColor clearColor]];
     [_lockButton setImageEdgeInsets:UIEdgeInsetsMake((viewFrame.size.height - image.size.height) * 0.5f, viewFrame.size.width - image.size.width - 10.0f, (viewFrame.size.height - image.size.height) * 0.5f, 10.0f)];
     [_lockButton setImage:image forState:UIControlStateNormal];
-    path = [[NSBundle mainBundle] pathForResource:@"on@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"on"];
     [_lockButton setImage:image forState:UIControlStateSelected];
     [_lockButton addTarget:self action:@selector(lockButtonclicked:) forControlEvents:UIControlEventTouchUpInside];
     [_lockButton setSelected:self.deviceInfo.lock];
@@ -210,8 +205,7 @@
     [macView addSubview:macValueLabel];
     
     //确定按钮
-    path = [[NSBundle mainBundle] pathForResource:@"btn_normal@2x" ofType:@"png"];
-    image = [UIImage imageWithContentsOfFile:path];
+    image = [UIImage imageNamed:@"btn_normal"];
 //    viewFrame = numberView.frame;
     viewFrame.origin.x = (self.view.frame.size.width - macValueLabel.frame.size.width) / 2.f;
     viewFrame.origin.y = self.view.frame.size.height - image.size.height - 20;
@@ -340,9 +334,7 @@
         //设置图片
         [_addButton setImage:image forState:UIControlStateNormal];
         // 拷贝图片
-        NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString * documentsDirectory = [paths objectAtIndex:0];
-        NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", self.deviceInfo.mac]];
+		NSString *imagePath = [NSString deviceAvatarPathWithMAC:self.deviceInfo.mac];
         [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
     }
 }
