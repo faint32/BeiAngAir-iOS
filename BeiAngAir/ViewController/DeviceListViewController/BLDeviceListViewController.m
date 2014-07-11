@@ -8,11 +8,9 @@
 
 #import "BLDeviceListViewController.h"
 #import "GlobalDefine.h"
-#import "BLModuleInfomation.h"
 #import "BLSmartConfigViewController.h"
 #import "BLAppDelegate.h"
 #import "BLNetwork.h"
-#import "BLFMDBSqlite.h"
 #import "EGORefreshTableHeaderView.h"
 #import "UILabel+Attribute.h"
 #import "Toast+UIView.h"
@@ -33,7 +31,6 @@
 @interface BLDeviceListViewController () <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate>
 {
     BLAppDelegate *appDelegate;
-    BLFMDBSqlite *sqlite;
     dispatch_queue_t networkQueue;
     EGORefreshTableHeaderView *_refreshTableView;  
     BOOL _reloading;
@@ -43,7 +40,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSTimer *refreshTimer;
 @property (nonatomic, strong) NSMutableArray *statusArray;
-@property (nonatomic, strong) NSMutableArray *deviceArray;
+@property (nonatomic, strong) NSArray *deviceArray;
 
 @end
 
@@ -70,17 +67,17 @@
     appDelegate = (BLAppDelegate *)[[UIApplication sharedApplication] delegate];
     _networkAPI = [[BLNetwork alloc] init];
 //    _beiAngAirNetwork = [BeiAngNetworkUnit sharedNetworkAPI];
-    sqlite = [BLFMDBSqlite sharedFMDBSqlite];
     networkQueue = dispatch_queue_create("BLDeviceListViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
     [MMProgressHUD setDisplayStyle:MMProgressHUDDisplayStylePlain];
     [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
-    _deviceArray = [[NSMutableArray alloc] init];
-    NSMutableArray *muTableArray = [[NSMutableArray alloc] initWithArray:[sqlite getAllModuleInfo]];
-    for (BLModuleInfomation *tmp in muTableArray) {
-        BLDeviceInfo *deviceInfo = tmp.info;
-		NSLog(@"deviceInfo: %@", deviceInfo);
-        [_deviceArray addObject:deviceInfo];
-    }
+	
+	_deviceArray = [BLDeviceInfo allDevices];
+//    NSMutableArray *muTableArray = [[NSMutableArray alloc] initWithArray:[sqlite getAllModuleInfo]];
+//    for (BLModuleInfomation *tmp in muTableArray) {
+//        BLDeviceInfo *deviceInfo = tmp.info;
+//		NSLog(@"deviceInfo: %@", deviceInfo);
+//        [_deviceArray addObject:deviceInfo];
+//    }
     _statusArray = [[NSMutableArray alloc] init];
     //背景颜色
     [self.view setBackgroundColor:RGB(246.0f, 246.0f, 246.0f)];
@@ -232,10 +229,11 @@
                         tmp = YES;
                         if(![infoTmp.name isEqualToString:info.name] || infoTmp.lock != info.lock)
                         {
-                            [array replaceObjectAtIndex:j withObject:info];
-                            BLModuleInfomation *moduleInfomation = [[BLModuleInfomation alloc] init];
-                            moduleInfomation.info = info;
-                            [sqlite insertOrUpdateModuleInfo:moduleInfomation];
+							[info persistence];
+//                            [array replaceObjectAtIndex:j withObject:info];
+//                            BLModuleInfomation *moduleInfomation = [[BLModuleInfomation alloc] init];
+//                            moduleInfomation.info = info;
+//                            [sqlite insertOrUpdateModuleInfo:moduleInfomation];
                         }
                         break;
                     }
@@ -378,7 +376,6 @@
 {
 	NSString *imagePath = [NSString deviceAvatarPathWithMAC:info.mac];
     UIImage *image;
-    BLModuleInfomation *moduleInfo;
     long infoID;
     
     if (![info.type isEqualToString:[NSString stringWithFormat:@"%d",BROADLINK_BeiAngAir]])
@@ -386,13 +383,17 @@
 	
     image = [UIImage imageNamed:@"device_icon"];
     [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
-    
-    infoID = [sqlite getMaxInfoID] + 1;
-    moduleInfo = [[BLModuleInfomation alloc] init];
-    [moduleInfo setInfo:info];
-    [moduleInfo setInfoID:infoID];
-    [moduleInfo setIsNew:1];
-    [sqlite insertOrUpdateModuleInfo:moduleInfo];
+	
+//    infoID = [sqlite getMaxInfoID] + 1;
+//	BLModuleInfomation *moduleInfo;
+//    moduleInfo = [[BLModuleInfomation alloc] init];
+//    [moduleInfo setInfo:info];
+//    [moduleInfo setInfoID:infoID];
+//    [moduleInfo setIsNew:1];
+//    [sqlite insertOrUpdateModuleInfo:moduleInfo];
+	
+	info.isNew = 1;
+	[info persistence];
 }
 
 - (void)addDeviceInfo:(BLDeviceInfo *)info

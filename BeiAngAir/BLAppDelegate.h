@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BLModuleInfomation.h"
 
 @interface BLAppDelegate : UIResponder <UIApplicationDelegate>
 

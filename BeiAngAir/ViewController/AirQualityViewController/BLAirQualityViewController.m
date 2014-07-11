@@ -18,7 +18,6 @@
 #import "BLAboutViewController.h"
 #import "SBJson.h"
 #import "MMProgressHUD.h"
-#import "BLFMDBSqlite.h"
 #import "UILabel+Attribute.h"
 #import "Toast+UIView.h"
 #import "UIViewController+MMDrawerController.h"
@@ -39,7 +38,6 @@
     dispatch_queue_t httpQueue;
     int oldSpeed;
     int oldTimer;
-    BLFMDBSqlite *sqlite;
 }
 //顶部视图
 @property (nonatomic, strong) UIView *topView;
@@ -103,7 +101,6 @@
     httpQueue = dispatch_queue_create("BLHttpQueue", DISPATCH_QUEUE_SERIAL);
     [MMProgressHUD setDisplayStyle:MMProgressHUDDisplayStylePlain];
     [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
-    sqlite = [BLFMDBSqlite sharedFMDBSqlite];
     
     _locManager = [[CLLocationManager alloc] init];
     [_locManager setDelegate:self];
@@ -580,7 +577,7 @@
     [super viewWillAppear:animated];
     
     //插入定时数据
-    BLTimerInfomation *timerInfomation = [sqlite getSecondCountTimer];
+    BLTimerInfomation *timerInfomation = [BLTimerInfomation timerInfomation];
     NSLog(@"timerInfomation = %@",timerInfomation);
     if(timerInfomation)
     {

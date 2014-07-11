@@ -8,7 +8,6 @@
 
 #import "BLAppDelegate.h"
 #import "BLDeviceListViewController.h"
-#import "BLFMDBSqlite.h"
 #import "ASIHTTPRequest.h"
 #import "JSONKit.h"
 #import "BLNetwork.h"
@@ -20,7 +19,6 @@
 
 @interface BLAppDelegate () <CLLocationManagerDelegate, MKMapViewDelegate>
 {
-    BLFMDBSqlite *sqlite;
     dispatch_queue_t httpQueue;
     dispatch_queue_t cityQueue;
     dispatch_queue_t networkQueue;
@@ -69,7 +67,6 @@
     _latitude = 0.0f;
     _longitude = 0.0f;
     _airQualityInfoClass = [[ClassAirQualityInfo alloc] init];
-    sqlite = [BLFMDBSqlite sharedFMDBSqlite];
     /*Init network library*/
     _network = [[BLNetwork alloc] init];
     httpQueue = dispatch_queue_create("BLAppDelegateHttpQueue", DISPATCH_QUEUE_SERIAL);

@@ -10,7 +10,6 @@
 #import "BLAppDelegate.h"
 #import "GlobalDefine.h"
 #import "Toast+UIView.h"
-#import "BLFMDBSqlite.h"
 #import "UIViewController+MMDrawerController.h"
 #import "JSONKit.h"
 #import "BLNetwork.h"
@@ -21,7 +20,6 @@
 {
     BLAppDelegate *appDelegate;
     BLNetwork *networkAPI;
-    BLFMDBSqlite *sqlite;
     dispatch_queue_t networkQueue;
 }
 @property (nonatomic, strong) UITextField *nameTextField;
@@ -55,7 +53,6 @@
     
     appDelegate = (BLAppDelegate *)[[UIApplication sharedApplication] delegate];
     networkAPI = [[BLNetwork alloc] init];
-    sqlite = [BLFMDBSqlite sharedFMDBSqlite];
     networkQueue = dispatch_queue_create("BLDeviceInfoEditViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
     
     [self.view setBackgroundColor:RGB(246.0f, 246.0f, 246.0f)];

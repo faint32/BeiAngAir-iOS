@@ -10,14 +10,12 @@
 #import "GlobalDefine.h"
 #import "BLNetwork.h"
 #import "JSONKit.h"
-#import "BLFMDBSqlite.h"
 #import "Toast+UIView.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 @interface BLSmartConfigViewController () <UITextFieldDelegate,UIAlertViewDelegate>
 {
     BLNetwork *configAPI;
-    BLFMDBSqlite *sqlite;
 }
 
 @property (nonatomic, strong) UIView *headerView;
@@ -43,7 +41,6 @@
     [super viewDidLoad];
 	
     configAPI = [[BLNetwork alloc] init];
-    sqlite = [BLFMDBSqlite sharedFMDBSqlite];
     
     [self.view setBackgroundColor:RGB(246.0f, 246.0f, 246.0f)];
     

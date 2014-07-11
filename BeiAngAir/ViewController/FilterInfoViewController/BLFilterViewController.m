@@ -9,7 +9,6 @@
 #import "BLFilterViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BLAppDelegate.h"
-#import "BLFMDBSqlite.h"
 #import "PICircularProgressView.h"
 #import "Toast+UIView.h"
 #import "MMProgressHUD.h"
@@ -29,7 +28,6 @@
     //两个选择的
     BLZSIndicatorProgress *countDownHourIndicator;
     BLZSIndicatorProgress *countDownMiniteIndicator;
-    BLFMDBSqlite *sqlite;
 }
 @property(nonatomic, strong) UIButton *buttonCancel;
 @property(nonatomic, strong) UIButton *buttonClose;
@@ -80,7 +78,6 @@
     networkAPI = [[BLNetwork alloc] init];
     appDelegate = (BLAppDelegate *)[[UIApplication sharedApplication] delegate];
     _tmpTimerCount = 0;
-    sqlite = [BLFMDBSqlite sharedFMDBSqlite];
     
     //页面设置
     [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
@@ -303,7 +300,8 @@
         NSDate *datenow = [NSDate date];
         timerInfomation.secondSince = (long)[datenow timeIntervalSince1970];
         NSLog(@"timerInfomation.secondSince = %ld",timerInfomation.secondSince);
-        [sqlite insertOrUpdateTimerInfo:timerInfomation];
+		[timerInfomation persistence];
+
         //定时任务
         _refreshInfoTimer = [NSTimer  timerWithTimeInterval:second target:self selector:@selector(runTimer) userInfo:nil repeats:YES];
         [[NSRunLoop  currentRunLoop] addTimer:_refreshInfoTimer forMode:NSDefaultRunLoopMode];
@@ -363,7 +361,7 @@
                 timerInfomation.switchState = recvInfo.switchStatus;
                 timerInfomation.secondSince = 0;
                 timerInfomation.secondCount = 0;//定时秒数
-                [sqlite insertOrUpdateTimerInfo:timerInfomation];
+				[timerInfomation persistence];
             });
         }
         else    //Control failed

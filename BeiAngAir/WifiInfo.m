@@ -8,24 +8,24 @@
 
 #import "WifiInfo.h"
 
-#define kWIFIInfo @"wifiInfo"
+#define kWIFIs @"wifis"
 
 @implementation WifiInfo
 
 - (void)persistence
 {
 	if (self.SSID && self.password) {
-		NSDictionary *wifis = [[NSUserDefaults standardUserDefaults] objectForKey:kWIFIInfo];
+		NSDictionary *wifis = [[NSUserDefaults standardUserDefaults] objectForKey:kWIFIs];
 		NSMutableDictionary *new = wifis ? [NSMutableDictionary dictionaryWithDictionary:wifis] : [NSMutableDictionary dictionary];
 		new[self.SSID] = self.password;
-		[[NSUserDefaults standardUserDefaults] setObject:new forKey:kWIFIInfo];
+		[[NSUserDefaults standardUserDefaults] setObject:new forKey:kWIFIs];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
 }
 
 + (instancetype)wifiInfoWithSSID:(NSString *)SSID
 {
-	NSDictionary *wifis = [[NSUserDefaults standardUserDefaults] objectForKey:kWIFIInfo];
+	NSDictionary *wifis = [[NSUserDefaults standardUserDefaults] objectForKey:kWIFIs];
 	if (wifis) {
 		if (wifis[SSID]) {
 			WifiInfo *info = [[WifiInfo alloc] init];
