@@ -69,17 +69,22 @@
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_headerView addSubview:titleLabel];
 	
-    UIImage *image = [UIImage imageNamed:@"left"];
-    viewFrame = CGRectZero;
-    viewFrame.origin.x = 10.0f;
-    viewFrame.size = image.size;
-    viewFrame.origin.y = ((IsiOS7Later) ? 20.0f : 0.0f) + (44.0f - image.size.height) * 0.5f;
-    UIButton *backButton = [[UIButton alloc] initWithFrame:viewFrame];
-    [backButton setBackgroundColor:[UIColor clearColor]];
-    [backButton setImage:image forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [_headerView addSubview:backButton];
-    
+	
+	//TODO: 
+//	
+//	
+//	
+//    UIImage *image = [UIImage imageNamed:@"left"];
+//    viewFrame = CGRectZero;
+//    viewFrame.origin.x = 10.0f;
+//    viewFrame.size = image.size;
+//    viewFrame.origin.y = ((IsiOS7Later) ? 20.0f : 0.0f) + (44.0f - image.size.height) * 0.5f;
+//    UIButton *backButton = [[UIButton alloc] initWithFrame:viewFrame];
+//    [backButton setBackgroundColor:[UIColor clearColor]];
+//    [backButton setImage:image forState:UIControlStateNormal];
+//    [backButton addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [_headerView addSubview:backButton];
+	
     viewFrame = _headerView.frame;
     viewFrame.origin.y += viewFrame.size.height + 50.0f;
     viewFrame.origin.x = 30.0f;
@@ -113,8 +118,8 @@
     [_ssidTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_ssidTextField setDelegate:self];
     //passwordText背景颜色
-    image=[UIImage imageNamed:@"input_squre"];
-    _ssidTextField.background=image;
+    UIImage *image = [UIImage imageNamed:@"input_squre"];
+    _ssidTextField.background = image;
     [_ssidTextField setText:[self getCurrentWiFiSSID]];
     [self.view addSubview:_ssidTextField];
     

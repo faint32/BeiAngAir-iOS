@@ -237,7 +237,7 @@
         _selectedView.hidden = NO;
         _labelSelected.text = [NSString stringWithFormat:@"%d%@%d%@%@",iHourPickerFrom.currentItemIndex,NSLocalizedString(@"hour", nil),iMinPickerFrom.currentItemIndex,NSLocalizedString(@"minute", nil),NSLocalizedString(@"close", nil)];
         [_labelCancel setTextColor:[UIColor blackColor]];
-		_labelCancel.textColor = [UIColor colorWithRed:0 green:145/255.0f blue:241/255.0f alpha:1.0f];
+		_labelCancel.textColor = [UIColor themeBlue];
         //取消按钮
         _imageViewClose .image = imageCheck;
         CGRect viewFrame =_imageViewClose.frame;
@@ -259,7 +259,7 @@
         _selectedView.hidden = NO;
         _labelSelected.text = [NSString stringWithFormat:@"%d%@%d%@%@",iHourPickerFrom.currentItemIndex,NSLocalizedString(@"hour", nil),iMinPickerFrom.currentItemIndex,NSLocalizedString(@"minute", nil),NSLocalizedString(@"open", nil)];
         [_labelClose setTextColor:[UIColor blackColor]];
-		_labelCancel.textColor = [UIColor colorWithRed:0 green:145/255.0f blue:241/255.0f alpha:1.0f];
+		_labelCancel.textColor = [UIColor themeBlue];
         //取消按钮
         _imageViewCancel .image = imageCheck;
         CGRect viewFrame =_imageViewCancel.frame;
@@ -446,7 +446,7 @@
         //选择的隐藏
         _selectedView.hidden = NO;
         [_labelClose setTextColor:[UIColor blackColor]];
-		_labelCancel.textColor = [UIColor colorWithRed:0 green:145/255.0f blue:241/255.0f alpha:1.0f];
+		_labelCancel.textColor = [UIColor themeBlue];
         //取消按钮
         _imageViewCancel .image = imageCheck;
         CGRect viewFrame =_imageViewCancel.frame;
@@ -466,7 +466,7 @@
          //选择的显示
         _selectedView.hidden = NO;
         [_labelCancel setTextColor:[UIColor blackColor]];
-		_labelCancel.textColor = [UIColor colorWithRed:0 green:145/255.0f blue:241/255.0f alpha:1.0f];
+		_labelCancel.textColor = [UIColor themeBlue];
         //取消按钮
         _imageViewClose .image = imageCheck;
         CGRect viewFrame =_imageViewClose.frame;

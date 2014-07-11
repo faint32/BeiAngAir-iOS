@@ -81,20 +81,21 @@
     [titleLabel setFrame:viewFrame];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [headerView addSubview:titleLabel];
-	
-    UIImage *image = [UIImage imageNamed:@"left"];
-    viewFrame = CGRectZero;
-    viewFrame.origin.x = 10.0f;
-    viewFrame.size = image.size;
-    viewFrame.origin.y = ((IsiOS7Later) ? 20.0f : 0.0f) + (44.0f - image.size.height) * 0.5f;
-    UIButton *backButton = [[UIButton alloc] initWithFrame:viewFrame];
-    [backButton setBackgroundColor:[UIColor clearColor]];
-    [backButton setImage:image forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:backButton];
+
+	//TODO:
+//    UIImage *image = [UIImage imageNamed:@"left"];
+//    viewFrame = CGRectZero;
+//    viewFrame.origin.x = 10.0f;
+//    viewFrame.size = image.size;
+//    viewFrame.origin.y = ((IsiOS7Later) ? 20.0f : 0.0f) + (44.0f - image.size.height) * 0.5f;
+//    UIButton *backButton = [[UIButton alloc] initWithFrame:viewFrame];
+//    [backButton setBackgroundColor:[UIColor clearColor]];
+//    [backButton setImage:image forState:UIControlStateNormal];
+//    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [headerView addSubview:backButton];
 	
 	NSString *path = [NSString deviceAvatarPathWithMAC:self.deviceInfo.mac];
-	image = [UIImage imageWithContentsOfFile:path];
+	UIImage *image = [UIImage imageWithContentsOfFile:path];
     viewFrame = headerView.frame;
     viewFrame.origin.y += viewFrame.size.height + 20.0f;
     viewFrame.origin.x = (self.view.frame.size.width - 62.5) * 0.5f;
@@ -205,7 +206,7 @@
     [macView addSubview:macValueLabel];
     
     //确定按钮
-    image = [UIImage imageNamed:@"btn_normal"];
+	image = [UIImage imageNamed:@"btn_normal"];
 //    viewFrame = numberView.frame;
     viewFrame.origin.x = (self.view.frame.size.width - macValueLabel.frame.size.width) / 2.f;
     viewFrame.origin.y = self.view.frame.size.height - image.size.height - 20;

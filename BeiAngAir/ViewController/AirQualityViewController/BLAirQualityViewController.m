@@ -123,31 +123,33 @@
     [self.view addSubview:_topView];
     
     //左侧返回按钮
-    UIImage *image = [UIImage imageNamed:@"left"];
-    viewFrame.origin.x = 0;
-    viewFrame.origin.y = 15;
-    viewFrame.size = image.size;
-    UIButton *leftButton = [[UIButton alloc] initWithFrame:viewFrame];
-    [leftButton setImage:image forState:UIControlStateNormal];
-    [leftButton setBackgroundColor:[UIColor clearColor]];
-    [leftButton addTarget:self action:@selector(leftButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self setNaviBarLeftBtn:leftButton];
-    
+//    UIImage *image = [UIImage imageNamed:@"left"];
+//    viewFrame.origin.x = 0;
+//    viewFrame.origin.y = 15;
+//    viewFrame.size = image.size;
+//    UIButton *leftButton = [[UIButton alloc] initWithFrame:viewFrame];
+//    [leftButton setImage:image forState:UIControlStateNormal];
+//    [leftButton setBackgroundColor:[UIColor clearColor]];
+//    [leftButton addTarget:self action:@selector(leftButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self setNaviBarLeftBtn:leftButton];
+	
     //右侧关于界面
-    image = [UIImage imageNamed:@"home_logo"];
-    viewFrame.origin.x = self.view.frame.size.width - image.size.width / 2.f - 10;
-    viewFrame.origin.y = leftButton.frame.origin.y;
-    viewFrame.size.width = image.size.width / 2.f;
-    viewFrame.size.height = leftButton.frame.size.height;
-    UIButton *rightButton = [[UIButton alloc] initWithFrame:viewFrame];
-    [rightButton setImage:image forState:UIControlStateNormal];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self setNaviBarRightBtn:rightButton];
-    
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"home_logo"] style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonClick:)];
+//    UIImage *image = [UIImage imageNamed:@"home_logo"];
+//    viewFrame.origin.x = self.view.frame.size.width - image.size.width / 2.f - 10;
+//    viewFrame.origin.y = leftButton.frame.origin.y;
+//    viewFrame.size.width = image.size.width / 2.f;
+//    viewFrame.size.height = leftButton.frame.size.height;
+//    UIButton *rightButton = [[UIButton alloc] initWithFrame:viewFrame];
+//    [rightButton setImage:image forState:UIControlStateNormal];
+//    [rightButton setBackgroundColor:[UIColor clearColor]];
+//    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self setNaviBarRightBtn:rightButton];
+	
     //城市地址
     viewFrame.origin.x = 20;
-    viewFrame.origin.y = leftButton.frame.size.height + leftButton.frame.origin.y + 5;
+    //viewFrame.origin.y = leftButton.frame.size.height + leftButton.frame.origin.y + 5;
+	viewFrame.origin.y = 40;//TODO:
     viewFrame.size.width = 20;
     viewFrame.size.height = 20;
     _address = [[UILabel alloc] initWithFrame:viewFrame];
@@ -207,7 +209,7 @@
     [self.view addSubview:bottomView];
     
     //风速
-    image = [UIImage imageNamed:@"wind"];
+    UIImage *image = [UIImage imageNamed:@"wind"];
     viewFrame.origin.x =  _address.frame.origin.x;
     viewFrame.origin.y = 10;
     viewFrame.size = CGSizeMake(47.f, 47.f);
@@ -427,9 +429,10 @@
     [_leftTimerLabel setTextAlignment:NSTextAlignmentCenter];
     [_leftTimerLabel setNumberOfLines:1];
     [bottomView addSubview:_leftTimerLabel];
-    
-    [self.view bringSubviewToFront:rightButton];
-    [self.view bringSubviewToFront:leftButton];
+	
+  //TODO:
+//    [self.view bringSubviewToFront:rightButton];
+//    [self.view bringSubviewToFront:leftButton];
 }
 
 //弹出视图
