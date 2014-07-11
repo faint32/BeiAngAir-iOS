@@ -138,51 +138,6 @@ static BLFMDBSqlite *sharedSqlite = nil;
         return nil;
 }
 
-/*WiFi information*/
-- (BOOL)insertOrUpdateWiFiInfoWithSSID:(NSString *)ssid password:(NSString *)password
-{
-    BOOL result = NO;
-    if (![self openDb:db])
-        return result;
-    [db setShouldCacheStatements:YES];
-    FMResultSet *rs = [db executeQuery:@"SELECT * FROM broadlink_wifi_info where `ssid` = ?", ssid];
-    if ([rs next])
-    {
-        if ([db executeUpdate:@"UPDATE broadlink_wifi_info SET `password` = ? WHERE `ssid` = ?", password, ssid])
-        {
-            result = YES;
-        }
-    }
-    else
-    {
-        if ([db executeUpdate:@"INSERT INTO broadlink_wifi_info(`ssid`, `password`) VALUES (?, ?)", ssid, password])
-        {
-            result = YES;
-        }
-    }
-    
-    [self closeDb:db];
-    return result;
-}
-
-
-- (NSString *)getPasswordBySSID:(NSString *)ssid
-{
-    NSString *password = [[NSString alloc] init];
-    if (![self openDb:db])
-        return password;
-    [db setShouldCacheStatements:YES];
-    FMResultSet *rs = [db executeQuery:@"SELECT * FROM broadlink_wifi_info where `ssid` = ?", ssid];
-    while ([rs next])
-    {
-        password = [rs stringForColumn:@"password"];
-    }
-    
-    [self closeDb:db];
-    return password;
-}
-
-
 /*Get current max info's id*/
 - (long)getMaxInfoID
 {

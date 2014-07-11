@@ -189,11 +189,6 @@
 
 - (void)addNewDevice
 {
-	//TODO:
-	BLAboutViewController *aboutViewController = [[BLAboutViewController alloc] init];
-	[self.navigationController pushViewController:aboutViewController animated:YES];
-	return;
-	
     BLSmartConfigViewController *controller = [[BLSmartConfigViewController alloc] initWithNibName:nil bundle:nil];
     [self presentViewController:controller animated:YES completion:nil];
 }

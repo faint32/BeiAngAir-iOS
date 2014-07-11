@@ -147,7 +147,9 @@
     [_passwordTextField becomeFirstResponder];
     //passwordText背景颜色
     _passwordTextField.background=image;
-    [_passwordTextField setText:[sqlite getPasswordBySSID:_ssidTextField.text]];
+	
+	WifiInfo *wifiInfo = [WifiInfo wifiInfoWithSSID:_ssidTextField.text];
+	_passwordTextField.text = wifiInfo.password;
     [self.view addSubview:_passwordTextField];
 	
     image = [UIImage imageNamed:@"check_normal"];
@@ -233,47 +235,51 @@
 
 - (void)configButtonClicked
 {
-        CGRect viewFrame = CGRectZero;
-        viewFrame.origin.y = _headerView.frame.origin.y + _headerView.frame.size.height;
-        viewFrame.size.width = self.view.frame.size.width;
-        viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y;
-        _waitingView = [[UIView alloc] initWithFrame:viewFrame];
-        [_waitingView setBackgroundColor:[UIColor whiteColor]];
-        [self.view addSubview:_waitingView];
-        viewFrame = _waitingView.frame;
-        viewFrame.origin.x = 20.0f;
-        viewFrame.size.width -= 40.0f;
-        UILabel *configLabel = [[UILabel alloc] initWithFrame:viewFrame];
-        [configLabel setBackgroundColor:[UIColor clearColor]];
-        [configLabel setFont:[UIFont systemFontOfSize:15.0f]];
-        [configLabel setTextColor:[UIColor grayColor]];
-        [configLabel setText:NSLocalizedString(@"SmartConfigViewControllerConfigLabelText", nil)];
-        [configLabel setNumberOfLines:3];
-        viewFrame = [configLabel textRectForBounds:viewFrame limitedToNumberOfLines:3];
-        viewFrame.origin.x = (_waitingView.frame.size.width - viewFrame.size.width) * 0.5f;
-        viewFrame.origin.y = (_waitingView.frame.size.height - viewFrame.size.height) * 0.5f - 30.0f;
-        [configLabel setFrame:viewFrame];
-        [configLabel setTextAlignment:NSTextAlignmentCenter];
-        [_waitingView addSubview:configLabel];
-        UIImage *image = [UIImage imageNamed:@"wait"];
-        viewFrame = configLabel.frame;
-        viewFrame.origin.y += viewFrame.size.height + 10.0f;
-        viewFrame.origin.x = (_waitingView.frame.size.width - image.size.width) * 0.5f;
-        viewFrame.size = image.size;
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewFrame];
-        [imageView setBackgroundColor:[UIColor clearColor]];
-        [imageView setImage:image];
-        CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];  
-        rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 ];  
-        rotationAnimation.duration = 2.0f;  
-        rotationAnimation.cumulative = YES;  
-        rotationAnimation.repeatCount = NSIntegerMax;  
-        [imageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
-        [_waitingView addSubview:imageView];
-        
-        [sqlite insertOrUpdateWiFiInfoWithSSID:_ssidTextField.text password:_passwordTextField.text];
-        //开始配置
-        [self startConfig];
+	CGRect viewFrame = CGRectZero;
+	viewFrame.origin.y = _headerView.frame.origin.y + _headerView.frame.size.height;
+	viewFrame.size.width = self.view.frame.size.width;
+	viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y;
+	_waitingView = [[UIView alloc] initWithFrame:viewFrame];
+	[_waitingView setBackgroundColor:[UIColor whiteColor]];
+	[self.view addSubview:_waitingView];
+	viewFrame = _waitingView.frame;
+	viewFrame.origin.x = 20.0f;
+	viewFrame.size.width -= 40.0f;
+	UILabel *configLabel = [[UILabel alloc] initWithFrame:viewFrame];
+	[configLabel setBackgroundColor:[UIColor clearColor]];
+	[configLabel setFont:[UIFont systemFontOfSize:15.0f]];
+	[configLabel setTextColor:[UIColor grayColor]];
+	[configLabel setText:NSLocalizedString(@"SmartConfigViewControllerConfigLabelText", nil)];
+	[configLabel setNumberOfLines:3];
+	viewFrame = [configLabel textRectForBounds:viewFrame limitedToNumberOfLines:3];
+	viewFrame.origin.x = (_waitingView.frame.size.width - viewFrame.size.width) * 0.5f;
+	viewFrame.origin.y = (_waitingView.frame.size.height - viewFrame.size.height) * 0.5f - 30.0f;
+	[configLabel setFrame:viewFrame];
+	[configLabel setTextAlignment:NSTextAlignmentCenter];
+	[_waitingView addSubview:configLabel];
+	UIImage *image = [UIImage imageNamed:@"wait"];
+	viewFrame = configLabel.frame;
+	viewFrame.origin.y += viewFrame.size.height + 10.0f;
+	viewFrame.origin.x = (_waitingView.frame.size.width - image.size.width) * 0.5f;
+	viewFrame.size = image.size;
+	UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewFrame];
+	[imageView setBackgroundColor:[UIColor clearColor]];
+	[imageView setImage:image];
+	CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];  
+	rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 ];  
+	rotationAnimation.duration = 2.0f;  
+	rotationAnimation.cumulative = YES;  
+	rotationAnimation.repeatCount = NSIntegerMax;  
+	[imageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+	[_waitingView addSubview:imageView];
+
+	if (_ssidTextField.text.length && _passwordTextField.text.length) {
+		WifiInfo *wifiInfo = [[WifiInfo alloc] init];
+		wifiInfo.SSID = _ssidTextField.text;
+		wifiInfo.password = _passwordTextField.text;
+		[wifiInfo persistence];
+		[self startConfig];
+	}
 }
 
 /*Start config*/
