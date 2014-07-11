@@ -121,7 +121,7 @@
     viewFrame.size.height =140.5f;
     _topView = [[UIView alloc] initWithFrame:viewFrame];
     //空气质量
-    _topView.backgroundColor = RGB(1, 178, 249);
+    _topView.backgroundColor = [UIColor themeBlue];
     [self.view addSubview:_topView];
     
     //左侧返回按钮

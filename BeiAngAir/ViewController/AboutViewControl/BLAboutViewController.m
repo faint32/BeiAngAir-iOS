@@ -30,42 +30,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.mm_drawerController setMaximumLeftDrawerWidth:320.0f];
-    [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
-	//背景图片
-    [self.view setBackgroundColor:RGB(1, 178, 249)];
-    
-    //左边按钮
-    CGRect viewFrame = CGRectZero;
-    UIImage *image = [UIImage imageNamed:@"left"];
-    viewFrame.origin.x = 10;
-    viewFrame.origin.y = 15;
-    viewFrame.size = image.size;
-    UIButton *leftBtn = [[UIButton alloc] initWithFrame:viewFrame];
-    [leftBtn setBackgroundColor:[UIColor clearColor]];
-    [leftBtn setImage:image forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:leftBtn];
 	
-    //标题
-    viewFrame.origin.x = leftBtn.frame.size.width + leftBtn.frame.origin.x;
-    viewFrame.origin.y = leftBtn.frame.origin.y;
-    viewFrame.size.height = leftBtn.frame.size.height;
-    viewFrame.size.width = self.view.frame.size.width - (leftBtn.frame.size.width + leftBtn.frame.origin.x) * 2;
-    UILabel *label = [[UILabel alloc] initWithFrame:viewFrame];
-    [label setTextColor:[UIColor whiteColor]];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setText:NSLocalizedString(@"AboutTitle", nil)];
-    [label setNumberOfLines:1];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:label];
+    [self.view setBackgroundColor:[UIColor themeBlue]];
 	
     //图标
-    viewFrame = CGRectZero;
-    image = [UIImage imageNamed:@"home_logo"];
-    viewFrame.origin.y = leftBtn.frame.size.height + leftBtn.frame.origin.y + 50.0f;
-    viewFrame.origin.x = (self.view.frame.size.width - image.size.width) / 2.0f;
+    CGRect viewFrame = CGRectZero;
+    UIImage *image = [UIImage imageNamed:@"home_logo"];
+	viewFrame.origin.y = 30;
+	viewFrame.origin.x = (self.view.frame.size.width - image.size.width) / 2;
     viewFrame.size = image.size;
     UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:viewFrame];
     [logoImageView setImage:image];
@@ -159,8 +131,6 @@
 
 -(void)leftBtnClicked:(UIButton *)button
 {
-    [self.mm_drawerController setMaximumLeftDrawerWidth:280.0f];
-    [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

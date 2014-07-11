@@ -193,7 +193,7 @@
 {
 	//TODO:
 	BLAboutViewController *aboutViewController = [[BLAboutViewController alloc] init];
-	[self presentModalViewController:aboutViewController animated:YES];
+	[self.navigationController pushViewController:aboutViewController animated:YES];
 	return;
 	
     BLSmartConfigViewController *controller = [[BLSmartConfigViewController alloc] initWithNibName:nil bundle:nil];
