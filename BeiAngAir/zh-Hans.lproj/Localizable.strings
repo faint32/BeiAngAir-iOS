@@ -132,9 +132,7 @@
 "FilterInfoViewControllerOverTimeLabel" = "剩余时间";
 "FilterInfoViewControllerOverTimeUnit" = "小时";
 "FilterInfoViewControllerBuyWebsiteLabel" = "购买网站";
-"FilterInfoViewControllerWebsiteAddress" = "http://www.beiangtech.com";
 "FilterInfoViewControllerServicePhoneLabel" = "服务电话";
-"FilterInfoViewControllerPhoneNumberLabel" = "0512-62925562";
 "FilterInfoViewControllerAddress" = "苏州贝昂科技有限公司";
 "FilterInfoViewControllerCompanyAddress" = "地址：苏州工业园区金芳路11号";
 

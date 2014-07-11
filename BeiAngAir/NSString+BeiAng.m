@@ -23,4 +23,14 @@
 	return path;
 }
 
++ (instancetype)phoneNumber
+{
+	return @"+86-0512-62925562";
+}
+
++ (instancetype)webSiteAddress
+{
+	return @"http://www.beiangtech.com";
+}
+
 @end

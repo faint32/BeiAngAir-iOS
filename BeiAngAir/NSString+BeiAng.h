@@ -11,7 +11,8 @@
 @interface NSString (BeiAng)
 
 + (instancetype)citiesCodeString;
-
 + (instancetype)deviceAvatarPathWithMAC:(NSString *)MAC;
++ (instancetype)phoneNumber;
++ (instancetype)webSiteAddress;
 
 @end

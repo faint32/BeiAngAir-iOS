@@ -9,11 +9,10 @@
 #import "BLAboutViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BLAppDelegate.h"
-#import "BLLinkLabel.h"
 #import "UIViewController+MMDrawerController.h"
 #import "CustomNaviBarView.h"
 
-@interface BLAboutViewController () <BLLinkLabelDelegate>
+@interface BLAboutViewController ()
 
 @end
 
@@ -92,17 +91,19 @@
     viewFrame.origin.x = serviceLabel.frame.size.width + serviceLabel.frame.origin.x;
     viewFrame.origin.y = self.view.frame.size.height - 140.0f;
     viewFrame.size = CGSizeMake(self.view.frame.size.width, 22.0f);
-    BLLinkLabel *phoneLabel = [[BLLinkLabel alloc] initWithFrame:CGRectZero];
+    UILabel *phoneLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [phoneLabel setBackgroundColor:[UIColor clearColor]];
     [phoneLabel setTextColor:[UIColor blueColor]];
     [phoneLabel setHighlightedTextColor:[UIColor grayColor]];
-    [phoneLabel setDelegate:self];
     [phoneLabel setFont:[UIFont systemFontOfSize:14.0f]];
-    [phoneLabel setText:NSLocalizedString(@"FilterInfoViewControllerPhoneNumberLabel", nil)];
-    [phoneLabel setTag:999 * 1];
+	phoneLabel.text = [NSString phoneNumber];
+	phoneLabel.userInteractionEnabled = YES;
+	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(call)];
+	[phoneLabel addGestureRecognizer:tapGestureRecognizer];
     viewFrame = [phoneLabel textRectForBounds:viewFrame limitedToNumberOfLines:1];
     [phoneLabel setFrame:viewFrame];
     [self.view addSubview:phoneLabel];
+	
     [serviceLabel setFrame:CGRectMake((self.view.frame.size.width - phoneLabel.frame.size.width - serviceLabel.frame.size.width) / 2.f, serviceLabel.frame.origin.y, serviceLabel.frame.size.width, serviceLabel.frame.size.height)];
     [phoneLabel setFrame:CGRectMake(serviceLabel.frame.size.width + serviceLabel.frame.origin.x, phoneLabel.frame.origin.y, phoneLabel.frame.size.width, phoneLabel.frame.size.height)];
     //公司名称
@@ -123,18 +124,20 @@
     viewFrame = companyLabel.frame;
     viewFrame.origin.y += viewFrame.size.height + 15.0f;
     viewFrame.size = CGSizeMake(self.view.frame.size.width, 22.0f);
-    BLLinkLabel *webSiteLabel = [[BLLinkLabel alloc] initWithFrame:CGRectZero];
-    [webSiteLabel setDelegate:self];
+    UILabel *webSiteLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [webSiteLabel setHighlightedTextColor:[UIColor grayColor]];
-    [webSiteLabel setTag:999 * 2];
     [webSiteLabel setBackgroundColor:[UIColor clearColor]];
     [webSiteLabel setTextColor:[UIColor blueColor]];
     [webSiteLabel setTextAlignment:NSTextAlignmentCenter];
     [webSiteLabel setFont:[UIFont systemFontOfSize:13.0f]];
-    [webSiteLabel setText:NSLocalizedString(@"FilterInfoViewControllerWebsiteAddress", nil)];
+	webSiteLabel.userInteractionEnabled = YES;
+	webSiteLabel.text = [NSString webSiteAddress];
     viewFrame = [webSiteLabel textRectForBounds:viewFrame limitedToNumberOfLines:1];
     viewFrame.origin.x = (self.view.frame.size.width - viewFrame.size.width) / 2.0f;
     [webSiteLabel setFrame:viewFrame];
+	
+	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebSite)];
+	[webSiteLabel addGestureRecognizer:gestureRecognizer];
     [self.view addSubview:webSiteLabel];
     
     viewFrame = webSiteLabel.frame;
@@ -166,20 +169,15 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - BLLinkLabel Delegate
-- (void)linkLabel:(BLLinkLabel *)label touchesWithTag:(NSInteger)tag
+- (void)call
 {
-    if (tag == 999 * 1)
-    {
-        UIWebView *callWebView = [[UIWebView alloc] init];
-        NSURL *url = [NSURL URLWithString:@"tel://+86-0512-62925562"];
-        [callWebView loadRequest:[NSURLRequest requestWithURL:url]];
-        [self.view addSubview:callWebView];
-    }
-    else if (tag == 999 * 2)
-    {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:label.text]];
-    }
+	NSString *URLString = [NSString stringWithFormat:@"tel://%@", [NSString phoneNumber]];
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
+}
+						   
+- (void)openWebSite
+{
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString webSiteAddress]]];
 }
 
 @end
