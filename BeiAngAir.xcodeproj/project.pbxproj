@@ -111,10 +111,6 @@
 		BAFA3753194151D3001DB631 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA374A194151D3001DB631 /* MMVectorImage.m */; };
 		BAFA3758194151E9001DB631 /* BLZSIndicatorProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */; };
 		BAFA3759194151E9001DB631 /* BLZSProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */; };
-		BAFA376619415211001DB631 /* CustomNaviBarSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA375C19415211001DB631 /* CustomNaviBarSearchController.m */; };
-		BAFA376719415211001DB631 /* CustomNaviBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA375E19415211001DB631 /* CustomNaviBarView.m */; };
-		BAFA376819415211001DB631 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA376019415211001DB631 /* CustomNavigationController.m */; };
-		BAFA376919415211001DB631 /* CustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA376219415211001DB631 /* CustomViewController.m */; };
 		BAFA381519416FF9001DB631 /* BLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA381419416FF9001DB631 /* BLFilterViewController.m */; };
 		BAFA381F1941862A001DB631 /* bl_custom_hud_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */; };
 		BAFA38201941862A001DB631 /* bl_custom_hud_btn_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38181941862A001DB631 /* bl_custom_hud_btn_no@2x.png */; };
@@ -323,14 +319,6 @@
 		BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSIndicatorProgress.m; sourceTree = "<group>"; };
 		BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLZSProgressLayer.h; sourceTree = "<group>"; };
 		BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSProgressLayer.m; sourceTree = "<group>"; };
-		BAFA375B19415211001DB631 /* CustomNaviBarSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNaviBarSearchController.h; sourceTree = "<group>"; };
-		BAFA375C19415211001DB631 /* CustomNaviBarSearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNaviBarSearchController.m; sourceTree = "<group>"; };
-		BAFA375D19415211001DB631 /* CustomNaviBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNaviBarView.h; sourceTree = "<group>"; };
-		BAFA375E19415211001DB631 /* CustomNaviBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNaviBarView.m; sourceTree = "<group>"; };
-		BAFA375F19415211001DB631 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
-		BAFA376019415211001DB631 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
-		BAFA376119415211001DB631 /* CustomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomViewController.h; sourceTree = "<group>"; };
-		BAFA376219415211001DB631 /* CustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomViewController.m; sourceTree = "<group>"; };
 		BAFA381319416FF9001DB631 /* BLFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLFilterViewController.h; path = FilterInfoViewController/BLFilterViewController.h; sourceTree = "<group>"; };
 		BAFA381419416FF9001DB631 /* BLFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLFilterViewController.m; path = FilterInfoViewController/BLFilterViewController.m; sourceTree = "<group>"; };
 		BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_bg@2x.png"; sourceTree = "<group>"; };
@@ -450,7 +438,6 @@
 			isa = PBXGroup;
 			children = (
 				BAFA38161941862A001DB631 /* BLCustomHUD */,
-				BAFA375A19415211001DB631 /* CustomNavigationBar */,
 				BAFA3754194151E9001DB631 /* BLZSIndicatorProgress.h */,
 				BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */,
 				BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */,
@@ -776,21 +763,6 @@
 			path = MMProgressHUD;
 			sourceTree = "<group>";
 		};
-		BAFA375A19415211001DB631 /* CustomNavigationBar */ = {
-			isa = PBXGroup;
-			children = (
-				BAFA375B19415211001DB631 /* CustomNaviBarSearchController.h */,
-				BAFA375C19415211001DB631 /* CustomNaviBarSearchController.m */,
-				BAFA375D19415211001DB631 /* CustomNaviBarView.h */,
-				BAFA375E19415211001DB631 /* CustomNaviBarView.m */,
-				BAFA375F19415211001DB631 /* CustomNavigationController.h */,
-				BAFA376019415211001DB631 /* CustomNavigationController.m */,
-				BAFA376119415211001DB631 /* CustomViewController.h */,
-				BAFA376219415211001DB631 /* CustomViewController.m */,
-			);
-			path = CustomNavigationBar;
-			sourceTree = "<group>";
-		};
 		BAFA38161941862A001DB631 /* BLCustomHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -887,7 +859,6 @@
 			files = (
 				BAAE38C2194089EE002C97C8 /* SBJsonStreamWriterState.m in Sources */,
 				BAB3897B193DA4AD00975805 /* BLModuleInfomation.m in Sources */,
-				BAFA376619415211001DB631 /* CustomNaviBarSearchController.m in Sources */,
 				BAB3897C193DA4AD00975805 /* BLFMDBSqlite.m in Sources */,
 				BAB3897D193DA4AD00975805 /* BLDeviceErrorViewController.m in Sources */,
 				BAB3897E193DA4AD00975805 /* BLDeviceInfoEditViewController.m in Sources */,
@@ -902,7 +873,6 @@
 				BAAE38C5194089EE002C97C8 /* SBJsonWriter.m in Sources */,
 				BAB38989193DA4AD00975805 /* MMDrawerVisualState.m in Sources */,
 				BAB3898A193DA4AD00975805 /* MMExampleDrawerVisualStateManager.m in Sources */,
-				BAFA376719415211001DB631 /* CustomNaviBarView.m in Sources */,
 				BAAE38C3194089EE002C97C8 /* SBJsonTokeniser.m in Sources */,
 				BAB3898B193DA4AD00975805 /* UIViewController+MMDrawerController.m in Sources */,
 				BAB3898C193DA4AD00975805 /* iCarousel.m in Sources */,
@@ -911,7 +881,6 @@
 				BAB3898E193DA4AD00975805 /* Toast+UIView.m in Sources */,
 				BAB3898F193DA4AD00975805 /* UILabel+Attribute.m in Sources */,
 				BAB38990193DA4AD00975805 /* EGORefreshTableHeaderView.m in Sources */,
-				BAFA376919415211001DB631 /* CustomViewController.m in Sources */,
 				BAB38991193DA4AD00975805 /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
 				BAB38992193DA4AD00975805 /* FMDatabase.m in Sources */,
 				BAAE38C1194089EE002C97C8 /* SBJsonStreamWriterAccumulator.m in Sources */,
@@ -944,7 +913,6 @@
 				BAFA374E194151D3001DB631 /* MMProgressHUD.m in Sources */,
 				BAB3899C193DA4AD00975805 /* ASIFormDataRequest.m in Sources */,
 				BAB3899D193DA4AD00975805 /* ASIHTTPRequest.m in Sources */,
-				BAFA376819415211001DB631 /* CustomNavigationController.m in Sources */,
 				BAB3899E193DA4AD00975805 /* ASIInputStream.m in Sources */,
 				771F07EE196F975300B41955 /* UIColor+BeiAng.m in Sources */,
 				BAB3899F193DA4AD00975805 /* ASINetworkQueue.m in Sources */,

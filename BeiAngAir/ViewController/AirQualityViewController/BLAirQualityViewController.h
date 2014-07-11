@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomViewController.h"
 
-@interface BLAirQualityViewController : CustomViewController
+@interface BLAirQualityViewController : UIViewController
 
 @property (nonatomic, strong) BeiAngReceivedDataInfo *currentAirInfo;
 @property (nonatomic, strong) BLDeviceInfo *deviceInfo;

@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomViewController.h"
 
-@interface BLDeviceListViewController : CustomViewController
+@interface BLDeviceListViewController : UIViewController
 
 @end

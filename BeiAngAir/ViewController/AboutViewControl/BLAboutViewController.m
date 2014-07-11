@@ -10,7 +10,6 @@
 #import "UIViewController+MMDrawerController.h"
 #import "BLAppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
-#import "CustomNaviBarView.h"
 
 @interface BLAboutViewController ()
 

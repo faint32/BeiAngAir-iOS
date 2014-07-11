@@ -18,8 +18,6 @@
 #import "BLAboutViewController.h"
 #import "SBJson.h"
 #import "MMProgressHUD.h"
-#import "CustomNaviBarView.h"
-#import "CustomNavigationController.h"
 #import "BLFMDBSqlite.h"
 #import "UILabel+Attribute.h"
 #import "Toast+UIView.h"

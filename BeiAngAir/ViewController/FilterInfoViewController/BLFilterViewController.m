@@ -8,7 +8,6 @@
 
 #import "BLFilterViewController.h"
 #import "UIViewController+MMDrawerController.h"
-#import "CustomNaviBarView.h"
 #import "BLAppDelegate.h"
 #import "BLFMDBSqlite.h"
 #import "PICircularProgressView.h"
@@ -88,45 +87,23 @@
     [self.navigationController setToolbarHidden:YES];
     CGRect viewFrame = CGRectZero;
     
-    //返回按钮
-    UIImage *image = [UIImage imageNamed:@"left"];
-    viewFrame.origin.x = 0;
-    viewFrame.origin.y = 20.f;
-    viewFrame.size.width = image.size.width;
-    viewFrame.size.height = image.size.height;
-    UIButton *returnButton = [[UIButton alloc] initWithFrame:viewFrame];
-    returnButton.backgroundColor = [UIColor clearColor];
-    [returnButton setImage:image forState:UIControlStateNormal];
-    [returnButton addTarget:self action:@selector(returnButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self setNaviBarLeftBtn:returnButton];
-    
     //设置标题
-    [self setNaviBarTitleFont:[UIFont systemFontOfSize:20.f]];
-    [self setNaviBarTitle:NSLocalizedString(@"timerTitle", nil) color:RGB(0, 145, 241)];
-    
+	self.title = NSLocalizedString(@"timerTitle", nil);
+	
     //保存
-    viewFrame.origin.x = 0;
-    viewFrame.origin.y = 20.f;
-    viewFrame.size.width = self.view.frame.size.width;
-    viewFrame.size.height = image.size.height;
-    UIButton *rightButton = [[UIButton alloc] initWithFrame:viewFrame];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    [rightButton setTitle:NSLocalizedString(@"save", nil) forState:UIControlStateNormal];
-    [rightButton setTitleColor:RGB(0, 145, 241) forState:UIControlStateNormal];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
-    [rightButton addTarget:self action:@selector(saveButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self setNaviBarRightBtn:rightButton];
-    
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonClick)];
+	
     //定时取消
-    viewFrame.origin.x = 0;
-    viewFrame.origin.y = rightButton.frame.size.height + rightButton.frame.origin.y;
+	viewFrame.origin.x = 0;
+	
+	viewFrame.origin.y = 40;//TODO: + rightButton.frame.origin.y;
     viewFrame.size.width = self.view.frame.size.width;
     viewFrame.size.height = 60.f;
     _buttonCancel = [[UIButton alloc] initWithFrame:viewFrame];
     [_buttonCancel setBackgroundColor:[UIColor whiteColor]];
     [_buttonCancel setTag:1];
     //定时取消图标
-    image = [UIImage imageNamed:@"btn_check"];
+    UIImage *image = [UIImage imageNamed:@"btn_check"];
     //定时取消文字
     viewFrame.origin.x = 10;
     viewFrame.origin.y = (60 - image.size.height) / 2.f;
@@ -260,7 +237,7 @@
         _selectedView.hidden = NO;
         _labelSelected.text = [NSString stringWithFormat:@"%d%@%d%@%@",iHourPickerFrom.currentItemIndex,NSLocalizedString(@"hour", nil),iMinPickerFrom.currentItemIndex,NSLocalizedString(@"minute", nil),NSLocalizedString(@"close", nil)];
         [_labelCancel setTextColor:[UIColor blackColor]];
-        [_labelClose setTextColor:RGB(0, 145, 241)];
+		_labelCancel.textColor = [UIColor colorWithRed:0 green:145/255.0f blue:241/255.0f alpha:1.0f];
         //取消按钮
         _imageViewClose .image = imageCheck;
         CGRect viewFrame =_imageViewClose.frame;
@@ -282,7 +259,7 @@
         _selectedView.hidden = NO;
         _labelSelected.text = [NSString stringWithFormat:@"%d%@%d%@%@",iHourPickerFrom.currentItemIndex,NSLocalizedString(@"hour", nil),iMinPickerFrom.currentItemIndex,NSLocalizedString(@"minute", nil),NSLocalizedString(@"open", nil)];
         [_labelClose setTextColor:[UIColor blackColor]];
-        [_labelCancel setTextColor:RGB(0, 145, 241)];
+		_labelCancel.textColor = [UIColor colorWithRed:0 green:145/255.0f blue:241/255.0f alpha:1.0f];
         //取消按钮
         _imageViewCancel .image = imageCheck;
         CGRect viewFrame =_imageViewCancel.frame;
@@ -469,7 +446,7 @@
         //选择的隐藏
         _selectedView.hidden = NO;
         [_labelClose setTextColor:[UIColor blackColor]];
-        [_labelCancel setTextColor:RGB(0, 145, 241)];
+		_labelCancel.textColor = [UIColor colorWithRed:0 green:145/255.0f blue:241/255.0f alpha:1.0f];
         //取消按钮
         _imageViewCancel .image = imageCheck;
         CGRect viewFrame =_imageViewCancel.frame;
@@ -489,7 +466,7 @@
          //选择的显示
         _selectedView.hidden = NO;
         [_labelCancel setTextColor:[UIColor blackColor]];
-        [_labelClose setTextColor:RGB(0, 145, 241)];
+		_labelCancel.textColor = [UIColor colorWithRed:0 green:145/255.0f blue:241/255.0f alpha:1.0f];
         //取消按钮
         _imageViewClose .image = imageCheck;
         CGRect viewFrame =_imageViewClose.frame;

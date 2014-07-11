@@ -15,7 +15,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import <CommonCrypto/CommonDigest.h>
-#import "CustomNavigationController.h"
 #import "SBJson.h"
 #import <AVFoundation/AVFoundation.h>
 
@@ -120,7 +119,7 @@
     
     BLDeviceListViewController *centerViewController = [[BLDeviceListViewController alloc] init];
     
-    CustomNavigationController *centerNav = [[CustomNavigationController alloc] initWithRootViewController:centerViewController];
+    UINavigationController *centerNav = [[UINavigationController alloc] initWithRootViewController:centerViewController];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setRootViewController:centerNav];
