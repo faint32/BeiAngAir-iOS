@@ -23,7 +23,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-		self.title = NSLocalizedString(@"关于贝昂", nil);
+		self.title = NSLocalizedString(@"AboutTitle", nil);
     }
     return self;
 }
@@ -39,7 +39,7 @@
     
     //左边按钮
     CGRect viewFrame = CGRectZero;
-    UIImage *image = [UIImage imageNamed:@"left@2x"];
+    UIImage *image = [UIImage imageNamed:@"left"];
     viewFrame.origin.x = 10;
     viewFrame.origin.y = 15;
     viewFrame.size = image.size;

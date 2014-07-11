@@ -30,6 +30,7 @@
 #import "MMDrawerVisualState.h"
 #import "MMExampleDrawerVisualStateManager.h"
 #import "UIImage+Retina4.h"
+#import "BLAboutViewController.h"//TODO
 
 @interface BLDeviceListViewController () <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate>
 {
@@ -190,10 +191,13 @@
 
 - (void)addNewDevice
 {
-    [_refreshTimer invalidate];
-    _refreshTimer = nil;
-    BLSmartConfigViewController *vc = [[BLSmartConfigViewController alloc] init];
-    [self presentViewController:vc animated:YES completion:nil];
+	//TODO:
+	BLAboutViewController *aboutViewController = [[BLAboutViewController alloc] init];
+	[self presentModalViewController:aboutViewController animated:YES];
+	return;
+	
+    BLSmartConfigViewController *controller = [[BLSmartConfigViewController alloc] initWithNibName:nil bundle:nil];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)refreshDeviceList

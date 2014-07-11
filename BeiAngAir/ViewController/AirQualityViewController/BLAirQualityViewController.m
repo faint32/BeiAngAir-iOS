@@ -125,7 +125,7 @@
     [self.view addSubview:_topView];
     
     //左侧返回按钮
-    UIImage *image = [UIImage imageNamed:@"left@2x"];
+    UIImage *image = [UIImage imageNamed:@"left"];
     viewFrame.origin.x = 0;
     viewFrame.origin.y = 15;
     viewFrame.size = image.size;
@@ -136,7 +136,7 @@
     [self setNaviBarLeftBtn:leftButton];
     
     //右侧关于界面
-    image = [UIImage imageNamed:@"home_logo@2x"];
+    image = [UIImage imageNamed:@"home_logo"];
     viewFrame.origin.x = self.view.frame.size.width - image.size.width / 2.f - 10;
     viewFrame.origin.y = leftButton.frame.origin.y;
     viewFrame.size.width = image.size.width / 2.f;
@@ -209,7 +209,7 @@
     [self.view addSubview:bottomView];
     
     //风速
-    image = [UIImage imageNamed:@"wind@2x"];
+    image = [UIImage imageNamed:@"wind"];
     viewFrame.origin.x =  _address.frame.origin.x;
     viewFrame.origin.y = 10;
     viewFrame.size = CGSizeMake(47.f, 47.f);
@@ -220,7 +220,7 @@
     [bottomView addSubview:speedButton];
     
     //空气质量指数
-    UIImage *timeImage = [UIImage imageNamed:@"time@2x"];
+    UIImage *timeImage = [UIImage imageNamed:@"time"];
     viewFrame.origin.x =  speedButton.frame.origin.x + speedButton.frame.size.width;
     viewFrame.origin.y = 10;
     viewFrame.size.width = self.view.frame.size.width - (47.f + _address.frame.origin.x) * 2;
@@ -254,14 +254,14 @@
     NSLog(@"switchStatus = %d", self.currentAirInfo.switchStatus);
     if(self.currentAirInfo.switchStatus)
     {
-        pathOnOff = @"power_on@2x";
-        pathOnOffClick = @"power_on_press@2x";
+        pathOnOff = @"power_on";
+        pathOnOffClick = @"power_on_press";
         _switchButton.selected = YES;
     }
     else
     {
-        pathOnOff = @"power_off@2x";
-        pathOnOffClick = @"power_off_press@2x";
+        pathOnOff = @"power_off";
+        pathOnOffClick = @"power_off_press";
         _switchButton.selected = NO;
     }
     UIImage *imageSwitchState = [UIImage imageNamed:pathOnOff];
@@ -280,14 +280,14 @@
     _handOrAutoButton  = [UIButton buttonWithType:UIButtonTypeCustom];
     //判断手动还是自动按钮
     if(self.currentAirInfo.autoOrHand) {
-        pathOnOff = @"auto_on@2x";
-        pathOnOffClick = @"auto_on_press@2x";
+        pathOnOff = @"auto_on";
+        pathOnOffClick = @"auto_on_press";
         _handOrAutoButton.selected = YES;
     }
     else
     {
-        pathOnOff = @"hand_on@2x";
-        pathOnOffClick = @"hand_on_press@2x";
+        pathOnOff = @"hand_on";
+        pathOnOffClick = @"hand_on_press";
         _handOrAutoButton.selected = NO;
     }
     imageSwitchState = [UIImage imageNamed:pathOnOff];
@@ -326,14 +326,14 @@
     //判断睡眠按钮
     if(self.currentAirInfo.sleepState)
     {
-        pathOnOff = @"night_on@2x";
-        pathOnOffClick = @"night_on_press@2x";
+        pathOnOff = @"night_on";
+        pathOnOffClick = @"night_on_press";
         sleepButton.selected = YES;
     }
     else
     {
-        pathOnOff = @"night_off@2x";
-        pathOnOffClick = @"night_off_press@2x";
+        pathOnOff = @"night_off";
+        pathOnOffClick = @"night_off_press";
         sleepButton.selected = NO;
     }
     imageSwitchState = [UIImage imageNamed:pathOnOff];
@@ -375,14 +375,14 @@
     //判断儿童锁按钮
     if(self.currentAirInfo.childLockState)
     {
-        pathOnOff = @"lock_on@2x";
-        pathOnOffClick = @"lock_on_press@2x";
+        pathOnOff = @"lock_on";
+        pathOnOffClick = @"lock_on_press";
         _childLockButton.selected = YES;
     }
     else
     {
-        pathOnOff = @"lock_off@2x";
-        pathOnOffClick = @"lock_off_press@2x";
+        pathOnOff = @"lock_off";
+        pathOnOffClick = @"lock_off_press";
         _childLockButton.selected = NO;
     }
     imageSwitchState = [UIImage imageNamed:pathOnOff];
@@ -467,7 +467,7 @@
         [view addSubview:label];
         
         //加热
-        UIImage *image = [UIImage imageNamed:@"point3@2x"];
+        UIImage *image = [UIImage imageNamed:@"point3"];
         UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(40, label.frame.size.height+label.frame.origin.y, self.view.frame.size.width - 80, 120)];
         [slider setBackgroundColor:[UIColor clearColor]];
         [slider setMaximumTrackTintColor:[UIColor grayColor]];
@@ -475,7 +475,7 @@
         [slider setMaximumValue:3.0f];
         [slider setMinimumValue:1.0f];
         [slider setValue:self.currentAirInfo.gearState];
-        image = [UIImage imageNamed:@"seekbar_btn@2x"];
+        image = [UIImage imageNamed:@"seekbar_btn"];
         [slider setThumbImage:image forState:UIControlStateNormal];
         [slider setTag:3];
         [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventTouchUpInside];
@@ -616,7 +616,7 @@
             //判断空气质量级别
             if([appDelegate.airQualityInfoClass.airQualityLevel isEqualToString:@"4"])
             {
-                UIColor *color = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weather_layout_color_bg@2x.png"]];
+                UIColor *color = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weather_layout_color_bg.png"]];
                 _topView.backgroundColor = color;
             }
             [timer invalidate];
@@ -713,15 +713,15 @@
                     //手动或者自动按钮
                     if(self.currentAirInfo.autoOrHand)
                     {
-                        stringSwitchState = @"auto_on@2x";
-                        stringSwitchClick = @"auto_on_press@2x";
+                        stringSwitchState = @"auto_on";
+                        stringSwitchClick = @"auto_on_press";
                         [_handOrAutoLabel setText:NSLocalizedString(@"Automatic", nil)];
                         button.selected = YES;
                     }
                     else
                     {
-                        stringSwitchState = @"hand_on@2x";
-                        stringSwitchClick = @"hand_on_press@2x";
+                        stringSwitchState = @"hand_on";
+                        stringSwitchClick = @"hand_on_press";
                         [_handOrAutoLabel setText:NSLocalizedString(@"Manual", nil)];
                         button.selected = NO;
                     }
@@ -731,14 +731,14 @@
                     //判断开关按钮
                     if(self.currentAirInfo.switchStatus)
                     {
-                        stringSwitchState = @"power_on@2x";
-                        stringSwitchClick = @"power_on_press@2x";
+                        stringSwitchState = @"power_on";
+                        stringSwitchClick = @"power_on_press";
                         button.selected = YES;
                     }
                     else
                     {
-                        stringSwitchState = @"power_off@2x";
-                        stringSwitchClick = @"power_off_press@2x";
+                        stringSwitchState = @"power_off";
+                        stringSwitchClick = @"power_off_press";
                         button.selected = NO;
                     }
                 }
@@ -747,15 +747,15 @@
                     //判断睡眠按钮
                     if(self.currentAirInfo.sleepState)
                     {
-                        stringSwitchState = @"night_on@2x";
-                        stringSwitchClick = @"night_on_press@2x";
+                        stringSwitchState = @"night_on";
+                        stringSwitchClick = @"night_on_press";
                         [_sleepLabel setText:NSLocalizedString(@"SleepOn", nil)];
                         button.selected = YES;
                     }
                     else
                     {
-                        stringSwitchState = @"night_off@2x";
-                        stringSwitchClick = @"night_off_press@2x";
+                        stringSwitchState = @"night_off";
+                        stringSwitchClick = @"night_off_press";
                         [_sleepLabel setText:NSLocalizedString(@"SleepOff", nil)];
                         button.selected = NO;
                     }
@@ -765,15 +765,15 @@
                     //判断儿童锁按钮
                     if(self.currentAirInfo.childLockState)
                     {
-                        stringSwitchState = @"lock_on@2x";
-                        stringSwitchClick = @"lock_on_press@2x";
+                        stringSwitchState = @"lock_on";
+                        stringSwitchClick = @"lock_on_press";
                         [_childLockLabel setText:NSLocalizedString(@"TheChildLock", nil)];
                         button.selected = YES;
                     }
                     else
                     {
-                        stringSwitchState = @"lock_off@2x";
-                        stringSwitchClick = @"lock_off_press@2x";
+                        stringSwitchState = @"lock_off";
+                        stringSwitchClick = @"lock_off_press";
                         [_childLockLabel setText:NSLocalizedString(@"TheChildLockOff", nil)];
                         button.selected = NO;
                     }
@@ -1013,7 +1013,7 @@
                 //判断空气质量级别
                 if([appDelegate.airQualityInfoClass.airQualityLevel isEqualToString:@"4"])
                 {
-                    UIColor *color = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weather_layout_color_bg@2x.png"]];
+                    UIColor *color = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weather_layout_color_bg.png"]];
                     _topView.backgroundColor = color;
                 }
             }
