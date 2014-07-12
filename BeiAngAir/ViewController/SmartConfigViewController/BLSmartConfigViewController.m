@@ -228,7 +228,6 @@
 	}
 }
 
-/*Start config*/
 - (void)startConfig
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -242,7 +241,6 @@
     });
 }
 
-/*Cancel config*/
 - (void)cancelConfig
 {
 	NSDictionary *dictionary = [NSDictionary dictionaryCancelEashConfig];
@@ -251,7 +249,7 @@
 }
 
 #pragma marks -- UIAlertViewDelegate --
-//根据被点击按钮的索引处理点击事件
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     [self dismiss];

@@ -451,6 +451,8 @@
 		2FAE512518F7BDEB0068893E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2FAE519F18F7E1950068893E /* BLSmartConfigViewController.h */,
+				2FAE51A018F7E1950068893E /* BLSmartConfigViewController.m */,
 				2FAE519918F7D4F00068893E /* BLDeviceListViewController.h */,
 				2FAE519A18F7D4F00068893E /* BLDeviceListViewController.m */,
 				BAAE389A1940854A002C97C8 /* BLAboutViewController.h */,
@@ -463,8 +465,6 @@
 				BAFA381419416FF9001DB631 /* BLFilterViewController.m */,
 				2FAE51DA18F81D3D0068893E /* BLAirQualityViewController.h */,
 				2FAE51DB18F81D3D0068893E /* BLAirQualityViewController.m */,
-				2FAE519F18F7E1950068893E /* BLSmartConfigViewController.h */,
-				2FAE51A018F7E1950068893E /* BLSmartConfigViewController.m */,
 			);
 			name = Controllers;
 			path = ViewController;

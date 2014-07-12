@@ -8,17 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
-	BROADLINK_SP1 = 0,
-	BROADLINK_BeiAngAir = 13,
-	BROADLINK_TCLAir = 7,
-	BROADLINK_RM1 = 10000,
-	BROADLINK_SP2 = 10001,
-	BROADLINK_RM2 = 10002,
-	BROADLINK_ROUTE1 = 10003,
-	BROADLINK_A1 = 10004
-};
-
 @interface BLDeviceInfo : NSObject
 
 @property (nonatomic, strong) NSString *mac;
@@ -35,7 +24,6 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 //@property (nonatomic, assign) long infoID;//设备在数据库中的id号，关联其他表
 @property (nonatomic, assign) float longitude;//经度
 @property (nonatomic, assign) float latitude;//纬度
-@property (nonatomic, assign) int isNew;
 @property (nonatomic, assign) long order;
 @property (nonatomic, assign) int switchState;
 @property (nonatomic, strong) NSString *city;
@@ -49,8 +37,9 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	  terminal_id:(int)terminal_id sub_device:(int)sub_device lock:(int)lock;
 - (void)persistence;
 - (void)remove;
-//+ (instancetype)latestOne;
+- (BOOL)hadPersistenced;
 + (instancetype)deviceByMAC:(NSString *)MAC;
 + (NSArray *)allDevices;
+- (BOOL)isBeiAngAirDevice;
 
 @end

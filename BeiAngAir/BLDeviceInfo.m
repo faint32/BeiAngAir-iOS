@@ -6,6 +6,17 @@
 //  Copyright (c) 2014 BroadLink. All rights reserved.
 //
 
+typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
+	BROADLINK_SP1 = 0,
+	BROADLINK_BeiAngAir = 13,
+	BROADLINK_TCLAir = 7,
+	BROADLINK_RM1 = 10000,
+	BROADLINK_SP2 = 10001,
+	BROADLINK_RM2 = 10002,
+	BROADLINK_ROUTE1 = 10003,
+	BROADLINK_A1 = 10004
+};
+
 #import "BLDeviceInfo.h"
 
 #define kDevices @"devices"
@@ -20,7 +31,6 @@
 
 #define kLongitude @"longitude"
 #define kLatitude @"latitude"
-#define kIsNew @"isNew"
 #define kOrder @"order"
 #define kSwitchState @"swtichState"
 #define kCity @"city"
@@ -65,7 +75,6 @@
 	
 	attributes[kLongitude] = @(self.longitude);
 	attributes[kLatitude] = @(self.latitude);
-	attributes[kIsNew] = @(self.isNew);
 	attributes[kOrder] = @(self.order);
 	attributes[kSwitchState] = @(self.switchState);
 	attributes[kCity] = self.city ?: @"";
@@ -151,7 +160,6 @@
 	
 	device.longitude = [attributes[kLongitude] floatValue];
 	device.latitude = [attributes[kLatitude] floatValue];
-	device.isNew = [attributes[kIsNew] integerValue];
 	device.order = [attributes[kOrder] longValue];
 	device.switchState = [attributes[kSwitchState] integerValue];
 	device.city = attributes[kCity];
@@ -160,6 +168,11 @@
 	device.remoteIP = attributes[kRemoteIP];
 	device.qrInfo = attributes[kQRInfo];
 	return device;
+}
+
+- (BOOL)isBeiAngAirDevice
+{
+	return [self.type isEqualToString:[NSString stringWithFormat:@"%d", BROADLINK_BeiAngAir]];
 }
 
 - (NSString *)description

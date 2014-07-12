@@ -53,6 +53,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+		self.title = NSLocalizedString(@"DeviceListViewControllerTitle", nil);
     }
     return self;
 }
@@ -157,6 +158,8 @@
         [_tableView addSubview:refreshView];  
         _refreshTableView = refreshView;  
     }
+	
+	[self refreshDeviceList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -167,10 +170,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-	
-	//TODO: 先去掉定时刷新
-    //_refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(refreshDeviceList) userInfo:nil repeats:YES];
-    //[_refreshTimer fire];
 }
 
 - (void)addNewDevice
@@ -187,14 +186,11 @@
         NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-        if (code == 0)
-        {
+        if (code == 0) {
             NSMutableArray *array = [[NSMutableArray alloc] initWithArray:_deviceArray];
             NSArray *list = [[response objectFromJSONData] objectForKey:@"list"];
-            int count = list.count;
-            NSLog(@"count = %d",count);
-            for (int i=0; i<count; i++)
-            {
+			
+            for (int i = 0; i < list.count; i++) {
                 BLDeviceInfo *info = [[BLDeviceInfo alloc] init];
                 NSDictionary *item = [list objectAtIndex:i];
                 [info setMac:[item objectForKey:@"mac"]];
@@ -205,29 +201,35 @@
                 [info setTerminal_id:[[item objectForKey:@"id"] intValue]];
                 [info setSub_device:[[item objectForKey:@"subdevice"] intValue]];
                 [info setKey:[item objectForKey:@"key"]];
-                /*Add this device to network thread.*/
-                //判断是否重复的数据
-                BOOL tmp = NO;
-                for (int j = 0; j < array.count; j++) {
-                    BLDeviceInfo *infoTmp = [array objectAtIndex:j];
-                    if([infoTmp.mac isEqualToString:info.mac])
-                    {
-                        tmp = YES;
-                        if(![infoTmp.name isEqualToString:info.name] || infoTmp.lock != info.lock)
-                        {
-							[info persistence];
-//                            [array replaceObjectAtIndex:j withObject:info];
-//                            BLModuleInfomation *moduleInfomation = [[BLModuleInfomation alloc] init];
-//                            moduleInfomation.info = info;
-//                            [sqlite insertOrUpdateModuleInfo:moduleInfomation];
-                        }
-                        break;
-                    }
-                }
-                NSLog(@"mac = %@",info.mac);
+				
+				//[info persistence];
+				
+				if (![info hadPersistenced]) {
+					if ([info isBeiAngAirDevice]) {
+						NSString *imagePath = [NSString deviceAvatarPathWithMAC:info.mac];
+						UIImage *image = [UIImage imageNamed:@"device_icon"];
+						[UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
+					}
+				}
+				
+
+				
+//                /*Add this device to network thread.*/
+//                //判断是否重复的数据
+//                BOOL tmp = NO;
+//                for (int j = 0; j < array.count; j++) {
+//                    BLDeviceInfo *infoTmp = [array objectAtIndex:j];
+//                    if([infoTmp.mac isEqualToString:info.mac]) {
+//                        tmp = YES;
+//                        if(![infoTmp.name isEqualToString:info.name] || infoTmp.lock != info.lock) {
+//							[info persistence];
+//                        }
+//                        break;
+//                    }
+//                }
+//                NSLog(@"mac = %@",info.mac);
                 //不存在的场合
-                if(!tmp)
-                {
+                if(!tmp) {
                     //加入数据库
                     [self getNewModuleInfo:info];
                     [self addDeviceInfo:info];
@@ -238,17 +240,14 @@
                 @synchronized(_statusArray)
                 {
                     BOOL exist = NO;
-                    for (int j=0; j<_statusArray.count; j++)
-                    {
+                    for (int j = 0; j < _statusArray.count; j++) {
                         BLAirQualityInfo *stInfo = [_statusArray objectAtIndex:j];
-                        if ([stInfo.mac isEqualToString:info.mac])
-                        {
+                        if ([stInfo.mac isEqualToString:info.mac]) {
                             exist = YES;
                             break;
                         }
                     }
-                    if(!exist)
-                    {
+                    if(!exist) {
                         BLAirQualityInfo *stInfo = [[BLAirQualityInfo alloc] init];
                         [stInfo setMac:info.mac];
                         [stInfo setHour:0];
@@ -268,6 +267,8 @@
             });
         }
     });
+	
+	[self performSelector:@selector(refreshDeviceList) withObject:nil afterDelay:5.0];
 }
 
 /*Refresh device list.*/
@@ -326,21 +327,19 @@
 
 - (void)getNewModuleInfo:(BLDeviceInfo *)info
 {
-    if (![info.type isEqualToString:[NSString stringWithFormat:@"%d",BROADLINK_BeiAngAir]])
-        return;
-	NSString *imagePath = [NSString deviceAvatarPathWithMAC:info.mac];
-	UIImage *image = [UIImage imageNamed:@"device_icon"];
-	[UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
+//    if (![info.type isEqualToString:[NSString stringWithFormat:@"%d",BROADLINK_BeiAngAir]])
+//        return;
+//	NSString *imagePath = [NSString deviceAvatarPathWithMAC:info.mac];
+//	UIImage *image = [UIImage imageNamed:@"device_icon"];
+//	[UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
 	
 //    infoID = [sqlite getMaxInfoID] + 1;
 //	BLModuleInfomation *moduleInfo;
 //    moduleInfo = [[BLModuleInfomation alloc] init];
 //    [moduleInfo setInfo:info];
 //    [moduleInfo setInfoID:infoID];
-//    [moduleInfo setIsNew:1];
 //    [sqlite insertOrUpdateModuleInfo:moduleInfo];
 	
-	info.isNew = 1;
 	[info persistence];
 }
 
