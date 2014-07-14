@@ -91,8 +91,7 @@
 //    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 //    [headerView addSubview:backButton];
 	
-	NSString *path = [NSString deviceAvatarPathWithMAC:self.deviceInfo.mac];
-	UIImage *image = [UIImage imageWithContentsOfFile:path];
+	UIImage *image = [self.deviceInfo avatar];
     viewFrame = headerView.frame;
     viewFrame.origin.y += viewFrame.size.height + 20.0f;
     viewFrame.origin.x = (self.view.frame.size.width - 62.5) * 0.5f;
@@ -291,8 +290,8 @@
     });
 }
 
-#pragma mark -
 #pragma mark - UIImagePickerController Delegate
+
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -301,23 +300,17 @@
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     NSData *data = nil;
     
-    if ([mediaType isEqualToString:@"public.image"])
-    {
+    if ([mediaType isEqualToString:@"public.image"]) {
         UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         UIImage *scaleImage = [self scaleImage:originImage toScale:250.0f/originImage.size.width];
         
-        if (UIImagePNGRepresentation(scaleImage) == nil)
-        {
+		if (UIImagePNGRepresentation(scaleImage) == nil) {
             data = UIImageJPEGRepresentation(scaleImage, 1);
-        }
-        else
-        {
+        } else {
             data = UIImagePNGRepresentation(scaleImage);
         }
         UIImage *image = [UIImage imageWithData:data];
-        //设置图片
         [_addButton setImage:image forState:UIControlStateNormal];
-        // 拷贝图片
 		NSString *imagePath = [NSString deviceAvatarPathWithMAC:self.deviceInfo.mac];
         [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
     }
@@ -334,39 +327,27 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIImagePickerController * imagePicker = [[UIImagePickerController alloc] init];
-    [imagePicker setDelegate:self];
-    
-    switch (buttonIndex)
-    {
-        case 0:
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-            {
-                imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            }
-            else
-            {
-                [self.view makeToast:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:TOAST_DURATION position:@"center"];
-            }
-            [self presentViewController:imagePicker animated:YES completion:nil];
-            break;
-        case 1:
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
-            {
-                imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            }
-            else
-            {
-                [self.view makeToast:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:TOAST_DURATION position:@"center"];
-            }
-            [self presentViewController:imagePicker animated:YES completion:nil];
-            break;
-        default:
-            break;
-    }
+	imagePicker.delegate = self;
+	if (buttonIndex == 0) {
+		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+			imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+		}
+		else {
+			[self.view makeToast:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:TOAST_DURATION position:@"center"];
+		}
+		[self presentViewController:imagePicker animated:YES completion:nil];
+	} else if (buttonIndex == 1) {
+		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+			imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+		} else {
+			[self.view makeToast:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:TOAST_DURATION position:@"center"];
+		}
+		[self presentViewController:imagePicker animated:YES completion:nil];
+	}
 }
 
-#pragma mark -
 #pragma mark - scaleImage
+
 - (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 {
     UIGraphicsBeginImageContext(CGSizeMake(image.size.width * scaleSize,image.size.height * scaleSize));

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BLAirQualityInfo.h"
 
 @interface BLDeviceInfo : NSObject
 
@@ -18,6 +19,8 @@
 @property (nonatomic, assign) int terminal_id;
 @property (nonatomic, assign) int sub_device;
 @property (nonatomic, strong) NSString *key;
+
+@property (nonatomic, strong) BLAirQualityInfo *airQualityInfo;
 
 //module
 //@property (nonatomic, strong) BLDeviceInfo *info;
@@ -41,5 +44,6 @@
 + (instancetype)deviceByMAC:(NSString *)MAC;
 + (NSArray *)allDevices;
 - (BOOL)isBeiAngAirDevice;
+- (UIImage *)avatar;
 
 @end

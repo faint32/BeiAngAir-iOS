@@ -10,7 +10,6 @@
 
 @interface BLAirQualityInfo : NSObject
 
-@property (nonatomic, strong) NSString *mac;
 @property (nonatomic, assign) int hour;
 @property (nonatomic, assign) int minute;
 @property (nonatomic, assign) int sleepState;

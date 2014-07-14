@@ -53,6 +53,8 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 		self.terminal_id = terminal_id;
 		self.sub_device = sub_device;
 		self.lock = lock;
+		
+		self.airQualityInfo = [[BLAirQualityInfo alloc] init];
 	}
 	return self;
 }
@@ -117,6 +119,7 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 		NSDictionary *attributes = (NSDictionary *)obj;
 		if ([attributes[kMac] isEqualToString:self.mac]) {
 			hadPersistenced = YES;
+			*stop = YES;
 		}
 	}];
 	return hadPersistenced;
@@ -173,6 +176,16 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 - (BOOL)isBeiAngAirDevice
 {
 	return [self.type isEqualToString:[NSString stringWithFormat:@"%d", BROADLINK_BeiAngAir]];
+}
+
+- (UIImage *)avatar
+{
+	NSString *path = [NSString deviceAvatarPathWithMAC:self.mac];
+	UIImage *image = [UIImage imageWithContentsOfFile:path];
+	if (image) {
+		return image;
+	}
+	return [UIImage imageNamed:@"device_icon"];
 }
 
 - (NSString *)description

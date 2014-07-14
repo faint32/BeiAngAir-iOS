@@ -25,29 +25,20 @@
 #import "MMDrawerVisualState.h"
 #import "MMExampleDrawerVisualStateManager.h"
 #import "UIImage+Retina4.h"
-#import "BLAboutViewController.h"//TODO
 
 @interface BLDeviceListViewController () <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate>
-{
-    dispatch_queue_t networkQueue;
-    EGORefreshTableHeaderView *_refreshTableView;  
-    BOOL _reloading;
-}
 
+@property (nonatomic, strong) EGORefreshTableHeaderView *refreshTableView;
+@property (nonatomic, assign) BOOL reloading;
+@property (nonatomic, assign) dispatch_queue_t networkQueue;
 @property (nonatomic, strong) BLNetwork *networkAPI;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *statusArray;
-@property (nonatomic, strong) NSArray *deviceArray;
+@property (nonatomic, strong) NSArray *devices;
 
 @end
 
 @implementation BLDeviceListViewController
 
-- (void)dealloc
-{
-    [super dealloc];
-    dispatch_release(networkQueue);
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,22 +52,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    _networkAPI = [[BLNetwork alloc] init];
-//    _beiAngAirNetwork = [BeiAngNetworkUnit sharedNetworkAPI];
-    networkQueue = dispatch_queue_create("BLDeviceListViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
     [MMProgressHUD setDisplayStyle:MMProgressHUDDisplayStylePlain];
     [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
-	
-	_deviceArray = [BLDeviceInfo allDevices];
-//    NSMutableArray *muTableArray = [[NSMutableArray alloc] initWithArray:[sqlite getAllModuleInfo]];
-//    for (BLModuleInfomation *tmp in muTableArray) {
-//        BLDeviceInfo *deviceInfo = tmp.info;
-//		NSLog(@"deviceInfo: %@", deviceInfo);
-//        [_deviceArray addObject:deviceInfo];
-//    }
-    _statusArray = [[NSMutableArray alloc] init];
-    //背景颜色
+	//背景颜色
     [self.view setBackgroundColor:RGB(246.0f, 246.0f, 246.0f)];
     
     CGRect viewFrame = CGRectZero;
@@ -102,10 +80,10 @@
     [headerView addSubview:titleLabel];
     
     //底部的添加设备
-    UIButton *btnAddDevice=[[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-43, self.view.frame.size.width, 43)];
+    UIButton *btnAddDevice = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-43, self.view.frame.size.width, 43)];
     //button(ALL,Senior,Ordinary)显示数据
     //背景颜色
-    btnAddDevice.backgroundColor=[UIColor whiteColor];
+    btnAddDevice.backgroundColor = [UIColor whiteColor];
     //button增加方法
     [btnAddDevice addTarget:self action:@selector(addNewDevice) forControlEvents:UIControlEventTouchUpInside];
     viewFrame.origin.x = self.view.frame.size.width / 2.f - 70;
@@ -139,7 +117,7 @@
     viewFrame.origin.y = headerView.frame.origin.y + headerView.frame.size.height;
     viewFrame.size.width = self.view.frame.size.width;
     viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y - 44.0f;
-    _tableView = [[UITableView alloc] initWithFrame:viewFrame style:UITableViewStylePlain];
+	_tableView = [[UITableView alloc] initWithFrame:viewFrame style:UITableViewStyleGrouped];
     [_tableView setBackgroundColor:[UIColor clearColor]];
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
@@ -149,27 +127,22 @@
     [_tableView.layer setBorderColor:RGBA(0x00, 0x00, 0x00, 0.3f).CGColor];
     [_tableView.layer setBorderWidth:0.5f];
     [self.view addSubview:_tableView];
-    
-    if (_refreshTableView == nil) {  
-        //初始化下拉刷新控件  
-        EGORefreshTableHeaderView *refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - _tableView.bounds.size.height, _tableView.frame.size.width, _tableView.bounds.size.height)];  
-        refreshView.delegate = self;  
-        //将下拉刷新控件作为子控件添加到_tableView中  
-        [_tableView addSubview:refreshView];  
-        _refreshTableView = refreshView;  
-    }
+
+	EGORefreshTableHeaderView *refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - _tableView.bounds.size.height, _tableView.frame.size.width, _tableView.bounds.size.height)];
+	refreshView.delegate = self;
+	[_tableView addSubview:refreshView];
+	_refreshTableView = refreshView;
 	
+	_networkAPI = [[BLNetwork alloc] init];
+	_networkQueue = dispatch_queue_create("BLDeviceListViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
+	_devices = [BLDeviceInfo allDevices];
 	[self refreshDeviceList];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)dealloc
 {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
+	[super dealloc];
+	dispatch_release(_networkQueue);
 }
 
 - (void)addNewDevice
@@ -181,15 +154,14 @@
 
 - (void)refreshDeviceList
 {
-    dispatch_async(networkQueue, ^{
+    dispatch_async(_networkQueue, ^{
 		NSDictionary *dictionary = [NSDictionary dictionaryProbeList];
         NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0) {
-            NSMutableArray *array = [[NSMutableArray alloc] initWithArray:_deviceArray];
             NSArray *list = [[response objectFromJSONData] objectForKey:@"list"];
-			
+			NSLog(@"prob count: %d", list.count);
             for (int i = 0; i < list.count; i++) {
                 BLDeviceInfo *info = [[BLDeviceInfo alloc] init];
                 NSDictionary *item = [list objectAtIndex:i];
@@ -201,151 +173,78 @@
                 [info setTerminal_id:[[item objectForKey:@"id"] intValue]];
                 [info setSub_device:[[item objectForKey:@"subdevice"] intValue]];
                 [info setKey:[item objectForKey:@"key"]];
-				
-				//[info persistence];
+				NSLog(@"info: %@", info);
 				
 				if (![info hadPersistenced]) {
 					if ([info isBeiAngAirDevice]) {
-						NSString *imagePath = [NSString deviceAvatarPathWithMAC:info.mac];
-						UIImage *image = [UIImage imageNamed:@"device_icon"];
-						[UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
+						[info persistence];
+						[self addDeviceInfo:info];
 					}
 				}
-				
+			}
 
-				
-//                /*Add this device to network thread.*/
-//                //判断是否重复的数据
-//                BOOL tmp = NO;
-//                for (int j = 0; j < array.count; j++) {
-//                    BLDeviceInfo *infoTmp = [array objectAtIndex:j];
-//                    if([infoTmp.mac isEqualToString:info.mac]) {
-//                        tmp = YES;
-//                        if(![infoTmp.name isEqualToString:info.name] || infoTmp.lock != info.lock) {
-//							[info persistence];
-//                        }
-//                        break;
-//                    }
-//                }
-//                NSLog(@"mac = %@",info.mac);
-                //不存在的场合
-                if(!tmp) {
-                    //加入数据库
-                    [self getNewModuleInfo:info];
-                    [self addDeviceInfo:info];
-                    [array addObject:info];
-                }
-                
-                //添加到设备信息列表中
-                @synchronized(_statusArray)
-                {
-                    BOOL exist = NO;
-                    for (int j = 0; j < _statusArray.count; j++) {
-                        BLAirQualityInfo *stInfo = [_statusArray objectAtIndex:j];
-                        if ([stInfo.mac isEqualToString:info.mac]) {
-                            exist = YES;
-                            break;
-                        }
-                    }
-                    if(!exist) {
-                        BLAirQualityInfo *stInfo = [[BLAirQualityInfo alloc] init];
-                        [stInfo setMac:info.mac];
-                        [stInfo setHour:0];
-                        [stInfo setSleepState:0];
-                        [stInfo setMinute:0];
-                        [stInfo setSwitchState:0];
-                        [stInfo setIsRefresh:NO];
-                        [_statusArray addObject:stInfo];
-                    }
-                }
-            }
-            /*Refresh tableView*/
             dispatch_async(dispatch_get_main_queue(), ^{
-                _deviceArray = array;
+                _devices = [BLDeviceInfo allDevices];
                 [self getDeviceInfoList];
                 [self.tableView reloadData];
             });
         }
     });
 	
+	//TODO: will crash
 	[self performSelector:@selector(refreshDeviceList) withObject:nil afterDelay:5.0];
 }
 
 /*Refresh device list.*/
 - (void)getDeviceInfoList
 {
-    int i;
-    @synchronized(_statusArray) {
-        for (i=0; i<_statusArray.count; i++) {
-            BLAirQualityInfo *stInfo = [_statusArray objectAtIndex:i];
-            if (!stInfo.isRefresh) {
-				NSDictionary *dictionary = [NSDictionary dictionaryDeviceStateWithMAC:stInfo.mac];
-                NSData *requestData = [dictionary JSONData];
-                NSData *responseData = [_networkAPI requestDispatch:requestData];
-				NSString *state = @"";
-                if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
-                    state = [[responseData objectFromJSONData] objectForKey:@"status"];
-                }
-                //设备不在线
-                if ([state isEqualToString:@"OFFLINE"] || [state isEqualToString:@"NOT_INIT"]) {
-                    stInfo.hour = 0;
-                    stInfo.minute = 0;
-                    [stInfo setIsRefresh:NO];
-                    [stInfo setSleepState:0];
-                    [stInfo setSwitchState:0];
-                    [_statusArray replaceObjectAtIndex:i withObject:stInfo];
-                    [_tableView reloadData];
-                } else if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
-                    dispatch_async(networkQueue, ^{
-                        //数据透传
-						NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:stInfo.mac];
-                        NSData *sendData = [dictionary JSONData];
-                        NSData *response = [_networkAPI requestDispatch:sendData];
-                        int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-                        if (code == 0) {
-                            NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-                            //判断数据是否相等
-                            if(stInfo.sleepState != [array[7] intValue] || stInfo.switchState != [array[4] intValue] || stInfo.hour != [array[9] intValue] || stInfo.minute != [array[10] intValue])
-                            {
-                                stInfo.hour = [array[9] intValue];
-                                stInfo.minute = [array[10] intValue];
-                                stInfo.sleepState = [array[7] intValue];
-                                stInfo.isRefresh = YES;
-                                stInfo.switchState = [array[4] intValue];
-                                [_statusArray replaceObjectAtIndex:i withObject:stInfo];
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    [_tableView reloadData];
-                                });
-                            }
-                        }
-                    });
-                }
-            }
-        }
-    }
-}
-
-- (void)getNewModuleInfo:(BLDeviceInfo *)info
-{
-//    if (![info.type isEqualToString:[NSString stringWithFormat:@"%d",BROADLINK_BeiAngAir]])
-//        return;
-//	NSString *imagePath = [NSString deviceAvatarPathWithMAC:info.mac];
-//	UIImage *image = [UIImage imageNamed:@"device_icon"];
-//	[UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
-	
-//    infoID = [sqlite getMaxInfoID] + 1;
-//	BLModuleInfomation *moduleInfo;
-//    moduleInfo = [[BLModuleInfomation alloc] init];
-//    [moduleInfo setInfo:info];
-//    [moduleInfo setInfoID:infoID];
-//    [sqlite insertOrUpdateModuleInfo:moduleInfo];
-	
-	[info persistence];
+	@synchronized(_devices) {
+		for (int i = 0; i < _devices.count; i++) {
+			BLDeviceInfo *device = _devices[i];
+			BLAirQualityInfo *airQualityInfo = device.airQualityInfo;
+			
+			NSDictionary *dictionary = [NSDictionary dictionaryDeviceStateWithMAC:device.mac];
+			NSData *requestData = [dictionary JSONData];
+			NSData *responseData = [_networkAPI requestDispatch:requestData];
+			NSString *state = @"";
+			if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
+				state = [[responseData objectFromJSONData] objectForKey:@"status"];
+			}
+			
+			if ([state isEqualToString:@"OFFLINE"] || [state isEqualToString:@"NOT_INIT"]) {
+				airQualityInfo.hour = 0;
+				airQualityInfo.minute = 0;
+				airQualityInfo.isRefresh = NO;
+				airQualityInfo.sleepState = 0;
+				airQualityInfo.switchState = 0;
+				[_tableView reloadData];
+			} else if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
+				dispatch_async(_networkQueue, ^{
+					//数据透传
+					NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:device.mac];
+					NSData *sendData = [dictionary JSONData];
+					NSData *response = [_networkAPI requestDispatch:sendData];
+					int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+					if (code == 0) {
+						NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
+						airQualityInfo.hour = [array[9] intValue];
+						airQualityInfo.minute = [array[10] intValue];
+						airQualityInfo.sleepState = [array[7] intValue];
+						airQualityInfo.isRefresh = YES;
+						airQualityInfo.switchState = [array[4] intValue];
+						dispatch_async(dispatch_get_main_queue(), ^{
+							[_tableView reloadData];
+						});
+					}
+				});
+			}
+		}
+	}
 }
 
 - (void)addDeviceInfo:(BLDeviceInfo *)info
 {
-    dispatch_async(networkQueue, ^{
+    dispatch_async(_networkQueue, ^{
 		NSDictionary *dictionary = [NSDictionary dictionaryDeviceAddWithMAC:info.mac name:info.name type:info.type lock:@(info.lock) password:@(info.password) terminalID:@(info.terminal_id) subDevice:@(info.sub_device) key:info.key];
         NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
@@ -363,7 +262,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _deviceArray.count;
+    return _devices.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -376,27 +275,27 @@
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        dispatch_async(networkQueue, ^{
-            BLDeviceInfo *info = [_deviceArray objectAtIndex:indexPath.row];
-			NSDictionary *dictionary = [NSDictionary dictionaryDeviceDeleteWithMAC:info.mac];
-            NSData *sendData = [dictionary JSONData];
-            NSData *response = [_networkAPI requestDispatch:sendData];
-			NSMutableArray *willRemove = [NSMutableArray arrayWithArray:_deviceArray];
-            int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-            if (code == 0) {
-				[willRemove removeObjectAtIndex:indexPath.row];
-				_deviceArray = [NSArray arrayWithArray:willRemove];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [tableView reloadData];
-                });
-            }
-        });
-    }
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete)
+//    {
+//        dispatch_async(networkQueue, ^{
+//            BLDeviceInfo *info = [_deviceArray objectAtIndex:indexPath.row];
+//			NSDictionary *dictionary = [NSDictionary dictionaryDeviceDeleteWithMAC:info.mac];
+//            NSData *sendData = [dictionary JSONData];
+//            NSData *response = [_networkAPI requestDispatch:sendData];
+//			NSMutableArray *willRemove = [NSMutableArray arrayWithArray:_deviceArray];
+//            int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+//            if (code == 0) {
+//				[willRemove removeObjectAtIndex:indexPath.row];
+//				_deviceArray = [NSArray arrayWithArray:willRemove];
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [tableView reloadData];
+//                });
+//            }
+//        });
+//    }
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -409,33 +308,25 @@
     }
 	
     //设备信息
-    BLDeviceInfo *info = [_deviceArray objectAtIndex:indexPath.row];
-	NSString *path = [NSString deviceAvatarPathWithMAC:info.mac];
-	UIImage *image = [UIImage imageWithContentsOfFile:path];
-	cell.imageView.image = image;
+	NSLog(@"devices count: %d", _devices.count);
+	NSLog(@"devices : %@", _devices);
+	BLDeviceInfo *deviceInfo = _devices[indexPath.row];
+	cell.imageView.image = [deviceInfo avatar];
 	cell.imageView.userInteractionEnabled = YES;
 	cell.imageView.tag = indexPath.row;
 	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editDeviceAvatar:)];
 	[cell.imageView addGestureRecognizer:tapGestureRecognizer];
-	
-	cell.textLabel.text = info.name;
-    //设备的信息
-    @synchronized(_statusArray)
-    {
-		for (int i=0; i<_statusArray.count; i++) {
-			BLAirQualityInfo *stInfo = [_statusArray objectAtIndex:i];
-			if ([stInfo.mac isEqualToString:info.mac] && stInfo.isRefresh) {
-				NSString *status = NSLocalizedString(@"设备已关闭", nil);
-				if (stInfo.switchState == 1) {
-					status = stInfo.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
-				}
-				
-				NSString *runTime = [NSString stringWithFormat:@"设备已运行%d小时%d分钟", stInfo.hour, stInfo.minute];
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%@\n%@", status, runTime];
-			}
+	cell.textLabel.text = deviceInfo.name;
+
+	BLAirQualityInfo *airQualityInfo = deviceInfo.airQualityInfo;
+	if (airQualityInfo.isRefresh) {
+		NSString *status = NSLocalizedString(@"设备已关闭", nil);
+		if (airQualityInfo.switchState == 1) {
+			status = airQualityInfo.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
 		}
-    }
-    
+		NSString *runTime = [NSString stringWithFormat:@"设备已运行%d小时%d分钟", airQualityInfo.hour, airQualityInfo.minute];
+		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@\n%@", status, runTime];
+	}
     return cell;
 }
 
@@ -443,10 +334,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    BLDeviceInfo *info = [_deviceArray objectAtIndex:indexPath.row];
-    
-    dispatch_async(networkQueue, ^{
+    BLDeviceInfo *info = [_devices objectAtIndex:indexPath.row];
+    dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
         //数据透传
 		NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:info.mac];
@@ -475,30 +364,29 @@
 
 - (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
 {
-    BLDeviceInfo *info = [_deviceArray objectAtIndex:recognizer.view.tag];
+    BLDeviceInfo *info = [_devices objectAtIndex:recognizer.view.tag];
     BLDeviceInfoEditViewController *vc = [[BLDeviceInfoEditViewController alloc] init];
 	vc.deviceInfo = info;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
 #pragma mark Data Source Loading / Reloading Methods  
-//开始重新加载时调用的方法  
-- (void)reloadTableViewDataSource{  
-    _reloading = YES; 
-    
+
+- (void)reloadTableViewDataSource
+{
+    _reloading = YES;
     [NSThread detachNewThreadSelector:@selector(doInBackground) toTarget:self withObject:nil];
 }  
 
-//完成加载时调用的方法  
-- (void)doneLoadingTableViewData{  
-    NSLog(@"doneLoadingTableViewData");  
-    
+
+- (void)doneLoadingTableViewData
+{
     _reloading = NO;  
     [_refreshTableView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];        
 }  
 
 #pragma mark Background operation  
-//这个方法运行于子线程中，完成获取刷新数据的操作  
+//这个方法运行于子线程中，完成获取刷新数据的操作
 -(void)doInBackground  
 {  
     NSLog(@"doInBackground");     
@@ -512,7 +400,7 @@
 }
 
 #pragma mark EGORefreshTableHeaderDelegate Methods  
-//下拉被触发调用的委托方法  
+
 -(void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view  
 {  
     [self reloadTableViewDataSource];  

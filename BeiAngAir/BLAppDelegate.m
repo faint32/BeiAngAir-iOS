@@ -29,7 +29,7 @@
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, assign) float latitude;
 @property (nonatomic, assign) float longitude;
-@property (nonatomic, strong) NSTimer *refreshLocation;
+//@property (nonatomic, strong) NSTimer *refreshLocation;
 @property (nonatomic, strong) BLNetwork *network;
 @end
 
@@ -135,10 +135,8 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    UIApplication*   app = [UIApplication sharedApplication];
-    __block    UIBackgroundTaskIdentifier bgTask;
+    UIApplication *app = [UIApplication sharedApplication];
+    __block UIBackgroundTaskIdentifier bgTask;
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (bgTask != UIBackgroundTaskInvalid)
@@ -212,14 +210,14 @@
                     }
                     //定时
 					
-                    _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getWeather:) userInfo:nil repeats:YES];
-                    [_refreshLocation fire];
+//                    _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getWeather:) userInfo:nil repeats:YES];
+//                    [_refreshLocation fire];
                 }
                 else
                 {
                     //定时
-                    _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getCityInfo) userInfo:nil repeats:YES];
-                    [_refreshLocation fire];
+//                    _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getCityInfo) userInfo:nil repeats:YES];
+//                    [_refreshLocation fire];
                     NSLog(@"_airQualityInfoClass.cityName = %@",_airQualityInfoClass.cityName);
                 }
             }
@@ -254,8 +252,8 @@
             if(_airQualityInfoClass.cityCode.length > 0)
             {
                 //定时
-                _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getWeather:) userInfo:nil repeats:YES];
-                [_refreshLocation fire];
+//                _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getWeather:) userInfo:nil repeats:YES];
+//                [_refreshLocation fire];
             }
         }
     });
@@ -304,7 +302,7 @@
             NSLog(@"_temperateStrings = %d",_airQualityInfoClass.temperateStrings.length);
             if(_airQualityInfoClass.temperateStrings.length > 0)
             {
-                [_refreshLocation invalidate];
+//                [_refreshLocation invalidate];
             }
         }
     });
