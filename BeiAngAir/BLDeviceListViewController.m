@@ -275,27 +275,25 @@
     return YES;
 }
 
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (editingStyle == UITableViewCellEditingStyleDelete)
-//    {
-//        dispatch_async(networkQueue, ^{
-//            BLDeviceInfo *info = [_deviceArray objectAtIndex:indexPath.row];
-//			NSDictionary *dictionary = [NSDictionary dictionaryDeviceDeleteWithMAC:info.mac];
-//            NSData *sendData = [dictionary JSONData];
-//            NSData *response = [_networkAPI requestDispatch:sendData];
-//			NSMutableArray *willRemove = [NSMutableArray arrayWithArray:_deviceArray];
-//            int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-//            if (code == 0) {
-//				[willRemove removeObjectAtIndex:indexPath.row];
-//				_deviceArray = [NSArray arrayWithArray:willRemove];
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [tableView reloadData];
-//                });
-//            }
-//        });
-//    }
-//}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        dispatch_async(_networkQueue, ^{
+            BLDeviceInfo *device = _devices[indexPath.row];
+			NSDictionary *dictionary = [NSDictionary dictionaryDeviceDeleteWithMAC:device.mac];
+            NSData *sendData = [dictionary JSONData];
+            NSData *response = [_networkAPI requestDispatch:sendData];
+            int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+            if (code == 0) {
+				[device remove];
+				_devices = [BLDeviceInfo allDevices];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [tableView reloadData];
+                });
+            }
+        });
+    }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

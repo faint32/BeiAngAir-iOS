@@ -36,8 +36,16 @@
 		771F07EE196F975300B41955 /* UIColor+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07ED196F975300B41955 /* UIColor+BeiAng.m */; };
 		771F07F5196FABCF00B41955 /* WifiInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F4196FABCF00B41955 /* WifiInfo.m */; };
 		771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */; };
+		775EB21B1973D9B000E4A0AB /* BLStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21A1973D9B000E4A0AB /* BLStartViewController.m */; };
+		775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */; };
+		775EB22D1973DA5B00E4A0AB /* BLAirQualityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21F1973DA5B00E4A0AB /* BLAirQualityViewController.m */; };
+		775EB22E1973DA5B00E4A0AB /* BLAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2211973DA5B00E4A0AB /* BLAuthViewController.m */; };
+		775EB22F1973DA5B00E4A0AB /* BLDeviceErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2231973DA5B00E4A0AB /* BLDeviceErrorViewController.m */; };
+		775EB2301973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2251973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m */; };
+		775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2271973DA5B00E4A0AB /* BLDeviceListViewController.m */; };
+		775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */; };
+		775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */; };
 		BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA89102519458F5700C16953 /* BeiAngAir-Info.plist */; };
-		BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE389B1940854A002C97C8 /* BLAboutViewController.m */; };
 		BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A2194089EE002C97C8 /* NSObject+SBJson.m */; };
 		BAAE38BB194089EE002C97C8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A5194089EE002C97C8 /* SBJsonParser.m */; };
 		BAAE38BC194089EE002C97C8 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A7194089EE002C97C8 /* SBJsonStreamParser.m */; };
@@ -52,11 +60,6 @@
 		BAAE38C5194089EE002C97C8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38B9194089EE002C97C8 /* SBJsonWriter.m */; };
 		BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38DD1940A9C6002C97C8 /* PICircularProgressView.m */; };
 		BAAE3EFD1949CA2A004054D2 /* libBLNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA69793E1949613B000B184F /* libBLNetwork.a */; };
-		BAB3897D193DA4AD00975805 /* BLDeviceErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F811F9619023A0500411FA4 /* BLDeviceErrorViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB3897E193DA4AD00975805 /* BLDeviceInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8D24B918FD176000716750 /* BLDeviceInfoEditViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB38984193DA4AD00975805 /* BLAirQualityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51DB18F81D3D0068893E /* BLAirQualityViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB38985193DA4AD00975805 /* BLSmartConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51A018F7E1950068893E /* BLSmartConfigViewController.m */; };
-		BAB38986193DA4AD00975805 /* BLDeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE519A18F7D4F00068893E /* BLDeviceListViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38987193DA4AD00975805 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB38969193D75EE00975805 /* MMDrawerBarButtonItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38988193DA4AD00975805 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3896B193D75EE00975805 /* MMDrawerController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38989193DA4AD00975805 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3896D193D75EE00975805 /* MMDrawerVisualState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -105,7 +108,6 @@
 		BAFA3753194151D3001DB631 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA374A194151D3001DB631 /* MMVectorImage.m */; };
 		BAFA3758194151E9001DB631 /* BLZSIndicatorProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */; };
 		BAFA3759194151E9001DB631 /* BLZSProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */; };
-		BAFA381519416FF9001DB631 /* BLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA381419416FF9001DB631 /* BLFilterViewController.m */; };
 		BAFA381F1941862A001DB631 /* bl_custom_hud_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */; };
 		BAFA38201941862A001DB631 /* bl_custom_hud_btn_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38181941862A001DB631 /* bl_custom_hud_btn_no@2x.png */; };
 		BAFA38211941862A001DB631 /* bl_custom_hud_btn_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38191941862A001DB631 /* bl_custom_hud_btn_yes@2x.png */; };
@@ -125,10 +127,6 @@
 		2F40FD8318FBAA6300505B6E /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		2F811F901902203800411FA4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2F811F911902203800411FA4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		2F811F9519023A0500411FA4 /* BLDeviceErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceErrorViewController.h; path = DeviceErrorViewController/BLDeviceErrorViewController.h; sourceTree = "<group>"; };
-		2F811F9619023A0500411FA4 /* BLDeviceErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceErrorViewController.m; path = DeviceErrorViewController/BLDeviceErrorViewController.m; sourceTree = "<group>"; };
-		2F8D24B818FD176000716750 /* BLDeviceInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceInfoEditViewController.h; path = DeviceInfoEditViewController/BLDeviceInfoEditViewController.h; sourceTree = "<group>"; };
-		2F8D24B918FD176000716750 /* BLDeviceInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceInfoEditViewController.m; path = DeviceInfoEditViewController/BLDeviceInfoEditViewController.m; sourceTree = "<group>"; };
 		2FAE501C18F78C470068893E /* BeiAngAir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeiAngAir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FAE501F18F78C470068893E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2FAE502118F78C470068893E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -196,10 +194,6 @@
 		2FAE519218F7D2230068893E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2FAE519418F7D29F0068893E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		2FAE519618F7D32B0068893E /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = usr/lib/libz.1.dylib; sourceTree = SDKROOT; };
-		2FAE519918F7D4F00068893E /* BLDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceListViewController.h; path = DeviceListViewController/BLDeviceListViewController.h; sourceTree = "<group>"; };
-		2FAE519A18F7D4F00068893E /* BLDeviceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceListViewController.m; path = DeviceListViewController/BLDeviceListViewController.m; sourceTree = "<group>"; };
-		2FAE519F18F7E1950068893E /* BLSmartConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLSmartConfigViewController.h; path = SmartConfigViewController/BLSmartConfigViewController.h; sourceTree = "<group>"; };
-		2FAE51A018F7E1950068893E /* BLSmartConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLSmartConfigViewController.m; path = SmartConfigViewController/BLSmartConfigViewController.m; sourceTree = "<group>"; };
 		2FAE51C118F808D80068893E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		2FAE51C318F808DE0068893E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2FAE51CA18F810540068893E /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
@@ -210,8 +204,6 @@
 		2FAE51D318F8145B0068893E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		2FAE51D618F81C220068893E /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
 		2FAE51D718F81C220068893E /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
-		2FAE51DA18F81D3D0068893E /* BLAirQualityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAirQualityViewController.h; path = AirQualityViewController/BLAirQualityViewController.h; sourceTree = "<group>"; };
-		2FAE51DB18F81D3D0068893E /* BLAirQualityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAirQualityViewController.m; path = AirQualityViewController/BLAirQualityViewController.m; sourceTree = "<group>"; };
 		2FAE51DE18F81E690068893E /* UIImage+Retina4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Retina4.h"; sourceTree = "<group>"; };
 		2FAE51DF18F81E690068893E /* UIImage+Retina4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Retina4.m"; sourceTree = "<group>"; };
 		7700C704196E67DE0001561F /* BLAirQualityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLAirQualityInfo.h; sourceTree = "<group>"; };
@@ -238,11 +230,27 @@
 		771F07F4196FABCF00B41955 /* WifiInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WifiInfo.m; sourceTree = "<group>"; };
 		771F07F6196FCFC800B41955 /* NSDictionary+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+BeiAng.h"; sourceTree = "<group>"; };
 		771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+BeiAng.m"; sourceTree = "<group>"; };
+		775EB2191973D9B000E4A0AB /* BLStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLStartViewController.h; path = BeiAngAir/BLStartViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB21A1973D9B000E4A0AB /* BLStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLStartViewController.m; path = BeiAngAir/BLStartViewController.m; sourceTree = SOURCE_ROOT; };
+		775EB21C1973DA5B00E4A0AB /* BLAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAboutViewController.h; path = BeiAngAir/BLAboutViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAboutViewController.m; path = BeiAngAir/BLAboutViewController.m; sourceTree = SOURCE_ROOT; };
+		775EB21E1973DA5B00E4A0AB /* BLAirQualityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAirQualityViewController.h; path = BeiAngAir/BLAirQualityViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB21F1973DA5B00E4A0AB /* BLAirQualityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAirQualityViewController.m; path = BeiAngAir/BLAirQualityViewController.m; sourceTree = SOURCE_ROOT; };
+		775EB2201973DA5B00E4A0AB /* BLAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAuthViewController.h; path = BeiAngAir/BLAuthViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB2211973DA5B00E4A0AB /* BLAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAuthViewController.m; path = BeiAngAir/BLAuthViewController.m; sourceTree = SOURCE_ROOT; };
+		775EB2221973DA5B00E4A0AB /* BLDeviceErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceErrorViewController.h; path = BeiAngAir/BLDeviceErrorViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB2231973DA5B00E4A0AB /* BLDeviceErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceErrorViewController.m; path = BeiAngAir/BLDeviceErrorViewController.m; sourceTree = SOURCE_ROOT; };
+		775EB2241973DA5B00E4A0AB /* BLDeviceInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceInfoEditViewController.h; path = BeiAngAir/BLDeviceInfoEditViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB2251973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceInfoEditViewController.m; path = BeiAngAir/BLDeviceInfoEditViewController.m; sourceTree = SOURCE_ROOT; };
+		775EB2261973DA5B00E4A0AB /* BLDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceListViewController.h; path = BeiAngAir/BLDeviceListViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB2271973DA5B00E4A0AB /* BLDeviceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceListViewController.m; path = BeiAngAir/BLDeviceListViewController.m; sourceTree = SOURCE_ROOT; };
+		775EB2281973DA5B00E4A0AB /* BLFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLFilterViewController.h; path = BeiAngAir/BLFilterViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLFilterViewController.m; path = BeiAngAir/BLFilterViewController.m; sourceTree = SOURCE_ROOT; };
+		775EB22A1973DA5B00E4A0AB /* BLSmartConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLSmartConfigViewController.h; path = BeiAngAir/BLSmartConfigViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLSmartConfigViewController.m; path = BeiAngAir/BLSmartConfigViewController.m; sourceTree = SOURCE_ROOT; };
 		BA69793D1949613B000B184F /* BLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNetwork.h; sourceTree = "<group>"; };
 		BA69793E1949613B000B184F /* libBLNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLNetwork.a; sourceTree = "<group>"; };
 		BA8910281945905E00C16953 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/BeiAngAir-Info.plist"; sourceTree = "<group>"; };
-		BAAE389A1940854A002C97C8 /* BLAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAboutViewController.h; path = AboutViewControl/BLAboutViewController.h; sourceTree = "<group>"; };
-		BAAE389B1940854A002C97C8 /* BLAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAboutViewController.m; path = AboutViewControl/BLAboutViewController.m; sourceTree = "<group>"; };
 		BAAE38A1194089EE002C97C8 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		BAAE38A2194089EE002C97C8 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		BAAE38A3194089EE002C97C8 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
@@ -301,8 +309,6 @@
 		BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSIndicatorProgress.m; sourceTree = "<group>"; };
 		BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLZSProgressLayer.h; sourceTree = "<group>"; };
 		BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSProgressLayer.m; sourceTree = "<group>"; };
-		BAFA381319416FF9001DB631 /* BLFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLFilterViewController.h; path = FilterInfoViewController/BLFilterViewController.h; sourceTree = "<group>"; };
-		BAFA381419416FF9001DB631 /* BLFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLFilterViewController.m; path = FilterInfoViewController/BLFilterViewController.m; sourceTree = "<group>"; };
 		BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_bg@2x.png"; sourceTree = "<group>"; };
 		BAFA38181941862A001DB631 /* bl_custom_hud_btn_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_btn_no@2x.png"; sourceTree = "<group>"; };
 		BAFA38191941862A001DB631 /* bl_custom_hud_btn_yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_btn_yes@2x.png"; sourceTree = "<group>"; };
@@ -451,20 +457,24 @@
 		2FAE512518F7BDEB0068893E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2FAE519F18F7E1950068893E /* BLSmartConfigViewController.h */,
-				2FAE51A018F7E1950068893E /* BLSmartConfigViewController.m */,
-				2FAE519918F7D4F00068893E /* BLDeviceListViewController.h */,
-				2FAE519A18F7D4F00068893E /* BLDeviceListViewController.m */,
-				BAAE389A1940854A002C97C8 /* BLAboutViewController.h */,
-				BAAE389B1940854A002C97C8 /* BLAboutViewController.m */,
-				2F811F9519023A0500411FA4 /* BLDeviceErrorViewController.h */,
-				2F811F9619023A0500411FA4 /* BLDeviceErrorViewController.m */,
-				2F8D24B818FD176000716750 /* BLDeviceInfoEditViewController.h */,
-				2F8D24B918FD176000716750 /* BLDeviceInfoEditViewController.m */,
-				BAFA381319416FF9001DB631 /* BLFilterViewController.h */,
-				BAFA381419416FF9001DB631 /* BLFilterViewController.m */,
-				2FAE51DA18F81D3D0068893E /* BLAirQualityViewController.h */,
-				2FAE51DB18F81D3D0068893E /* BLAirQualityViewController.m */,
+				775EB2191973D9B000E4A0AB /* BLStartViewController.h */,
+				775EB21A1973D9B000E4A0AB /* BLStartViewController.m */,
+				775EB22A1973DA5B00E4A0AB /* BLSmartConfigViewController.h */,
+				775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */,
+				775EB2261973DA5B00E4A0AB /* BLDeviceListViewController.h */,
+				775EB2271973DA5B00E4A0AB /* BLDeviceListViewController.m */,
+				775EB21E1973DA5B00E4A0AB /* BLAirQualityViewController.h */,
+				775EB21F1973DA5B00E4A0AB /* BLAirQualityViewController.m */,
+				775EB2201973DA5B00E4A0AB /* BLAuthViewController.h */,
+				775EB2211973DA5B00E4A0AB /* BLAuthViewController.m */,
+				775EB2221973DA5B00E4A0AB /* BLDeviceErrorViewController.h */,
+				775EB2231973DA5B00E4A0AB /* BLDeviceErrorViewController.m */,
+				775EB2241973DA5B00E4A0AB /* BLDeviceInfoEditViewController.h */,
+				775EB2251973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m */,
+				775EB2281973DA5B00E4A0AB /* BLFilterViewController.h */,
+				775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */,
+				775EB21C1973DA5B00E4A0AB /* BLAboutViewController.h */,
+				775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */,
 			);
 			name = Controllers;
 			path = ViewController;
@@ -820,11 +830,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAAE38C2194089EE002C97C8 /* SBJsonStreamWriterState.m in Sources */,
-				BAB3897D193DA4AD00975805 /* BLDeviceErrorViewController.m in Sources */,
-				BAB3897E193DA4AD00975805 /* BLDeviceInfoEditViewController.m in Sources */,
-				BAB38984193DA4AD00975805 /* BLAirQualityViewController.m in Sources */,
-				BAB38985193DA4AD00975805 /* BLSmartConfigViewController.m in Sources */,
-				BAB38986193DA4AD00975805 /* BLDeviceListViewController.m in Sources */,
+				775EB2301973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m in Sources */,
 				771F07F5196FABCF00B41955 /* WifiInfo.m in Sources */,
 				BAAE38BC194089EE002C97C8 /* SBJsonStreamParser.m in Sources */,
 				BAFA3758194151E9001DB631 /* BLZSIndicatorProgress.m in Sources */,
@@ -838,6 +844,7 @@
 				BAB3898B193DA4AD00975805 /* UIViewController+MMDrawerController.m in Sources */,
 				BAB3898C193DA4AD00975805 /* iCarousel.m in Sources */,
 				BAAE38C4194089EE002C97C8 /* SBJsonUTF8Stream.m in Sources */,
+				775EB22F1973DA5B00E4A0AB /* BLDeviceErrorViewController.m in Sources */,
 				BAB3898D193DA4AD00975805 /* UIImage+Retina4.m in Sources */,
 				BAB3898E193DA4AD00975805 /* Toast+UIView.m in Sources */,
 				BAB3898F193DA4AD00975805 /* UILabel+Attribute.m in Sources */,
@@ -851,15 +858,17 @@
 				7700C718196E85690001561F /* ClassAirQualityInfo.m in Sources */,
 				771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */,
 				BAFA38251941862A001DB631 /* BLCustomHUD+UIWindow.m in Sources */,
+				775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */,
 				7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */,
 				BAFA374F194151D3001DB631 /* MMProgressHUDOverlayView.m in Sources */,
 				BAB38997193DA4AD00975805 /* Reachability.m in Sources */,
-				BAAE389C1940854A002C97C8 /* BLAboutViewController.m in Sources */,
 				BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */,
 				BAFA374B194151D3001DB631 /* MMHud.m in Sources */,
 				BAB38998193DA4AD00975805 /* ASIAuthenticationDialog.m in Sources */,
 				7700C715196E6A530001561F /* BeiAngReceivedDataInfo.m in Sources */,
+				775EB22D1973DA5B00E4A0AB /* BLAirQualityViewController.m in Sources */,
 				7700C712196E6A350001561F /* BeiAngSendDataInfo.m in Sources */,
+				775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */,
 				BAFA3752194151D3001DB631 /* MMRadialProgressView.m in Sources */,
 				7700C70C196E69960001561F /* WeatherInfo.m in Sources */,
 				BAB38999193DA4AD00975805 /* ASIDataCompressor.m in Sources */,
@@ -868,12 +877,15 @@
 				BAB3899B193DA4AD00975805 /* ASIDownloadCache.m in Sources */,
 				BAFA374E194151D3001DB631 /* MMProgressHUD.m in Sources */,
 				BAB3899C193DA4AD00975805 /* ASIFormDataRequest.m in Sources */,
+				775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */,
+				775EB21B1973D9B000E4A0AB /* BLStartViewController.m in Sources */,
 				BAB3899D193DA4AD00975805 /* ASIHTTPRequest.m in Sources */,
 				BAB3899E193DA4AD00975805 /* ASIInputStream.m in Sources */,
 				771F07EE196F975300B41955 /* UIColor+BeiAng.m in Sources */,
 				BAB3899F193DA4AD00975805 /* ASINetworkQueue.m in Sources */,
 				BAB389A0193DA4AD00975805 /* ASIWebPageRequest.m in Sources */,
 				BAB389A1193DA4AD00975805 /* ASICloudFilesCDNRequest.m in Sources */,
+				775EB22E1973DA5B00E4A0AB /* BLAuthViewController.m in Sources */,
 				BAFA374C194151D3001DB631 /* MMProgressHUD+Animations.m in Sources */,
 				BAAE38BD194089EE002C97C8 /* SBJsonStreamParserAccumulator.m in Sources */,
 				BAB389A2193DA4AD00975805 /* ASICloudFilesContainer.m in Sources */,
@@ -890,9 +902,9 @@
 				BAB389AB193DA4AD00975805 /* ASIS3ObjectRequest.m in Sources */,
 				BAFA3751194151D3001DB631 /* MMProgressHUDWindow.m in Sources */,
 				BAB389AC193DA4AD00975805 /* ASIS3Request.m in Sources */,
-				BAFA381519416FF9001DB631 /* BLFilterViewController.m in Sources */,
 				BAAE38C0194089EE002C97C8 /* SBJsonStreamWriter.m in Sources */,
 				BAB389AD193DA4AD00975805 /* ASIS3ServiceRequest.m in Sources */,
+				775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */,
 				BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */,
 				BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */,
 				BAB389B0193DA4AD00975805 /* UtilityFunc.m in Sources */,
