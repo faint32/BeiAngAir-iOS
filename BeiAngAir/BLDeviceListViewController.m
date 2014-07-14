@@ -141,7 +141,6 @@
 
 - (void)dealloc
 {
-	[super dealloc];
 	dispatch_release(_networkQueue);
 }
 

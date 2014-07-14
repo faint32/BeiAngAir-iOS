@@ -78,7 +78,6 @@
 
 - (void)dealloc
 {
-    [super dealloc];
     dispatch_release(networkQueue);
     dispatch_release(httpQueue);
 }

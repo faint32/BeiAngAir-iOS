@@ -31,11 +31,7 @@
 
 - (void)dealloc
 {
-    [super dealloc];
-    [self setNameTextField:nil];
-    [self setLockButton:nil];
-    [self setAddButton:nil];
-    dispatch_release(networkQueue);
+	dispatch_release(networkQueue);
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
