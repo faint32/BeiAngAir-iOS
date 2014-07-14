@@ -324,8 +324,22 @@
 		if (airQualityInfo.switchState == 1) {
 			status = airQualityInfo.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
 		}
-		NSString *runTime = [NSString stringWithFormat:@"设备已运行%d小时%d分钟", airQualityInfo.hour, airQualityInfo.minute];
-		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@\n%@", status, runTime];
+		
+		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n设备已运行%d小时%d分钟", status, airQualityInfo.hour, airQualityInfo.minute];
+		NSMutableAttributedString *attributedString;
+		if (airQualityInfo.hour >= 50) {
+			NSDictionary *wordToColorMapping = @{statusAndrunTime : [UIColor blackColor], @"请清洗!" : [UIColor redColor]};
+			attributedString = [[NSMutableAttributedString alloc] initWithString:@""];
+			for (NSString *word in wordToColorMapping) {
+				UIColor *color = [wordToColorMapping objectForKey:word];
+				NSDictionary *attributes = [NSDictionary dictionaryWithObject:color forKey:NSForegroundColorAttributeName];
+				NSAttributedString *subString = [[NSAttributedString alloc] initWithString:word attributes:attributes];
+				[attributedString appendAttributedString:subString];
+			}
+		} else {
+			attributedString = [[NSMutableAttributedString alloc] initWithString:statusAndrunTime];
+		}
+		cell.detailTextLabel.attributedText = attributedString;
 	}
     return cell;
 }
