@@ -52,6 +52,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	self.navigationController.navigationBarHidden = NO;
+	
     [MMProgressHUD setDisplayStyle:MMProgressHUDDisplayStylePlain];
     [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
 	//背景颜色
@@ -64,7 +66,7 @@
     viewFrame.size.height = 44.0f + ((IsiOS7Later) ? 20.0f : 0.0f);
     UIView *headerView = [[UIView alloc] initWithFrame:viewFrame];
     [headerView setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:headerView];
+//    [self.view addSubview:headerView];//TODO: remove title view
     
     viewFrame = headerView.frame;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:viewFrame];
@@ -77,7 +79,7 @@
     viewFrame.origin.y = (44.0f - viewFrame.size.height) * 0.5f + ((IsiOS7Later) ? 20.0f : 0.0f);
     [titleLabel setFrame:viewFrame];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [headerView addSubview:titleLabel];
+//    [headerView addSubview:titleLabel];//TODO: title color
     
     //底部的添加设备
     UIButton *btnAddDevice = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-43, self.view.frame.size.width, 43)];
@@ -128,10 +130,9 @@
     [_tableView.layer setBorderWidth:0.5f];
     [self.view addSubview:_tableView];
 
-	EGORefreshTableHeaderView *refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - _tableView.bounds.size.height, _tableView.frame.size.width, _tableView.bounds.size.height)];
-	refreshView.delegate = self;
-	[_tableView addSubview:refreshView];
-	_refreshTableView = refreshView;
+	_refreshTableView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - _tableView.bounds.size.height, _tableView.frame.size.width, _tableView.bounds.size.height)];
+	_refreshTableView.delegate = self;
+	[_tableView addSubview:_refreshTableView];
 	
 	_networkAPI = [[BLNetwork alloc] init];
 	_networkQueue = dispatch_queue_create("BLDeviceListViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
