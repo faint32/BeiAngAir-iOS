@@ -85,12 +85,12 @@
 
 - (void)service
 {
-	
+	//TODO:暂时不做
 }
 
 - (void)help
 {
-	
+	//TODO:安卓版功能为空
 }
 
 @end

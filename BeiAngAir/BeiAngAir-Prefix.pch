@@ -30,4 +30,7 @@
 #import	"UIImage+BeiAng.h"
 #import "UIColor+BeiAng.h"
 
+//Notification
+#define BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE @"BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE"
+
 #endif

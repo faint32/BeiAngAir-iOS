@@ -28,8 +28,8 @@
 "Automatic" = "自动";
 "SleepOff" = "睡眠关";
 "SleepOn" = "睡眠开";
-"TheChildLock" = "儿童锁开";
-"TheChildLockOff" = "儿童锁关";
+"TheChildLock" = "童锁开";
+"TheChildLockOff" = "童锁关";
 "speedSelection"= "风速选择";
 "timerTitle"="设置定时";
 "timeOpen"="定时开机";

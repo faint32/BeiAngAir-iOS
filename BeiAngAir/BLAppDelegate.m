@@ -30,7 +30,6 @@
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, assign) float latitude;
 @property (nonatomic, assign) float longitude;
-//@property (nonatomic, strong) NSTimer *refreshLocation;
 @property (nonatomic, strong) BLNetwork *network;
 @end
 
@@ -187,9 +186,7 @@
             _longitude = newLocation.coordinate.longitude;
             NSLog(@"_latitude = %f",_latitude);
             NSLog(@"_longitude = %f",_longitude);
-            //解析“lat:39.983424, l
-            @synchronized(_airQualityInfoClass)
-            {
+            @synchronized(_airQualityInfoClass) {
                 //城市名称
                 _airQualityInfoClass.cityName = [[[placemark.addressDictionary objectForKey:@"City"] componentsSeparatedByString:@"市"] objectAtIndex:0];
                 //城市code
@@ -197,32 +194,21 @@
                 NSLog(@"cityCode = %d",_airQualityInfoClass.cityCode.length);
                 //如果名称不相同则一般为英文
                 //取得空气质量
-                if(_airQualityInfoClass.cityCode.length > 0)
-                {
-                    if(_airQualityInfoClass.weather.length > 0)
-                    {
+                if(_airQualityInfoClass.cityCode.length > 0) {
+                    if(_airQualityInfoClass.weather.length > 0) {
                         [manager stopUpdatingLocation];
                         return;
                     }
-                    //定时
-					
-//                    _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getWeather:) userInfo:nil repeats:YES];
-//                    [_refreshLocation fire];
+					[self getWeather:nil];
                 }
-                else
-                {
-                    //定时
-//                    _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getCityInfo) userInfo:nil repeats:YES];
-//                    [_refreshLocation fire];
-                    NSLog(@"_airQualityInfoClass.cityName = %@",_airQualityInfoClass.cityName);
+                else {
+					[self getWeather:nil];
                 }
             }
         }
-        else if (error == nil && [placemarks count] == 0)
-        {
+        else if (error == nil && [placemarks count] == 0) {
             NSLog(@"No results were returned.");
-        }
-        else if (error != nil)
+        } else if (error != nil)
         {
             NSLog(@"An error occurred = %@", error);
         }
@@ -243,13 +229,9 @@
         @synchronized(_airQualityInfoClass)
         {
             _airQualityInfoClass.cityName = [[[[weatherInfo objectForKey:@"addressComponent"] objectForKey:@"city"] componentsSeparatedByString:@"市"] objectAtIndex:0];
-            //城市code
             _airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
-            if(_airQualityInfoClass.cityCode.length > 0)
-            {
-                //定时
-//                _refreshLocation = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getWeather:) userInfo:nil repeats:YES];
-//                [_refreshLocation fire];
+            if(_airQualityInfoClass.cityCode.length > 0) {
+				[self getWeather:nil];
             }
         }
     });
@@ -261,18 +243,28 @@
     dispatch_async(httpQueue, ^{
         @synchronized(_airQualityInfoClass)
         {
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://tqapi.mobile.360.cn/app/meizu/city/%@",_airQualityInfoClass.cityCode]];
-            NSError *error=nil;
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://tqapi.mobile.360.cn/app/meizu/city/%@", _airQualityInfoClass.cityCode]];
+            NSError *error;
             NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
-            SBJsonParser *parser = [[SBJsonParser alloc]init];
+            SBJsonParser *parser = [[SBJsonParser alloc] init];
             NSDictionary *rootDic = [parser objectWithString:jsonString error:&error];
+			NSLog(@"rootDic: %@", rootDic);
             NSDictionary *weatherInfo = [rootDic objectForKey:@"pm25"];
             //空气质量
-            NSString *tmp =  [NSString stringWithFormat:@"%@",[weatherInfo objectForKey:@"quality"]];
-            if(tmp.length == 0 || [tmp isEqual:@"(null)"])
+            NSString *tmp =  [NSString stringWithFormat:@"%@", [weatherInfo objectForKey:@"quality"]];
+			if(tmp.length == 0 || [tmp isEqual:@"(null)"]) {
                 _airQualityInfoClass.airQualityString = @"" ;
-            else
+			} else {
                 _airQualityInfoClass.airQualityString = tmp ;
+			}
+			
+			tmp = [NSString stringWithFormat:@"%@", [weatherInfo objectForKey:@"pm25"]];
+			if (tmp.length == 0 || [tmp isEqual:@"(null)"]) {
+				_airQualityInfoClass.pm25 = @"";
+			} else {
+				_airQualityInfoClass.pm25 = tmp;
+			}
+			
             //温度
             NSMutableArray *dayArray = [[NSMutableArray alloc] init];
             NSMutableArray *nightArray = [[NSMutableArray alloc] init];
@@ -296,10 +288,6 @@
                 _airQualityInfoClass.temperateStrings = [NSString stringWithFormat:@"%@℃~%@℃",tmpDay,tmpNight] ;
             NSLog(@"_temperateStrings = %@",_airQualityInfoClass.temperateStrings);
             NSLog(@"_temperateStrings = %d",_airQualityInfoClass.temperateStrings.length);
-            if(_airQualityInfoClass.temperateStrings.length > 0)
-            {
-//                [_refreshLocation invalidate];
-            }
         }
     });
 }

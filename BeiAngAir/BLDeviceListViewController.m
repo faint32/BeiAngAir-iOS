@@ -33,7 +33,7 @@
 @property (nonatomic, assign) dispatch_queue_t networkQueue;
 @property (nonatomic, strong) BLNetwork *networkAPI;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *devices;
+@property (nonatomic, strong) NSMutableArray *devices;
 
 @end
 
@@ -136,13 +136,16 @@
 	
 	_networkAPI = [[BLNetwork alloc] init];
 	_networkQueue = dispatch_queue_create("BLDeviceListViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
-	_devices = [BLDeviceInfo allDevices];
+	_devices = [[BLDeviceInfo allDevices] mutableCopy];
 	[self refreshDeviceList];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doInBackground) name:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
 }
 
 - (void)dealloc
 {
 	dispatch_release(_networkQueue);
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
 }
 
 - (void)addNewDevice
@@ -159,6 +162,7 @@
         NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+		NSLog(@"objectFromJSONData: %@", [response objectFromJSONData]);
         if (code == 0) {
             NSArray *list = [[response objectFromJSONData] objectForKey:@"list"];
 			NSLog(@"prob count: %d", list.count);
@@ -178,21 +182,23 @@
 				if (![info hadPersistenced]) {
 					if ([info isBeiAngAirDevice]) {
 						[info persistence];
+						[_devices addObject:info];
 						[self addDeviceInfo:info];
 					}
 				}
 			}
 
             dispatch_async(dispatch_get_main_queue(), ^{
-                _devices = [BLDeviceInfo allDevices];
+				[self.tableView reloadData];
                 [self getDeviceInfoList];
-                [self.tableView reloadData];
             });
-        }
+		} else {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self.tableView reloadData];
+				[self getDeviceInfoList];
+			});
+		}
     });
-	
-	//TODO: will crash
-	[self performSelector:@selector(refreshDeviceList) withObject:nil afterDelay:5.0];
 }
 
 /*Refresh device list.*/
@@ -201,22 +207,21 @@
 	@synchronized(_devices) {
 		for (int i = 0; i < _devices.count; i++) {
 			BLDeviceInfo *device = _devices[i];
-			BLAirQualityInfo *airQualityInfo = device.airQualityInfo;
-			
 			NSDictionary *dictionary = [NSDictionary dictionaryDeviceStateWithMAC:device.mac];
 			NSData *requestData = [dictionary JSONData];
 			NSData *responseData = [_networkAPI requestDispatch:requestData];
 			NSString *state = @"";
+			NSLog(@"DeviceStateWithMAC: %@", [responseData objectFromJSONData]);
 			if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
 				state = [[responseData objectFromJSONData] objectForKey:@"status"];
 			}
 			
 			if ([state isEqualToString:@"OFFLINE"] || [state isEqualToString:@"NOT_INIT"]) {
-				airQualityInfo.hour = 0;
-				airQualityInfo.minute = 0;
-				airQualityInfo.isRefresh = NO;
-				airQualityInfo.sleepState = 0;
-				airQualityInfo.switchState = 0;
+				device.airQualityInfo.hour = 0;
+				device.airQualityInfo.minute = 0;
+				device.airQualityInfo.isRefresh = NO;
+				device.airQualityInfo.sleepState = 0;
+				device.airQualityInfo.switchState = 0;
 				[_tableView reloadData];
 			} else if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
 				dispatch_async(_networkQueue, ^{
@@ -227,11 +232,11 @@
 					int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
 					if (code == 0) {
 						NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-						airQualityInfo.hour = [array[9] intValue];
-						airQualityInfo.minute = [array[10] intValue];
-						airQualityInfo.sleepState = [array[7] intValue];
-						airQualityInfo.isRefresh = YES;
-						airQualityInfo.switchState = [array[4] intValue];
+						device.airQualityInfo.hour = [array[9] intValue];
+						device.airQualityInfo.minute = [array[10] intValue];
+						device.airQualityInfo.sleepState = [array[7] intValue];
+						device.airQualityInfo.isRefresh = YES;
+						device.airQualityInfo.switchState = [array[4] intValue];
 						dispatch_async(dispatch_get_main_queue(), ^{
 							[_tableView reloadData];
 						});
@@ -285,8 +290,8 @@
             NSData *response = [_networkAPI requestDispatch:sendData];
             int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
             if (code == 0) {
+				[_devices removeObject:device];
 				[device remove];
-				_devices = [BLDeviceInfo allDevices];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [tableView reloadData];
                 });
@@ -308,24 +313,23 @@
     //设备信息
 	NSLog(@"devices count: %d", _devices.count);
 	NSLog(@"devices : %@", _devices);
-	BLDeviceInfo *deviceInfo = _devices[indexPath.row];
-	cell.imageView.image = [deviceInfo avatar];
+	BLDeviceInfo *device = _devices[indexPath.row];
+	cell.imageView.image = [device avatar];
 	cell.imageView.userInteractionEnabled = YES;
 	cell.imageView.tag = indexPath.row;
 	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editDeviceAvatar:)];
 	[cell.imageView addGestureRecognizer:tapGestureRecognizer];
-	cell.textLabel.text = deviceInfo.name;
+	cell.textLabel.text = device.name;
 
-	BLAirQualityInfo *airQualityInfo = deviceInfo.airQualityInfo;
-	if (airQualityInfo.isRefresh) {
+	if (device.airQualityInfo.isRefresh) {
 		NSString *status = NSLocalizedString(@"设备已关闭", nil);
-		if (airQualityInfo.switchState == 1) {
-			status = airQualityInfo.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
+		if (device.airQualityInfo.switchState == 1) {
+			status = device.airQualityInfo.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
 		}
 		
-		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n设备已运行%d小时%d分钟", status, airQualityInfo.hour, airQualityInfo.minute];
+		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n设备已运行%d小时%d分钟", status, device.airQualityInfo.hour, device.airQualityInfo.minute];
 		NSMutableAttributedString *attributedString;
-		if (airQualityInfo.hour >= 50) {
+		if (device.airQualityInfo.hour >= 50) {
 			NSDictionary *wordToColorMapping = @{statusAndrunTime : [UIColor blackColor], @"请清洗!" : [UIColor redColor]};
 			attributedString = [[NSMutableAttributedString alloc] initWithString:@""];
 			for (NSString *word in wordToColorMapping) {
@@ -347,6 +351,14 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     BLDeviceInfo *info = [_devices objectAtIndex:indexPath.row];
+	
+	//BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
+	BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
+	//airQualityViewController.currentAirInfo = recvInfo;
+	airQualityViewController.deviceInfo = info;
+	[self.navigationController pushViewController:airQualityViewController animated:YES];
+	return;//TODO:
+	
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
         //数据透传
@@ -359,6 +371,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
                 BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
+				NSLog(@"BeiAngReceivedDataInfo: %@", recvInfo);
                 BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
 				airQualityViewController.currentAirInfo = recvInfo;
 				airQualityViewController.deviceInfo = info;
@@ -367,19 +380,18 @@
         } else {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 [MMProgressHUD dismiss];
-                [self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
+                [self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];//TODO:
             });
         }
     });
 }
 
-
 - (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
 {
     BLDeviceInfo *info = [_devices objectAtIndex:recognizer.view.tag];
-    BLDeviceInfoEditViewController *vc = [[BLDeviceInfoEditViewController alloc] init];
-	vc.deviceInfo = info;
-    [self presentViewController:vc animated:YES completion:nil];
+    BLDeviceInfoEditViewController *controller = [[BLDeviceInfoEditViewController alloc] init];
+	controller.deviceInfo = info;
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark Data Source Loading / Reloading Methods  
@@ -401,8 +413,6 @@
 //这个方法运行于子线程中，完成获取刷新数据的操作
 -(void)doInBackground  
 {  
-    NSLog(@"doInBackground");     
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self refreshDeviceList];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

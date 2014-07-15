@@ -170,7 +170,17 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	device.userName = attributes[kUserName];
 	device.remoteIP = attributes[kRemoteIP];
 	device.qrInfo = attributes[kQRInfo];
+	
+	device.airQualityInfo = [[BLAirQualityInfo alloc] init];
 	return device;
+}
+
+- (BLAirQualityInfo *)airQualityInfo
+{
+	if (!_airQualityInfo) {
+		_airQualityInfo = [[BLAirQualityInfo alloc] init];
+	}
+	return _airQualityInfo;
 }
 
 - (BOOL)isBeiAngAirDevice

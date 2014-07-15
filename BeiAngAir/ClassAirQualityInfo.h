@@ -16,5 +16,6 @@
 @property (strong, nonatomic) NSString *temperateStrings;
 @property (strong, nonatomic) NSString *airQualityString;
 @property (strong, nonatomic) NSString *airQualityLevel;
+@property (strong, nonatomic) NSString *pm25;
 
 @end

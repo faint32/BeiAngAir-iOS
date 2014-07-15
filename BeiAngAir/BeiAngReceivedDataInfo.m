@@ -47,5 +47,9 @@
 	return self;
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"< switchState: %d>", self.switchStatus];
+}
 
 @end

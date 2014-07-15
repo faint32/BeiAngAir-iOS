@@ -230,6 +230,7 @@
 
 - (void)startConfig
 {
+	[self.view endEditing:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSDictionary *dictionary = [NSDictionary dictionaryEashConfigWithSSID:_ssidTextField.text password:_passwordTextField.text];
         NSData *requestData = [dictionary JSONData];
@@ -237,6 +238,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[[responseData objectFromJSONData] objectForKey:@"msg"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alertView show];
+			
+			[[NSNotificationCenter defaultCenter] postNotificationName:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
         });
     });
 }

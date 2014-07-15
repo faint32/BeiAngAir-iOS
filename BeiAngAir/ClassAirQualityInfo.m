@@ -10,4 +10,9 @@
 
 @implementation ClassAirQualityInfo
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"< cityCode: %@, cityName: %@, weather: %@, temperateStrings: %@, airQualityString: %@, airQualityLevel: %@, pm25: %@ >", self.cityCode, self.cityName, self.weather, self.temperateStrings, self.airQualityString, self.airQualityLevel, self.pm25];
+}
+
 @end
