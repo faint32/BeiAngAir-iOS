@@ -11,7 +11,6 @@
 @interface BLAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) ClassAirQualityInfo *airQualityInfoClass;
 
 @end
 

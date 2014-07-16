@@ -29,10 +29,10 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "BLNetwork.h"
+#import "ClassAirQualityInfo.h"
 
 @interface BLAirQualityViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 {
-    BLAppDelegate *appDelegate;
     BLNetwork *networkAPI;
     dispatch_queue_t networkQueue;
     dispatch_queue_t httpQueue;
@@ -66,12 +66,11 @@
 //剩余时间
 @property (nonatomic, strong) UILabel *leftTimerLabel;
 //定时器
-@property (nonatomic, strong) NSTimer *refreshInfoTimer;
-@property (nonatomic, strong) CLLocationManager *locManager;
-@property (nonatomic, strong) CLGeocoder *geocoder;
-@property (nonatomic, assign) float latitude;
-@property (nonatomic, assign) float longitude;
-@property (nonatomic, strong) NSTimer *refreshLocationInfo;
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocation *currentLocation;
+@property (nonatomic, strong) ClassAirQualityInfo *airQualityInfoClass;
+
 @end
 
 @implementation BLAirQualityViewController
@@ -87,18 +86,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    appDelegate = (BLAppDelegate *)[[UIApplication sharedApplication] delegate];
+	
+	_airQualityInfoClass = [[ClassAirQualityInfo alloc] init];
     networkAPI = [[BLNetwork alloc] init];
     networkQueue = dispatch_queue_create("BLAirQualityViewCtrollerNetworkQueue", DISPATCH_QUEUE_SERIAL);
     httpQueue = dispatch_queue_create("BLHttpQueue", DISPATCH_QUEUE_SERIAL);
     [MMProgressHUD setDisplayStyle:MMProgressHUDDisplayStylePlain];
     [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
     
-    _locManager = [[CLLocationManager alloc] init];
-    [_locManager setDelegate:self];
-    [_locManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    [_locManager setDistanceFilter:500.0f];
-    [_locManager startUpdatingLocation];
+    _locationManager = [[CLLocationManager alloc] init];
+    [_locationManager setDelegate:self];
+    [_locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [_locationManager setDistanceFilter:500.0f];
+    [_locationManager startUpdatingLocation];
 
     //顶部视图
     CGRect viewFrame = CGRectZero;
@@ -110,30 +110,9 @@
     //空气质量
     _topView.backgroundColor = [UIColor themeBlue];
     [self.view addSubview:_topView];
-    
-    //左侧返回按钮
-//    UIImage *image = [UIImage imageNamed:@"left"];
-//    viewFrame.origin.x = 0;
-//    viewFrame.origin.y = 15;
-//    viewFrame.size = image.size;
-//    UIButton *leftButton = [[UIButton alloc] initWithFrame:viewFrame];
-//    [leftButton setImage:image forState:UIControlStateNormal];
-//    [leftButton setBackgroundColor:[UIColor clearColor]];
-//    [leftButton addTarget:self action:@selector(leftButtonClick) forControlEvents:UIControlEventTouchUpInside];
-//    [self setNaviBarLeftBtn:leftButton];
 	
     //右侧关于界面
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"home_logo"] style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonClick:)];
-//    UIImage *image = [UIImage imageNamed:@"home_logo"];
-//    viewFrame.origin.x = self.view.frame.size.width - image.size.width / 2.f - 10;
-//    viewFrame.origin.y = leftButton.frame.origin.y;
-//    viewFrame.size.width = image.size.width / 2.f;
-//    viewFrame.size.height = leftButton.frame.size.height;
-//    UIButton *rightButton = [[UIButton alloc] initWithFrame:viewFrame];
-//    [rightButton setImage:image forState:UIControlStateNormal];
-//    [rightButton setBackgroundColor:[UIColor clearColor]];
-//    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-//    [self setNaviBarRightBtn:rightButton];
 	
     //城市地址
     viewFrame.origin.x = 20;
@@ -146,7 +125,7 @@
     [_address setNumberOfLines:1];
     [_address setTextColor:[UIColor whiteColor]];
     [_address setFont:[UIFont systemFontOfSize:17.f]];
-    [_address setText:appDelegate.airQualityInfoClass.cityName];
+    [_address setText:_airQualityInfoClass.cityName];
     //根据高度调整长度
     CGSize size = [_address.text sizeWithFont:_address.font constrainedToSize:CGSizeMake(MAXFLOAT, _address.frame.size.height) lineBreakMode:NSLineBreakByWordWrapping];
     viewFrame.size.width = size.width;
@@ -164,9 +143,9 @@
     [_weatherLabel setTextColor:[UIColor whiteColor]];
     [_weatherLabel setFont:[UIFont systemFontOfSize:25.f]];
     
-    @synchronized(appDelegate.airQualityInfoClass)
+    @synchronized(_airQualityInfoClass)
     {
-        [_weatherLabel setText:appDelegate.airQualityInfoClass.temperateStrings];
+        [_weatherLabel setText:_airQualityInfoClass.temperateStrings];
     }
     [_topView addSubview:_weatherLabel];
     
@@ -179,8 +158,8 @@
 	_airQuality.numberOfLines = 0;
     [_airQuality setBackgroundColor:[UIColor clearColor]];
     [_airQuality setTextColor:[UIColor whiteColor]];
-    @synchronized(appDelegate.airQualityInfoClass) {
-		ClassAirQualityInfo *airQuality = appDelegate.airQualityInfoClass;
+    @synchronized(_airQualityInfoClass) {
+		ClassAirQualityInfo *airQuality = _airQualityInfoClass;
 		_airQuality.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", airQuality.cityName, airQuality.temperateStrings, airQuality.pm25, airQuality.airQualityString];
     }
     [_airQuality setFont:[UIFont systemFontOfSize:17.f]];
@@ -199,7 +178,7 @@
     
     //风速
     UIImage *image = [UIImage imageNamed:@"wind"];
-    viewFrame.origin.x =  _address.frame.origin.x;
+    viewFrame.origin.x = _address.frame.origin.x;
     viewFrame.origin.y = 10;
     viewFrame.size = CGSizeMake(47.f, 47.f);
     UIButton *speedButton = [[UIButton alloc] initWithFrame:viewFrame];
@@ -218,9 +197,9 @@
     [_airQualityLabel setTextAlignment:NSTextAlignmentCenter];
     [_airQualityLabel setBackgroundColor:[UIColor clearColor]];
 	_airQualityLabel.numberOfLines = 0;
-    @synchronized(appDelegate.airQualityInfoClass) {
-		NSLog(@"airQualityInfoClass: %@", appDelegate.airQualityInfoClass);
-        [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil),appDelegate.airQualityInfoClass.airQualityLevel]];
+    @synchronized(_airQualityInfoClass) {
+		NSLog(@"airQualityInfoClass: %@", _airQualityInfoClass);
+        [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil),_airQualityInfoClass.airQualityLevel]];
     }
     [_airQualityLabel setTextColor:[UIColor blackColor]];
     [_airQualityLabel setFont:[UIFont systemFontOfSize:15.f]];
@@ -360,10 +339,6 @@
     [_leftTimerLabel setTextAlignment:NSTextAlignmentCenter];
     [_leftTimerLabel setNumberOfLines:1];
     [bottomView addSubview:_leftTimerLabel];
-	
-  //TODO:
-//    [self.view bringSubviewToFront:rightButton];
-//    [self.view bringSubviewToFront:leftButton];
 }
 
 //弹出视图
@@ -507,41 +482,39 @@
     //插入定时数据
     BLTimerInfomation *timerInfomation = [BLTimerInfomation timerInfomation];
     NSLog(@"timerInfomation = %@",timerInfomation);
-    if(timerInfomation)
-    {
+    if(timerInfomation) {
         //判断定时时间已经过去
         NSDate *datenow = [NSDate date];
         long currentSecond = (long)[datenow timeIntervalSince1970];
         if(currentSecond >= (timerInfomation.secondSince + timerInfomation.secondCount))
             return;
         
-        if(timerInfomation.switchState)
+		if(timerInfomation.switchState) {
             [_leftTimerLabel setText:[NSString stringWithFormat:@"%ld%@%ld%@%@",timerInfomation.secondCount / 3600,NSLocalizedString(@"hour", nil),(timerInfomation.secondCount % 3600) / 60,NSLocalizedString(@"minute", nil),NSLocalizedString(@"open", nil)]];
-        else
+		} else {
             [_leftTimerLabel setText:[NSString stringWithFormat:@"%ld%@%ld%@%@",timerInfomation.secondCount / 3600,NSLocalizedString(@"hour", nil),timerInfomation.secondCount / 60,NSLocalizedString(@"minute", nil),NSLocalizedString(@"close", nil)]];
+		}
     }
     
     //定时
-    _refreshInfoTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(getInfo:) userInfo:nil repeats:YES];
-    [_refreshInfoTimer fire];
+	[self getInfo:nil];
 }
 
 //刷新
 -(void)getInfo:(NSTimer *)timer
 {
-    @synchronized(appDelegate.airQualityInfoClass)
+    @synchronized(_airQualityInfoClass)
     {
         //温度
-        NSLog(@"%@", appDelegate.airQualityInfoClass.temperateStrings);
-        if(appDelegate.airQualityInfoClass.temperateStrings.length > 0)
+        NSLog(@"%@", _airQualityInfoClass.temperateStrings);
+        if(_airQualityInfoClass.temperateStrings.length > 0)
         {
-            _address.text = appDelegate.airQualityInfoClass.cityName;
-            _airQuality.text = appDelegate.airQualityInfoClass.airQualityString;
-            _weatherLabel.text = appDelegate.airQualityInfoClass.temperateStrings;
-            [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil),appDelegate.airQualityInfoClass.airQualityLevel]];
+            _address.text = _airQualityInfoClass.cityName;
+            _airQuality.text = _airQualityInfoClass.airQualityString;
+            _weatherLabel.text = _airQualityInfoClass.temperateStrings;
+            [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil), _airQualityInfoClass.airQualityLevel]];
             //判断空气质量级别
-            if([appDelegate.airQualityInfoClass.airQualityLevel isEqualToString:@"4"])
-            {
+            if([_airQualityInfoClass.airQualityLevel isEqualToString:@"4"]) {
                 UIColor *color = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weather_layout_color_bg.png"]];
                 _topView.backgroundColor = color;
             }
@@ -554,8 +527,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    dispatch_release(networkQueue);
-    dispatch_release(httpQueue);
 }
 
 //自动或者手动按钮点击
@@ -794,69 +765,44 @@
 
 #pragma mark - CLLocationManager Delegate
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    //有数据的场合停止检索
-    NSLog(@"_weatherLabel = %d", _weatherLabel.text.length);
-    if(_weatherLabel.text.length > 0) {
-        [manager stopUpdatingLocation];
-        return;
-    }
-    _geocoder = [[CLGeocoder alloc] init];
-    [_geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (error == nil && [placemarks count] > 0)
-        {
-            CLPlacemark *placemark = [placemarks objectAtIndex:0];
-            _latitude = newLocation.coordinate.latitude;
-            _longitude = newLocation.coordinate.longitude;
-            NSLog(@"_latitude = %f",_latitude);
-            NSLog(@"_longitude = %f",_longitude);
-            @synchronized(appDelegate.airQualityInfoClass) {
-                //城市名称
-                appDelegate.airQualityInfoClass.cityName = [[[placemark.addressDictionary objectForKey:@"City"] componentsSeparatedByString:@"市"] objectAtIndex:0];
-                _address.text = appDelegate.airQualityInfoClass.cityName;
-                //城市code
-				
-                appDelegate.airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[appDelegate.airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
-                NSLog(@"cityCode = %d",appDelegate.airQualityInfoClass.cityCode.length);
-                //如果名称不相同则一般为英文
-                //取得空气质量
-                if(appDelegate.airQualityInfoClass.cityCode.length > 0) {
-					//[self getWeather];//TODO:
-                }
-                else {
-					//[self getCityInfo];//TODO:
-                }
-            }
-        }
-        else if (error == nil && [placemarks count] == 0) {
-            NSLog(@"No results were returned.");
-        } else if (error != nil) {
-            NSLog(@"An error occurred = %@", error);
-        }
-    }];
-    [manager stopUpdatingLocation];
+	_currentLocation = locations[0];
+	[[[CLGeocoder alloc] init] reverseGeocodeLocation:_currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+		if (!error && placemarks.count) {
+			CLPlacemark *placemark = placemarks[0];
+			_airQualityInfoClass.cityName = [[[placemark.addressDictionary objectForKey:@"City"] componentsSeparatedByString:@"市"] objectAtIndex:0];
+			_address.text = _airQualityInfoClass.cityName;
+			_airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
+			//如果名称不相同则一般为英文
+			if(_airQualityInfoClass.cityCode.length) {
+				[self getWeather];
+			} else {
+				[self getCityInfo];
+			}
+		} else {
+			NSLog(@"No results were returned.");
+		}
+	}];
+	[manager stopUpdatingLocation];
 }
 
 -(void)getCityInfo
 {
     dispatch_async(httpQueue, ^{
         //百度接口取得地图上面的点
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.map.baidu.com/geocoder?output=json&location=%f,%f&key=37492c0ee6f924cb5e934fa08c6b1676",_latitude,_longitude]];
-        NSError *error=nil;
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.map.baidu.com/geocoder?output=json&location=%f,%f&key=37492c0ee6f924cb5e934fa08c6b1676", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude]];
+        NSError *error;
         NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
         SBJsonParser *parser = [[SBJsonParser alloc]init];
         NSDictionary *rootDic = [parser objectWithString:jsonString error:&error];
         NSDictionary *weatherInfo = [rootDic objectForKey:@"result"];
-        @synchronized(appDelegate.airQualityInfoClass) {
-            appDelegate.airQualityInfoClass.cityName = [[[[weatherInfo objectForKey:@"addressComponent"] objectForKey:@"city"] componentsSeparatedByString:@"市"] objectAtIndex:0];
-            _address.text = appDelegate.airQualityInfoClass.cityName;
-            //城市code
-            appDelegate.airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[appDelegate.airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
-            if(appDelegate.airQualityInfoClass.cityCode.length > 0) {
-				[self getWeather];
-            }
-        }
+		_airQualityInfoClass.cityName = [[[[weatherInfo objectForKey:@"addressComponent"] objectForKey:@"city"] componentsSeparatedByString:@"市"] objectAtIndex:0];
+		_address.text = _airQualityInfoClass.cityName;
+		_airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
+		if(_airQualityInfoClass.cityCode.length) {
+			[self getWeather];
+		}
     });
 }
 
@@ -864,9 +810,9 @@
 - (void)getWeather
 {
     dispatch_async(httpQueue, ^{
-        @synchronized(appDelegate.airQualityInfoClass)
+        @synchronized(_airQualityInfoClass)
         {
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://tqapi.mobile.360.cn/app/meizu/city/%@", appDelegate.airQualityInfoClass.cityCode]];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://tqapi.mobile.360.cn/app/meizu/city/%@", _airQualityInfoClass.cityCode]];
             NSError *error=nil;
             NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
             SBJsonParser *parser = [[SBJsonParser alloc]init];
@@ -875,7 +821,7 @@
             //空气质量
             NSString *tmp =  [NSString stringWithFormat:@"%@",[weatherInfo objectForKey:@"quality"]];
             if(tmp.length > 0 && ![tmp isEqual:@"(null)"])
-                _airQuality.text = appDelegate.airQualityInfoClass.airQualityString;
+                _airQuality.text = _airQualityInfoClass.airQualityString;
             //温度
             NSMutableArray *dayArray = [[NSMutableArray alloc] init];
             NSMutableArray *nightArray = [[NSMutableArray alloc] init];
@@ -884,23 +830,22 @@
             //温度最高
             nightArray = [[[rootDic objectForKey:@"weather"][0] objectForKey:@"info"] objectForKey:@"day"];
             //空气质量等级
-            if([NSString stringWithFormat:@"%@",[weatherInfo objectForKey:@"level"]].length > 0)
-            {
-                [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil),appDelegate.airQualityInfoClass.airQualityLevel]];
+            if([NSString stringWithFormat:@"%@",[weatherInfo objectForKey:@"level"]].length > 0) {
+                [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil), _airQualityInfoClass.airQualityLevel]];
                 //判断空气质量级别
-                if([appDelegate.airQualityInfoClass.airQualityLevel isEqualToString:@"4"])
-                {
+                if([_airQualityInfoClass.airQualityLevel isEqualToString:@"4"]) {
                     UIColor *color = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weather_layout_color_bg.png"]];
                     _topView.backgroundColor = color;
-                }
+                }//TODO: 重构
             }
             //天气
-            appDelegate.airQualityInfoClass.weather = dayArray[1];
+            _airQualityInfoClass.weather = dayArray[1];
             //温度
             NSString *tmpDay =  dayArray[2];
             NSString *tmpNight =  nightArray[2];
-            if(tmpDay.length > 0 && tmpNight.length > 0 && ![tmpDay isEqual:@"(null)"] && ![tmpNight isEqual:@"(null)"])
-               _weatherLabel.text  = [NSString stringWithFormat:@"%@℃~%@℃",tmpDay,tmpNight] ;
+			if(tmpDay.length > 0 && tmpNight.length > 0 && ![tmpDay isEqual:@"(null)"] && ![tmpNight isEqual:@"(null)"]) {
+               _weatherLabel.text  = [NSString stringWithFormat:@"%@℃~%@℃",tmpDay,tmpNight];
+			}
         }
     });
 }

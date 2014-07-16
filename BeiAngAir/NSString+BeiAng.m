@@ -19,6 +19,14 @@
 {
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSString *directory = [documentsDirectory stringByAppendingPathComponent:@"SharedData/DeviceIcon/"];
+	if (![[NSFileManager defaultManager] fileExistsAtPath:directory]) {
+		NSError *error = nil;
+		[[NSFileManager defaultManager] createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:&error];
+		if (error) {
+			NSLog(@"创建目录:%@ 失败:%@", directory, [error localizedDescription]);
+		}
+	}
 	NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedData/DeviceIcon/%@.png", MAC]];
 	return path;
 }
