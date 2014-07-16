@@ -11,5 +11,6 @@
 @interface UIColor (BeiAng)
 
 + (instancetype)themeBlue;
++ (instancetype)colorAirPolluted;
 
 @end

@@ -39,33 +39,15 @@
     int oldSpeed;
     int oldTimer;
 }
-//顶部视图
-@property (nonatomic, strong) UIView *topView;
-//温度
-@property (nonatomic, strong) UILabel *weatherLabel;
-//点击风速弹出的视图
+
 @property (nonatomic, strong) UIView *backView;
-//空气质量指数
 @property (nonatomic, strong) UILabel *airQualityLabel;
-//开关按钮
 @property (nonatomic, strong) UIButton *switchButton;
-//手动或者自动按钮
 @property (nonatomic, strong) UIButton *handOrAutoButton;
-//儿童锁按钮
 @property (nonatomic, strong) UIButton *childLockButton;
-//手动自动标题
-@property (nonatomic, strong) UILabel *handOrAutoLabel;
-//睡眠开关标题
-@property (nonatomic, strong) UILabel *sleepLabel;
-//儿童锁开关标题
-@property (nonatomic, strong) UILabel *childLockLabel;
-//空气质量标题
-@property (nonatomic, strong) UILabel *airQuality;
-//城市标题
-@property (nonatomic, strong) UILabel *address;
-//剩余时间
+@property (nonatomic, strong) UIButton *sleepButton;
+@property (nonatomic, strong) UILabel *weatherLabel;
 @property (nonatomic, strong) UILabel *leftTimerLabel;
-//定时器
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *currentLocation;
@@ -79,6 +61,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"home_logo"] style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonClick:)];
     }
     return self;
 }
@@ -100,76 +83,26 @@
     [_locationManager setDistanceFilter:500.0f];
     [_locationManager startUpdatingLocation];
 
-    //顶部视图
-    CGRect viewFrame = CGRectZero;
-    viewFrame.origin.x = 0;
-    viewFrame.origin.y = 0;
+	self.view.backgroundColor = [UIColor themeBlue];
+	UIEdgeInsets edgeInsets = UIEdgeInsetsMake(10, 20, 0, 20);
+	
+	CGRect viewFrame = CGRectZero;
     viewFrame.size.width = self.view.frame.size.width;
-    viewFrame.size.height =140.5f;
-    _topView = [[UIView alloc] initWithFrame:viewFrame];
-    //空气质量
-    _topView.backgroundColor = [UIColor themeBlue];
-    [self.view addSubview:_topView];
-	
-    //右侧关于界面
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"home_logo"] style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonClick:)];
-	
-    //城市地址
-    viewFrame.origin.x = 20;
-    //viewFrame.origin.y = leftButton.frame.size.height + leftButton.frame.origin.y + 5;
-	viewFrame.origin.y = 40;//TODO:
-    viewFrame.size.width = 20;
-    viewFrame.size.height = 20;
-    _address = [[UILabel alloc] initWithFrame:viewFrame];
-    [_address setBackgroundColor:[UIColor clearColor]];
-    [_address setNumberOfLines:1];
-    [_address setTextColor:[UIColor whiteColor]];
-    [_address setFont:[UIFont systemFontOfSize:17.f]];
-    [_address setText:_airQualityInfoClass.cityName];
-    //根据高度调整长度
-    CGSize size = [_address.text sizeWithFont:_address.font constrainedToSize:CGSizeMake(MAXFLOAT, _address.frame.size.height) lineBreakMode:NSLineBreakByWordWrapping];
-    viewFrame.size.width = size.width;
-    [_address setFrame:viewFrame];
-    [_topView addSubview:_address];
-    
-     //温度
-    viewFrame.origin.x = _address.frame.size.width + _address.frame.origin.x + 10;
-    viewFrame.origin.y = _address.frame.origin.y;
-    viewFrame.size.width = 150;
-    viewFrame.size.height = 20;
+    viewFrame.size.height = 40;
     _weatherLabel = [[UILabel alloc] initWithFrame:viewFrame];
+	_weatherLabel.numberOfLines = 0;
     [_weatherLabel setBackgroundColor:[UIColor clearColor]];
-    [_weatherLabel setNumberOfLines:1];
     [_weatherLabel setTextColor:[UIColor whiteColor]];
-    [_weatherLabel setFont:[UIFont systemFontOfSize:25.f]];
-    
-    @synchronized(_airQualityInfoClass)
-    {
-        [_weatherLabel setText:_airQualityInfoClass.temperateStrings];
-    }
-    [_topView addSubview:_weatherLabel];
-    
-    //空气质量
-    viewFrame.origin.x =  _address.frame.origin.x;
-    viewFrame.origin.y = _address.frame.size.height + _address.frame.origin.y + 10.f;
-    viewFrame.size.width = 200;
-    viewFrame.size.height = 80;
-    _airQuality = [[UILabel alloc] initWithFrame:viewFrame];
-	_airQuality.numberOfLines = 0;
-    [_airQuality setBackgroundColor:[UIColor clearColor]];
-    [_airQuality setTextColor:[UIColor whiteColor]];
-    @synchronized(_airQualityInfoClass) {
-		ClassAirQualityInfo *airQuality = _airQualityInfoClass;
-		_airQuality.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", airQuality.cityName, airQuality.temperateStrings, airQuality.pm25, airQuality.airQualityString];
-    }
-    [_airQuality setFont:[UIFont systemFontOfSize:17.f]];
-    [_topView addSubview:_airQuality];
+	_weatherLabel.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", _airQualityInfoClass.cityName, _airQualityInfoClass.temperateStrings, _airQualityInfoClass.pm25, _airQualityInfoClass.airQualityString];
+    [_weatherLabel setFont:[UIFont systemFontOfSize:17.f]];
+	[self.view addSubview:_weatherLabel];
     
     //底部视图
     viewFrame.origin.x =  0;
-    viewFrame.origin.y = _topView.frame.size.height + _topView.frame.origin.y - 10;
+	viewFrame.origin.y = 145;
     viewFrame.size.width = self.view.frame.size.width;
-    viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y + 10;
+    viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y;
+	
     UIView *bottomView = [[UIView alloc] initWithFrame:viewFrame];
     [bottomView.layer setMasksToBounds:YES];
     [bottomView.layer setCornerRadius:10.f];
@@ -178,9 +111,9 @@
     
     //风速
     UIImage *image = [UIImage imageNamed:@"wind"];
-    viewFrame.origin.x = _address.frame.origin.x;
-    viewFrame.origin.y = 10;
-    viewFrame.size = CGSizeMake(47.f, 47.f);
+    viewFrame.origin.x = edgeInsets.left;
+    viewFrame.origin.y = edgeInsets.top;
+	viewFrame.size = CGSizeMake(image.size.width, image.size.height);
     UIButton *speedButton = [[UIButton alloc] initWithFrame:viewFrame];
     [speedButton setBackgroundColor:[UIColor clearColor]];
     [speedButton setImage:image forState:UIControlStateNormal];
@@ -188,157 +121,140 @@
     [bottomView addSubview:speedButton];
     
     //空气质量指数
-    UIImage *timeImage = [UIImage imageNamed:@"time"];
-    viewFrame.origin.x =  speedButton.frame.origin.x + speedButton.frame.size.width;
-    viewFrame.origin.y = 10;
-    viewFrame.size.width = self.view.frame.size.width - (47.f + _address.frame.origin.x) * 2;
-    viewFrame.size.height = 47.f;
-    _airQualityLabel = [[UILabel alloc] initWithFrame:viewFrame];
+    _airQualityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, edgeInsets.top, self.view.frame.size.width, 30)];
     [_airQualityLabel setTextAlignment:NSTextAlignmentCenter];
     [_airQualityLabel setBackgroundColor:[UIColor clearColor]];
 	_airQualityLabel.numberOfLines = 0;
-    @synchronized(_airQualityInfoClass) {
-		NSLog(@"airQualityInfoClass: %@", _airQualityInfoClass);
-        [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil),_airQualityInfoClass.airQualityLevel]];
-    }
     [_airQualityLabel setTextColor:[UIColor blackColor]];
     [_airQualityLabel setFont:[UIFont systemFontOfSize:15.f]];
     [bottomView addSubview:_airQualityLabel];
     
     //定时任务
-    viewFrame.origin.x =  self.view.frame.size.width - speedButton.frame.size.width - _address.frame.origin.x;
-    viewFrame.origin.y = speedButton.frame.origin.y;
-    viewFrame.size = speedButton.frame.size;
+	UIImage *timeImage = [UIImage imageNamed:@"time"];
+    viewFrame.origin.x =  self.view.frame.size.width - timeImage.size.width - edgeInsets.left;
+    viewFrame.origin.y = edgeInsets.top;
+    viewFrame.size = timeImage.size;
     UIButton *timerButton = [[UIButton alloc] initWithFrame:viewFrame];
     [timerButton setBackgroundColor:[UIColor clearColor]];
     [timerButton setImage:timeImage forState:UIControlStateNormal];
     [timerButton addTarget:self action:@selector(timerButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:timerButton];
-    
-    //开关按钮
+	
+	CGSize buttonSize = CGSizeMake(110, 110);
+	viewFrame.origin.x =  (self.view.frame.size.width - buttonSize.width) / 2.f;
+	viewFrame.origin.y = timerButton.frame.origin.y + timerButton.frame.size.height + 15.f;
+	viewFrame.size = buttonSize;
+	
     _switchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	_switchButton.selected = self.currentAirInfo.switchStatus ? YES : NO;
-	NSString *pathOnOff = self.currentAirInfo.switchStatus ? @"power_on" : @"power_off";
-	NSString *pathOnOffClick = self.currentAirInfo.switchStatus ? @"power_on_press" : @"power_off_press";
-    UIImage *imageSwitchState = [UIImage imageNamed:pathOnOff];
-    UIImage *imageSwitchClick = [UIImage imageNamed:pathOnOffClick];
-    viewFrame.origin.x =  (self.view.frame.size.width - imageSwitchState.size.width) / 2.f;
-    viewFrame.origin.y = timerButton.frame.origin.y + timerButton.frame.size.height + 15.f;
-    viewFrame.size = imageSwitchState.size;
-    [_switchButton setFrame:viewFrame];
-    [_switchButton setImage:imageSwitchState forState:UIControlStateNormal];
-    [_switchButton setImage:imageSwitchClick forState:UIControlStateSelected | UIControlStateHighlighted];
-    [_switchButton setTag:1];
+	[_switchButton setFrame:viewFrame];
+	[_switchButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[self deviceOn:self.currentAirInfo.switchStatus];
     [_switchButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:_switchButton];
-    
-    //手动按钮
+	
+	CGSize titleSize = CGSizeZero;
+	buttonSize = CGSizeMake(47, 47 + 15);
+	viewFrame.origin.x = edgeInsets.left;
+	viewFrame.origin.y = CGRectGetMaxY(_switchButton.frame);
+	viewFrame.size = buttonSize;
+	UIFont *font = [UIFont systemFontOfSize:13];
+	
     _handOrAutoButton  = [UIButton buttonWithType:UIButtonTypeCustom];
-	_handOrAutoButton.selected = self.currentAirInfo.autoOrHand ? YES : NO;
-	pathOnOff = self.currentAirInfo.autoOrHand ? @"auto_on" : @"hand_on";
-	pathOnOffClick = self.currentAirInfo.autoOrHand ? @"auto_on_press" : @"hand_on_press";
-    imageSwitchState = [UIImage imageNamed:pathOnOff];
-    imageSwitchClick = [UIImage imageNamed:pathOnOffClick];
-    viewFrame.origin.x =  _address.frame.origin.x;
-    viewFrame.origin.y = _switchButton.frame.origin.y + _switchButton.frame.size.height;
-    viewFrame.size = imageSwitchState.size;
-    [_handOrAutoButton setFrame:viewFrame];
-    [_handOrAutoButton setImage:imageSwitchState forState:UIControlStateNormal];
-    [_handOrAutoButton setImage:imageSwitchClick forState:UIControlStateHighlighted | UIControlStateSelected];
-    [_handOrAutoButton setTag:2];
+	[_handOrAutoButton setFrame:viewFrame];
+	_handOrAutoButton.titleLabel.font = font;
+	[_handOrAutoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[self deviceAutoOn:self.currentAirInfo.autoOrHand];
+	[_handOrAutoButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
+	titleSize = _handOrAutoButton.titleLabel.frame.size;
+	[_handOrAutoButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
+	_handOrAutoButton.contentMode = UIViewContentModeCenter;
+	
     [_handOrAutoButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:_handOrAutoButton];
-    
-    //手动自动标题
-    viewFrame.origin.y = _handOrAutoButton.frame.size.height + _handOrAutoButton.frame.origin.y;
-    _handOrAutoLabel = [[UILabel alloc] initWithFrame:viewFrame];
-	[_handOrAutoLabel setFont:[UIFont systemFontOfSize:13.f]];
-	[_handOrAutoLabel setNumberOfLines:2];
-	_handOrAutoLabel.text = self.currentAirInfo.autoOrHand ? NSLocalizedString(@"Automatic", nil) : NSLocalizedString(@"Manual", nil);
+
+	viewFrame.origin.x =  (self.view.frame.size.width - buttonSize.width) / 2.f;
+	viewFrame.origin.y = _handOrAutoButton.frame.origin.y + _handOrAutoButton.frame.size.height * 2.f / 3.f;
 	
-    //根据长度调帐高度
-    size = [_handOrAutoLabel.text sizeWithFont:_handOrAutoLabel.font constrainedToSize:CGSizeMake(viewFrame.size.width, MAXFLOAT)  lineBreakMode:NSLineBreakByWordWrapping];
-    viewFrame.size.height = size.height;
-    [_handOrAutoLabel setFrame:viewFrame];
-    [_handOrAutoLabel setBackgroundColor:[UIColor clearColor]];
-    [_handOrAutoLabel setTextColor:[UIColor blackColor]];
-    [_handOrAutoLabel setTextAlignment:NSTextAlignmentCenter];
-    [bottomView addSubview:_handOrAutoLabel];
-    
-    //睡眠按钮
-    UIButton *sleepButton  = [UIButton buttonWithType:UIButtonTypeCustom];
-	sleepButton.selected = self.currentAirInfo.sleepState ? YES : NO;
-	pathOnOff = self.currentAirInfo.sleepState ? @"night_on" : @"night_off";
-	pathOnOffClick = self.currentAirInfo.sleepState ? @"night_on_press" : @"night_off_press";
-    imageSwitchState = [UIImage imageNamed:pathOnOff];
-    imageSwitchClick = [UIImage imageNamed:pathOnOffClick];
-    viewFrame.origin.x =  (self.view.frame.size.width - imageSwitchState.size.width) / 2.f;
-    viewFrame.origin.y = _handOrAutoButton.frame.origin.y + _handOrAutoButton.frame.size.height * 2.f / 3.f;
-    viewFrame.size = imageSwitchState.size;
-    [sleepButton setFrame:viewFrame];
-    [sleepButton setImage:imageSwitchState forState:UIControlStateNormal];
-    [sleepButton setImage:imageSwitchClick forState:UIControlStateHighlighted | UIControlStateSelected];
-    [sleepButton setTag:3];
-    [sleepButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [bottomView addSubview:sleepButton];
-    
-    //睡眠标题
-    viewFrame.origin.y = sleepButton.frame.size.height + sleepButton.frame.origin.y;
-    _sleepLabel = [[UILabel alloc] initWithFrame:viewFrame];
-	_sleepLabel.text = self.currentAirInfo.sleepState ? NSLocalizedString(@"SleepOn", nil) : NSLocalizedString(@"SleepOff", nil);
-    [_sleepLabel setBackgroundColor:[UIColor clearColor]];
-    [_sleepLabel setFont:[UIFont systemFontOfSize:13.f]];
-    [_sleepLabel setNumberOfLines:2];
-    //根据长度调帐高度
-    size = [_sleepLabel.text sizeWithFont:_sleepLabel.font constrainedToSize:CGSizeMake(viewFrame.size.width, MAXFLOAT)  lineBreakMode:NSLineBreakByWordWrapping];
-    viewFrame.size.height = size.height;
-    [_sleepLabel setFrame:viewFrame];
-    [_sleepLabel setTextColor:[UIColor blackColor]];
-    [_sleepLabel setTextAlignment:NSTextAlignmentCenter];
-    [bottomView addSubview:_sleepLabel];
-    
-    //儿童锁按钮
+	_sleepButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[_sleepButton setFrame:viewFrame];
+	_sleepButton.titleLabel.font = font;
+	[_sleepButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[self deviceSleepOn:self.currentAirInfo.sleepState];
+	[_sleepButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
+	titleSize = _sleepButton.titleLabel.frame.size;
+	[_sleepButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
+	_sleepButton.contentMode = UIViewContentModeCenter;
+    [_sleepButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [bottomView addSubview:_sleepButton];
+
+	viewFrame.origin.x = self.view.frame.size.width - buttonSize.width - edgeInsets.top;
+	viewFrame.origin.y = _handOrAutoButton.frame.origin.y;
+
     _childLockButton  = [UIButton buttonWithType:UIButtonTypeCustom];
-	_childLockButton.selected = self.currentAirInfo.childLockState ? YES : NO;
-	pathOnOff = self.currentAirInfo.childLockState ? @"lock_on" : @"lock_off";
-	pathOnOffClick = self.currentAirInfo.childLockState ? @"lock_on_press" : @"lock_off_press";
-    imageSwitchState = [UIImage imageNamed:pathOnOff];
-    imageSwitchClick = [UIImage imageNamed:pathOnOffClick];
-    viewFrame.origin.x =  self.view.frame.size.width - imageSwitchState.size.width - _address.frame.origin.x;
-    viewFrame.origin.y = _handOrAutoButton.frame.origin.y ;
-    viewFrame.size = imageSwitchState.size;
-    [_childLockButton setFrame:viewFrame];
-    [_childLockButton setImage:imageSwitchState forState:UIControlStateNormal];
-    [_childLockButton setImage:imageSwitchClick forState:UIControlStateHighlighted | UIControlStateSelected];
-    [_childLockButton setTag:4];
-    [_childLockButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+	[_childLockButton setFrame:viewFrame];
+	_childLockButton.titleLabel.font = font;
+	[_childLockButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[self deviceChildLockOn:self.currentAirInfo.childLockState];
+	[_childLockButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
+	titleSize = _childLockButton.titleLabel.frame.size;
+	[_childLockButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
+	_childLockButton.contentMode = UIViewContentModeCenter;
+	[_childLockButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:_childLockButton];
-    
-    //儿童锁标题
-    viewFrame.origin.y = _childLockButton.frame.size.height + _childLockButton.frame.origin.y;
-    _childLockLabel = [[UILabel alloc] initWithFrame:viewFrame];
-	_childLockLabel.text = self.currentAirInfo.childLockState ? NSLocalizedString(@"TheChildLock", nil) : NSLocalizedString(@"TheChildLockOff", nil);
-    [_childLockLabel setBackgroundColor:[UIColor clearColor]];
-    [_childLockLabel setFont:[UIFont systemFontOfSize:13.f]];
-    [_childLockLabel setNumberOfLines:3];
-    //根据长度调帐高度
-    size = [_childLockLabel.text sizeWithFont:[UIFont systemFontOfSize:13.f] constrainedToSize:CGSizeMake(viewFrame.size.width, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
-    viewFrame.size.height = size.height;
-    [_childLockLabel setFrame:viewFrame];
-    [_childLockLabel setTextColor:[UIColor blackColor]];
-    [_childLockLabel setTextAlignment:NSTextAlignmentCenter];
-    [bottomView addSubview:_childLockLabel];
-    
+	
     viewFrame.origin.x =  0;
     viewFrame.origin.y = bottomView.frame.size.height - 40;
     viewFrame.size.width = self.view.frame.size.width;
     viewFrame.size.height = 20;
+	
     _leftTimerLabel = [[UILabel alloc] initWithFrame:viewFrame];
     [_leftTimerLabel setBackgroundColor:[UIColor clearColor]];
     [_leftTimerLabel setTextColor:[UIColor blackColor]];
     [_leftTimerLabel setTextAlignment:NSTextAlignmentCenter];
     [_leftTimerLabel setNumberOfLines:1];
     [bottomView addSubview:_leftTimerLabel];
+}
+
+- (void)deviceOn:(BOOL)on
+{
+	NSString *onOrOff = on ? @"power_on" : @"power_off";
+	NSString *highlighted = on ? @"power_on_press" : @"power_off_press";
+	[_switchButton setImage:[UIImage imageNamed:onOrOff] forState:UIControlStateNormal];
+	[_switchButton setImage:[UIImage imageNamed:highlighted] forState:UIControlStateHighlighted];
+	_switchButton.selected = on;
+}
+
+- (void)deviceAutoOn:(BOOL)on
+{
+	NSString *onOrOff = on ? @"auto_on" : @"hand_on";
+	NSString *highlighted = on ? @"auto_on_press" : @"hand_on_press";
+	[_handOrAutoButton setImage:[UIImage imageNamed:onOrOff] forState:UIControlStateNormal];
+	[_handOrAutoButton setImage:[UIImage imageNamed:highlighted] forState:UIControlStateHighlighted];
+	_handOrAutoButton.selected = on;
+	NSString *title = on ? NSLocalizedString(@"Automatic", nil) : NSLocalizedString(@"Manual", nil);
+	[_handOrAutoButton setTitle:title forState:UIControlStateNormal];
+}
+
+- (void)deviceSleepOn:(BOOL)on
+{
+	NSString *onOrOff = on ? @"night_on" : @"night_off";
+	NSString *highlighted = on ? @"night_on_press" : @"night_off_press";
+	[_sleepButton setImage:[UIImage imageNamed:onOrOff] forState:UIControlStateNormal];
+	[_sleepButton setImage:[UIImage imageNamed:highlighted] forState:UIControlStateHighlighted];
+	_sleepButton.selected = on;
+	NSString *title = on ? NSLocalizedString(@"SleepOn", nil) : NSLocalizedString(@"SleepOff", nil);
+	[_sleepButton setTitle:title forState:UIControlStateNormal];
+}
+
+- (void)deviceChildLockOn:(BOOL)on
+{
+	NSString *onOrOff = on ? @"lock_on" : @"lock_off";
+	NSString *highlighted = on ? @"lock_on_press" : @"lock_off_press";
+	[_childLockButton setImage:[UIImage imageNamed:onOrOff] forState:UIControlStateNormal];
+	[_childLockButton setImage:[UIImage imageNamed:highlighted] forState:UIControlStateHighlighted];
+	_childLockButton.selected = on;
+	NSString *title = on ? NSLocalizedString(@"TheChildLock", nil) : NSLocalizedString(@"TheChildLockOff", nil);
+	[_childLockButton setTitle:title forState:UIControlStateNormal];
 }
 
 //弹出视图
@@ -478,50 +394,36 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     //插入定时数据
     BLTimerInfomation *timerInfomation = [BLTimerInfomation timerInfomation];
-    NSLog(@"timerInfomation = %@",timerInfomation);
     if(timerInfomation) {
         //判断定时时间已经过去
         NSDate *datenow = [NSDate date];
         long currentSecond = (long)[datenow timeIntervalSince1970];
         if(currentSecond >= (timerInfomation.secondSince + timerInfomation.secondCount))
             return;
-        
 		if(timerInfomation.switchState) {
             [_leftTimerLabel setText:[NSString stringWithFormat:@"%ld%@%ld%@%@",timerInfomation.secondCount / 3600,NSLocalizedString(@"hour", nil),(timerInfomation.secondCount % 3600) / 60,NSLocalizedString(@"minute", nil),NSLocalizedString(@"open", nil)]];
 		} else {
             [_leftTimerLabel setText:[NSString stringWithFormat:@"%ld%@%ld%@%@",timerInfomation.secondCount / 3600,NSLocalizedString(@"hour", nil),timerInfomation.secondCount / 60,NSLocalizedString(@"minute", nil),NSLocalizedString(@"close", nil)]];
 		}
     }
-    
-    //定时
 	[self getInfo:nil];
 }
 
-//刷新
 -(void)getInfo:(NSTimer *)timer
 {
-    @synchronized(_airQualityInfoClass)
-    {
-        //温度
-        NSLog(@"%@", _airQualityInfoClass.temperateStrings);
-        if(_airQualityInfoClass.temperateStrings.length > 0)
-        {
-            _address.text = _airQualityInfoClass.cityName;
-            _airQuality.text = _airQualityInfoClass.airQualityString;
-            _weatherLabel.text = _airQualityInfoClass.temperateStrings;
-            [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil), _airQualityInfoClass.airQualityLevel]];
-            //判断空气质量级别
-            if([_airQualityInfoClass.airQualityLevel isEqualToString:@"4"]) {
-                UIColor *color = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weather_layout_color_bg.png"]];
-                _topView.backgroundColor = color;
-            }
-            [timer invalidate];
-            timer = nil;
-        }
-    }
+	if(_airQualityInfoClass.temperateStrings.length > 0) {
+		//TODO:
+		_weatherLabel.text = _airQualityInfoClass.airQualityString;//TODO: 逻辑错误，室内的怎么会影响室外的呢
+		[_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil), _airQualityInfoClass.airQualityLevel]];
+		//判断空气质量级别
+		if([_airQualityInfoClass.airQualityLevel isEqualToString:@"4"]) {
+			self.view.backgroundColor = [UIColor colorAirPolluted];
+		}
+		[timer invalidate];
+		timer = nil;
+	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -529,23 +431,13 @@
     [super viewWillDisappear:animated];
 }
 
-//自动或者手动按钮点击
 - (void)allButtonClicked:(UIButton *)button
 {
-    //判断是否开机状态
-    if(!self.currentAirInfo.switchStatus && button.tag != 1)
-    {
-        //关机状态就返回
+    if(!self.currentAirInfo.switchStatus && button != _switchButton) {
         return;
-    }
-    else
-    {
-        //判断儿童锁是否开启
-        if(_childLockButton.selected)
-        {
-            if(button.tag == 2 || button.tag == 3)
-            {
-                //提示信息
+    } else {
+        if(_childLockButton.selected) {
+            if(button == _handOrAutoButton || button == _sleepButton) {
                 [self.view makeToast:NSLocalizedString(@"childMessage", nil) duration:0.8 position:@"bottom"];
                 return;
             }
@@ -555,46 +447,24 @@
     dispatch_async(networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
         BeiAngSendDataInfo *sendInfo = [[BeiAngSendDataInfo alloc] init];
-        //判断是那个按钮点击
-        if(button.tag == 1)
-        {
-            //开关按钮
+		sendInfo.switchStatus = self.currentAirInfo.switchStatus;
+		sendInfo.autoOrHand = self.currentAirInfo.autoOrHand;
+		sendInfo.sleepState = self.currentAirInfo.sleepState;
+		sendInfo.childLockState = self.currentAirInfo.childLockState;
+		sendInfo.gearState = self.currentAirInfo.gearState;
+        if(button == _switchButton) {
             [sendInfo setSwitchStatus:!button.selected];
-            [sendInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
-            sendInfo.sleepState = self.currentAirInfo.sleepState;
-            sendInfo.childLockState = self.currentAirInfo.childLockState;
-        }
-        else if (button.tag == 2)
-        {
-            //自动或者手动按钮
+        } else if (button == _handOrAutoButton) {
             [sendInfo setAutoOrHand:!button.selected];
-            sendInfo.switchStatus = self.currentAirInfo.switchStatus;
-            sendInfo.sleepState = self.currentAirInfo.sleepState;
-            sendInfo.childLockState = self.currentAirInfo.childLockState;
-        }
-        else if (button.tag == 3)
-        {
-            //睡眠按钮
+        } else if (button == _sleepButton) {
             sendInfo.sleepState = !button.selected;
-            sendInfo.switchStatus = self.currentAirInfo.switchStatus;
-            [sendInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
-            sendInfo.childLockState = self.currentAirInfo.childLockState;
-        }
-        else if(button.tag == 4)
-        {
-            //儿童锁按钮
+        } else if(button == _childLockButton) {
             sendInfo.childLockState = !button.selected;
-            sendInfo.switchStatus = self.currentAirInfo.switchStatus;
-            [sendInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
-            sendInfo.sleepState = self.currentAirInfo.sleepState;
         }
-        sendInfo.gearState = self.currentAirInfo.gearState;
-        
-        //数据透传
+		
         NSData *response =[self sendDataCommon:sendInfo];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-        if (code == 0)
-        {
+        if (code == 0) {
             [MMProgressHUD dismiss];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
             BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] init];
@@ -602,93 +472,23 @@
             recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
             self.currentAirInfo = recvInfo;
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSString *stringSwitchState;
-                NSString *stringSwitchClick;
-                //判断是那个按钮点击
-                if(button.tag == 2)
-                {
-                    //手动或者自动按钮
-                    if(self.currentAirInfo.autoOrHand)
-                    {
-                        stringSwitchState = @"auto_on";
-                        stringSwitchClick = @"auto_on_press";
-                        [_handOrAutoLabel setText:NSLocalizedString(@"Automatic", nil)];
-                        button.selected = YES;
-                    }
-                    else
-                    {
-                        stringSwitchState = @"hand_on";
-                        stringSwitchClick = @"hand_on_press";
-                        [_handOrAutoLabel setText:NSLocalizedString(@"Manual", nil)];
-                        button.selected = NO;
-                    }
+                if(button == _handOrAutoButton) {
+					[self deviceAutoOn:self.currentAirInfo.autoOrHand];
+				} else if (button == _switchButton) {
+					[self deviceOn:self.currentAirInfo.switchStatus];
+                } else if (button == _sleepButton) {
+					[self deviceSleepOn:self.currentAirInfo.sleepState];
+                } else if (button == _childLockButton) {
+					[self deviceChildLockOn:self.currentAirInfo.childLockState];
                 }
-                else if (button.tag == 1)
-                {
-                    //判断开关按钮
-                    if(self.currentAirInfo.switchStatus)
-                    {
-                        stringSwitchState = @"power_on";
-                        stringSwitchClick = @"power_on_press";
-                        button.selected = YES;
-                    }
-                    else
-                    {
-                        stringSwitchState = @"power_off";
-                        stringSwitchClick = @"power_off_press";
-                        button.selected = NO;
-                    }
-                }
-                else if (button.tag == 3)
-                {
-                    //判断睡眠按钮
-                    if(self.currentAirInfo.sleepState)
-                    {
-                        stringSwitchState = @"night_on";
-                        stringSwitchClick = @"night_on_press";
-                        [_sleepLabel setText:NSLocalizedString(@"SleepOn", nil)];
-                        button.selected = YES;
-                    }
-                    else
-                    {
-                        stringSwitchState = @"night_off";
-                        stringSwitchClick = @"night_off_press";
-                        [_sleepLabel setText:NSLocalizedString(@"SleepOff", nil)];
-                        button.selected = NO;
-                    }
-                }
-                else if (button.tag == 4)
-                {
-                    //判断儿童锁按钮
-                    if(self.currentAirInfo.childLockState)
-                    {
-                        stringSwitchState = @"lock_on";
-                        stringSwitchClick = @"lock_on_press";
-                        [_childLockLabel setText:NSLocalizedString(@"TheChildLock", nil)];
-                        button.selected = YES;
-                    }
-                    else
-                    {
-                        stringSwitchState = @"lock_off";
-                        stringSwitchClick = @"lock_off_press";
-                        [_childLockLabel setText:NSLocalizedString(@"TheChildLockOff", nil)];
-                        button.selected = NO;
-                    }
-                }
-                UIImage *imageSwitchState = [UIImage imageNamed:stringSwitchState];
-                UIImage *imageSwitchClick = [UIImage imageNamed:stringSwitchClick];
-                [button setImage:imageSwitchState forState:UIControlStateNormal];
-                [button setImage:imageSwitchClick forState:UIControlStateHighlighted];
-                });
-            }
-            else
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [MMProgressHUD dismiss];
-                    [self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
-                });
-            }
-        });
+			});
+		} else {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[MMProgressHUD dismiss];
+				[self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
+			});
+		}
+	});
 }
 
 //发送数据
@@ -744,17 +544,14 @@
         //数据透传
         NSData *response =[self sendDataCommon:sendInfo];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-        if (code == 0)
-        {
+        if (code == 0) {
             [MMProgressHUD dismiss];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
             BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] init];
             //数据转换
             recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
             self.currentAirInfo = recvInfo;
-        }
-        else
-        {
+        } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MMProgressHUD dismiss];
                 [self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
@@ -772,7 +569,6 @@
 		if (!error && placemarks.count) {
 			CLPlacemark *placemark = placemarks[0];
 			_airQualityInfoClass.cityName = [[[placemark.addressDictionary objectForKey:@"City"] componentsSeparatedByString:@"市"] objectAtIndex:0];
-			_address.text = _airQualityInfoClass.cityName;
 			_airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
 			//如果名称不相同则一般为英文
 			if(_airQualityInfoClass.cityCode.length) {
@@ -787,6 +583,15 @@
 	[manager stopUpdatingLocation];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+	if (status == kCLAuthorizationStatusDenied) {
+		[manager stopUpdatingLocation];
+	} else {
+		[manager startUpdatingLocation];
+	}
+}
+
 -(void)getCityInfo
 {
     dispatch_async(httpQueue, ^{
@@ -798,7 +603,6 @@
         NSDictionary *rootDic = [parser objectWithString:jsonString error:&error];
         NSDictionary *weatherInfo = [rootDic objectForKey:@"result"];
 		_airQualityInfoClass.cityName = [[[[weatherInfo objectForKey:@"addressComponent"] objectForKey:@"city"] componentsSeparatedByString:@"市"] objectAtIndex:0];
-		_address.text = _airQualityInfoClass.cityName;
 		_airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
 		if(_airQualityInfoClass.cityCode.length) {
 			[self getWeather];
@@ -821,7 +625,7 @@
             //空气质量
             NSString *tmp =  [NSString stringWithFormat:@"%@",[weatherInfo objectForKey:@"quality"]];
             if(tmp.length > 0 && ![tmp isEqual:@"(null)"])
-                _airQuality.text = _airQualityInfoClass.airQualityString;
+                _weatherLabel.text = _airQualityInfoClass.airQualityString;
             //温度
             NSMutableArray *dayArray = [[NSMutableArray alloc] init];
             NSMutableArray *nightArray = [[NSMutableArray alloc] init];
@@ -834,8 +638,7 @@
                 [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil), _airQualityInfoClass.airQualityLevel]];
                 //判断空气质量级别
                 if([_airQualityInfoClass.airQualityLevel isEqualToString:@"4"]) {
-                    UIColor *color = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weather_layout_color_bg.png"]];
-                    _topView.backgroundColor = color;
+					self.view.backgroundColor = [UIColor colorAirPolluted];
                 }//TODO: 重构
             }
             //天气
@@ -844,7 +647,8 @@
             NSString *tmpDay =  dayArray[2];
             NSString *tmpNight =  nightArray[2];
 			if(tmpDay.length > 0 && tmpNight.length > 0 && ![tmpDay isEqual:@"(null)"] && ![tmpNight isEqual:@"(null)"]) {
-               _weatherLabel.text  = [NSString stringWithFormat:@"%@℃~%@℃",tmpDay,tmpNight];
+				//TODO:
+               //_weatherLabel.text  = [NSString stringWithFormat:@"%@℃~%@℃",tmpDay,tmpNight];
 			}
         }
     });

@@ -235,6 +235,7 @@
 		NSDictionary *dictionary = [NSDictionary dictionaryEashConfigWithSSID:_ssidTextField.text password:_passwordTextField.text];
         NSData *requestData = [dictionary JSONData];
         NSData *responseData = [_configAPI requestDispatch:requestData];
+		NSLog(@"responseData: %@", [responseData objectFromJSONData]);
         dispatch_async(dispatch_get_main_queue(), ^{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[[responseData objectFromJSONData] objectForKey:@"msg"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alertView show];
