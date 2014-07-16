@@ -433,7 +433,7 @@
     //定时界面
     BLFilterViewController *filterInfoViewController = [[BLFilterViewController alloc] init];
 	filterInfoViewController.currentAirInfo = self.currentAirInfo;
-	filterInfoViewController.deviceInfo = self.deviceInfo;
+	filterInfoViewController.deviceInfo = self.device;
     [self.navigationController pushViewController:filterInfoViewController animated:YES];
 }
 
@@ -694,7 +694,7 @@
 //发送数据
 -(NSData *)sendDataCommon:(BeiAngSendDataInfo *)sendInfo
 {
-	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.deviceInfo.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
+	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.device.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
     NSData *sendData = [dictionary JSONData];
     NSData *response = [networkAPI requestDispatch:sendData];
     return response;

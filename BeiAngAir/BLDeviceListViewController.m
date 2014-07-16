@@ -355,7 +355,7 @@
 	//BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
 	BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
 	//airQualityViewController.currentAirInfo = recvInfo;
-	airQualityViewController.deviceInfo = info;
+	airQualityViewController.device = info;
 	[self.navigationController pushViewController:airQualityViewController animated:YES];
 	return;//TODO:
 	
@@ -374,7 +374,7 @@
 				NSLog(@"BeiAngReceivedDataInfo: %@", recvInfo);
                 BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
 				airQualityViewController.currentAirInfo = recvInfo;
-				airQualityViewController.deviceInfo = info;
+				airQualityViewController.device = info;
                 [self.navigationController pushViewController:airQualityViewController animated:YES];
             });
         } else {
