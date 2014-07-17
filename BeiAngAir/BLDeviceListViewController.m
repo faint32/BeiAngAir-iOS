@@ -310,10 +310,10 @@
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
                 BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
 				NSLog(@"BeiAngReceivedDataInfo: %@", receivedData);
-                BLDeviceControlViewController *airQualityViewController = [[BLDeviceControlViewController alloc] init];
-				airQualityViewController.receivedData = receivedData;
-				airQualityViewController.device = device;
-                [self.navigationController pushViewController:airQualityViewController animated:YES];
+                BLDeviceControlViewController *controller = [[BLDeviceControlViewController alloc] init];
+				controller.receivedData = receivedData;
+				controller.device = device;
+                [self.navigationController pushViewController:controller animated:YES];
             });
         } else {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
