@@ -23,7 +23,6 @@
 		2FAE51C218F808D80068893E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE51C118F808D80068893E /* libsqlite3.dylib */; };
 		2FAE51C418F808DE0068893E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE51C318F808DE0068893E /* SystemConfiguration.framework */; };
 		2FAE51D418F8145B0068893E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE51D318F8145B0068893E /* CoreText.framework */; };
-		7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C705196E67DE0001561F /* BLAirQualityInfo.m */; };
 		7700C709196E690F0001561F /* BLDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C708196E690F0001561F /* BLDeviceInfo.m */; };
 		7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C70E196E69FA0001561F /* BLTimerInfomation.m */; };
 		7700C712196E6A350001561F /* BeiAngSendDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C711196E6A350001561F /* BeiAngSendDataInfo.m */; };
@@ -134,8 +133,6 @@
 		2FAE51D318F8145B0068893E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		2FAE51D618F81C220068893E /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
 		2FAE51D718F81C220068893E /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
-		7700C704196E67DE0001561F /* BLAirQualityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLAirQualityInfo.h; sourceTree = "<group>"; };
-		7700C705196E67DE0001561F /* BLAirQualityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLAirQualityInfo.m; sourceTree = "<group>"; };
 		7700C707196E690F0001561F /* BLDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLDeviceInfo.h; sourceTree = "<group>"; };
 		7700C708196E690F0001561F /* BLDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLDeviceInfo.m; sourceTree = "<group>"; };
 		7700C70D196E69FA0001561F /* BLTimerInfomation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTimerInfomation.h; sourceTree = "<group>"; };
@@ -460,8 +457,6 @@
 				77F16E451977F87800564AAB /* Weather.m */,
 				7700C707196E690F0001561F /* BLDeviceInfo.h */,
 				7700C708196E690F0001561F /* BLDeviceInfo.m */,
-				7700C704196E67DE0001561F /* BLAirQualityInfo.h */,
-				7700C705196E67DE0001561F /* BLAirQualityInfo.m */,
 				7700C70D196E69FA0001561F /* BLTimerInfomation.h */,
 				7700C70E196E69FA0001561F /* BLTimerInfomation.m */,
 				7700C710196E6A350001561F /* BeiAngSendDataInfo.h */,
@@ -742,7 +737,6 @@
 				771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */,
 				BAFA3750194151D3001DB631 /* MMProgressHUDViewController.m in Sources */,
 				77F16DAC1977588B00564AAB /* IPAddress.m in Sources */,
-				7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */,
 				771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */,
 				775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */,
 				7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */,

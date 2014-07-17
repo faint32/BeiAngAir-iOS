@@ -29,16 +29,6 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 #define kSubDevice @"subDevice"
 #define kKey @"key"
 
-#define kLongitude @"longitude"
-#define kLatitude @"latitude"
-#define kOrder @"order"
-#define kSwitchState @"swtichState"
-//#define kCity @"city"
-//#define kCityCode @"cityCode"
-//#define kUserName @"userName"
-//#define kRemoteIP @"remoteIP"
-//#define kQRInfo @"QRInfo"
-
 @implementation BLDeviceInfo
 
 - (id)initWithMAC:(NSString *)mac type:(NSString *)type name:(NSString *)name key:(NSString *)key password:(uint32_t)password terminal_id:(int)terminal_id sub_device:(int)sub_device lock:(int)lock
@@ -72,16 +62,6 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	attributes[kTerminalID] = @(self.terminal_id);
 	attributes[kSubDevice] = @(self.sub_device);
 	attributes[kKey] = self.key ?: @"";
-	
-	attributes[kLongitude] = @(self.longitude);
-	attributes[kLatitude] = @(self.latitude);
-	attributes[kOrder] = @(self.order);
-	attributes[kSwitchState] = @(self.switchState);
-//	attributes[kCity] = self.city ?: @"";
-//	attributes[kCityCode] = self.cityCode ?: @"";
-//	attributes[kUserName] = self.userName ?: @"";
-//	attributes[kRemoteIP] = self.remoteIP ?: @"";
-//	attributes[kQRInfo] = self.qrInfo ?: @"";
 	
 	NSArray *multiAttributes = [[NSUserDefaults standardUserDefaults] objectForKey:kDevices];
 	NSMutableArray *new = multiAttributes ? [NSMutableArray arrayWithArray:multiAttributes] : [NSMutableArray array];
@@ -158,27 +138,16 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	device.terminal_id = [attributes[kTerminalID] integerValue];
 	device.sub_device = [attributes[kSubDevice] integerValue];
 	device.key = attributes[kKey];
-	
-	device.longitude = [attributes[kLongitude] floatValue];
-	device.latitude = [attributes[kLatitude] floatValue];
-	device.order = [attributes[kOrder] longValue];
-	device.switchState = [attributes[kSwitchState] integerValue];
-//	device.city = attributes[kCity];
-//	device.cityCode = attributes[kCityCode];
-//	device.userName = attributes[kUserName];
-//	device.remoteIP = attributes[kRemoteIP];
-//	device.qrInfo = attributes[kQRInfo];
-	
 	return device;
 }
 
-- (BLAirQualityInfo *)airQualityInfo
-{
-	if (!_airQualityInfo) {
-		_airQualityInfo = [[BLAirQualityInfo alloc] init];
-	}
-	return _airQualityInfo;
-}
+//- (BLAirQualityInfo *)airQualityInfo
+//{
+//	if (!_airQualityInfo) {
+//		_airQualityInfo = [[BLAirQualityInfo alloc] init];
+//	}
+//	return _airQualityInfo;
+//}
 
 - (BOOL)isBeiAngAirDevice
 {

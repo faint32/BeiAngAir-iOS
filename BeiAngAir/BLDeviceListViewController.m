@@ -175,16 +175,7 @@
 				state = [[responseData objectFromJSONData] objectForKey:@"status"];
 			}
 			
-			if ([state isEqualToString:@"OFFLINE"] || [state isEqualToString:@"NOT_INIT"]) {
-				device.airQualityInfo.hour = 0;
-				device.airQualityInfo.minute = 0;
-				device.airQualityInfo.isRefresh = NO;
-				device.airQualityInfo.sleepState = 0;
-				device.airQualityInfo.switchState = 0;
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[self.tableView reloadData];
-				});
-			} else if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
+			if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
 				dispatch_async(_networkQueue, ^{
 					//数据透传
 					NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:device.mac];
@@ -193,11 +184,11 @@
 					int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
 					if (code == 0) {
 						NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-						device.airQualityInfo.hour = [array[9] intValue];
-						device.airQualityInfo.minute = [array[10] intValue];
-						device.airQualityInfo.sleepState = [array[7] intValue];
-						device.airQualityInfo.isRefresh = YES;
-						device.airQualityInfo.switchState = [array[4] intValue];
+						device.hour = [array[9] intValue];
+						device.minute = [array[10] intValue];
+						device.sleepState = [array[7] intValue];
+						device.isRefresh = YES;
+						device.switchState = [array[4] intValue];
 						dispatch_async(dispatch_get_main_queue(), ^{
 							[self.tableView reloadData];
 						});
@@ -282,16 +273,15 @@
 	[cell.imageView addGestureRecognizer:tapGestureRecognizer];
 	cell.textLabel.text = device.name;
 
-	if (device.airQualityInfo.isRefresh) {
+	if (device.isRefresh) {
 		NSString *status = NSLocalizedString(@"设备已关闭", nil);
-		if (device.airQualityInfo.switchState == 1) {
-			status = device.airQualityInfo.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
+		if (device.switchState == 1) {
+			status = device.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
 		}
-		NSLog(@"airQuality: %@", device.airQualityInfo);
 		
-		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n设备已运行%d小时%d分钟", status, device.airQualityInfo.hour, device.airQualityInfo.minute];
+		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n设备已运行%d小时%d分钟", status, device.hour, device.minute];
 		NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:statusAndrunTime];
-		if (device.airQualityInfo.hour >= 50) {
+		if (device.hour >= 50) {
 			NSAttributedString *subString = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"  请清洗!", nil) attributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont systemFontOfSize:15]}];
 			[attributedString appendAttributedString:subString];
 		}

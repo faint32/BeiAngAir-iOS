@@ -19,17 +19,14 @@
 @property (nonatomic, assign) int terminal_id;
 @property (nonatomic, assign) int sub_device;
 @property (nonatomic, strong) NSString *key;
-@property (nonatomic, strong) BLAirQualityInfo *airQualityInfo;
 
-@property (nonatomic, assign) float longitude;//经度
-@property (nonatomic, assign) float latitude;//纬度
-@property (nonatomic, assign) long order;
+@property (nonatomic, assign) int hour;
+@property (nonatomic, assign) int minute;
+@property (nonatomic, assign) int sleepState;
 @property (nonatomic, assign) int switchState;
-//@property (nonatomic, strong) NSString *city;
-//@property (nonatomic, strong) NSString *cityCode;
-//@property (nonatomic, strong) NSString *userName;
-//@property (nonatomic, strong) NSString *remoteIP;
-//@property (nonatomic, strong) NSString *qrInfo;
+@property (nonatomic, assign) BOOL isRefresh;
+
+//@property (nonatomic, strong) BLAirQualityInfo *airQualityInfo;
 
 - (id)initWithMAC:(NSString *)mac type:(NSString *)type
 			 name:(NSString *)name key:(NSString *)key password:(uint32_t)password
