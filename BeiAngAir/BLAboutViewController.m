@@ -9,7 +9,6 @@
 #import "BLAboutViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BLAppDelegate.h"
-#import "UIViewController+MMDrawerController.h"
 
 @interface BLAboutViewController ()
 
