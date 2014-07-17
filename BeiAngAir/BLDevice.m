@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	BROADLINK_A1 = 10004
 };
 
-#import "BLDeviceInfo.h"
+#import "BLDevice.h"
 
 #define kDevices @"devices"
 #define kMac @"mac"
@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 #define kSubDevice @"subDevice"
 #define kKey @"key"
 
-@implementation BLDeviceInfo
+@implementation BLDevice
 
 - (id)initWithMAC:(NSString *)mac type:(NSString *)type name:(NSString *)name key:(NSString *)key password:(uint32_t)password terminal_id:(int)terminal_id sub_device:(int)sub_device lock:(int)lock
 {
@@ -109,7 +109,7 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	NSMutableArray *devices = [NSMutableArray array];
 	for (int i = 0; i < multiAttributes.count; i++) {
 		NSDictionary *attributes = multiAttributes[i];
-		BLDeviceInfo *device = [[BLDeviceInfo alloc] initWithAttributes:attributes];
+		BLDevice *device = [[BLDevice alloc] initWithAttributes:attributes];
 		[devices addObject:device];
 	}
 	return devices;
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	for (int i = 0; i < multiAttributes.count; i++) {
 		NSDictionary *attributes = multiAttributes[i];
 		if ([attributes[kMac] isEqualToString:MAC]) {
-			return [[BLDeviceInfo alloc] initWithAttributes:attributes];
+			return [[BLDevice alloc] initWithAttributes:attributes];
 		}
 	}
 	return nil;
@@ -129,7 +129,7 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 
 - (instancetype)initWithAttributes:(NSDictionary *)attributes
 {
-	BLDeviceInfo *device = [[BLDeviceInfo alloc] init];
+	BLDevice *device = [[BLDevice alloc] init];
 	device.mac = attributes[kMac];
 	device.type = attributes[kType];
 	device.name = attributes[kName];

@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BLAirQualityInfo.h"
 
-@interface BLDeviceInfo : NSObject
+@interface BLDevice : NSObject
 
 @property (nonatomic, strong) NSString *mac;
 @property (nonatomic, strong) NSString *type;
@@ -25,8 +24,6 @@
 @property (nonatomic, assign) int sleepState;
 @property (nonatomic, assign) int switchState;
 @property (nonatomic, assign) BOOL isRefresh;
-
-//@property (nonatomic, strong) BLAirQualityInfo *airQualityInfo;
 
 - (id)initWithMAC:(NSString *)mac type:(NSString *)type
 			 name:(NSString *)name key:(NSString *)key password:(uint32_t)password

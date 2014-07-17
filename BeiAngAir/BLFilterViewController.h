@@ -13,6 +13,6 @@
 @interface BLFilterViewController : UIViewController
 
 @property (nonatomic, strong) BeiAngReceivedDataInfo *currentAirInfo;
-@property (nonatomic, strong) BLDeviceInfo *deviceInfo;
+@property (nonatomic, strong) BLDevice *deviceInfo;
 
 @end

@@ -90,7 +90,7 @@
 	
 	_networkAPI = [[BLNetwork alloc] init];
 	_networkQueue = dispatch_queue_create("BLDeviceListViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
-	_devices = [[BLDeviceInfo allDevices] mutableCopy];
+	_devices = [[BLDevice allDevices] mutableCopy];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doInBackground) name:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
 }
@@ -125,7 +125,7 @@
             NSArray *list = [[response objectFromJSONData] objectForKey:@"list"];
 			NSLog(@"prob count: %d", list.count);
             for (int i = 0; i < list.count; i++) {
-                BLDeviceInfo *info = [[BLDeviceInfo alloc] init];
+                BLDevice *info = [[BLDevice alloc] init];
                 NSDictionary *item = [list objectAtIndex:i];
                 [info setMac:[item objectForKey:@"mac"]];
                 [info setType:[item objectForKey:@"type"]];
@@ -165,7 +165,7 @@
 {
 	@synchronized(_devices) {
 		for (int i = 0; i < _devices.count; i++) {
-			BLDeviceInfo *device = _devices[i];
+			BLDevice *device = _devices[i];
 			NSDictionary *dictionary = [NSDictionary dictionaryDeviceStateWithMAC:device.mac];
 			NSData *requestData = [dictionary JSONData];
 			NSData *responseData = [_networkAPI requestDispatch:requestData];
@@ -199,7 +199,7 @@
 	}
 }
 
-- (void)addDeviceInfo:(BLDeviceInfo *)info
+- (void)addDeviceInfo:(BLDevice *)info
 {
     dispatch_async(_networkQueue, ^{
 		NSDictionary *dictionary = [NSDictionary dictionaryDeviceAddWithMAC:info.mac name:info.name type:info.type lock:@(info.lock) password:@(info.password) terminalID:@(info.terminal_id) subDevice:@(info.sub_device) key:info.key];
@@ -236,7 +236,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         dispatch_async(_networkQueue, ^{
-            BLDeviceInfo *device = _devices[indexPath.row];
+            BLDevice *device = _devices[indexPath.row];
 			NSDictionary *dictionary = [NSDictionary dictionaryDeviceDeleteWithMAC:device.mac];
             NSData *sendData = [dictionary JSONData];
             NSData *response = [_networkAPI requestDispatch:sendData];
@@ -265,7 +265,7 @@
     //设备信息
 	NSLog(@"devices count: %d", _devices.count);
 	NSLog(@"devices : %@", _devices);
-	BLDeviceInfo *device = _devices[indexPath.row];
+	BLDevice *device = _devices[indexPath.row];
 	cell.imageView.image = [device avatar];
 	cell.imageView.userInteractionEnabled = YES;
 	cell.imageView.tag = indexPath.row;
@@ -295,7 +295,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    BLDeviceInfo *info = [_devices objectAtIndex:indexPath.row];
+    BLDevice *info = [_devices objectAtIndex:indexPath.row];
 	
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
@@ -326,7 +326,7 @@
 
 - (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
 {
-    BLDeviceInfo *info = [_devices objectAtIndex:recognizer.view.tag];
+    BLDevice *info = [_devices objectAtIndex:recognizer.view.tag];
     BLDeviceInfoEditViewController *controller = [[BLDeviceInfoEditViewController alloc] init];
 	controller.deviceInfo = info;
 	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
