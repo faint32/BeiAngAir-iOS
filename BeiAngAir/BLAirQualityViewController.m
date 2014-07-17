@@ -417,7 +417,7 @@
 -(void)timerButtonClick
 {
     //定时界面
-    BLFilterViewController *filterInfoViewController = [[BLFilterViewController alloc] init];
+    BLFilterViewController *filterInfoViewController = [[BLFilterViewController alloc] initWithNibName:nil bundle:nil];
 	filterInfoViewController.currentAirInfo = self.currentAirInfo;
 	filterInfoViewController.deviceInfo = self.device;
     [self.navigationController pushViewController:filterInfoViewController animated:YES];

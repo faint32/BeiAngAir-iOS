@@ -65,6 +65,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+		self.title = NSLocalizedString(@"timerTitle", nil);
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonClick)];
     }
     return self;
 }
@@ -82,17 +84,10 @@
     [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
     [self.navigationController setToolbarHidden:YES];
     CGRect viewFrame = CGRectZero;
-    
-    //设置标题
-	self.title = NSLocalizedString(@"timerTitle", nil);
-	
-    //保存
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonClick)];
-	
+
     //定时取消
 	viewFrame.origin.x = 0;
-	
-	viewFrame.origin.y = 40;//TODO: + rightButton.frame.origin.y;
+	viewFrame.origin.y = 100;
     viewFrame.size.width = self.view.frame.size.width;
     viewFrame.size.height = 60.f;
     _buttonCancel = [[UIButton alloc] initWithFrame:viewFrame];
