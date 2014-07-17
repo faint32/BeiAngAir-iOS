@@ -67,6 +67,9 @@
 		77F16E1B197794F100564AAB /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77F16E14197794F100564AAB /* payRequsestHandler.mm */; };
 		77F16E1C197794F100564AAB /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 77F16E15197794F100564AAB /* readme.txt */; };
 		77F16E1D197794F100564AAB /* TenpayUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77F16E17197794F100564AAB /* TenpayUtil.mm */; };
+		77F16E2D1977A12000564AAB /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F16E2B1977A12000564AAB /* TencentOpenAPI.framework */; };
+		77F16E2E1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 77F16E2C1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle */; };
+		77F16E301977A2A600564AAB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F16E2F1977A2A600564AAB /* CoreTelephony.framework */; };
 		BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA89102519458F5700C16953 /* BeiAngAir-Info.plist */; };
 		BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A2194089EE002C97C8 /* NSObject+SBJson.m */; };
 		BAAE38BB194089EE002C97C8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A5194089EE002C97C8 /* SBJsonParser.m */; };
@@ -311,6 +314,9 @@
 		77F16E17197794F100564AAB /* TenpayUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TenpayUtil.mm; sourceTree = "<group>"; };
 		77F16E18197794F100564AAB /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		77F16E19197794F100564AAB /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		77F16E2B1977A12000564AAB /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		77F16E2C1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		77F16E2F1977A2A600564AAB /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		BA69793D1949613B000B184F /* BLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNetwork.h; sourceTree = "<group>"; };
 		BA69793E1949613B000B184F /* libBLNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLNetwork.a; sourceTree = "<group>"; };
 		BA8910281945905E00C16953 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/BeiAngAir-Info.plist"; sourceTree = "<group>"; };
@@ -387,7 +393,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77F16E301977A2A600564AAB /* CoreTelephony.framework in Frameworks */,
 				BAAE3EFD1949CA2A004054D2 /* libBLNetwork.a in Frameworks */,
+				77F16E2D1977A12000564AAB /* TencentOpenAPI.framework in Frameworks */,
 				2F40FD5E18FB93C200505B6E /* AVFoundation.framework in Frameworks */,
 				2F40FD6618FB93E800505B6E /* libiconv.dylib in Frameworks */,
 				2F40FD6418FB93DB00505B6E /* QuartzCore.framework in Frameworks */,
@@ -437,6 +445,7 @@
 		2FAE501E18F78C470068893E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77F16E2F1977A2A600564AAB /* CoreTelephony.framework */,
 				2F40FD6518FB93E800505B6E /* libiconv.dylib */,
 				2F40FD6318FB93DB00505B6E /* QuartzCore.framework */,
 				2F40FD6118FB93D400505B6E /* CoreVideo.framework */,
@@ -487,6 +496,7 @@
 		2FAE511C18F7BBDA0068893E /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				77F16E2A1977A12000564AAB /* QQ */,
 				77F16E11197794F100564AAB /* WeChatSDK_1.4.1 */,
 				77F16D801977588B00564AAB /* ZBUtilities */,
 				BAFA38161941862A001DB631 /* BLCustomHUD */,
@@ -774,6 +784,15 @@
 			path = WeChatSDK_1.4.1;
 			sourceTree = "<group>";
 		};
+		77F16E2A1977A12000564AAB /* QQ */ = {
+			isa = PBXGroup;
+			children = (
+				77F16E2B1977A12000564AAB /* TencentOpenAPI.framework */,
+				77F16E2C1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle */,
+			);
+			path = QQ;
+			sourceTree = "<group>";
+		};
 		BAAE38A0194089EE002C97C8 /* SBJson */ = {
 			isa = PBXGroup;
 			children = (
@@ -932,6 +951,7 @@
 				2FAE51CD18F810540068893E /* blueArrow@2x.png in Resources */,
 				77F16DBD1977588B00564AAB /* ZBUtilities.podspec in Resources */,
 				BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */,
+				77F16E2E1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				77F16DAD1977588B00564AAB /* LICENSE in Resources */,
 				77F16E1C197794F100564AAB /* readme.txt in Resources */,
 				BAFA38211941862A001DB631 /* bl_custom_hud_btn_yes@2x.png in Resources */,
@@ -1181,6 +1201,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BeiAngAir/3rd/QQ",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BeiAngAir/BeiAngAir-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1212,6 +1236,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BeiAngAir/3rd/QQ",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BeiAngAir/BeiAngAir-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

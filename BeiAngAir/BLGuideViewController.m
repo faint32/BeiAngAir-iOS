@@ -77,7 +77,8 @@
 
 - (void)devices
 {
-	BLDeviceListViewController *controller = [[BLDeviceListViewController alloc] initWithNibName:nil bundle:nil];
+	BLDeviceListViewController *controller = [[BLDeviceListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+//	BLDeviceListViewController *controller = [[BLDeviceListViewController alloc] initWithNibName:nil bundle:nil];
 	[self.navigationController pushViewController:controller animated:YES];
 }
 

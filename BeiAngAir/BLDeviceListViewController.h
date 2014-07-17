@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BLDeviceListViewController : UIViewController
+@interface BLDeviceListViewController : UITableViewController
 
 @end

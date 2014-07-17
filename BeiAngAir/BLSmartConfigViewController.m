@@ -239,8 +239,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[[responseData objectFromJSONData] objectForKey:@"msg"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alertView show];
-			
-			[[NSNotificationCenter defaultCenter] postNotificationName:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
         });
     });
 }
@@ -256,7 +254,8 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self dismiss];
+	[[NSNotificationCenter defaultCenter] postNotificationName:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)showPasswordButtonClicked:(UIButton *)button

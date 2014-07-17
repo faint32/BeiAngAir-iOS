@@ -10,4 +10,9 @@
 
 @implementation BLAirQualityInfo
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"< hour: %d, minute: %d, sleepState: %d, switchState: %d, isRefresh: %d >", self.hour, self.minute, self.sleepState, self.switchState, self.isRefresh];
+}
+
 @end

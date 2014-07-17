@@ -15,8 +15,9 @@
 #import "ASIHTTPRequest.h"
 #import "BLGuideViewController.h"
 #import "WXApi.h"
+#import <TencentOpenAPI/QQApiInterface.h>
 
-@interface BLAppDelegate ()
+@interface BLAppDelegate () <QQApiInterfaceDelegate>
 
 @property (nonatomic, strong) BLNetwork *network;
 
@@ -70,7 +71,13 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-//	[self handleOpenURL:url];
+	[QQApiInterface handleOpenURL:url delegate:self];
+	return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+	[QQApiInterface handleOpenURL:url delegate:self];
 	return YES;
 }
 

@@ -26,10 +26,9 @@
 #import "MMExampleDrawerVisualStateManager.h"
 #import "UIImage+Retina4.h"
 
-@interface BLDeviceListViewController () <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate>
+@interface BLDeviceListViewController ()
 
 @property (nonatomic, strong) EGORefreshTableHeaderView *refreshTableView;
-@property (nonatomic, assign) BOOL reloading;
 @property (nonatomic, assign) dispatch_queue_t networkQueue;
 @property (nonatomic, strong) BLNetwork *networkAPI;
 @property (nonatomic, strong) UITableView *tableView;
@@ -39,49 +38,40 @@
 
 @implementation BLDeviceListViewController
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+	self = [super initWithStyle:style];
+	if (self) {
 		self.title = NSLocalizedString(@"DeviceListViewControllerTitle", nil);
-    }
-    return self;
+	}
+	return self;
 }
+
+//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+//{
+//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+//    if (self) {
+//		self.title = NSLocalizedString(@"DeviceListViewControllerTitle", nil);
+//    }
+//    return self;
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	self.navigationController.navigationBarHidden = NO;
 	
+	self.refreshControl = [[UIRefreshControl alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100.0f)];
+	[self.refreshControl addTarget:self action:@selector(doInBackground) forControlEvents:UIControlEventValueChanged];
+	[self.tableView.tableHeaderView addSubview:self.refreshControl];
+	
     [MMProgressHUD setDisplayStyle:MMProgressHUDDisplayStylePlain];
     [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
 	//背景颜色
     [self.view setBackgroundColor:RGB(246.0f, 246.0f, 246.0f)];
     
-    CGRect viewFrame = CGRectZero;
-    viewFrame.origin.x = 0.0f;
-    viewFrame.origin.y = 0.0f;
-    viewFrame.size.width = self.view.frame.size.width;
-    viewFrame.size.height = 44.0f + ((IsiOS7Later) ? 20.0f : 0.0f);
-    UIView *headerView = [[UIView alloc] initWithFrame:viewFrame];
-    [headerView setBackgroundColor:[UIColor whiteColor]];
-//    [self.view addSubview:headerView];//TODO: remove title view//TODO:
-    
-    viewFrame = headerView.frame;
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    [titleLabel setBackgroundColor:[UIColor clearColor]];
-    [titleLabel setFont:[UIFont systemFontOfSize:20.0f]];
-    [titleLabel setTextColor:RGB(0x13, 0xb3, 0x5c)];
-    [titleLabel setText:NSLocalizedString(@"DeviceListViewControllerTitle", nil)];
-    viewFrame = [titleLabel textRectForBounds:viewFrame limitedToNumberOfLines:1];
-    viewFrame.origin.x = (headerView.frame.size.width - viewFrame.size.width) * 0.5f;
-    viewFrame.origin.y = (44.0f - viewFrame.size.height) * 0.5f + ((IsiOS7Later) ? 20.0f : 0.0f);
-    [titleLabel setFrame:viewFrame];
-    [titleLabel setTextAlignment:NSTextAlignmentCenter];
-//    [headerView addSubview:titleLabel];//TODO: title color
-    
     //底部的添加设备
+	CGRect viewFrame = CGRectZero;
     UIButton *btnAddDevice = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-43, self.view.frame.size.width, 43)];
     //button(ALL,Senior,Ordinary)显示数据
     //背景颜色
@@ -113,33 +103,17 @@
     [btnAddDevice addSubview:addImageView];
     //加入显示
     [self.view addSubview:btnAddDevice];
-  
-    /*Add device list.*/
-    viewFrame = CGRectZero;
-    viewFrame.origin.y = headerView.frame.origin.y + headerView.frame.size.height;
-    viewFrame.size.width = self.view.frame.size.width;
-    viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y - 44.0f;
-	_tableView = [[UITableView alloc] initWithFrame:viewFrame style:UITableViewStyleGrouped];
-    [_tableView setBackgroundColor:[UIColor clearColor]];
-    [_tableView setDataSource:self];
-    [_tableView setDelegate:self];
-    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    [_tableView setShowsVerticalScrollIndicator:NO];
-    [_tableView setShowsHorizontalScrollIndicator:NO];
-    [_tableView.layer setBorderColor:RGBA(0x00, 0x00, 0x00, 0.3f).CGColor];
-    [_tableView.layer setBorderWidth:0.5f];
-    [self.view addSubview:_tableView];
-
-	_refreshTableView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - _tableView.bounds.size.height, _tableView.frame.size.width, _tableView.bounds.size.height)];
-	_refreshTableView.delegate = self;
-	[_tableView addSubview:_refreshTableView];
 	
 	_networkAPI = [[BLNetwork alloc] init];
 	_networkQueue = dispatch_queue_create("BLDeviceListViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
 	_devices = [[BLDeviceInfo allDevices] mutableCopy];
-	[self refreshDeviceList];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doInBackground) name:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[self doInBackground];
 }
 
 - (void)dealloc
@@ -177,20 +151,21 @@
                 [info setTerminal_id:[[item objectForKey:@"id"] intValue]];
                 [info setSub_device:[[item objectForKey:@"subdevice"] intValue]];
                 [info setKey:[item objectForKey:@"key"]];
-				NSLog(@"info: %@", info);
 				
 				if (![info hadPersistenced]) {
 					if ([info isBeiAngAirDevice]) {
 						[info persistence];
+						NSLog(@"persistence");
 						[_devices addObject:info];
-						[self addDeviceInfo:info];
+						
 					}
 				}
+				[self addDeviceInfo:info];
 			}
 
             dispatch_async(dispatch_get_main_queue(), ^{
 				[self.tableView reloadData];
-                [self getDeviceInfoList];
+				[self performSelector:@selector(getDeviceInfoList) withObject:nil afterDelay:2.0];
             });
 		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
@@ -222,7 +197,9 @@
 				device.airQualityInfo.isRefresh = NO;
 				device.airQualityInfo.sleepState = 0;
 				device.airQualityInfo.switchState = 0;
-				[_tableView reloadData];
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[self.tableView reloadData];
+				});
 			} else if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
 				dispatch_async(_networkQueue, ^{
 					//数据透传
@@ -238,7 +215,7 @@
 						device.airQualityInfo.isRefresh = YES;
 						device.airQualityInfo.switchState = [array[4] intValue];
 						dispatch_async(dispatch_get_main_queue(), ^{
-							[_tableView reloadData];
+							[self.tableView reloadData];
 						});
 					}
 				});
@@ -329,19 +306,12 @@
 		NSLog(@"airQuality: %@", device.airQualityInfo);
 		
 		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n设备已运行%d小时%d分钟", status, device.airQualityInfo.hour, device.airQualityInfo.minute];
-		NSMutableAttributedString *attributedString;
+		NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:statusAndrunTime];
 		if (device.airQualityInfo.hour >= 50) {
-			NSDictionary *wordToColorMapping = @{statusAndrunTime : [UIColor blackColor], @"请清洗!" : [UIColor redColor]};
-			attributedString = [[NSMutableAttributedString alloc] initWithString:@""];
-			for (NSString *word in wordToColorMapping) {
-				UIColor *color = [wordToColorMapping objectForKey:word];
-				NSDictionary *attributes = [NSDictionary dictionaryWithObject:color forKey:NSForegroundColorAttributeName];
-				NSAttributedString *subString = [[NSAttributedString alloc] initWithString:word attributes:attributes];
-				[attributedString appendAttributedString:subString];
-			}
-		} else {
-			attributedString = [[NSMutableAttributedString alloc] initWithString:statusAndrunTime];
+			NSAttributedString *subString = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"  请清洗!", nil) attributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont systemFontOfSize:15]}];
+			[attributedString appendAttributedString:subString];
 		}
+		cell.detailTextLabel.numberOfLines = 0;
 		cell.detailTextLabel.attributedText = attributedString;
 	}
     return cell;
@@ -352,13 +322,6 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     BLDeviceInfo *info = [_devices objectAtIndex:indexPath.row];
-	
-	//TODO
-	BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
-	//airQualityViewController.currentAirInfo = recvInfo;
-	airQualityViewController.device = info;
-	[self.navigationController pushViewController:airQualityViewController animated:YES];
-	return;//TODO:
 	
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
@@ -396,20 +359,6 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
-#pragma mark Data Source Loading / Reloading Methods  
-
-- (void)reloadTableViewDataSource
-{
-    _reloading = YES;
-    [NSThread detachNewThreadSelector:@selector(doInBackground) toTarget:self withObject:nil];
-}  
-
-
-- (void)doneLoadingTableViewData
-{
-    _reloading = NO;  
-    [_refreshTableView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];        
-}  
 
 #pragma mark Background operation  
 //这个方法运行于子线程中，完成获取刷新数据的操作
@@ -418,40 +367,12 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self refreshDeviceList];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self doneLoadingTableViewData];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self.refreshControl endRefreshing];
+				[self.tableView reloadData];
+			});
         });
     });  
 }
-
-#pragma mark EGORefreshTableHeaderDelegate Methods  
-
--(void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view  
-{  
-    [self reloadTableViewDataSource];  
-}  
-
-//返回当前是刷新还是无刷新状态  
--(BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view  
-{  
-    return _reloading;  
-}  
-
-//返回刷新时间的回调方法  
--(NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view  
-{  
-    return [NSDate date];  
-}  
-
-#pragma mark UIScrollViewDelegate Methods  
-//滚动控件的委托方法  
--(void)scrollViewDidScroll:(UIScrollView *)scrollView  
-{  
-    [_refreshTableView egoRefreshScrollViewDidScroll:scrollView];  
-}  
-
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate  
-{  
-    [_refreshTableView egoRefreshScrollViewDidEndDragging:scrollView];  
-} 
 
 @end
