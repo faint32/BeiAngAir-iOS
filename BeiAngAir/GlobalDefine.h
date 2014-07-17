@@ -9,8 +9,6 @@
 #ifndef CustomNavigationBarDemo_GlobalDefine_h
 #define CustomNavigationBarDemo_GlobalDefine_h
 
-#import "UtilityFunc.h"
-
 
 #ifdef DEBUG
 

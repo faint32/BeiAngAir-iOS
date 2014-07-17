@@ -93,7 +93,6 @@
 		BAB3898E193DA4AD00975805 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51D718F81C220068893E /* Toast+UIView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE517818F7D1340068893E /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE502F18F78C470068893E /* BLAppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB389B0193DA4AD00975805 /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE513218F7C18E0068893E /* UtilityFunc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389B1193DA4AD00975805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE502B18F78C470068893E /* main.m */; };
 		BAFA374B194151D3001DB631 /* MMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA373B194151D3001DB631 /* MMHud.m */; };
 		BAFA374C194151D3001DB631 /* MMProgressHUD+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA373D194151D3001DB631 /* MMProgressHUD+Animations.m */; };
@@ -126,8 +125,6 @@
 		2FAE502F18F78C470068893E /* BLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLAppDelegate.m; sourceTree = "<group>"; };
 		2FAE503118F78C470068893E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2FAE513018F7C18E0068893E /* GlobalDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
-		2FAE513118F7C18E0068893E /* UtilityFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilityFunc.h; sourceTree = "<group>"; };
-		2FAE513218F7C18E0068893E /* UtilityFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilityFunc.m; sourceTree = "<group>"; };
 		2FAE517718F7D1340068893E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		2FAE517818F7D1340068893E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		2FAE519418F7D29F0068893E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -363,8 +360,6 @@
 				2FAE502E18F78C470068893E /* BLAppDelegate.h */,
 				2FAE502F18F78C470068893E /* BLAppDelegate.m */,
 				2FAE513018F7C18E0068893E /* GlobalDefine.h */,
-				2FAE513118F7C18E0068893E /* UtilityFunc.h */,
-				2FAE513218F7C18E0068893E /* UtilityFunc.m */,
 				7700C719196E86C90001561F /* Categories */,
 				7700C703196E67B10001561F /* Models */,
 				2FAE512518F7BDEB0068893E /* Controllers */,
@@ -783,7 +778,6 @@
 				775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */,
 				BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */,
 				BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */,
-				BAB389B0193DA4AD00975805 /* UtilityFunc.m in Sources */,
 				BAAE38BE194089EE002C97C8 /* SBJsonStreamParserAdapter.m in Sources */,
 				7700C720196E87F90001561F /* NSString+BeiAng.m in Sources */,
 				BAFA374D194151D3001DB631 /* MMProgressHUD+Class.m in Sources */,
