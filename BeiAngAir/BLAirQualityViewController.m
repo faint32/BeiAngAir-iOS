@@ -11,7 +11,6 @@
 #import "BLAppDelegate.h"
 #import "Toast+UIView.h"
 #import "BLFilterViewController.h"
-#import "ASIHTTPRequest.h"
 #import "JSONKit.h"
 #import "BLAboutViewController.h"
 #import "SBJson.h"

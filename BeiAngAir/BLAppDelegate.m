@@ -12,7 +12,6 @@
 #import "SBJson.h"
 #import "JSONKit.h"
 #import "BLNetwork.h"
-#import "ASIHTTPRequest.h"
 #import "BLGuideViewController.h"
 #import "WXApi.h"
 #import <TencentOpenAPI/QQApiInterface.h>

@@ -13,7 +13,6 @@
 #import "UILabel+Attribute.h"
 #import "Toast+UIView.h"
 #import "BLAirQualityViewController.h"
-#import "ASIHTTPRequest.h"
 #import "JSONKit.h"
 #import "BLDeviceInfoEditViewController.h"
 #import "MMProgressHUD.h"
