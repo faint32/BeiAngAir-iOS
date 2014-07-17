@@ -90,7 +90,6 @@
 		BAB3898B193DA4AD00975805 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB38971193D75EE00975805 /* UIViewController+MMDrawerController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB3898C193DA4AD00975805 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F40FD8318FBAA6300505B6E /* iCarousel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB3898E193DA4AD00975805 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51D718F81C220068893E /* Toast+UIView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB38997193DA4AD00975805 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE519218F7D2230068893E /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE517818F7D1340068893E /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE502F18F78C470068893E /* BLAppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389B0193DA4AD00975805 /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE513218F7C18E0068893E /* UtilityFunc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -132,8 +131,6 @@
 		2FAE513218F7C18E0068893E /* UtilityFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilityFunc.m; sourceTree = "<group>"; };
 		2FAE517718F7D1340068893E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		2FAE517818F7D1340068893E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		2FAE519118F7D2230068893E /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		2FAE519218F7D2230068893E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2FAE519418F7D29F0068893E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		2FAE519618F7D32B0068893E /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = usr/lib/libz.1.dylib; sourceTree = SDKROOT; };
 		2FAE51C118F808D80068893E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -408,7 +405,6 @@
 				BAB38967193D75EE00975805 /* MMDrawerController */,
 				2F40FD8118FBAA6300505B6E /* iCarousel */,
 				2FAE51D518F81C220068893E /* Toast */,
-				2FAE519018F7D2230068893E /* Reachability */,
 				2FAE517618F7D1340068893E /* JSONKit */,
 				2FAE511E18F7BD620068893E /* BroadLink */,
 			);
@@ -455,15 +451,6 @@
 				2FAE517818F7D1340068893E /* JSONKit.m */,
 			);
 			path = JSONKit;
-			sourceTree = "<group>";
-		};
-		2FAE519018F7D2230068893E /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				2FAE519118F7D2230068893E /* Reachability.h */,
-				2FAE519218F7D2230068893E /* Reachability.m */,
-			);
-			path = Reachability;
 			sourceTree = "<group>";
 		};
 		2FAE51D518F81C220068893E /* Toast */ = {
@@ -766,7 +753,6 @@
 				BAFA374F194151D3001DB631 /* MMProgressHUDOverlayView.m in Sources */,
 				77F16DB11977588B00564AAB /* NSString+Hex.m in Sources */,
 				77F16E10197792C000564AAB /* BLShareViewController.m in Sources */,
-				BAB38997193DA4AD00975805 /* Reachability.m in Sources */,
 				77F16DB21977588B00564AAB /* NSString+ZBUtilites.m in Sources */,
 				BAFA374B194151D3001DB631 /* MMHud.m in Sources */,
 				7700C715196E6A530001561F /* BeiAngReceivedDataInfo.m in Sources */,
