@@ -9,29 +9,61 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BeiAngAir/ViewController/DeviceListViewController/BLDeviceListViewController.m"
-            timestampString = "426827926.84777"
+            filePath = "BeiAngAir/BLDeviceListViewController.m"
+            timestampString = "427091352.487553"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
-            landmarkName = "-refreshDeviceList"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "-getDeviceInfoList"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BeiAngAir/ViewController/DeviceListViewController/BLDeviceListViewController.m"
-            timestampString = "426827975.624804"
+            filePath = "BeiAngAir/BLDeviceListViewController.m"
+            timestampString = "427091352.487553"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "-getDeviceInfoList"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BeiAngAir/BLDeviceListViewController.m"
+            timestampString = "427088400.12433"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "-getDeviceInfoList"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BeiAngAir/BLDeviceListViewController.m"
+            timestampString = "427091352.487553"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
+            landmarkName = "-getDeviceInfoList"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

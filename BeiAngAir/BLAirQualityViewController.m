@@ -32,14 +32,10 @@
 #import "ClassAirQualityInfo.h"
 
 @interface BLAirQualityViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
-{
-    BLNetwork *networkAPI;
-    dispatch_queue_t networkQueue;
-    dispatch_queue_t httpQueue;
-    int oldSpeed;
-    int oldTimer;
-}
 
+@property (nonatomic, assign) dispatch_queue_t httpQueue;
+@property (nonatomic, assign) dispatch_queue_t networkQueue;
+@property (nonatomic, strong) BLNetwork *networkAPI;
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UILabel *airQualityLabel;
 @property (nonatomic, strong) UIButton *switchButton;
@@ -71,9 +67,9 @@
     [super viewDidLoad];
 	
 	_airQualityInfoClass = [[ClassAirQualityInfo alloc] init];
-    networkAPI = [[BLNetwork alloc] init];
-    networkQueue = dispatch_queue_create("BLAirQualityViewCtrollerNetworkQueue", DISPATCH_QUEUE_SERIAL);
-    httpQueue = dispatch_queue_create("BLHttpQueue", DISPATCH_QUEUE_SERIAL);
+    _networkAPI = [[BLNetwork alloc] init];
+    _networkQueue = dispatch_queue_create("BLAirQualityViewCtrollerNetworkQueue", DISPATCH_QUEUE_SERIAL);
+    _httpQueue = dispatch_queue_create("BLHttpQueue", DISPATCH_QUEUE_SERIAL);
     [MMProgressHUD setDisplayStyle:MMProgressHUDDisplayStylePlain];
     [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
     
@@ -83,7 +79,7 @@
     [_locationManager setDistanceFilter:500.0f];
     [_locationManager startUpdatingLocation];
 
-	self.view.backgroundColor = [UIColor themeBlue];
+	self.view.backgroundColor = [UIColor greenColor];
 	UIEdgeInsets edgeInsets = UIEdgeInsetsMake(10, 20, 0, 20);
 	
 	CGRect viewFrame = CGRectZero;
@@ -444,7 +440,7 @@
         }
     }
     
-    dispatch_async(networkQueue, ^{
+    dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
         BeiAngSendDataInfo *sendInfo = [[BeiAngSendDataInfo alloc] init];
 		sendInfo.switchStatus = self.currentAirInfo.switchStatus;
@@ -496,7 +492,7 @@
 {
 	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.device.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
     NSData *sendData = [dictionary JSONData];
-    NSData *response = [networkAPI requestDispatch:sendData];
+    NSData *response = [_networkAPI requestDispatch:sendData];
     return response;
 }
 
@@ -533,7 +529,7 @@
     if (old == speed)
         return;
     old = speed;
-    dispatch_async(networkQueue, ^{
+    dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
         BeiAngSendDataInfo *sendInfo = [[BeiAngSendDataInfo alloc] init];
         sendInfo.childLockState = self.currentAirInfo.childLockState;
@@ -594,7 +590,7 @@
 
 -(void)getCityInfo
 {
-    dispatch_async(httpQueue, ^{
+    dispatch_async(_httpQueue, ^{
         //百度接口取得地图上面的点
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.map.baidu.com/geocoder?output=json&location=%f,%f&key=37492c0ee6f924cb5e934fa08c6b1676", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude]];
         NSError *error;
@@ -613,7 +609,7 @@
 //天气接口
 - (void)getWeather
 {
-    dispatch_async(httpQueue, ^{
+    dispatch_async(_httpQueue, ^{
         @synchronized(_airQualityInfoClass)
         {
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://tqapi.mobile.360.cn/app/meizu/city/%@", _airQualityInfoClass.cityCode]];
