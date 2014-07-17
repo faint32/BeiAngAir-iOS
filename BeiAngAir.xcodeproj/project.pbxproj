@@ -69,6 +69,8 @@
 		77F16E2D1977A12000564AAB /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F16E2B1977A12000564AAB /* TencentOpenAPI.framework */; };
 		77F16E2E1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 77F16E2C1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle */; };
 		77F16E301977A2A600564AAB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F16E2F1977A2A600564AAB /* CoreTelephony.framework */; };
+		77F16E421977E36600564AAB /* BLZSIndicatorProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16E3F1977E36600564AAB /* BLZSIndicatorProgress.m */; };
+		77F16E431977E36600564AAB /* BLZSProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16E411977E36600564AAB /* BLZSProgressLayer.m */; };
 		BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA89102519458F5700C16953 /* BeiAngAir-Info.plist */; };
 		BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A2194089EE002C97C8 /* NSObject+SBJson.m */; };
 		BAAE38BB194089EE002C97C8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A5194089EE002C97C8 /* SBJsonParser.m */; };
@@ -103,8 +105,6 @@
 		BAFA3751194151D3001DB631 /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3746194151D3001DB631 /* MMProgressHUDWindow.m */; };
 		BAFA3752194151D3001DB631 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3748194151D3001DB631 /* MMRadialProgressView.m */; };
 		BAFA3753194151D3001DB631 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA374A194151D3001DB631 /* MMVectorImage.m */; };
-		BAFA3758194151E9001DB631 /* BLZSIndicatorProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */; };
-		BAFA3759194151E9001DB631 /* BLZSProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -224,6 +224,10 @@
 		77F16E2B1977A12000564AAB /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		77F16E2C1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		77F16E2F1977A2A600564AAB /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		77F16E3E1977E36600564AAB /* BLZSIndicatorProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLZSIndicatorProgress.h; sourceTree = "<group>"; };
+		77F16E3F1977E36600564AAB /* BLZSIndicatorProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSIndicatorProgress.m; sourceTree = "<group>"; };
+		77F16E401977E36600564AAB /* BLZSProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLZSProgressLayer.h; sourceTree = "<group>"; };
+		77F16E411977E36600564AAB /* BLZSProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSProgressLayer.m; sourceTree = "<group>"; };
 		BA69793D1949613B000B184F /* BLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNetwork.h; sourceTree = "<group>"; };
 		BA69793E1949613B000B184F /* libBLNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLNetwork.a; sourceTree = "<group>"; };
 		BA8910281945905E00C16953 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/BeiAngAir-Info.plist"; sourceTree = "<group>"; };
@@ -279,10 +283,6 @@
 		BAFA3748194151D3001DB631 /* MMRadialProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRadialProgressView.m; sourceTree = "<group>"; };
 		BAFA3749194151D3001DB631 /* MMVectorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMVectorImage.h; sourceTree = "<group>"; };
 		BAFA374A194151D3001DB631 /* MMVectorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVectorImage.m; sourceTree = "<group>"; };
-		BAFA3754194151E9001DB631 /* BLZSIndicatorProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLZSIndicatorProgress.h; sourceTree = "<group>"; };
-		BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSIndicatorProgress.m; sourceTree = "<group>"; };
-		BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLZSProgressLayer.h; sourceTree = "<group>"; };
-		BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSProgressLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -393,13 +393,10 @@
 		2FAE511C18F7BBDA0068893E /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				77F16E3D1977E36600564AAB /* BLZSIndicatorProgress */,
 				77F16E2A1977A12000564AAB /* QQ */,
 				77F16E11197794F100564AAB /* WeChatSDK_1.4.1 */,
 				77F16D801977588B00564AAB /* ZBUtilities */,
-				BAFA3754194151E9001DB631 /* BLZSIndicatorProgress.h */,
-				BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */,
-				BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */,
-				BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */,
 				BAFA3739194151D3001DB631 /* MMProgressHUD */,
 				BAAE38A0194089EE002C97C8 /* SBJson */,
 				BAB38967193D75EE00975805 /* MMDrawerController */,
@@ -566,6 +563,17 @@
 			path = QQ;
 			sourceTree = "<group>";
 		};
+		77F16E3D1977E36600564AAB /* BLZSIndicatorProgress */ = {
+			isa = PBXGroup;
+			children = (
+				77F16E3E1977E36600564AAB /* BLZSIndicatorProgress.h */,
+				77F16E3F1977E36600564AAB /* BLZSIndicatorProgress.m */,
+				77F16E401977E36600564AAB /* BLZSProgressLayer.h */,
+				77F16E411977E36600564AAB /* BLZSProgressLayer.m */,
+			);
+			path = BLZSIndicatorProgress;
+			sourceTree = "<group>";
+		};
 		BAAE38A0194089EE002C97C8 /* SBJson */ = {
 			isa = PBXGroup;
 			children = (
@@ -721,11 +729,10 @@
 				771F07F5196FABCF00B41955 /* WifiInfo.m in Sources */,
 				775EB2361973DF4600E4A0AB /* BLGuideViewController.m in Sources */,
 				BAAE38BC194089EE002C97C8 /* SBJsonStreamParser.m in Sources */,
-				BAFA3758194151E9001DB631 /* BLZSIndicatorProgress.m in Sources */,
 				BAB38987193DA4AD00975805 /* MMDrawerBarButtonItem.m in Sources */,
-				BAFA3759194151E9001DB631 /* BLZSProgressLayer.m in Sources */,
 				BAB38988193DA4AD00975805 /* MMDrawerController.m in Sources */,
 				77F16DB41977588B00564AAB /* UIColor+Hex.m in Sources */,
+				77F16E431977E36600564AAB /* BLZSProgressLayer.m in Sources */,
 				BAAE38C5194089EE002C97C8 /* SBJsonWriter.m in Sources */,
 				BAB38989193DA4AD00975805 /* MMDrawerVisualState.m in Sources */,
 				BAB3898A193DA4AD00975805 /* MMExampleDrawerVisualStateManager.m in Sources */,
@@ -788,6 +795,7 @@
 				BAFA374D194151D3001DB631 /* MMProgressHUD+Class.m in Sources */,
 				BAB389B1193DA4AD00975805 /* main.m in Sources */,
 				77F16DAF1977588B00564AAB /* NSNumber+PrintableMeasurement.m in Sources */,
+				77F16E421977E36600564AAB /* BLZSIndicatorProgress.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
