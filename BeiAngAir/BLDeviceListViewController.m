@@ -11,7 +11,7 @@
 #import "BLSmartConfigViewController.h"
 #import "BLNetwork.h"
 #import "Toast+UIView.h"
-#import "BLAirQualityViewController.h"
+#import "BLDeviceControlViewController.h"
 #import "JSONKit.h"
 #import "BLDeviceEditViewController.h"
 #import "MMProgressHUD.h"
@@ -310,7 +310,7 @@
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
                 BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
 				NSLog(@"BeiAngReceivedDataInfo: %@", receivedData);
-                BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
+                BLDeviceControlViewController *airQualityViewController = [[BLDeviceControlViewController alloc] init];
 				airQualityViewController.receivedData = receivedData;
 				airQualityViewController.device = device;
                 [self.navigationController pushViewController:airQualityViewController animated:YES];

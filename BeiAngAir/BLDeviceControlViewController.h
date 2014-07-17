@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BLAirQualityViewController : UIViewController
+@interface BLDeviceControlViewController : UIViewController
 
 @property (nonatomic, strong) BeiAngReceivedData *receivedData;
 @property (nonatomic, strong) BLDevice *device;

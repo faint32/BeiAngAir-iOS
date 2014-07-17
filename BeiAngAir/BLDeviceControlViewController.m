@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 BroadLink. All rights reserved.
 //
 
-#import "BLAirQualityViewController.h"
+#import "BLDeviceControlViewController.h"
 #import "GlobalDefine.h"
 #import "BLAppDelegate.h"
 #import "Toast+UIView.h"
@@ -25,7 +25,7 @@
 #import "BLNetwork.h"
 #import "Weather.h"
 
-@interface BLAirQualityViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
+@interface BLDeviceControlViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 
 @property (nonatomic, assign) dispatch_queue_t httpQueue;
 @property (nonatomic, assign) dispatch_queue_t networkQueue;
@@ -45,7 +45,7 @@
 
 @end
 
-@implementation BLAirQualityViewController
+@implementation BLDeviceControlViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
