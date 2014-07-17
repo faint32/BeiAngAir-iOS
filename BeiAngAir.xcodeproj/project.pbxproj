@@ -44,6 +44,25 @@
 		775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */; };
 		775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */; };
 		775EB2361973DF4600E4A0AB /* BLGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2351973DF4600E4A0AB /* BLGuideViewController.m */; };
+		77F16DAA1977588B00564AAB /* CLLocation+NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */; };
+		77F16DAB1977588B00564AAB /* CLLocation+NSString.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D851977588B00564AAB /* CLLocation+NSString.m */; };
+		77F16DAC1977588B00564AAB /* IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D871977588B00564AAB /* IPAddress.m */; };
+		77F16DAD1977588B00564AAB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 77F16D881977588B00564AAB /* LICENSE */; };
+		77F16DAF1977588B00564AAB /* NSNumber+PrintableMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D8C1977588B00564AAB /* NSNumber+PrintableMeasurement.m */; };
+		77F16DB01977588B00564AAB /* NSString+BundleExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D8E1977588B00564AAB /* NSString+BundleExtensions.m */; };
+		77F16DB11977588B00564AAB /* NSString+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D901977588B00564AAB /* NSString+Hex.m */; };
+		77F16DB21977588B00564AAB /* NSString+ZBUtilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D921977588B00564AAB /* NSString+ZBUtilites.m */; };
+		77F16DB31977588B00564AAB /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D931977588B00564AAB /* README.md */; };
+		77F16DB41977588B00564AAB /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D951977588B00564AAB /* UIColor+Hex.m */; };
+		77F16DB51977588B00564AAB /* UIColor+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D971977588B00564AAB /* UIColor+Random.m */; };
+		77F16DB61977588B00564AAB /* UIDevice+ZBUtilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D991977588B00564AAB /* UIDevice+ZBUtilites.m */; };
+		77F16DB71977588B00564AAB /* UIImage+LogN.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D9B1977588B00564AAB /* UIImage+LogN.m */; };
+		77F16DB91977588B00564AAB /* UIViewController+ZBUtilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D9F1977588B00564AAB /* UIViewController+ZBUtilites.m */; };
+		77F16DBA1977588B00564AAB /* ZBHorizontalScrollTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA11977588B00564AAB /* ZBHorizontalScrollTableViewCell.m */; };
+		77F16DBB1977588B00564AAB /* ZBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA31977588B00564AAB /* ZBModel.m */; };
+		77F16DBC1977588B00564AAB /* ZBTextValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA51977588B00564AAB /* ZBTextValidate.m */; };
+		77F16DBD1977588B00564AAB /* ZBUtilities.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 77F16DA61977588B00564AAB /* ZBUtilities.podspec */; };
+		77F16DBE1977588B00564AAB /* ZBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA81977588B00564AAB /* ZBViewController.m */; };
 		BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA89102519458F5700C16953 /* BeiAngAir-Info.plist */; };
 		BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A2194089EE002C97C8 /* NSObject+SBJson.m */; };
 		BAAE38BB194089EE002C97C8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A5194089EE002C97C8 /* SBJsonParser.m */; };
@@ -245,6 +264,41 @@
 		775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLSmartConfigViewController.m; path = BeiAngAir/BLSmartConfigViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB2341973DF4600E4A0AB /* BLGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLGuideViewController.h; path = BeiAngAir/BLGuideViewController.h; sourceTree = SOURCE_ROOT; };
 		775EB2351973DF4600E4A0AB /* BLGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLGuideViewController.m; path = BeiAngAir/BLGuideViewController.m; sourceTree = SOURCE_ROOT; };
+		77F16D821977588B00564AAB /* CLLocation+NSDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+NSDictionary.h"; sourceTree = "<group>"; };
+		77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+NSDictionary.m"; sourceTree = "<group>"; };
+		77F16D841977588B00564AAB /* CLLocation+NSString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+NSString.h"; sourceTree = "<group>"; };
+		77F16D851977588B00564AAB /* CLLocation+NSString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+NSString.m"; sourceTree = "<group>"; };
+		77F16D861977588B00564AAB /* IPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPAddress.h; sourceTree = "<group>"; };
+		77F16D871977588B00564AAB /* IPAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPAddress.m; sourceTree = "<group>"; };
+		77F16D881977588B00564AAB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		77F16D8B1977588B00564AAB /* NSNumber+PrintableMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+PrintableMeasurement.h"; sourceTree = "<group>"; };
+		77F16D8C1977588B00564AAB /* NSNumber+PrintableMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+PrintableMeasurement.m"; sourceTree = "<group>"; };
+		77F16D8D1977588B00564AAB /* NSString+BundleExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BundleExtensions.h"; sourceTree = "<group>"; };
+		77F16D8E1977588B00564AAB /* NSString+BundleExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+BundleExtensions.m"; sourceTree = "<group>"; };
+		77F16D8F1977588B00564AAB /* NSString+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hex.h"; sourceTree = "<group>"; };
+		77F16D901977588B00564AAB /* NSString+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hex.m"; sourceTree = "<group>"; };
+		77F16D911977588B00564AAB /* NSString+ZBUtilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ZBUtilites.h"; sourceTree = "<group>"; };
+		77F16D921977588B00564AAB /* NSString+ZBUtilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ZBUtilites.m"; sourceTree = "<group>"; };
+		77F16D931977588B00564AAB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		77F16D941977588B00564AAB /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		77F16D951977588B00564AAB /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
+		77F16D961977588B00564AAB /* UIColor+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Random.h"; sourceTree = "<group>"; };
+		77F16D971977588B00564AAB /* UIColor+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Random.m"; sourceTree = "<group>"; };
+		77F16D981977588B00564AAB /* UIDevice+ZBUtilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+ZBUtilites.h"; sourceTree = "<group>"; };
+		77F16D991977588B00564AAB /* UIDevice+ZBUtilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+ZBUtilites.m"; sourceTree = "<group>"; };
+		77F16D9A1977588B00564AAB /* UIImage+LogN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+LogN.h"; sourceTree = "<group>"; };
+		77F16D9B1977588B00564AAB /* UIImage+LogN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+LogN.m"; sourceTree = "<group>"; };
+		77F16D9E1977588B00564AAB /* UIViewController+ZBUtilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZBUtilites.h"; sourceTree = "<group>"; };
+		77F16D9F1977588B00564AAB /* UIViewController+ZBUtilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZBUtilites.m"; sourceTree = "<group>"; };
+		77F16DA01977588B00564AAB /* ZBHorizontalScrollTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBHorizontalScrollTableViewCell.h; sourceTree = "<group>"; };
+		77F16DA11977588B00564AAB /* ZBHorizontalScrollTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBHorizontalScrollTableViewCell.m; sourceTree = "<group>"; };
+		77F16DA21977588B00564AAB /* ZBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBModel.h; sourceTree = "<group>"; };
+		77F16DA31977588B00564AAB /* ZBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBModel.m; sourceTree = "<group>"; };
+		77F16DA41977588B00564AAB /* ZBTextValidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBTextValidate.h; sourceTree = "<group>"; };
+		77F16DA51977588B00564AAB /* ZBTextValidate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBTextValidate.m; sourceTree = "<group>"; };
+		77F16DA61977588B00564AAB /* ZBUtilities.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ZBUtilities.podspec; sourceTree = "<group>"; };
+		77F16DA71977588B00564AAB /* ZBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBViewController.h; sourceTree = "<group>"; };
+		77F16DA81977588B00564AAB /* ZBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBViewController.m; sourceTree = "<group>"; };
 		BA69793D1949613B000B184F /* BLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNetwork.h; sourceTree = "<group>"; };
 		BA69793E1949613B000B184F /* libBLNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLNetwork.a; sourceTree = "<group>"; };
 		BA8910281945905E00C16953 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/BeiAngAir-Info.plist"; sourceTree = "<group>"; };
@@ -420,6 +474,7 @@
 		2FAE511C18F7BBDA0068893E /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				77F16D801977588B00564AAB /* ZBUtilities */,
 				BAFA38161941862A001DB631 /* BLCustomHUD */,
 				BAFA3754194151E9001DB631 /* BLZSIndicatorProgress.h */,
 				BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */,
@@ -648,6 +703,48 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		77F16D801977588B00564AAB /* ZBUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				77F16D821977588B00564AAB /* CLLocation+NSDictionary.h */,
+				77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */,
+				77F16D841977588B00564AAB /* CLLocation+NSString.h */,
+				77F16D851977588B00564AAB /* CLLocation+NSString.m */,
+				77F16D861977588B00564AAB /* IPAddress.h */,
+				77F16D871977588B00564AAB /* IPAddress.m */,
+				77F16D881977588B00564AAB /* LICENSE */,
+				77F16D8B1977588B00564AAB /* NSNumber+PrintableMeasurement.h */,
+				77F16D8C1977588B00564AAB /* NSNumber+PrintableMeasurement.m */,
+				77F16D8D1977588B00564AAB /* NSString+BundleExtensions.h */,
+				77F16D8E1977588B00564AAB /* NSString+BundleExtensions.m */,
+				77F16D8F1977588B00564AAB /* NSString+Hex.h */,
+				77F16D901977588B00564AAB /* NSString+Hex.m */,
+				77F16D911977588B00564AAB /* NSString+ZBUtilites.h */,
+				77F16D921977588B00564AAB /* NSString+ZBUtilites.m */,
+				77F16D931977588B00564AAB /* README.md */,
+				77F16D941977588B00564AAB /* UIColor+Hex.h */,
+				77F16D951977588B00564AAB /* UIColor+Hex.m */,
+				77F16D961977588B00564AAB /* UIColor+Random.h */,
+				77F16D971977588B00564AAB /* UIColor+Random.m */,
+				77F16D981977588B00564AAB /* UIDevice+ZBUtilites.h */,
+				77F16D991977588B00564AAB /* UIDevice+ZBUtilites.m */,
+				77F16D9A1977588B00564AAB /* UIImage+LogN.h */,
+				77F16D9B1977588B00564AAB /* UIImage+LogN.m */,
+				77F16D9E1977588B00564AAB /* UIViewController+ZBUtilites.h */,
+				77F16D9F1977588B00564AAB /* UIViewController+ZBUtilites.m */,
+				77F16DA01977588B00564AAB /* ZBHorizontalScrollTableViewCell.h */,
+				77F16DA11977588B00564AAB /* ZBHorizontalScrollTableViewCell.m */,
+				77F16DA21977588B00564AAB /* ZBModel.h */,
+				77F16DA31977588B00564AAB /* ZBModel.m */,
+				77F16DA41977588B00564AAB /* ZBTextValidate.h */,
+				77F16DA51977588B00564AAB /* ZBTextValidate.m */,
+				77F16DA61977588B00564AAB /* ZBUtilities.podspec */,
+				77F16DA71977588B00564AAB /* ZBViewController.h */,
+				77F16DA81977588B00564AAB /* ZBViewController.m */,
+			);
+			path = ZBUtilities;
+			sourceTree = "<group>";
+		};
 		BAAE38A0194089EE002C97C8 /* SBJson */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,7 +901,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FAE51CD18F810540068893E /* blueArrow@2x.png in Resources */,
+				77F16DBD1977588B00564AAB /* ZBUtilities.podspec in Resources */,
 				BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */,
+				77F16DAD1977588B00564AAB /* LICENSE in Resources */,
 				BAFA38211941862A001DB631 /* bl_custom_hud_btn_yes@2x.png in Resources */,
 				BAFA38231941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png in Resources */,
 				2FAE502A18F78C470068893E /* InfoPlist.strings in Resources */,
@@ -826,6 +925,7 @@
 			files = (
 				BAAE38C2194089EE002C97C8 /* SBJsonStreamWriterState.m in Sources */,
 				775EB2301973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m in Sources */,
+				77F16DB91977588B00564AAB /* UIViewController+ZBUtilites.m in Sources */,
 				771F07F5196FABCF00B41955 /* WifiInfo.m in Sources */,
 				775EB2361973DF4600E4A0AB /* BLGuideViewController.m in Sources */,
 				BAAE38BC194089EE002C97C8 /* SBJsonStreamParser.m in Sources */,
@@ -833,6 +933,7 @@
 				BAB38987193DA4AD00975805 /* MMDrawerBarButtonItem.m in Sources */,
 				BAFA3759194151E9001DB631 /* BLZSProgressLayer.m in Sources */,
 				BAB38988193DA4AD00975805 /* MMDrawerController.m in Sources */,
+				77F16DB41977588B00564AAB /* UIColor+Hex.m in Sources */,
 				BAAE38C5194089EE002C97C8 /* SBJsonWriter.m in Sources */,
 				BAB38989193DA4AD00975805 /* MMDrawerVisualState.m in Sources */,
 				BAB3898A193DA4AD00975805 /* MMExampleDrawerVisualStateManager.m in Sources */,
@@ -840,7 +941,11 @@
 				BAB3898B193DA4AD00975805 /* UIViewController+MMDrawerController.m in Sources */,
 				BAB3898C193DA4AD00975805 /* iCarousel.m in Sources */,
 				BAAE38C4194089EE002C97C8 /* SBJsonUTF8Stream.m in Sources */,
+				77F16DB71977588B00564AAB /* UIImage+LogN.m in Sources */,
 				775EB22F1973DA5B00E4A0AB /* BLDeviceErrorViewController.m in Sources */,
+				77F16DBA1977588B00564AAB /* ZBHorizontalScrollTableViewCell.m in Sources */,
+				77F16DBB1977588B00564AAB /* ZBModel.m in Sources */,
+				77F16DB31977588B00564AAB /* README.md in Sources */,
 				BAB3898D193DA4AD00975805 /* UIImage+Retina4.m in Sources */,
 				BAB3898E193DA4AD00975805 /* Toast+UIView.m in Sources */,
 				BAB3898F193DA4AD00975805 /* UILabel+Attribute.m in Sources */,
@@ -850,6 +955,7 @@
 				BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */,
 				771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */,
 				BAFA3750194151D3001DB631 /* MMProgressHUDViewController.m in Sources */,
+				77F16DAC1977588B00564AAB /* IPAddress.m in Sources */,
 				7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */,
 				7700C718196E85690001561F /* ClassAirQualityInfo.m in Sources */,
 				771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */,
@@ -857,7 +963,9 @@
 				775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */,
 				7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */,
 				BAFA374F194151D3001DB631 /* MMProgressHUDOverlayView.m in Sources */,
+				77F16DB11977588B00564AAB /* NSString+Hex.m in Sources */,
 				BAB38997193DA4AD00975805 /* Reachability.m in Sources */,
+				77F16DB21977588B00564AAB /* NSString+ZBUtilites.m in Sources */,
 				BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */,
 				BAFA374B194151D3001DB631 /* MMHud.m in Sources */,
 				BAB38998193DA4AD00975805 /* ASIAuthenticationDialog.m in Sources */,
@@ -867,10 +975,14 @@
 				775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */,
 				BAFA3752194151D3001DB631 /* MMRadialProgressView.m in Sources */,
 				7700C70C196E69960001561F /* WeatherInfo.m in Sources */,
+				77F16DB51977588B00564AAB /* UIColor+Random.m in Sources */,
 				BAB38999193DA4AD00975805 /* ASIDataCompressor.m in Sources */,
+				77F16DBC1977588B00564AAB /* ZBTextValidate.m in Sources */,
 				BAB3899A193DA4AD00975805 /* ASIDataDecompressor.m in Sources */,
 				BAAE38BF194089EE002C97C8 /* SBJsonStreamParserState.m in Sources */,
 				BAB3899B193DA4AD00975805 /* ASIDownloadCache.m in Sources */,
+				77F16DAB1977588B00564AAB /* CLLocation+NSString.m in Sources */,
+				77F16DBE1977588B00564AAB /* ZBViewController.m in Sources */,
 				BAFA374E194151D3001DB631 /* MMProgressHUD.m in Sources */,
 				BAB3899C193DA4AD00975805 /* ASIFormDataRequest.m in Sources */,
 				775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */,
@@ -881,6 +993,8 @@
 				BAB389A0193DA4AD00975805 /* ASIWebPageRequest.m in Sources */,
 				BAB389A1193DA4AD00975805 /* ASICloudFilesCDNRequest.m in Sources */,
 				BAFA374C194151D3001DB631 /* MMProgressHUD+Animations.m in Sources */,
+				77F16DB61977588B00564AAB /* UIDevice+ZBUtilites.m in Sources */,
+				77F16DB01977588B00564AAB /* NSString+BundleExtensions.m in Sources */,
 				BAAE38BD194089EE002C97C8 /* SBJsonStreamParserAccumulator.m in Sources */,
 				BAB389A2193DA4AD00975805 /* ASICloudFilesContainer.m in Sources */,
 				BAB389A3193DA4AD00975805 /* ASICloudFilesContainerRequest.m in Sources */,
@@ -892,6 +1006,7 @@
 				BAB389A8193DA4AD00975805 /* ASIS3Bucket.m in Sources */,
 				BAB389A9193DA4AD00975805 /* ASIS3BucketObject.m in Sources */,
 				BAB389AA193DA4AD00975805 /* ASIS3BucketRequest.m in Sources */,
+				77F16DAA1977588B00564AAB /* CLLocation+NSDictionary.m in Sources */,
 				7700C709196E690F0001561F /* BLDeviceInfo.m in Sources */,
 				BAB389AB193DA4AD00975805 /* ASIS3ObjectRequest.m in Sources */,
 				BAFA3751194151D3001DB631 /* MMProgressHUDWindow.m in Sources */,
@@ -906,6 +1021,7 @@
 				7700C720196E87F90001561F /* NSString+BeiAng.m in Sources */,
 				BAFA374D194151D3001DB631 /* MMProgressHUD+Class.m in Sources */,
 				BAB389B1193DA4AD00975805 /* main.m in Sources */,
+				77F16DAF1977588B00564AAB /* NSNumber+PrintableMeasurement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

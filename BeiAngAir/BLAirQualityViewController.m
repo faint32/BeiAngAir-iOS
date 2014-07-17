@@ -83,13 +83,14 @@
 	UIEdgeInsets edgeInsets = UIEdgeInsetsMake(10, 20, 0, 20);
 	
 	CGRect viewFrame = CGRectZero;
-    viewFrame.size.width = self.view.frame.size.width;
-    viewFrame.size.height = 40;
+	viewFrame.origin.x = 20;
+	viewFrame.origin.y = 70;
+    viewFrame.size.width = self.view.frame.size.width - viewFrame.origin.x * 2;
+    viewFrame.size.height = 80;
     _weatherLabel = [[UILabel alloc] initWithFrame:viewFrame];
 	_weatherLabel.numberOfLines = 0;
     [_weatherLabel setBackgroundColor:[UIColor clearColor]];
     [_weatherLabel setTextColor:[UIColor whiteColor]];
-	_weatherLabel.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", _airQualityInfoClass.cityName, _airQualityInfoClass.temperateStrings, _airQualityInfoClass.pm25, _airQualityInfoClass.airQualityString];
     [_weatherLabel setFont:[UIFont systemFontOfSize:17.f]];
 	[self.view addSubview:_weatherLabel];
     
@@ -209,6 +210,16 @@
     [_leftTimerLabel setTextAlignment:NSTextAlignmentCenter];
     [_leftTimerLabel setNumberOfLines:1];
     [bottomView addSubview:_leftTimerLabel];
+}
+
+- (void)refreshWeather
+{
+	NSLog(@"refreshWeather: %@", _airQualityInfoClass);
+	_weatherLabel.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", _airQualityInfoClass.cityName, _airQualityInfoClass.temperateStrings, _airQualityInfoClass.pm25, _airQualityInfoClass.airQualityString];
+	_airQualityInfoClass.airQualityLevel = @"4";
+	if([_airQualityInfoClass.airQualityLevel isEqualToString:@"4"]) {
+		self.view.backgroundColor = [UIColor colorAirPolluted];
+	}
 }
 
 - (void)deviceOn:(BOOL)on
@@ -404,27 +415,6 @@
             [_leftTimerLabel setText:[NSString stringWithFormat:@"%ld%@%ld%@%@",timerInfomation.secondCount / 3600,NSLocalizedString(@"hour", nil),timerInfomation.secondCount / 60,NSLocalizedString(@"minute", nil),NSLocalizedString(@"close", nil)]];
 		}
     }
-	[self getInfo:nil];
-}
-
--(void)getInfo:(NSTimer *)timer
-{
-	if(_airQualityInfoClass.temperateStrings.length > 0) {
-		//TODO:
-		_weatherLabel.text = _airQualityInfoClass.airQualityString;//TODO: 逻辑错误，室内的怎么会影响室外的呢
-		[_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil), _airQualityInfoClass.airQualityLevel]];
-		//判断空气质量级别
-		if([_airQualityInfoClass.airQualityLevel isEqualToString:@"4"]) {
-			self.view.backgroundColor = [UIColor colorAirPolluted];
-		}
-		[timer invalidate];
-		timer = nil;
-	}
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
 }
 
 - (void)allButtonClicked:(UIButton *)button
@@ -610,43 +600,36 @@
 - (void)getWeather
 {
     dispatch_async(_httpQueue, ^{
-        @synchronized(_airQualityInfoClass)
-        {
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://tqapi.mobile.360.cn/app/meizu/city/%@", _airQualityInfoClass.cityCode]];
-            NSError *error=nil;
-            NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
-            SBJsonParser *parser = [[SBJsonParser alloc]init];
-            NSDictionary *rootDic = [parser objectWithString:jsonString error:&error];
-            NSDictionary *weatherInfo = [rootDic objectForKey:@"pm25"];
-            //空气质量
-            NSString *tmp =  [NSString stringWithFormat:@"%@",[weatherInfo objectForKey:@"quality"]];
-            if(tmp.length > 0 && ![tmp isEqual:@"(null)"])
-                _weatherLabel.text = _airQualityInfoClass.airQualityString;
-            //温度
-            NSMutableArray *dayArray = [[NSMutableArray alloc] init];
-            NSMutableArray *nightArray = [[NSMutableArray alloc] init];
-            //温度最低
-            dayArray = [[[rootDic objectForKey:@"weather"][0] objectForKey:@"info"] objectForKey:@"night"];
-            //温度最高
-            nightArray = [[[rootDic objectForKey:@"weather"][0] objectForKey:@"info"] objectForKey:@"day"];
-            //空气质量等级
-            if([NSString stringWithFormat:@"%@",[weatherInfo objectForKey:@"level"]].length > 0) {
-                [_airQualityLabel setText:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"airQiality", nil), _airQualityInfoClass.airQualityLevel]];
-                //判断空气质量级别
-                if([_airQualityInfoClass.airQualityLevel isEqualToString:@"4"]) {
-					self.view.backgroundColor = [UIColor colorAirPolluted];
-                }//TODO: 重构
-            }
-            //天气
-            _airQualityInfoClass.weather = dayArray[1];
-            //温度
-            NSString *tmpDay =  dayArray[2];
-            NSString *tmpNight =  nightArray[2];
-			if(tmpDay.length > 0 && tmpNight.length > 0 && ![tmpDay isEqual:@"(null)"] && ![tmpNight isEqual:@"(null)"]) {
-				//TODO:
-               //_weatherLabel.text  = [NSString stringWithFormat:@"%@℃~%@℃",tmpDay,tmpNight];
-			}
-        }
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://tqapi.mobile.360.cn/app/meizu/city/%@", _airQualityInfoClass.cityCode]];
+		NSError *error;
+		NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+		SBJsonParser *parser = [[SBJsonParser alloc]init];
+		NSDictionary *rootDic = [parser objectWithString:jsonString error:&error];
+		
+		NSMutableString *temperature = [NSMutableString stringWithString:@""];
+		NSDictionary *weatherOfToday = rootDic[@"weather"][0];
+		NSArray *nightInfomation = weatherOfToday[@"info"][@"night"];
+		NSArray *dayInfomation = weatherOfToday[@"info"][@"day"];
+		if (nightInfomation.count >= 3 && dayInfomation.count >= 3) {
+			[temperature appendString:nightInfomation[2]];
+			[temperature appendString:@"~"];
+			[temperature appendString:dayInfomation[2]];
+			[temperature appendString:@"℃"];
+		}
+		_airQualityInfoClass.temperateStrings = temperature;
+		
+		NSDictionary *pm25Information = rootDic[@"pm25"];
+		if (pm25Information) {
+			NSString *pm25 = [NSString stringWithFormat:@"%@", pm25Information[@"pm25"]];
+			_airQualityInfoClass.pm25 = pm25;
+			_airQualityInfoClass.airQualityString = pm25Information[@"quality"];
+			_airQualityInfoClass.airQualityLevel = [NSString stringWithFormat:@"%@", pm25Information[@"level"]];
+			_airQualityInfoClass.airQualityColorHexString = pm25Information[@"color"];
+		}
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self refreshWeather];
+		});
     });
 }
 @end

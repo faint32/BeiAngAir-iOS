@@ -17,7 +17,7 @@
 
 + (instancetype)colorAirPolluted
 {
-	return [UIColor colorWithPatternImage:[UIImage imageNamed:@"weather_layout_color_bg.png"]];
+	return [UIColor colorWithRed:128/255.0f green:125/255.0f blue:168/255.0f alpha:1.0f];
 }
 
 @end

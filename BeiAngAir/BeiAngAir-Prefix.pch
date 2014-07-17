@@ -30,6 +30,10 @@
 #import	"UIImage+BeiAng.h"
 #import "UIColor+BeiAng.h"
 
+//ZBUtilities
+#import "NSString+Hex.h"
+#import "UIColor+Hex.h"
+
 //Notification
 #define BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE @"BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE"
 

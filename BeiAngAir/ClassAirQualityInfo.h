@@ -17,5 +17,6 @@
 @property (strong, nonatomic) NSString *airQualityString;
 @property (strong, nonatomic) NSString *airQualityLevel;
 @property (strong, nonatomic) NSString *pm25;
+@property (strong, nonatomic) NSString *airQualityColorHexString;
 
 @end
