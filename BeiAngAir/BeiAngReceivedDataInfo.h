@@ -43,4 +43,6 @@
 
 - (instancetype)initWithData:(NSArray *)data;
 
+- (NSString *)airQualityDisplayString;
+
 @end

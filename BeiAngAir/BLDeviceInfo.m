@@ -53,8 +53,6 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 		self.terminal_id = terminal_id;
 		self.sub_device = sub_device;
 		self.lock = lock;
-		
-		self.airQualityInfo = [[BLAirQualityInfo alloc] init];
 	}
 	return self;
 }
@@ -171,7 +169,6 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	device.remoteIP = attributes[kRemoteIP];
 	device.qrInfo = attributes[kQRInfo];
 	
-	device.airQualityInfo = [[BLAirQualityInfo alloc] init];
 	return device;
 }
 

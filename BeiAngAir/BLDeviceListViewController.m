@@ -66,7 +66,7 @@
     viewFrame.size.height = 44.0f + ((IsiOS7Later) ? 20.0f : 0.0f);
     UIView *headerView = [[UIView alloc] initWithFrame:viewFrame];
     [headerView setBackgroundColor:[UIColor whiteColor]];
-//    [self.view addSubview:headerView];//TODO: remove title view
+//    [self.view addSubview:headerView];//TODO: remove title view//TODO:
     
     viewFrame = headerView.frame;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:viewFrame];
@@ -326,6 +326,7 @@
 		if (device.airQualityInfo.switchState == 1) {
 			status = device.airQualityInfo.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
 		}
+		NSLog(@"airQuality: %@", device.airQualityInfo);
 		
 		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n设备已运行%d小时%d分钟", status, device.airQualityInfo.hour, device.airQualityInfo.minute];
 		NSMutableAttributedString *attributedString;
@@ -352,12 +353,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     BLDeviceInfo *info = [_devices objectAtIndex:indexPath.row];
 	
-	//BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
-	BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
-	//airQualityViewController.currentAirInfo = recvInfo;
-	airQualityViewController.device = info;
-	[self.navigationController pushViewController:airQualityViewController animated:YES];
-	return;//TODO:
+//	//BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
+//	BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
+//	//airQualityViewController.currentAirInfo = recvInfo;
+//	airQualityViewController.device = info;
+//	[self.navigationController pushViewController:airQualityViewController animated:YES];
+//	return;//TODO:
 	
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
@@ -391,7 +392,8 @@
     BLDeviceInfo *info = [_devices objectAtIndex:recognizer.view.tag];
     BLDeviceInfoEditViewController *controller = [[BLDeviceInfoEditViewController alloc] init];
 	controller.deviceInfo = info;
-    [self presentViewController:controller animated:YES completion:nil];
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark Data Source Loading / Reloading Methods  

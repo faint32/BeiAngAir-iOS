@@ -38,7 +38,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+		self.title = NSLocalizedString(@"DeviceInfoEditViewControllerTitle", nil);
+		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
     }
     return self;
 }
@@ -46,6 +47,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	self.navigationController.navigationBarHidden = NO;
     
     appDelegate = (BLAppDelegate *)[[UIApplication sharedApplication] delegate];
     networkAPI = [[BLNetwork alloc] init];
@@ -60,7 +63,7 @@
     viewFrame.size.height = 44.0f + ((IsiOS7Later) ? 20.0f : 0.0f);
     UIView *headerView = [[UIView alloc] initWithFrame:viewFrame];
     [headerView setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:headerView];
+//    [self.view addSubview:headerView];
     
     viewFrame = headerView.frame;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:viewFrame];
@@ -73,7 +76,7 @@
     viewFrame.origin.y = (44.0f - viewFrame.size.height) * 0.5f + ((IsiOS7Later) ? 20.0f : 0.0f);
     [titleLabel setFrame:viewFrame];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [headerView addSubview:titleLabel];
+//    [headerView addSubview:titleLabel];//TODO: hide
 
 	//TODO:
 //    UIImage *image = [UIImage imageNamed:@"left"];
@@ -198,14 +201,14 @@
     [macView addSubview:macValueLabel];
     
     //确定按钮
-    viewFrame.origin.x = (self.view.frame.size.width - macValueLabel.frame.size.width) / 2.f;
-    viewFrame.origin.y = CGRectGetMaxY(macValueLabel.frame) + 10;
+    viewFrame.origin.x = 0;
+    viewFrame.origin.y = 360;
     viewFrame.size.width = self.view.bounds.size.width;
-	viewFrame.size.height = 40;
-    UIButton *okButton = [[UIButton alloc] initWithFrame:viewFrame];
+	viewFrame.size.height = 50;
+	UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	okButton.frame = viewFrame;
     [okButton setBackgroundColor:[UIColor themeBlue]];
     [okButton setTitle:NSLocalizedString(@"DeviceInfoEditViewControllerOKButton", nil) forState:UIControlStateNormal];
-    [okButton setTitleColor:RGB(0xff, 0xff, 0xff) forState:UIControlStateNormal];
     [okButton addTarget:self action:@selector(okButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:okButton];
 }
@@ -232,13 +235,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)backButtonClicked:(UIButton *)button
+- (void)dismiss
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [self setNameTextField:nil];
-    [self setLockButton:nil];
-    [self setAddButton:nil];
-    dispatch_release(networkQueue);
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)lockButtonclicked:(UIButton *)button

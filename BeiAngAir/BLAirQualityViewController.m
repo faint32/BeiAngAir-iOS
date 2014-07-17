@@ -210,6 +210,8 @@
     [_leftTimerLabel setTextAlignment:NSTextAlignmentCenter];
     [_leftTimerLabel setNumberOfLines:1];
     [bottomView addSubview:_leftTimerLabel];
+	
+	[self refreshDevice];
 }
 
 - (void)refreshWeather
@@ -264,6 +266,68 @@
 	[_childLockButton setTitle:title forState:UIControlStateNormal];
 }
 
+
+- (void)refreshDevice
+{
+	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:_device.mac];
+	NSData *sendData = [dictionary JSONData];
+	NSData *response = [_networkAPI requestDispatch:sendData];
+	int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+	if (code == 0) {
+		dispatch_async(_networkQueue, ^{
+			NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
+			BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
+			NSLog(@"BeiAngReceivedDataInfo: %@", recvInfo);
+			NSLog(@"airdisplay: %@", [recvInfo airQualityDisplayString]);
+			
+			dispatch_async(dispatch_get_main_queue(), ^{
+				//[self performSelector:@selector(refreshDevice) withObject:nil afterDelay:3.0];
+			});
+		});
+	}
+	
+	
+	
+//	NSDictionary *dictionary = [NSDictionary dictionaryDeviceStateWithMAC:_device.mac];
+//	NSData *requestData = [dictionary JSONData];
+//	NSData *responseData = [_networkAPI requestDispatch:requestData];
+//	NSString *state = @"";
+//	NSLog(@"DeviceStateWithMAC: %@", [responseData objectFromJSONData]);
+//	if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
+//		state = [[responseData objectFromJSONData] objectForKey:@"status"];
+//	}
+//	
+//	if ([state isEqualToString:@"OFFLINE"] || [state isEqualToString:@"NOT_INIT"]) {
+//		_device.airQualityInfo.hour = 0;
+//		_device.airQualityInfo.minute = 0;
+//		_device.airQualityInfo.isRefresh = NO;
+//		_device.airQualityInfo.sleepState = 0;
+//		_device.airQualityInfo.switchState = 0;
+//	} else if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
+//		dispatch_async(_networkQueue, ^{
+//			//数据透传
+//			NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:_device.mac];
+//			NSData *sendData = [dictionary JSONData];
+//			NSData *response = [_networkAPI requestDispatch:sendData];
+//			int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+//			if (code == 0) {
+//				NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
+//				//_device.airQualityInfo.hour = [array[9] intValue];
+//				//_device.airQualityInfo.minute = [array[10] intValue];
+//				//_device.airQualityInfo.sleepState = [array[7] intValue];
+//				//_device.airQualityInfo.isRefresh = YES;
+//				//_device.airQualityInfo.switchState = [array[4] intValue];
+//				
+////				_device.airQualityInfo
+//				dispatch_async(dispatch_get_main_queue(), ^{
+//					//[_tableView reloadData];
+//				});
+//			}
+//		});
+//	}
+
+	
+}
 //弹出视图
 -(void)popUpView:(UIButton *)button
 {

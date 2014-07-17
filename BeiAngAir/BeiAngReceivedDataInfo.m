@@ -47,6 +47,20 @@
 	return self;
 }
 
+- (NSString *)airQualityDisplayString
+{
+	if (self.airQualityData >= 200) {
+		return NSLocalizedString(@"严重", nil);
+	} else if (self.airQualityData >= 150) {
+		return NSLocalizedString(@"差", nil);
+	} else if (self.airQualityData >= 100) {
+		return NSLocalizedString(@"中", nil);
+	} else if (self.airQualityData >= 50) {
+		return NSLocalizedString(@"良", nil);
+	}
+	return NSLocalizedString(@"优", nil);
+}
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"< switchState: %d>", self.switchStatus];
