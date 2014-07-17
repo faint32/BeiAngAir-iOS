@@ -24,7 +24,6 @@
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "MMExampleDrawerVisualStateManager.h"
-#import "UIImage+Retina4.h"
 
 @interface BLDeviceListViewController ()
 
@@ -46,15 +45,6 @@
 	}
 	return self;
 }
-
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self) {
-//		self.title = NSLocalizedString(@"DeviceListViewControllerTitle", nil);
-//    }
-//    return self;
-//}
 
 - (void)viewDidLoad
 {
