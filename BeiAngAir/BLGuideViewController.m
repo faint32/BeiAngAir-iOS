@@ -8,8 +8,11 @@
 
 #import "BLGuideViewController.h"
 #import "BLDeviceListViewController.h"
+#import "BLShareViewController.h"
 
 @interface BLGuideViewController ()
+
+@property (nonatomic, strong) BLShareViewController *shareViewController;
 
 @end
 
@@ -80,7 +83,8 @@
 
 - (void)share
 {
-	
+	_shareViewController = [[BLShareViewController alloc] initWithNibName:nil bundle:nil];
+	[_shareViewController showActionSheetInView:self.view];
 }
 
 - (void)service

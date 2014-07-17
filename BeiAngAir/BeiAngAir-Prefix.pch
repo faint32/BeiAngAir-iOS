@@ -34,6 +34,10 @@
 #import "NSString+Hex.h"
 #import "UIColor+Hex.h"
 
+//
+#define WEIXIN_APP_ID @"wx45d480ba2f3138c5"//BeiAng
+//#define WEIXIN_APP_ID @"wx8599aa33ebb96d0f"//DUSHUHU
+
 //Notification
 #define BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE @"BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE"
 

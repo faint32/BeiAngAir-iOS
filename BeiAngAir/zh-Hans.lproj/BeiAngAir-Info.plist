@@ -36,5 +36,24 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.beiangtech.ios</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>beiangtech</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>weixin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wx45d480ba2f3138c5</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

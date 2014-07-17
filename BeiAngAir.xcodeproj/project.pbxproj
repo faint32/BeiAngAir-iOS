@@ -62,6 +62,11 @@
 		77F16DBC1977588B00564AAB /* ZBTextValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA51977588B00564AAB /* ZBTextValidate.m */; };
 		77F16DBD1977588B00564AAB /* ZBUtilities.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 77F16DA61977588B00564AAB /* ZBUtilities.podspec */; };
 		77F16DBE1977588B00564AAB /* ZBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA81977588B00564AAB /* ZBViewController.m */; };
+		77F16E10197792C000564AAB /* BLShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16E0F197792C000564AAB /* BLShareViewController.m */; };
+		77F16E1A197794F100564AAB /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F16E12197794F100564AAB /* libWeChatSDK.a */; };
+		77F16E1B197794F100564AAB /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77F16E14197794F100564AAB /* payRequsestHandler.mm */; };
+		77F16E1C197794F100564AAB /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 77F16E15197794F100564AAB /* readme.txt */; };
+		77F16E1D197794F100564AAB /* TenpayUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77F16E17197794F100564AAB /* TenpayUtil.mm */; };
 		BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA89102519458F5700C16953 /* BeiAngAir-Info.plist */; };
 		BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A2194089EE002C97C8 /* NSObject+SBJson.m */; };
 		BAAE38BB194089EE002C97C8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38A5194089EE002C97C8 /* SBJsonParser.m */; };
@@ -296,6 +301,16 @@
 		77F16DA61977588B00564AAB /* ZBUtilities.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ZBUtilities.podspec; sourceTree = "<group>"; };
 		77F16DA71977588B00564AAB /* ZBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBViewController.h; sourceTree = "<group>"; };
 		77F16DA81977588B00564AAB /* ZBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBViewController.m; sourceTree = "<group>"; };
+		77F16E0E197792C000564AAB /* BLShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLShareViewController.h; path = BeiAngAir/BLShareViewController.h; sourceTree = SOURCE_ROOT; };
+		77F16E0F197792C000564AAB /* BLShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLShareViewController.m; path = BeiAngAir/BLShareViewController.m; sourceTree = SOURCE_ROOT; };
+		77F16E12197794F100564AAB /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		77F16E13197794F100564AAB /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
+		77F16E14197794F100564AAB /* payRequsestHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = payRequsestHandler.mm; sourceTree = "<group>"; };
+		77F16E15197794F100564AAB /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		77F16E16197794F100564AAB /* TenpayUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TenpayUtil.h; sourceTree = "<group>"; };
+		77F16E17197794F100564AAB /* TenpayUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TenpayUtil.mm; sourceTree = "<group>"; };
+		77F16E18197794F100564AAB /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		77F16E19197794F100564AAB /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		BA69793D1949613B000B184F /* BLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNetwork.h; sourceTree = "<group>"; };
 		BA69793E1949613B000B184F /* libBLNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLNetwork.a; sourceTree = "<group>"; };
 		BA8910281945905E00C16953 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/BeiAngAir-Info.plist"; sourceTree = "<group>"; };
@@ -386,6 +401,7 @@
 				2FAE502218F78C470068893E /* CoreGraphics.framework in Frameworks */,
 				2FAE502418F78C470068893E /* UIKit.framework in Frameworks */,
 				2FAE502018F78C470068893E /* Foundation.framework in Frameworks */,
+				77F16E1A197794F100564AAB /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +487,7 @@
 		2FAE511C18F7BBDA0068893E /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				77F16E11197794F100564AAB /* WeChatSDK_1.4.1 */,
 				77F16D801977588B00564AAB /* ZBUtilities */,
 				BAFA38161941862A001DB631 /* BLCustomHUD */,
 				BAFA3754194151E9001DB631 /* BLZSIndicatorProgress.h */,
@@ -520,6 +537,8 @@
 				775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */,
 				775EB21C1973DA5B00E4A0AB /* BLAboutViewController.h */,
 				775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */,
+				77F16E0E197792C000564AAB /* BLShareViewController.h */,
+				77F16E0F197792C000564AAB /* BLShareViewController.m */,
 			);
 			name = Controllers;
 			path = ViewController;
@@ -740,6 +759,21 @@
 			path = ZBUtilities;
 			sourceTree = "<group>";
 		};
+		77F16E11197794F100564AAB /* WeChatSDK_1.4.1 */ = {
+			isa = PBXGroup;
+			children = (
+				77F16E12197794F100564AAB /* libWeChatSDK.a */,
+				77F16E13197794F100564AAB /* payRequsestHandler.h */,
+				77F16E14197794F100564AAB /* payRequsestHandler.mm */,
+				77F16E15197794F100564AAB /* readme.txt */,
+				77F16E16197794F100564AAB /* TenpayUtil.h */,
+				77F16E17197794F100564AAB /* TenpayUtil.mm */,
+				77F16E18197794F100564AAB /* WXApi.h */,
+				77F16E19197794F100564AAB /* WXApiObject.h */,
+			);
+			path = WeChatSDK_1.4.1;
+			sourceTree = "<group>";
+		};
 		BAAE38A0194089EE002C97C8 /* SBJson */ = {
 			isa = PBXGroup;
 			children = (
@@ -899,6 +933,7 @@
 				77F16DBD1977588B00564AAB /* ZBUtilities.podspec in Resources */,
 				BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */,
 				77F16DAD1977588B00564AAB /* LICENSE in Resources */,
+				77F16E1C197794F100564AAB /* readme.txt in Resources */,
 				BAFA38211941862A001DB631 /* bl_custom_hud_btn_yes@2x.png in Resources */,
 				BAFA38231941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png in Resources */,
 				2FAE502A18F78C470068893E /* InfoPlist.strings in Resources */,
@@ -935,6 +970,7 @@
 				BAAE38C3194089EE002C97C8 /* SBJsonTokeniser.m in Sources */,
 				BAB3898B193DA4AD00975805 /* UIViewController+MMDrawerController.m in Sources */,
 				BAB3898C193DA4AD00975805 /* iCarousel.m in Sources */,
+				77F16E1D197794F100564AAB /* TenpayUtil.mm in Sources */,
 				BAAE38C4194089EE002C97C8 /* SBJsonUTF8Stream.m in Sources */,
 				77F16DB71977588B00564AAB /* UIImage+LogN.m in Sources */,
 				77F16DBA1977588B00564AAB /* ZBHorizontalScrollTableViewCell.m in Sources */,
@@ -958,6 +994,7 @@
 				7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */,
 				BAFA374F194151D3001DB631 /* MMProgressHUDOverlayView.m in Sources */,
 				77F16DB11977588B00564AAB /* NSString+Hex.m in Sources */,
+				77F16E10197792C000564AAB /* BLShareViewController.m in Sources */,
 				BAB38997193DA4AD00975805 /* Reachability.m in Sources */,
 				77F16DB21977588B00564AAB /* NSString+ZBUtilites.m in Sources */,
 				BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */,
@@ -1006,6 +1043,7 @@
 				BAFA3751194151D3001DB631 /* MMProgressHUDWindow.m in Sources */,
 				BAB389AC193DA4AD00975805 /* ASIS3Request.m in Sources */,
 				BAAE38C0194089EE002C97C8 /* SBJsonStreamWriter.m in Sources */,
+				77F16E1B197794F100564AAB /* payRequsestHandler.mm in Sources */,
 				BAB389AD193DA4AD00975805 /* ASIS3ServiceRequest.m in Sources */,
 				775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */,
 				BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */,
@@ -1156,6 +1194,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/BroadLink",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/zBar",
+					"$(PROJECT_DIR)/BeiAngAir/3rd/WeChatSDK_1.4.1",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1186,6 +1225,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/BroadLink",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/zBar",
+					"$(PROJECT_DIR)/BeiAngAir/3rd/WeChatSDK_1.4.1",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";

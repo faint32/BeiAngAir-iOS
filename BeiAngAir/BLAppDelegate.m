@@ -14,6 +14,7 @@
 #import "BLNetwork.h"
 #import "ASIHTTPRequest.h"
 #import "BLGuideViewController.h"
+#import "WXApi.h"
 
 @interface BLAppDelegate ()
 
@@ -49,6 +50,8 @@
 {
     [self initBLLicense];
 	
+	[WXApi registerApp:WEIXIN_APP_ID];
+	
 	//TODO:先注释掉，影响我听歌了
 	//加上代码后，如果你从音乐播放器切换到你的app，你会发现音乐播放器停止播放了。
 //    NSError *setCategoryErr = nil;
@@ -63,6 +66,19 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+//	[self handleOpenURL:url];
+	return YES;
+}
+
+- (void)handleOpenURL:(NSURL *)url
+{
+//	if ([url.scheme isEqualToString:WEIXIN_APP_ID]) {
+//		[[NSNotificationCenter defaultCenter] postNotificationName:DSH_NOTIFICATION_AFTER_WEIXIN_IDENTIFIER object:nil userInfo:@{DSH_OPENURL_USERINFO_KEY : url}];
+//	}
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
