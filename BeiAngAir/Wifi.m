@@ -28,10 +28,10 @@
 	NSDictionary *wifis = [[NSUserDefaults standardUserDefaults] objectForKey:kWIFIs];
 	if (wifis) {
 		if (wifis[SSID]) {
-			Wifi *info = [[Wifi alloc] init];
-			info.SSID = SSID;
-			info.password = wifis[SSID];
-			return info;
+			Wifi *wifi = [[Wifi alloc] init];
+			wifi.SSID = SSID;
+			wifi.password = wifis[SSID];
+			return wifi;
 		}
 	}
 	return nil;

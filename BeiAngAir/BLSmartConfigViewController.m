@@ -103,8 +103,8 @@
     //passwordText背景颜色
     _passwordTextField.background = image;
 	
-	Wifi *wifiInfo = [Wifi wifiWithSSID:_ssidTextField.text];
-	_passwordTextField.text = wifiInfo.password;
+	Wifi *wifi = [Wifi wifiWithSSID:_ssidTextField.text];
+	_passwordTextField.text = wifi.password;
     [self.view addSubview:_passwordTextField];
 	
     image = [UIImage imageNamed:@"check_normal"];
@@ -220,10 +220,10 @@
 	[waitingView addSubview:imageView];
 
 	if (_ssidTextField.text.length && _passwordTextField.text.length) {
-		Wifi *wifiInfo = [[Wifi alloc] init];
-		wifiInfo.SSID = _ssidTextField.text;
-		wifiInfo.password = _passwordTextField.text;
-		[wifiInfo persistence];
+		Wifi *wifi = [[Wifi alloc] init];
+		wifi.SSID = _ssidTextField.text;
+		wifi.password = _passwordTextField.text;
+		[wifi persistence];
 		[self startConfig];
 	}
 }

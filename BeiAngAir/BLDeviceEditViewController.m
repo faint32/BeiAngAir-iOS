@@ -90,7 +90,7 @@
 //    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 //    [headerView addSubview:backButton];
 	
-	UIImage *image = [self.deviceInfo avatar];
+	UIImage *image = [self.device avatar];
     viewFrame = headerView.frame;
     viewFrame.origin.y += viewFrame.size.height + 20.0f;
     viewFrame.origin.x = (self.view.frame.size.width - 62.5) * 0.5f;
@@ -139,7 +139,7 @@
     [_nameTextField setPlaceholder:NSLocalizedString(@"DeviceInfoEditViewControllerNamePlaceholder", nil)];
     [_nameTextField setAutoresizesSubviews:YES];
     [_nameTextField setReturnKeyType:UIReturnKeyDone];
-    [_nameTextField setText:self.deviceInfo.name];
+    [_nameTextField setText:self.device.name];
     [_nameTextField addTarget:self action:@selector(keywindowHidden:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [nameView addSubview:_nameTextField];
     
@@ -170,7 +170,7 @@
     image = [UIImage imageNamed:@"on"];
     [_lockButton setImage:image forState:UIControlStateSelected];
     [_lockButton addTarget:self action:@selector(lockButtonclicked:) forControlEvents:UIControlEventTouchUpInside];
-    [_lockButton setSelected:self.deviceInfo.lock];
+    [_lockButton setSelected:self.device.lock];
     [lockView addSubview:_lockButton];
     
     viewFrame = lockView.frame;
@@ -197,7 +197,7 @@
     [macValueLabel setBackgroundColor:[UIColor clearColor]];
     [macValueLabel setTextColor:[UIColor blackColor]];
     [macValueLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    [macValueLabel setText:self.deviceInfo.mac];
+    [macValueLabel setText:self.device.mac];
     [macView addSubview:macValueLabel];
     
     //确定按钮
@@ -249,9 +249,9 @@
 {
     dispatch_async(networkQueue, ^{
         NSString *name = [_nameTextField text];
-        [self.deviceInfo setName:name];
-        [self.deviceInfo setLock:_lockButton.isSelected];
-		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:self.deviceInfo.mac name:name lock:@(self.deviceInfo.lock)];
+        [self.device setName:name];
+        [self.device setLock:_lockButton.isSelected];
+		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:self.device.mac name:name lock:@(self.device.lock)];
         NSData *requestData = [dictionary JSONData];
         NSData *responseData = [networkAPI requestDispatch:requestData];
         NSLog(@"[[[responseData objectFromJSONData] = %d",[[[responseData objectFromJSONData] objectForKey:@"code"] intValue]);
@@ -306,7 +306,7 @@
         }
         UIImage *image = [UIImage imageWithData:data];
         [_addButton setImage:image forState:UIControlStateNormal];
-		NSString *imagePath = [NSString deviceAvatarPathWithMAC:self.deviceInfo.mac];
+		NSString *imagePath = [NSString deviceAvatarPathWithMAC:self.device.mac];
         [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
     }
 }

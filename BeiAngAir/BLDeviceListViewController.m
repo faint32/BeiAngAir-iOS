@@ -125,26 +125,26 @@
             NSArray *list = [[response objectFromJSONData] objectForKey:@"list"];
 			NSLog(@"prob count: %d", list.count);
             for (int i = 0; i < list.count; i++) {
-                BLDevice *info = [[BLDevice alloc] init];
+                BLDevice *device = [[BLDevice alloc] init];
                 NSDictionary *item = [list objectAtIndex:i];
-                [info setMac:[item objectForKey:@"mac"]];
-                [info setType:[item objectForKey:@"type"]];
-                [info setName:[item objectForKey:@"name"]];
-                [info setLock:[[item objectForKey:@"lock"] intValue]];
-                [info setPassword:[[item objectForKey:@"password"] unsignedIntValue]];
-                [info setTerminal_id:[[item objectForKey:@"id"] intValue]];
-                [info setSub_device:[[item objectForKey:@"subdevice"] intValue]];
-                [info setKey:[item objectForKey:@"key"]];
+                [device setMac:[item objectForKey:@"mac"]];
+                [device setType:[item objectForKey:@"type"]];
+                [device setName:[item objectForKey:@"name"]];
+                [device setLock:[[item objectForKey:@"lock"] intValue]];
+                [device setPassword:[[item objectForKey:@"password"] unsignedIntValue]];
+                [device setTerminal_id:[[item objectForKey:@"id"] intValue]];
+                [device setSub_device:[[item objectForKey:@"subdevice"] intValue]];
+                [device setKey:[item objectForKey:@"key"]];
 				
-				if (![info hadPersistenced]) {
-					if ([info isBeiAngAirDevice]) {
-						[info persistence];
+				if (![device hadPersistenced]) {
+					if ([device isBeiAngAirDevice]) {
+						[device persistence];
 						NSLog(@"persistence");
-						[_devices addObject:info];
+						[_devices addObject:device];
 						
 					}
 				}
-				[self addDeviceInfo:info];
+				[self addDeviceInfo:device];
 			}
 
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -326,9 +326,9 @@
 
 - (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
 {
-    BLDevice *info = [_devices objectAtIndex:recognizer.view.tag];
+    BLDevice *device = [_devices objectAtIndex:recognizer.view.tag];
     BLDeviceEditViewController *controller = [[BLDeviceEditViewController alloc] init];
-	controller.deviceInfo = info;
+	controller.device = device;
 	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:navigationController animated:YES completion:nil];
 }

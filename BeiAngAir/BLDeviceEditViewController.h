@@ -11,7 +11,6 @@
 
 @interface BLDeviceEditViewController : UIViewController
 
-@property (nonatomic, strong) BLDevice *deviceInfo;
-@property (nonatomic, strong) NSArray *deviceArray;
+@property (nonatomic, strong) BLDevice *device;
 
 @end
