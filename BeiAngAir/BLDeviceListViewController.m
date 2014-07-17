@@ -295,12 +295,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    BLDevice *info = [_devices objectAtIndex:indexPath.row];
+    BLDevice *device = [_devices objectAtIndex:indexPath.row];
 	
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
         //数据透传
-		NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:info.mac];
+		NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:device.mac];
         NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
@@ -308,11 +308,11 @@
             [MMProgressHUD dismiss];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-                BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] initWithData:array];
-				NSLog(@"BeiAngReceivedDataInfo: %@", recvInfo);
+                BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+				NSLog(@"BeiAngReceivedDataInfo: %@", receivedData);
                 BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
-				airQualityViewController.currentAirInfo = recvInfo;
-				airQualityViewController.device = info;
+				airQualityViewController.receivedData = receivedData;
+				airQualityViewController.device = device;
                 [self.navigationController pushViewController:airQualityViewController animated:YES];
             });
         } else {

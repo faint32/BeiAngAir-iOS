@@ -220,7 +220,7 @@
     UIImage *imageCheck = [UIImage imageNamed:@"btn_check"];
     UIImage *imageUnCheck = [UIImage imageNamed:@"btn_point"];
     //判断当前是那个按钮选择s
-    if(self.currentAirInfo.switchStatus) {
+    if(self.receivedData.switchStatus) {
         _lastSelectedButton = _buttonClose;
         //有定时
         _selectedView.hidden = NO;
@@ -307,41 +307,38 @@
         return;
     }
     //实例
-    BeiAngSendData *tmpInfo = [[BeiAngSendData alloc] init];
+    BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
     //判断点击的按钮
     if(_lastSelectedButton == _buttonCancel) {
         //定时开机
         NSLog(@"_buttonCancel");
-        tmpInfo.switchStatus = 1;
+        sendData.switchStatus = 1;
     } else if (_lastSelectedButton == _buttonClose) {
         NSLog(@"_buttonClose");
-        tmpInfo.switchStatus = 0;
+        sendData.switchStatus = 0;
     }
     //定时任务设置
-    tmpInfo.childLockState = self.currentAirInfo.childLockState;
-    [tmpInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
-    tmpInfo.sleepState = self.currentAirInfo.sleepState;
-    tmpInfo.gearState = self.currentAirInfo.gearState;
+    sendData.childLockState = self.receivedData.childLockState;
+    [sendData setAutoOrHand:self.receivedData.autoOrHand];
+    sendData.sleepState = self.receivedData.sleepState;
+    sendData.gearState = self.receivedData.gearState;
     
     //发送数据
     dispatch_async(networkQueue, ^{
         [MMProgressHUD showWithTitle:NSLocalizedString(@"Network", nil) status:NSLocalizedString(@"Network", nil)];
         //数据透传
         NSData *response = [[NSData alloc] init];
-        int code =[self sendDataCommon:tmpInfo response:response];
+        int code =[self sendDataCommon:sendData response:response];
         if (code == 0) {
             [MMProgressHUD dismiss];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-                BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] init];
-                //数据转换
-                recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
-                self.currentAirInfo = recvInfo;
+                self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
                 [_refreshInfoTimer invalidate];
                 _refreshInfoTimer = nil;
                 //更新数据库
                 BLTimerInfomation *timerInfomation = [[BLTimerInfomation alloc] init];
-                timerInfomation.switchState = recvInfo.switchStatus;
+                timerInfomation.switchState = _receivedData.switchStatus;
                 timerInfomation.secondSince = 0;
                 timerInfomation.secondCount = 0;//定时秒数
 				[timerInfomation persistence];
@@ -358,18 +355,11 @@
 //发送数据
 -(int)sendDataCommon:(BeiAngSendData *)sendInfo response:(NSData *)response
 {
-	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.deviceInfo.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
+	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.device.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
 	NSData *sendData = [dictionary JSONData];
     response = [networkAPI requestDispatch:sendData];
     int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
     return code;
-}
-
-//根据传入的数组取得接受数据
--(BeiAngReceivedData *)turnArrayToBeiAngReceivedDataInfo:(NSArray *)array
-{
-    BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] initWithData:array];
-    return recvInfo;
 }
 
 //返回按钮点击事件
@@ -505,7 +495,7 @@
     //-- 获取每个iCarousel的值
     [countDownHourIndicator setPercent:iHourPickerFrom.currentItemIndex maxPercent:24 animated:YES];
     [countDownMiniteIndicator setPercent:iMinPickerFrom.currentItemIndex maxPercent:60 animated:YES];
-    if(!self.currentAirInfo.switchStatus)
+    if(!self.receivedData.switchStatus)
         _labelSelected.text = [NSString stringWithFormat:@"%d%@%d%@%@",iHourPickerFrom.currentItemIndex,NSLocalizedString(@"hour", nil),iMinPickerFrom.currentItemIndex,NSLocalizedString(@"minute", nil),NSLocalizedString(@"open", nil)];
     else
         _labelSelected.text = [NSString stringWithFormat:@"%d%@%d%@%@",iHourPickerFrom.currentItemIndex,NSLocalizedString(@"hour", nil),iMinPickerFrom.currentItemIndex,NSLocalizedString(@"minute", nil),NSLocalizedString(@"close", nil)];

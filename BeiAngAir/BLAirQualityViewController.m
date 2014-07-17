@@ -139,7 +139,7 @@
     _switchButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_switchButton setFrame:viewFrame];
 	[_switchButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceOn:self.currentAirInfo.switchStatus];
+	[self deviceOn:self.receivedData.switchStatus];
     [_switchButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:_switchButton];
 	
@@ -154,7 +154,7 @@
 	[_handOrAutoButton setFrame:viewFrame];
 	_handOrAutoButton.titleLabel.font = font;
 	[_handOrAutoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceAutoOn:self.currentAirInfo.autoOrHand];
+	[self deviceAutoOn:self.receivedData.autoOrHand];
 	[_handOrAutoButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _handOrAutoButton.titleLabel.frame.size;
 	[_handOrAutoButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -170,7 +170,7 @@
 	[_sleepButton setFrame:viewFrame];
 	_sleepButton.titleLabel.font = font;
 	[_sleepButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceSleepOn:self.currentAirInfo.sleepState];
+	[self deviceSleepOn:self.receivedData.sleepState];
 	[_sleepButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _sleepButton.titleLabel.frame.size;
 	[_sleepButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -185,7 +185,7 @@
 	[_childLockButton setFrame:viewFrame];
 	_childLockButton.titleLabel.font = font;
 	[_childLockButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceChildLockOn:self.currentAirInfo.childLockState];
+	[self deviceChildLockOn:self.receivedData.childLockState];
 	[_childLockButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _childLockButton.titleLabel.frame.size;
 	[_childLockButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -270,9 +270,9 @@
 	if (code == 0) {
 		dispatch_async(_networkQueue, ^{
 			NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-			BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] initWithData:array];
-			NSLog(@"BeiAngReceivedDataInfo: %@", recvInfo);
-			NSLog(@"airdisplay: %@", [recvInfo airQualityDisplayString]);
+			BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+			NSLog(@"BeiAngReceivedDataInfo: %@", receivedData);
+			NSLog(@"airdisplay: %@", [receivedData airQualityDisplayString]);
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				//[self performSelector:@selector(refreshDevice) withObject:nil afterDelay:3.0];
@@ -320,7 +320,7 @@
         [slider setMinimumTrackTintColor:RGB(0x13, 0xb3, 0x5c)];
         [slider setMaximumValue:3.0f];
         [slider setMinimumValue:1.0f];
-        [slider setValue:self.currentAirInfo.gearState];
+        [slider setValue:self.receivedData.gearState];
         image = [UIImage imageNamed:@"seekbar_btn"];
         [slider setThumbImage:image forState:UIControlStateNormal];
         [slider setTag:3];
@@ -371,8 +371,8 @@
 {
     //定时界面
     BLFilterViewController *filterInfoViewController = [[BLFilterViewController alloc] initWithNibName:nil bundle:nil];
-	filterInfoViewController.currentAirInfo = self.currentAirInfo;
-	filterInfoViewController.deviceInfo = self.device;
+	filterInfoViewController.receivedData = self.receivedData;
+	filterInfoViewController.device = self.device;
     [self.navigationController pushViewController:filterInfoViewController animated:YES];
 }
 
@@ -435,7 +435,7 @@
 
 - (void)allButtonClicked:(UIButton *)button
 {
-    if(!self.currentAirInfo.switchStatus && button != _switchButton) {
+    if(!self.receivedData.switchStatus && button != _switchButton) {
         return;
     } else {
         if(_childLockButton.selected) {
@@ -448,40 +448,37 @@
     
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
-        BeiAngSendData *sendInfo = [[BeiAngSendData alloc] init];
-		sendInfo.switchStatus = self.currentAirInfo.switchStatus;
-		sendInfo.autoOrHand = self.currentAirInfo.autoOrHand;
-		sendInfo.sleepState = self.currentAirInfo.sleepState;
-		sendInfo.childLockState = self.currentAirInfo.childLockState;
-		sendInfo.gearState = self.currentAirInfo.gearState;
+        BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
+		sendData.switchStatus = self.receivedData.switchStatus;
+		sendData.autoOrHand = self.receivedData.autoOrHand;
+		sendData.sleepState = self.receivedData.sleepState;
+		sendData.childLockState = self.receivedData.childLockState;
+		sendData.gearState = self.receivedData.gearState;
         if(button == _switchButton) {
-            [sendInfo setSwitchStatus:!button.selected];
+            [sendData setSwitchStatus:!button.selected];
         } else if (button == _handOrAutoButton) {
-            [sendInfo setAutoOrHand:!button.selected];
+            [sendData setAutoOrHand:!button.selected];
         } else if (button == _sleepButton) {
-            sendInfo.sleepState = !button.selected;
+            sendData.sleepState = !button.selected;
         } else if(button == _childLockButton) {
-            sendInfo.childLockState = !button.selected;
+            sendData.childLockState = !button.selected;
         }
 		
-        NSData *response =[self sendDataCommon:sendInfo];
+        NSData *response =[self sendDataCommon:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0) {
             [MMProgressHUD dismiss];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-            BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] init];
-            //数据转换
-            recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
-            self.currentAirInfo = recvInfo;
+            self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(button == _handOrAutoButton) {
-					[self deviceAutoOn:self.currentAirInfo.autoOrHand];
+					[self deviceAutoOn:self.receivedData.autoOrHand];
 				} else if (button == _switchButton) {
-					[self deviceOn:self.currentAirInfo.switchStatus];
+					[self deviceOn:self.receivedData.switchStatus];
                 } else if (button == _sleepButton) {
-					[self deviceSleepOn:self.currentAirInfo.sleepState];
+					[self deviceSleepOn:self.receivedData.sleepState];
                 } else if (button == _childLockButton) {
-					[self deviceChildLockOn:self.currentAirInfo.childLockState];
+					[self deviceChildLockOn:self.receivedData.childLockState];
                 }
 			});
 		} else {
@@ -494,19 +491,12 @@
 }
 
 //发送数据
--(NSData *)sendDataCommon:(BeiAngSendData *)sendInfo
+-(NSData *)sendDataCommon:(BeiAngSendData *)sendData
 {
-	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.device.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
-    NSData *sendData = [dictionary JSONData];
-    NSData *response = [_networkAPI requestDispatch:sendData];
+	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.device.mac switchStatus:@(sendData.switchStatus) autoOrManual:@(sendData.autoOrHand) gearState:@(sendData.gearState) sleepState:@(sendData.sleepState) childLockState:@(sendData.childLockState)];
+    NSData *send = [dictionary JSONData];
+    NSData *response = [_networkAPI requestDispatch:send];
     return response;
-}
-
-//根据传入的数组取得接受数据
--(BeiAngReceivedData *)turnArrayToBeiAngReceivedDataInfo:(NSArray *)array
-{
-    BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] initWithData:array];
-    return recvInfo;
 }
 
 - (void)sliderValueChanged:(UISlider *)slider
@@ -537,22 +527,19 @@
     old = speed;
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
-        BeiAngSendData *sendInfo = [[BeiAngSendData alloc] init];
-        sendInfo.childLockState = self.currentAirInfo.childLockState;
-        sendInfo.switchStatus = self.currentAirInfo.switchStatus;
-        [sendInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
-        sendInfo.sleepState = self.currentAirInfo.sleepState;
-        sendInfo.gearState = speed;
+        BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
+        sendData.childLockState = self.receivedData.childLockState;
+        sendData.switchStatus = self.receivedData.switchStatus;
+        [sendData setAutoOrHand:self.receivedData.autoOrHand];
+        sendData.sleepState = self.receivedData.sleepState;
+        sendData.gearState = speed;
         //数据透传
-        NSData *response =[self sendDataCommon:sendInfo];
+        NSData *response =[self sendDataCommon:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0) {
             [MMProgressHUD dismiss];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-            BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] init];
-            //数据转换
-            recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
-            self.currentAirInfo = recvInfo;
+            self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MMProgressHUD dismiss];
