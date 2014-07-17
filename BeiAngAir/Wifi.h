@@ -14,6 +14,6 @@
 @property (nonatomic, strong) NSString *password;
 
 - (void)persistence;
-+ (instancetype)wifiInfoWithSSID:(NSString *)SSID;
++ (instancetype)wifiWithSSID:(NSString *)SSID;
 
 @end

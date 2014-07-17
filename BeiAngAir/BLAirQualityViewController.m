@@ -41,7 +41,7 @@
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *currentLocation;
-@property (nonatomic, strong) Weather *airQualityInfoClass;
+@property (nonatomic, strong) Weather *weather;
 
 @end
 
@@ -60,7 +60,7 @@
 {
     [super viewDidLoad];
 	
-	_airQualityInfoClass = [[Weather alloc] init];
+	_weather = [[Weather alloc] init];
     _networkAPI = [[BLNetwork alloc] init];
     _networkQueue = dispatch_queue_create("BLAirQualityViewCtrollerNetworkQueue", DISPATCH_QUEUE_SERIAL);
     _httpQueue = dispatch_queue_create("BLHttpQueue", DISPATCH_QUEUE_SERIAL);
@@ -210,10 +210,10 @@
 
 - (void)refreshWeather
 {
-	NSLog(@"refreshWeather: %@", _airQualityInfoClass);
-	_weatherLabel.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", _airQualityInfoClass.cityName, _airQualityInfoClass.temperateStrings, _airQualityInfoClass.pm25, _airQualityInfoClass.airQualityString];
-	_airQualityInfoClass.airQualityLevel = @"4";
-	if([_airQualityInfoClass.airQualityLevel isEqualToString:@"4"]) {
+	NSLog(@"refreshWeather: %@", _weather);
+	_weatherLabel.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", _weather.cityName, _weather.temperateStrings, _weather.pm25, _weather.airQualityString];
+	_weather.airQualityLevel = @"4";
+	if([_weather.airQualityLevel isEqualToString:@"4"]) {
 		self.view.backgroundColor = [UIColor colorAirPolluted];
 	}
 }
@@ -270,7 +270,7 @@
 	if (code == 0) {
 		dispatch_async(_networkQueue, ^{
 			NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-			BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
+			BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] initWithData:array];
 			NSLog(@"BeiAngReceivedDataInfo: %@", recvInfo);
 			NSLog(@"airdisplay: %@", [recvInfo airQualityDisplayString]);
 			
@@ -279,48 +279,6 @@
 			});
 		});
 	}
-	
-	
-	
-//	NSDictionary *dictionary = [NSDictionary dictionaryDeviceStateWithMAC:_device.mac];
-//	NSData *requestData = [dictionary JSONData];
-//	NSData *responseData = [_networkAPI requestDispatch:requestData];
-//	NSString *state = @"";
-//	NSLog(@"DeviceStateWithMAC: %@", [responseData objectFromJSONData]);
-//	if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
-//		state = [[responseData objectFromJSONData] objectForKey:@"status"];
-//	}
-//	
-//	if ([state isEqualToString:@"OFFLINE"] || [state isEqualToString:@"NOT_INIT"]) {
-//		_device.airQualityInfo.hour = 0;
-//		_device.airQualityInfo.minute = 0;
-//		_device.airQualityInfo.isRefresh = NO;
-//		_device.airQualityInfo.sleepState = 0;
-//		_device.airQualityInfo.switchState = 0;
-//	} else if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
-//		dispatch_async(_networkQueue, ^{
-//			//数据透传
-//			NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:_device.mac];
-//			NSData *sendData = [dictionary JSONData];
-//			NSData *response = [_networkAPI requestDispatch:sendData];
-//			int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-//			if (code == 0) {
-//				NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-//				//_device.airQualityInfo.hour = [array[9] intValue];
-//				//_device.airQualityInfo.minute = [array[10] intValue];
-//				//_device.airQualityInfo.sleepState = [array[7] intValue];
-//				//_device.airQualityInfo.isRefresh = YES;
-//				//_device.airQualityInfo.switchState = [array[4] intValue];
-//				
-////				_device.airQualityInfo
-//				dispatch_async(dispatch_get_main_queue(), ^{
-//					//[_tableView reloadData];
-//				});
-//			}
-//		});
-//	}
-
-	
 }
 //弹出视图
 -(void)popUpView:(UIButton *)button
@@ -490,7 +448,7 @@
     
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
-        BeiAngSendDataInfo *sendInfo = [[BeiAngSendDataInfo alloc] init];
+        BeiAngSendData *sendInfo = [[BeiAngSendData alloc] init];
 		sendInfo.switchStatus = self.currentAirInfo.switchStatus;
 		sendInfo.autoOrHand = self.currentAirInfo.autoOrHand;
 		sendInfo.sleepState = self.currentAirInfo.sleepState;
@@ -511,7 +469,7 @@
         if (code == 0) {
             [MMProgressHUD dismiss];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-            BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] init];
+            BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] init];
             //数据转换
             recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
             self.currentAirInfo = recvInfo;
@@ -536,7 +494,7 @@
 }
 
 //发送数据
--(NSData *)sendDataCommon:(BeiAngSendDataInfo *)sendInfo
+-(NSData *)sendDataCommon:(BeiAngSendData *)sendInfo
 {
 	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.device.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
     NSData *sendData = [dictionary JSONData];
@@ -545,9 +503,9 @@
 }
 
 //根据传入的数组取得接受数据
--(BeiAngReceivedDataInfo *)turnArrayToBeiAngReceivedDataInfo:(NSArray *)array
+-(BeiAngReceivedData *)turnArrayToBeiAngReceivedDataInfo:(NSArray *)array
 {
-    BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
+    BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] initWithData:array];
     return recvInfo;
 }
 
@@ -579,7 +537,7 @@
     old = speed;
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
-        BeiAngSendDataInfo *sendInfo = [[BeiAngSendDataInfo alloc] init];
+        BeiAngSendData *sendInfo = [[BeiAngSendData alloc] init];
         sendInfo.childLockState = self.currentAirInfo.childLockState;
         sendInfo.switchStatus = self.currentAirInfo.switchStatus;
         [sendInfo setAutoOrHand:self.currentAirInfo.autoOrHand];
@@ -591,7 +549,7 @@
         if (code == 0) {
             [MMProgressHUD dismiss];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-            BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] init];
+            BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] init];
             //数据转换
             recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
             self.currentAirInfo = recvInfo;
@@ -612,10 +570,10 @@
 	[[[CLGeocoder alloc] init] reverseGeocodeLocation:_currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
 		if (!error && placemarks.count) {
 			CLPlacemark *placemark = placemarks[0];
-			_airQualityInfoClass.cityName = [[[placemark.addressDictionary objectForKey:@"City"] componentsSeparatedByString:@"市"] objectAtIndex:0];
-			_airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
+			_weather.cityName = [[[placemark.addressDictionary objectForKey:@"City"] componentsSeparatedByString:@"市"] objectAtIndex:0];
+			_weather.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_weather.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
 			//如果名称不相同则一般为英文
-			if(_airQualityInfoClass.cityCode.length) {
+			if(_weather.cityCode.length) {
 				[self getWeather];
 			} else {
 				[self getCityInfo];
@@ -646,9 +604,9 @@
         SBJsonParser *parser = [[SBJsonParser alloc]init];
         NSDictionary *rootDic = [parser objectWithString:jsonString error:&error];
         NSDictionary *weatherInfo = [rootDic objectForKey:@"result"];
-		_airQualityInfoClass.cityName = [[[[weatherInfo objectForKey:@"addressComponent"] objectForKey:@"city"] componentsSeparatedByString:@"市"] objectAtIndex:0];
-		_airQualityInfoClass.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_airQualityInfoClass.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
-		if(_airQualityInfoClass.cityCode.length) {
+		_weather.cityName = [[[[weatherInfo objectForKey:@"addressComponent"] objectForKey:@"city"] componentsSeparatedByString:@"市"] objectAtIndex:0];
+		_weather.cityCode = [[[NSString citiesCodeString] objectFromJSONString] objectForKey:[[_weather.cityName componentsSeparatedByString:@"市"] objectAtIndex:0]];
+		if(_weather.cityCode.length) {
 			[self getWeather];
 		}
     });
@@ -658,7 +616,7 @@
 - (void)getWeather
 {
     dispatch_async(_httpQueue, ^{
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://tqapi.mobile.360.cn/app/meizu/city/%@", _airQualityInfoClass.cityCode]];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://tqapi.mobile.360.cn/app/meizu/city/%@", _weather.cityCode]];
 		NSError *error;
 		NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
 		SBJsonParser *parser = [[SBJsonParser alloc]init];
@@ -674,15 +632,15 @@
 			[temperature appendString:dayInfomation[2]];
 			[temperature appendString:@"℃"];
 		}
-		_airQualityInfoClass.temperateStrings = temperature;
+		_weather.temperateStrings = temperature;
 		
 		NSDictionary *pm25Information = rootDic[@"pm25"];
 		if (pm25Information) {
 			NSString *pm25 = [NSString stringWithFormat:@"%@", pm25Information[@"pm25"]];
-			_airQualityInfoClass.pm25 = pm25;
-			_airQualityInfoClass.airQualityString = pm25Information[@"quality"];
-			_airQualityInfoClass.airQualityLevel = [NSString stringWithFormat:@"%@", pm25Information[@"level"]];
-			_airQualityInfoClass.airQualityColorHexString = pm25Information[@"color"];
+			_weather.pm25 = pm25;
+			_weather.airQualityString = pm25Information[@"quality"];
+			_weather.airQualityLevel = [NSString stringWithFormat:@"%@", pm25Information[@"level"]];
+			_weather.airQualityColorHexString = pm25Information[@"color"];
 		}
 		
 		dispatch_async(dispatch_get_main_queue(), ^{

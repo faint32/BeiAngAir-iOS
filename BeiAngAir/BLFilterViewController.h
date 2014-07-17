@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "BeiAngReceivedDataInfo.h"
+#import "BeiAngReceivedData.h"
 
 @interface BLFilterViewController : UIViewController
 
-@property (nonatomic, strong) BeiAngReceivedDataInfo *currentAirInfo;
+@property (nonatomic, strong) BeiAngReceivedData *currentAirInfo;
 @property (nonatomic, strong) BLDevice *deviceInfo;
 
 @end

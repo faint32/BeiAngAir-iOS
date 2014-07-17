@@ -308,7 +308,7 @@
             [MMProgressHUD dismiss];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-                BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
+                BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] initWithData:array];
 				NSLog(@"BeiAngReceivedDataInfo: %@", recvInfo);
                 BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
 				airQualityViewController.currentAirInfo = recvInfo;

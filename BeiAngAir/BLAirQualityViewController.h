@@ -10,7 +10,7 @@
 
 @interface BLAirQualityViewController : UIViewController
 
-@property (nonatomic, strong) BeiAngReceivedDataInfo *currentAirInfo;
+@property (nonatomic, strong) BeiAngReceivedData *currentAirInfo;
 @property (nonatomic, strong) BLDevice *device;
 
 @end

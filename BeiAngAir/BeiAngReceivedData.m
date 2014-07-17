@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 BroadLink. All rights reserved.
 //
 
-#import "BeiAngReceivedDataInfo.h"
+#import "BeiAngReceivedData.h"
 
-@implementation BeiAngReceivedDataInfo
+@implementation BeiAngReceivedData
 
 - (instancetype)initWithData:(NSArray *)data
 {

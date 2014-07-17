@@ -17,8 +17,8 @@
 //Models
 #import "BLDevice.h"
 #import	"BLTimerInfomation.h"
-#import	"BeiAngSendDataInfo.h"
-#import	"BeiAngReceivedDataInfo.h"
+#import	"BeiAngSendData.h"
+#import	"BeiAngReceivedData.h"
 #import "Weather.h"
 #import "Wifi.h"
 

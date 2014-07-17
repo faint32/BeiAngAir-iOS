@@ -23,7 +23,7 @@
 	}
 }
 
-+ (instancetype)wifiInfoWithSSID:(NSString *)SSID
++ (instancetype)wifiWithSSID:(NSString *)SSID
 {
 	NSDictionary *wifis = [[NSUserDefaults standardUserDefaults] objectForKey:kWIFIs];
 	if (wifis) {

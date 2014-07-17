@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 BroadLink. All rights reserved.
 //
 
-#import "BeiAngSendDataInfo.h"
+#import "BeiAngSendData.h"
 
-@implementation BeiAngSendDataInfo
+@implementation BeiAngSendData
 
 @end

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BeiAngSendDataInfo : NSObject
+@interface BeiAngSendData : NSObject
 
 //设置开关状态: 00 关机  01 打开
 @property (nonatomic, assign) uint8_t switchStatus;

@@ -307,7 +307,7 @@
         return;
     }
     //实例
-    BeiAngSendDataInfo *tmpInfo = [[BeiAngSendDataInfo alloc] init];
+    BeiAngSendData *tmpInfo = [[BeiAngSendData alloc] init];
     //判断点击的按钮
     if(_lastSelectedButton == _buttonCancel) {
         //定时开机
@@ -333,7 +333,7 @@
             [MMProgressHUD dismiss];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-                BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] init];
+                BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] init];
                 //数据转换
                 recvInfo = [self turnArrayToBeiAngReceivedDataInfo:array];
                 self.currentAirInfo = recvInfo;
@@ -356,7 +356,7 @@
 }
 
 //发送数据
--(int)sendDataCommon:(BeiAngSendDataInfo *)sendInfo response:(NSData *)response
+-(int)sendDataCommon:(BeiAngSendData *)sendInfo response:(NSData *)response
 {
 	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.deviceInfo.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
 	NSData *sendData = [dictionary JSONData];
@@ -366,9 +366,9 @@
 }
 
 //根据传入的数组取得接受数据
--(BeiAngReceivedDataInfo *)turnArrayToBeiAngReceivedDataInfo:(NSArray *)array
+-(BeiAngReceivedData *)turnArrayToBeiAngReceivedDataInfo:(NSArray *)array
 {
-    BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
+    BeiAngReceivedData *recvInfo = [[BeiAngReceivedData alloc] initWithData:array];
     return recvInfo;
 }
 
