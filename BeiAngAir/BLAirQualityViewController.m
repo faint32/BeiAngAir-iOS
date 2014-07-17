@@ -12,7 +12,6 @@
 #import "UIImage+Retina4.h"
 #import "Toast+UIView.h"
 #import "BLFilterViewController.h"
-#import "BLDeviceErrorViewController.h"
 #import "ASIHTTPRequest.h"
 #import "JSONKit.h"
 #import "BLAboutViewController.h"

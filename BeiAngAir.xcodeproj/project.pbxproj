@@ -38,7 +38,6 @@
 		771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */; };
 		775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */; };
 		775EB22D1973DA5B00E4A0AB /* BLAirQualityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21F1973DA5B00E4A0AB /* BLAirQualityViewController.m */; };
-		775EB22F1973DA5B00E4A0AB /* BLDeviceErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2231973DA5B00E4A0AB /* BLDeviceErrorViewController.m */; };
 		775EB2301973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2251973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m */; };
 		775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2271973DA5B00E4A0AB /* BLDeviceListViewController.m */; };
 		775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */; };
@@ -252,8 +251,6 @@
 		775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAboutViewController.m; path = BeiAngAir/BLAboutViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB21E1973DA5B00E4A0AB /* BLAirQualityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAirQualityViewController.h; path = BeiAngAir/BLAirQualityViewController.h; sourceTree = SOURCE_ROOT; };
 		775EB21F1973DA5B00E4A0AB /* BLAirQualityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAirQualityViewController.m; path = BeiAngAir/BLAirQualityViewController.m; sourceTree = SOURCE_ROOT; };
-		775EB2221973DA5B00E4A0AB /* BLDeviceErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceErrorViewController.h; path = BeiAngAir/BLDeviceErrorViewController.h; sourceTree = SOURCE_ROOT; };
-		775EB2231973DA5B00E4A0AB /* BLDeviceErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceErrorViewController.m; path = BeiAngAir/BLDeviceErrorViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB2241973DA5B00E4A0AB /* BLDeviceInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceInfoEditViewController.h; path = BeiAngAir/BLDeviceInfoEditViewController.h; sourceTree = SOURCE_ROOT; };
 		775EB2251973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceInfoEditViewController.m; path = BeiAngAir/BLDeviceInfoEditViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB2261973DA5B00E4A0AB /* BLDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceListViewController.h; path = BeiAngAir/BLDeviceListViewController.h; sourceTree = SOURCE_ROOT; };
@@ -517,8 +514,6 @@
 				775EB2271973DA5B00E4A0AB /* BLDeviceListViewController.m */,
 				775EB21E1973DA5B00E4A0AB /* BLAirQualityViewController.h */,
 				775EB21F1973DA5B00E4A0AB /* BLAirQualityViewController.m */,
-				775EB2221973DA5B00E4A0AB /* BLDeviceErrorViewController.h */,
-				775EB2231973DA5B00E4A0AB /* BLDeviceErrorViewController.m */,
 				775EB2241973DA5B00E4A0AB /* BLDeviceInfoEditViewController.h */,
 				775EB2251973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m */,
 				775EB2281973DA5B00E4A0AB /* BLFilterViewController.h */,
@@ -942,7 +937,6 @@
 				BAB3898C193DA4AD00975805 /* iCarousel.m in Sources */,
 				BAAE38C4194089EE002C97C8 /* SBJsonUTF8Stream.m in Sources */,
 				77F16DB71977588B00564AAB /* UIImage+LogN.m in Sources */,
-				775EB22F1973DA5B00E4A0AB /* BLDeviceErrorViewController.m in Sources */,
 				77F16DBA1977588B00564AAB /* ZBHorizontalScrollTableViewCell.m in Sources */,
 				77F16DBB1977588B00564AAB /* ZBModel.m in Sources */,
 				77F16DB31977588B00564AAB /* README.md in Sources */,
