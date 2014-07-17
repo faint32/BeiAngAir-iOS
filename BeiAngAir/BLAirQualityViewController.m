@@ -15,7 +15,6 @@
 #import "BLAboutViewController.h"
 #import "SBJson.h"
 #import "MMProgressHUD.h"
-#import "UILabel+Attribute.h"
 #import "Toast+UIView.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MMDrawerController.h"

@@ -10,7 +10,6 @@
 #import "GlobalDefine.h"
 #import "BLSmartConfigViewController.h"
 #import "BLNetwork.h"
-#import "UILabel+Attribute.h"
 #import "Toast+UIView.h"
 #import "BLAirQualityViewController.h"
 #import "JSONKit.h"
