@@ -22,7 +22,7 @@
 #import	"BeiAngSendDataInfo.h"
 #import	"BeiAngReceivedDataInfo.h"
 #import "ClassAirQualityInfo.h"
-#import "WifiInfo.h"
+#import "Wifi.h"
 
 //Categories
 #import "NSDictionary+BeiAng.h"

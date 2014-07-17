@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WifiInfo : NSObject
+@interface Wifi : NSObject
 
 @property (nonatomic, strong) NSString *SSID;
 @property (nonatomic, strong) NSString *password;

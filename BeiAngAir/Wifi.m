@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 BroadLink. All rights reserved.
 //
 
-#import "WifiInfo.h"
+#import "Wifi.h"
 
 #define kWIFIs @"wifis"
 
-@implementation WifiInfo
+@implementation Wifi
 
 - (void)persistence
 {
@@ -28,7 +28,7 @@
 	NSDictionary *wifis = [[NSUserDefaults standardUserDefaults] objectForKey:kWIFIs];
 	if (wifis) {
 		if (wifis[SSID]) {
-			WifiInfo *info = [[WifiInfo alloc] init];
+			Wifi *info = [[Wifi alloc] init];
 			info.SSID = SSID;
 			info.password = wifis[SSID];
 			return info;
