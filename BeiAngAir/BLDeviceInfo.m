@@ -33,11 +33,11 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 #define kLatitude @"latitude"
 #define kOrder @"order"
 #define kSwitchState @"swtichState"
-#define kCity @"city"
-#define kCityCode @"cityCode"
-#define kUserName @"userName"
-#define kRemoteIP @"remoteIP"
-#define kQRInfo @"QRInfo"
+//#define kCity @"city"
+//#define kCityCode @"cityCode"
+//#define kUserName @"userName"
+//#define kRemoteIP @"remoteIP"
+//#define kQRInfo @"QRInfo"
 
 @implementation BLDeviceInfo
 
@@ -77,11 +77,11 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	attributes[kLatitude] = @(self.latitude);
 	attributes[kOrder] = @(self.order);
 	attributes[kSwitchState] = @(self.switchState);
-	attributes[kCity] = self.city ?: @"";
-	attributes[kCityCode] = self.cityCode ?: @"";
-	attributes[kUserName] = self.userName ?: @"";
-	attributes[kRemoteIP] = self.remoteIP ?: @"";
-	attributes[kQRInfo] = self.qrInfo ?: @"";
+//	attributes[kCity] = self.city ?: @"";
+//	attributes[kCityCode] = self.cityCode ?: @"";
+//	attributes[kUserName] = self.userName ?: @"";
+//	attributes[kRemoteIP] = self.remoteIP ?: @"";
+//	attributes[kQRInfo] = self.qrInfo ?: @"";
 	
 	NSArray *multiAttributes = [[NSUserDefaults standardUserDefaults] objectForKey:kDevices];
 	NSMutableArray *new = multiAttributes ? [NSMutableArray arrayWithArray:multiAttributes] : [NSMutableArray array];
@@ -163,11 +163,11 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	device.latitude = [attributes[kLatitude] floatValue];
 	device.order = [attributes[kOrder] longValue];
 	device.switchState = [attributes[kSwitchState] integerValue];
-	device.city = attributes[kCity];
-	device.cityCode = attributes[kCityCode];
-	device.userName = attributes[kUserName];
-	device.remoteIP = attributes[kRemoteIP];
-	device.qrInfo = attributes[kQRInfo];
+//	device.city = attributes[kCity];
+//	device.cityCode = attributes[kCityCode];
+//	device.userName = attributes[kUserName];
+//	device.remoteIP = attributes[kRemoteIP];
+//	device.qrInfo = attributes[kQRInfo];
 	
 	return device;
 }
