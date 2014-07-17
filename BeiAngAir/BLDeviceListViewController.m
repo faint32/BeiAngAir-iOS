@@ -13,7 +13,7 @@
 #import "Toast+UIView.h"
 #import "BLAirQualityViewController.h"
 #import "JSONKit.h"
-#import "BLDeviceInfoEditViewController.h"
+#import "BLDeviceEditViewController.h"
 #import "MMProgressHUD.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MMDrawerController.h"
@@ -327,7 +327,7 @@
 - (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
 {
     BLDevice *info = [_devices objectAtIndex:recognizer.view.tag];
-    BLDeviceInfoEditViewController *controller = [[BLDeviceInfoEditViewController alloc] init];
+    BLDeviceEditViewController *controller = [[BLDeviceEditViewController alloc] init];
 	controller.deviceInfo = info;
 	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:navigationController animated:YES completion:nil];

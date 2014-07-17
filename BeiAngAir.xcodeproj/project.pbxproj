@@ -34,7 +34,7 @@
 		771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */; };
 		775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */; };
 		775EB22D1973DA5B00E4A0AB /* BLAirQualityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21F1973DA5B00E4A0AB /* BLAirQualityViewController.m */; };
-		775EB2301973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2251973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m */; };
+		775EB2301973DA5B00E4A0AB /* BLDeviceEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2251973DA5B00E4A0AB /* BLDeviceEditViewController.m */; };
 		775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2271973DA5B00E4A0AB /* BLDeviceListViewController.m */; };
 		775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */; };
 		775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */; };
@@ -155,8 +155,8 @@
 		775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAboutViewController.m; path = BeiAngAir/BLAboutViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB21E1973DA5B00E4A0AB /* BLAirQualityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAirQualityViewController.h; path = BeiAngAir/BLAirQualityViewController.h; sourceTree = SOURCE_ROOT; };
 		775EB21F1973DA5B00E4A0AB /* BLAirQualityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAirQualityViewController.m; path = BeiAngAir/BLAirQualityViewController.m; sourceTree = SOURCE_ROOT; };
-		775EB2241973DA5B00E4A0AB /* BLDeviceInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceInfoEditViewController.h; path = BeiAngAir/BLDeviceInfoEditViewController.h; sourceTree = SOURCE_ROOT; };
-		775EB2251973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceInfoEditViewController.m; path = BeiAngAir/BLDeviceInfoEditViewController.m; sourceTree = SOURCE_ROOT; };
+		775EB2241973DA5B00E4A0AB /* BLDeviceEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceEditViewController.h; path = BeiAngAir/BLDeviceEditViewController.h; sourceTree = SOURCE_ROOT; };
+		775EB2251973DA5B00E4A0AB /* BLDeviceEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceEditViewController.m; path = BeiAngAir/BLDeviceEditViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB2261973DA5B00E4A0AB /* BLDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceListViewController.h; path = BeiAngAir/BLDeviceListViewController.h; sourceTree = SOURCE_ROOT; };
 		775EB2271973DA5B00E4A0AB /* BLDeviceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceListViewController.m; path = BeiAngAir/BLDeviceListViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB2281973DA5B00E4A0AB /* BLFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLFilterViewController.h; path = BeiAngAir/BLFilterViewController.h; sourceTree = SOURCE_ROOT; };
@@ -417,8 +417,8 @@
 				775EB2271973DA5B00E4A0AB /* BLDeviceListViewController.m */,
 				775EB21E1973DA5B00E4A0AB /* BLAirQualityViewController.h */,
 				775EB21F1973DA5B00E4A0AB /* BLAirQualityViewController.m */,
-				775EB2241973DA5B00E4A0AB /* BLDeviceInfoEditViewController.h */,
-				775EB2251973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m */,
+				775EB2241973DA5B00E4A0AB /* BLDeviceEditViewController.h */,
+				775EB2251973DA5B00E4A0AB /* BLDeviceEditViewController.m */,
 				775EB2281973DA5B00E4A0AB /* BLFilterViewController.h */,
 				775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */,
 				775EB21C1973DA5B00E4A0AB /* BLAboutViewController.h */,
@@ -709,7 +709,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAAE38C2194089EE002C97C8 /* SBJsonStreamWriterState.m in Sources */,
-				775EB2301973DA5B00E4A0AB /* BLDeviceInfoEditViewController.m in Sources */,
+				775EB2301973DA5B00E4A0AB /* BLDeviceEditViewController.m in Sources */,
 				77F16DB91977588B00564AAB /* UIViewController+ZBUtilites.m in Sources */,
 				771F07F5196FABCF00B41955 /* Wifi.m in Sources */,
 				775EB2361973DF4600E4A0AB /* BLGuideViewController.m in Sources */,

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 BroadLink. All rights reserved.
 //
 
-#import "BLDeviceInfoEditViewController.h"
+#import "BLDeviceEditViewController.h"
 #import "BLAppDelegate.h"
 #import "GlobalDefine.h"
 #import "Toast+UIView.h"
@@ -16,7 +16,7 @@
 
 #define TOAST_DURATION  0.8f
 
-@interface BLDeviceInfoEditViewController () <UITextFieldDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface BLDeviceEditViewController () <UITextFieldDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     BLAppDelegate *appDelegate;
     BLNetwork *networkAPI;
@@ -27,7 +27,7 @@
 @property (nonatomic, strong) UIButton *addButton;
 @end
 
-@implementation BLDeviceInfoEditViewController
+@implementation BLDeviceEditViewController
 
 - (void)dealloc
 {

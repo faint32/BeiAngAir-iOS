@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface BLDeviceInfoEditViewController : UIViewController
+@interface BLDeviceEditViewController : UIViewController
 
 @property (nonatomic, strong) BLDevice *deviceInfo;
 @property (nonatomic, strong) NSArray *deviceArray;
