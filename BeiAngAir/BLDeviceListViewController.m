@@ -353,12 +353,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     BLDeviceInfo *info = [_devices objectAtIndex:indexPath.row];
 	
-//	//BeiAngReceivedDataInfo *recvInfo = [[BeiAngReceivedDataInfo alloc] initWithData:array];
-//	BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
-//	//airQualityViewController.currentAirInfo = recvInfo;
-//	airQualityViewController.device = info;
-//	[self.navigationController pushViewController:airQualityViewController animated:YES];
-//	return;//TODO:
+	//TODO
+	BLAirQualityViewController *airQualityViewController = [[BLAirQualityViewController alloc] init];
+	//airQualityViewController.currentAirInfo = recvInfo;
+	airQualityViewController.device = info;
+	[self.navigationController pushViewController:airQualityViewController animated:YES];
+	return;//TODO:
 	
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];

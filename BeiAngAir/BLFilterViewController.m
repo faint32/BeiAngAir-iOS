@@ -65,7 +65,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -227,8 +226,7 @@
     UIImage *imageCheck = [UIImage imageNamed:@"btn_check"];
     UIImage *imageUnCheck = [UIImage imageNamed:@"btn_point"];
     //判断当前是那个按钮选择s
-    if(self.currentAirInfo.switchStatus)
-    {
+    if(self.currentAirInfo.switchStatus) {
         _lastSelectedButton = _buttonClose;
         //有定时
         _selectedView.hidden = NO;
@@ -248,9 +246,7 @@
         viewFrame.origin.x = self.view.frame.size.width - imageUnCheck.size.width - 10;
         viewFrame.size = imageUnCheck.size;
         [_imageViewCancel setFrame:viewFrame];
-    }
-    else
-    {
+    } else {
         _lastSelectedButton = _buttonCancel;
         //无定时
         _selectedView.hidden = NO;
@@ -277,18 +273,16 @@
 -(void)saveButtonClick
 {
     //判断点击事件
-    if(iMinPickerFrom.currentItemIndex == 0 && iHourPickerFrom.currentItemIndex == 0)
-        return;
-    else
-    {
+	if(iMinPickerFrom.currentItemIndex == 0 && iHourPickerFrom.currentItemIndex == 0) {
+		return;
+	} else {
         double second = iMinPickerFrom.currentItemIndex * 60 + iHourPickerFrom.currentItemIndex * 3600;
         NSLog(@"second = %f",second);
          //插入数据库
         BLTimerInfomation *timerInfomation = [[BLTimerInfomation alloc] init];
         timerInfomation.secondCount = second;//定时秒数
         //开机状态
-        if(_lastSelectedButton == _buttonCancel)
-        {
+        if(_lastSelectedButton == _buttonCancel) {
             //定时开机
             timerInfomation.switchState = 1;
         }
@@ -314,22 +308,18 @@
 -(void)runTimer
 {
     NSLog(@"_tmpTimerCount = %d",_tmpTimerCount);
-    if(_tmpTimerCount == 0)
-    {
+    if(_tmpTimerCount == 0) {
         _tmpTimerCount ++;
         return;
     }
     //实例
     BeiAngSendDataInfo *tmpInfo = [[BeiAngSendDataInfo alloc] init];
     //判断点击的按钮
-    if(_lastSelectedButton == _buttonCancel)
-    {
+    if(_lastSelectedButton == _buttonCancel) {
         //定时开机
         NSLog(@"_buttonCancel");
         tmpInfo.switchStatus = 1;
-    }
-    else if (_lastSelectedButton == _buttonClose)
-    {
+    } else if (_lastSelectedButton == _buttonClose) {
         NSLog(@"_buttonClose");
         tmpInfo.switchStatus = 0;
     }
@@ -345,8 +335,7 @@
         //数据透传
         NSData *response = [[NSData alloc] init];
         int code =[self sendDataCommon:tmpInfo response:response];
-        if (code == 0)    //If success
-        {
+        if (code == 0) {
             [MMProgressHUD dismiss];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
@@ -363,9 +352,7 @@
                 timerInfomation.secondCount = 0;//定时秒数
 				[timerInfomation persistence];
             });
-        }
-        else    //Control failed
-        {
+        } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MMProgressHUD dismiss];
                 [self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
@@ -406,8 +393,7 @@
     UIImage *imageCheck = [UIImage imageNamed:@"btn_check"];
     UIImage *imageUnCheck = [UIImage imageNamed:@"btn_point"];
     //判断点击的按钮
-    if(button.tag == 1)
-    {
+    if(button.tag == 1) {
         //选择的隐藏
         _selectedView.hidden = NO;
         [_labelClose setTextColor:[UIColor blackColor]];
@@ -425,9 +411,7 @@
         viewFrame.origin.x = self.view.frame.size.width - imageUnCheck.size.width - 10;
         viewFrame.size = imageUnCheck.size;
         [_imageViewClose setFrame:viewFrame];
-    }
-    else if (button.tag == 2)
-    {
+    } else if (button.tag == 2) {
          //选择的显示
         _selectedView.hidden = NO;
         [_labelCancel setTextColor:[UIColor blackColor]];
@@ -474,29 +458,22 @@
     UILabel *label1 = [itemArray objectAtIndex:0];
     UILabel *label2 = [itemArray objectAtIndex:1];
     UILabel *label3 = [itemArray objectAtIndex:2];
-    if ([carousel isEqual:iHourPickerFrom])
-    {
-        
-        if (index3 > 15)
-        {
+    if ([carousel isEqual:iHourPickerFrom]) {
+        if (index3 > 15) {
             label1.textColor = [UIColor lightGrayColor];
             label1.font = [UIFont systemFontOfSize:20.0f];
             label2.textColor = [UIColor lightGrayColor];
             label2.font = [UIFont systemFontOfSize:20.0f];
             label3.textColor = [UIColor blackColor];
             label3.font = [UIFont systemFontOfSize:45.0f];
-        }
-        else if (index2 == 0)
-        {
+        } else if (index2 == 0) {
             label1.textColor = [UIColor blackColor];
             label1.font = [UIFont systemFontOfSize:45.0f];
             label2.textColor = [UIColor lightGrayColor];
             label2.font = [UIFont systemFontOfSize:20.0f];
             label3.textColor = [UIColor lightGrayColor];
             label3.font = [UIFont systemFontOfSize:20.0f];
-        }
-        else
-        {
+        } else {
             label1.textColor = [UIColor lightGrayColor];
             label1.font = [UIFont systemFontOfSize:20.0f];
             label2.textColor = [UIColor blackColor];
@@ -506,28 +483,22 @@
         }
     }
     
-    if ([carousel isEqual:iMinPickerFrom])
-    {
-        if (index3 > 59)
-        {
+    if ([carousel isEqual:iMinPickerFrom]) {
+        if (index3 > 59) {
             label1.textColor = [UIColor lightGrayColor];
             label1.font = [UIFont systemFontOfSize:20.0f];
             label2.textColor = [UIColor lightGrayColor];
             label2.font = [UIFont systemFontOfSize:20.0f];
             label3.textColor = [UIColor blackColor];
             label3.font = [UIFont systemFontOfSize:45.0f];
-        }
-        else if (index2 == 0)
-        {
+        } else if (index2 == 0) {
             label1.textColor = [UIColor blackColor];
             label1.font = [UIFont systemFontOfSize:45.0f];
             label2.textColor = [UIColor lightGrayColor];
             label2.font = [UIFont systemFontOfSize:20.0f];
             label3.textColor = [UIColor lightGrayColor];
             label3.font = [UIFont systemFontOfSize:20.0f];
-        }
-        else
-        {
+        } else {
             label1.textColor = [UIColor lightGrayColor];
             label1.font = [UIFont systemFontOfSize:20.0f];
             label2.textColor = [UIColor blackColor];
@@ -548,8 +519,7 @@
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
 {
-    if (view == nil)
-	{
+    if (view == nil) {
         view = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, carousel.frame.size.width, carousel.frame.size.height / 3.f)];
     }
     
@@ -557,9 +527,7 @@
     ((UILabel *)view).font = [UIFont systemFontOfSize:11.0f];
     ((UILabel *)view).textColor = [UIColor lightGrayColor];
     ((UILabel *)view).backgroundColor = [UIColor clearColor];
-    
     ((UILabel *)view).text = [NSString stringWithFormat:@"%02i", index];
-    
     return view;
 }
 
@@ -573,12 +541,9 @@
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
     NSUInteger count = 0;
-    if ([carousel isEqual:iHourPickerFrom] )
-    {
+    if ([carousel isEqual:iHourPickerFrom]) {
         count = 16;
-    }
-    else if ([carousel isEqual:iMinPickerFrom])
-    {
+    } else if ([carousel isEqual:iMinPickerFrom]) {
         count = 60;
     }
     return count;
@@ -595,7 +560,6 @@
     //implement 'flip3D' style carousel
     transform = CATransform3DRotate(transform, M_PI / 8.0f, 0.0f, 1.0f, 0.0f);
     return CATransform3DTranslate(transform, 0.0f, 0.0f, offset * _carousel.itemWidth);
-    //    return CATransform3DTranslate(transform, 0.0f, 0.0f, offset * _carousel.itemWidth);
 }
 
 - (BOOL)carouselShouldWrap:(iCarousel *)carousel
@@ -607,4 +571,5 @@
 {
     return YES;
 }
+
 @end
