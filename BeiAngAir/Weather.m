@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 BroadLink. All rights reserved.
 //
 
-#import "ClassAirQualityInfo.h"
+#import "Weather.h"
 
-@implementation ClassAirQualityInfo
+@implementation Weather
 
 - (NSString *)description
 {

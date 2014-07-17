@@ -21,7 +21,7 @@
 #import	"BLTimerInfomation.h"
 #import	"BeiAngSendDataInfo.h"
 #import	"BeiAngReceivedDataInfo.h"
-#import "ClassAirQualityInfo.h"
+#import "Weather.h"
 #import "Wifi.h"
 
 //Categories

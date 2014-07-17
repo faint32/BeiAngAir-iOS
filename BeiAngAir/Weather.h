@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ClassAirQualityInfo : NSObject
+@interface Weather : NSObject
 
 @property (strong, nonatomic) NSString *cityCode;
 @property (strong, nonatomic) NSString *cityName;

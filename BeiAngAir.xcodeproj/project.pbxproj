@@ -28,7 +28,7 @@
 		7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C70E196E69FA0001561F /* BLTimerInfomation.m */; };
 		7700C712196E6A350001561F /* BeiAngSendDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C711196E6A350001561F /* BeiAngSendDataInfo.m */; };
 		7700C715196E6A530001561F /* BeiAngReceivedDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C714196E6A530001561F /* BeiAngReceivedDataInfo.m */; };
-		7700C718196E85690001561F /* ClassAirQualityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C717196E85690001561F /* ClassAirQualityInfo.m */; };
+		7700C718196E85690001561F /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C717196E85690001561F /* Weather.m */; };
 		7700C720196E87F90001561F /* NSString+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C71F196E87F90001561F /* NSString+BeiAng.m */; };
 		771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07EA196F897600B41955 /* UIImage+BeiAng.m */; };
 		771F07EE196F975300B41955 /* UIColor+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07ED196F975300B41955 /* UIColor+BeiAng.m */; };
@@ -147,8 +147,8 @@
 		7700C711196E6A350001561F /* BeiAngSendDataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeiAngSendDataInfo.m; sourceTree = "<group>"; };
 		7700C713196E6A530001561F /* BeiAngReceivedDataInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeiAngReceivedDataInfo.h; sourceTree = "<group>"; };
 		7700C714196E6A530001561F /* BeiAngReceivedDataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeiAngReceivedDataInfo.m; sourceTree = "<group>"; };
-		7700C716196E85690001561F /* ClassAirQualityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassAirQualityInfo.h; sourceTree = "<group>"; };
-		7700C717196E85690001561F /* ClassAirQualityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassAirQualityInfo.m; sourceTree = "<group>"; };
+		7700C716196E85690001561F /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weather.h; sourceTree = "<group>"; };
+		7700C717196E85690001561F /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
 		7700C71E196E87F90001561F /* NSString+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BeiAng.h"; sourceTree = "<group>"; };
 		7700C71F196E87F90001561F /* NSString+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+BeiAng.m"; sourceTree = "<group>"; };
 		771F07E9196F897600B41955 /* UIImage+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+BeiAng.h"; sourceTree = "<group>"; };
@@ -471,8 +471,8 @@
 				7700C711196E6A350001561F /* BeiAngSendDataInfo.m */,
 				7700C713196E6A530001561F /* BeiAngReceivedDataInfo.h */,
 				7700C714196E6A530001561F /* BeiAngReceivedDataInfo.m */,
-				7700C716196E85690001561F /* ClassAirQualityInfo.h */,
-				7700C717196E85690001561F /* ClassAirQualityInfo.m */,
+				7700C716196E85690001561F /* Weather.h */,
+				7700C717196E85690001561F /* Weather.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -748,7 +748,7 @@
 				BAFA3750194151D3001DB631 /* MMProgressHUDViewController.m in Sources */,
 				77F16DAC1977588B00564AAB /* IPAddress.m in Sources */,
 				7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */,
-				7700C718196E85690001561F /* ClassAirQualityInfo.m in Sources */,
+				7700C718196E85690001561F /* Weather.m in Sources */,
 				771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */,
 				775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */,
 				7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */,

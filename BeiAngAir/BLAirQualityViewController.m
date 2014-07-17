@@ -23,7 +23,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "BLNetwork.h"
-#import "ClassAirQualityInfo.h"
+#import "Weather.h"
 
 @interface BLAirQualityViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 
@@ -41,7 +41,7 @@
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *currentLocation;
-@property (nonatomic, strong) ClassAirQualityInfo *airQualityInfoClass;
+@property (nonatomic, strong) Weather *airQualityInfoClass;
 
 @end
 
@@ -60,7 +60,7 @@
 {
     [super viewDidLoad];
 	
-	_airQualityInfoClass = [[ClassAirQualityInfo alloc] init];
+	_airQualityInfoClass = [[Weather alloc] init];
     _networkAPI = [[BLNetwork alloc] init];
     _networkQueue = dispatch_queue_create("BLAirQualityViewCtrollerNetworkQueue", DISPATCH_QUEUE_SERIAL);
     _httpQueue = dispatch_queue_create("BLHttpQueue", DISPATCH_QUEUE_SERIAL);
