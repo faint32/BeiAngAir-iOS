@@ -9,7 +9,6 @@
 #import "BLFilterViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BLAppDelegate.h"
-#import "PICircularProgressView.h"
 #import "Toast+UIView.h"
 #import "MMProgressHUD.h"
 #import "iCarousel.h"

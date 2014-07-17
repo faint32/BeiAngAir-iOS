@@ -82,7 +82,6 @@
 		BAAE38C3194089EE002C97C8 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38B5194089EE002C97C8 /* SBJsonTokeniser.m */; };
 		BAAE38C4194089EE002C97C8 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38B7194089EE002C97C8 /* SBJsonUTF8Stream.m */; };
 		BAAE38C5194089EE002C97C8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38B9194089EE002C97C8 /* SBJsonWriter.m */; };
-		BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAE38DD1940A9C6002C97C8 /* PICircularProgressView.m */; };
 		BAAE3EFD1949CA2A004054D2 /* libBLNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA69793E1949613B000B184F /* libBLNetwork.a */; };
 		BAB38987193DA4AD00975805 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB38969193D75EE00975805 /* MMDrawerBarButtonItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38988193DA4AD00975805 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3896B193D75EE00975805 /* MMDrawerController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -108,13 +107,6 @@
 		BAFA3753194151D3001DB631 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA374A194151D3001DB631 /* MMVectorImage.m */; };
 		BAFA3758194151E9001DB631 /* BLZSIndicatorProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */; };
 		BAFA3759194151E9001DB631 /* BLZSProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */; };
-		BAFA381F1941862A001DB631 /* bl_custom_hud_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */; };
-		BAFA38201941862A001DB631 /* bl_custom_hud_btn_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38181941862A001DB631 /* bl_custom_hud_btn_no@2x.png */; };
-		BAFA38211941862A001DB631 /* bl_custom_hud_btn_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA38191941862A001DB631 /* bl_custom_hud_btn_yes@2x.png */; };
-		BAFA38221941862A001DB631 /* bl_custom_hud_hint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA381A1941862A001DB631 /* bl_custom_hud_hint@2x.png */; };
-		BAFA38231941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA381B1941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png */; };
-		BAFA38241941862A001DB631 /* bl_custom_hud_timer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFA381C1941862A001DB631 /* bl_custom_hud_timer@2x.png */; };
-		BAFA38251941862A001DB631 /* BLCustomHUD+UIWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA381E1941862A001DB631 /* BLCustomHUD+UIWindow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -266,8 +258,6 @@
 		BAAE38B7194089EE002C97C8 /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
 		BAAE38B8194089EE002C97C8 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		BAAE38B9194089EE002C97C8 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		BAAE38DC1940A9C6002C97C8 /* PICircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PICircularProgressView.h; sourceTree = "<group>"; };
-		BAAE38DD1940A9C6002C97C8 /* PICircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PICircularProgressView.m; sourceTree = "<group>"; };
 		BAB38968193D75EE00975805 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		BAB38969193D75EE00975805 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		BAB3896A193D75EE00975805 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
@@ -299,14 +289,6 @@
 		BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSIndicatorProgress.m; sourceTree = "<group>"; };
 		BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLZSProgressLayer.h; sourceTree = "<group>"; };
 		BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLZSProgressLayer.m; sourceTree = "<group>"; };
-		BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_bg@2x.png"; sourceTree = "<group>"; };
-		BAFA38181941862A001DB631 /* bl_custom_hud_btn_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_btn_no@2x.png"; sourceTree = "<group>"; };
-		BAFA38191941862A001DB631 /* bl_custom_hud_btn_yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_btn_yes@2x.png"; sourceTree = "<group>"; };
-		BAFA381A1941862A001DB631 /* bl_custom_hud_hint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_hint@2x.png"; sourceTree = "<group>"; };
-		BAFA381B1941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_textfield_bg@2x.png"; sourceTree = "<group>"; };
-		BAFA381C1941862A001DB631 /* bl_custom_hud_timer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bl_custom_hud_timer@2x.png"; sourceTree = "<group>"; };
-		BAFA381D1941862A001DB631 /* BLCustomHUD+UIWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BLCustomHUD+UIWindow.h"; sourceTree = "<group>"; };
-		BAFA381E1941862A001DB631 /* BLCustomHUD+UIWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BLCustomHUD+UIWindow.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -420,13 +402,11 @@
 				77F16E2A1977A12000564AAB /* QQ */,
 				77F16E11197794F100564AAB /* WeChatSDK_1.4.1 */,
 				77F16D801977588B00564AAB /* ZBUtilities */,
-				BAFA38161941862A001DB631 /* BLCustomHUD */,
 				BAFA3754194151E9001DB631 /* BLZSIndicatorProgress.h */,
 				BAFA3755194151E9001DB631 /* BLZSIndicatorProgress.m */,
 				BAFA3756194151E9001DB631 /* BLZSProgressLayer.h */,
 				BAFA3757194151E9001DB631 /* BLZSProgressLayer.m */,
 				BAFA3739194151D3001DB631 /* MMProgressHUD */,
-				BAAE38DB1940A9C6002C97C8 /* PICircularProgressView */,
 				BAAE38A0194089EE002C97C8 /* SBJson */,
 				BAB38967193D75EE00975805 /* MMDrawerController */,
 				2F40FD8118FBAA6300505B6E /* iCarousel */,
@@ -644,15 +624,6 @@
 			path = SBJson;
 			sourceTree = "<group>";
 		};
-		BAAE38DB1940A9C6002C97C8 /* PICircularProgressView */ = {
-			isa = PBXGroup;
-			children = (
-				BAAE38DC1940A9C6002C97C8 /* PICircularProgressView.h */,
-				BAAE38DD1940A9C6002C97C8 /* PICircularProgressView.m */,
-			);
-			path = PICircularProgressView;
-			sourceTree = "<group>";
-		};
 		BAB38967193D75EE00975805 /* MMDrawerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,21 +663,6 @@
 				BAFA374A194151D3001DB631 /* MMVectorImage.m */,
 			);
 			path = MMProgressHUD;
-			sourceTree = "<group>";
-		};
-		BAFA38161941862A001DB631 /* BLCustomHUD */ = {
-			isa = PBXGroup;
-			children = (
-				BAFA38171941862A001DB631 /* bl_custom_hud_bg@2x.png */,
-				BAFA38181941862A001DB631 /* bl_custom_hud_btn_no@2x.png */,
-				BAFA38191941862A001DB631 /* bl_custom_hud_btn_yes@2x.png */,
-				BAFA381A1941862A001DB631 /* bl_custom_hud_hint@2x.png */,
-				BAFA381B1941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png */,
-				BAFA381C1941862A001DB631 /* bl_custom_hud_timer@2x.png */,
-				BAFA381D1941862A001DB631 /* BLCustomHUD+UIWindow.h */,
-				BAFA381E1941862A001DB631 /* BLCustomHUD+UIWindow.m */,
-			);
-			path = BLCustomHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -772,15 +728,9 @@
 				77F16E2E1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				77F16DAD1977588B00564AAB /* LICENSE in Resources */,
 				77F16E1C197794F100564AAB /* readme.txt in Resources */,
-				BAFA38211941862A001DB631 /* bl_custom_hud_btn_yes@2x.png in Resources */,
-				BAFA38231941862A001DB631 /* bl_custom_hud_textfield_bg@2x.png in Resources */,
 				2FAE502A18F78C470068893E /* InfoPlist.strings in Resources */,
 				2FAE513618F7C4B90068893E /* Localizable.strings in Resources */,
-				BAFA38221941862A001DB631 /* bl_custom_hud_hint@2x.png in Resources */,
 				2FAE503218F78C470068893E /* Images.xcassets in Resources */,
-				BAFA38241941862A001DB631 /* bl_custom_hud_timer@2x.png in Resources */,
-				BAFA38201941862A001DB631 /* bl_custom_hud_btn_no@2x.png in Resources */,
-				BAFA381F1941862A001DB631 /* bl_custom_hud_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,7 +775,6 @@
 				7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */,
 				7700C718196E85690001561F /* ClassAirQualityInfo.m in Sources */,
 				771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */,
-				BAFA38251941862A001DB631 /* BLCustomHUD+UIWindow.m in Sources */,
 				775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */,
 				7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */,
 				BAFA374F194151D3001DB631 /* MMProgressHUDOverlayView.m in Sources */,
@@ -833,7 +782,6 @@
 				77F16E10197792C000564AAB /* BLShareViewController.m in Sources */,
 				BAB38997193DA4AD00975805 /* Reachability.m in Sources */,
 				77F16DB21977588B00564AAB /* NSString+ZBUtilites.m in Sources */,
-				BAAE38DE1940A9C6002C97C8 /* PICircularProgressView.m in Sources */,
 				BAFA374B194151D3001DB631 /* MMHud.m in Sources */,
 				7700C715196E6A530001561F /* BeiAngReceivedDataInfo.m in Sources */,
 				775EB22D1973DA5B00E4A0AB /* BLAirQualityViewController.m in Sources */,
