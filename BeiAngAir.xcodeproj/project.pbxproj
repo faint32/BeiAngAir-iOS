@@ -22,7 +22,6 @@
 		2FAE519718F7D32B0068893E /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE519618F7D32B0068893E /* libz.1.dylib */; };
 		2FAE51C218F808D80068893E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE51C118F808D80068893E /* libsqlite3.dylib */; };
 		2FAE51C418F808DE0068893E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE51C318F808DE0068893E /* SystemConfiguration.framework */; };
-		2FAE51CD18F810540068893E /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FAE51CA18F810540068893E /* blueArrow@2x.png */; };
 		2FAE51D418F8145B0068893E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE51D318F8145B0068893E /* CoreText.framework */; };
 		7700C706196E67DE0001561F /* BLAirQualityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C705196E67DE0001561F /* BLAirQualityInfo.m */; };
 		7700C709196E690F0001561F /* BLDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C708196E690F0001561F /* BLDeviceInfo.m */; };
@@ -93,7 +92,6 @@
 		BAB3898C193DA4AD00975805 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F40FD8318FBAA6300505B6E /* iCarousel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB3898E193DA4AD00975805 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51D718F81C220068893E /* Toast+UIView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB3898F193DA4AD00975805 /* UILabel+Attribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51D118F813180068893E /* UILabel+Attribute.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BAB38990193DA4AD00975805 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE51CC18F810540068893E /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38997193DA4AD00975805 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE519218F7D2230068893E /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38998193DA4AD00975805 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE514318F7D1340068893E /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB38999193DA4AD00975805 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE514618F7D1340068893E /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -220,9 +218,6 @@
 		2FAE519618F7D32B0068893E /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = usr/lib/libz.1.dylib; sourceTree = SDKROOT; };
 		2FAE51C118F808D80068893E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		2FAE51C318F808DE0068893E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		2FAE51CA18F810540068893E /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
-		2FAE51CB18F810540068893E /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
-		2FAE51CC18F810540068893E /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		2FAE51D018F813180068893E /* UILabel+Attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Attribute.h"; sourceTree = "<group>"; };
 		2FAE51D118F813180068893E /* UILabel+Attribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Attribute.m"; sourceTree = "<group>"; };
 		2FAE51D318F8145B0068893E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -508,7 +503,6 @@
 				2F40FD8118FBAA6300505B6E /* iCarousel */,
 				2FAE51D518F81C220068893E /* Toast */,
 				2FAE51CF18F813180068893E /* UILabel+Attribute */,
-				2FAE51C918F810540068893E /* EGORefreshTableHeaderView */,
 				2FAE519018F7D2230068893E /* Reachability */,
 				2FAE514118F7D1340068893E /* ASIHTTPRequest */,
 				2FAE517618F7D1340068893E /* JSONKit */,
@@ -646,16 +640,6 @@
 				2FAE519218F7D2230068893E /* Reachability.m */,
 			);
 			path = Reachability;
-			sourceTree = "<group>";
-		};
-		2FAE51C918F810540068893E /* EGORefreshTableHeaderView */ = {
-			isa = PBXGroup;
-			children = (
-				2FAE51CA18F810540068893E /* blueArrow@2x.png */,
-				2FAE51CB18F810540068893E /* EGORefreshTableHeaderView.h */,
-				2FAE51CC18F810540068893E /* EGORefreshTableHeaderView.m */,
-			);
-			path = EGORefreshTableHeaderView;
 			sourceTree = "<group>";
 		};
 		2FAE51CF18F813180068893E /* UILabel+Attribute */ = {
@@ -935,7 +919,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FAE51CD18F810540068893E /* blueArrow@2x.png in Resources */,
 				77F16DBD1977588B00564AAB /* ZBUtilities.podspec in Resources */,
 				BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */,
 				77F16E2E1977A12000564AAB /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
@@ -985,7 +968,6 @@
 				77F16DB31977588B00564AAB /* README.md in Sources */,
 				BAB3898E193DA4AD00975805 /* Toast+UIView.m in Sources */,
 				BAB3898F193DA4AD00975805 /* UILabel+Attribute.m in Sources */,
-				BAB38990193DA4AD00975805 /* EGORefreshTableHeaderView.m in Sources */,
 				BAAE38C1194089EE002C97C8 /* SBJsonStreamWriterAccumulator.m in Sources */,
 				BAAE38BB194089EE002C97C8 /* SBJsonParser.m in Sources */,
 				BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */,

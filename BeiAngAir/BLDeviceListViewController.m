@@ -10,7 +10,6 @@
 #import "GlobalDefine.h"
 #import "BLSmartConfigViewController.h"
 #import "BLNetwork.h"
-#import "EGORefreshTableHeaderView.h"
 #import "UILabel+Attribute.h"
 #import "Toast+UIView.h"
 #import "BLAirQualityViewController.h"
@@ -27,7 +26,6 @@
 
 @interface BLDeviceListViewController ()
 
-@property (nonatomic, strong) EGORefreshTableHeaderView *refreshTableView;
 @property (nonatomic, assign) dispatch_queue_t networkQueue;
 @property (nonatomic, strong) BLNetwork *networkAPI;
 @property (nonatomic, strong) UITableView *tableView;
