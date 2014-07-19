@@ -24,6 +24,7 @@
 #import <MapKit/MapKit.h>
 #import "BLNetwork.h"
 #import "Weather.h"
+#import "BLShareViewController.h"
 
 @interface BLDeviceControlViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 
@@ -38,10 +39,11 @@
 @property (nonatomic, strong) UIButton *sleepButton;
 @property (nonatomic, strong) UILabel *weatherLabel;
 @property (nonatomic, strong) UILabel *leftTimerLabel;
-
+@property (nonatomic, strong) UIButton *shareButton;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, strong) Weather *weather;
+@property (nonatomic, strong) BLShareViewController *shareViewController;
 
 @end
 
@@ -87,6 +89,19 @@
     [_weatherLabel setTextColor:[UIColor whiteColor]];
     [_weatherLabel setFont:[UIFont systemFontOfSize:17.f]];
 	[self.view addSubview:_weatherLabel];
+	
+
+	UIImage *shareImage = [UIImage imageNamed:@"Share"];
+	viewFrame.origin.x = self.view.frame.size.width - shareImage.size.width - edgeInsets.right;
+	viewFrame.origin.y = 90;
+	viewFrame.size = shareImage.size;
+	
+	_shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	_shareButton.frame = viewFrame;
+	_shareButton.showsTouchWhenHighlighted = YES;
+	[_shareButton setImage:shareImage forState:UIControlStateNormal];
+	[_shareButton addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
+	[self.view addSubview:_shareButton];
     
     //底部视图
     viewFrame.origin.x =  0;
@@ -100,30 +115,31 @@
     [bottomView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:bottomView];
     
-    //风速
-    UIImage *image = [UIImage imageNamed:@"wind"];
-    viewFrame.origin.x = edgeInsets.left;
-    viewFrame.origin.y = edgeInsets.top;
-	viewFrame.size = CGSizeMake(image.size.width, image.size.height);
-    UIButton *speedButton = [[UIButton alloc] initWithFrame:viewFrame];
-    [speedButton setBackgroundColor:[UIColor clearColor]];
-    [speedButton setImage:image forState:UIControlStateNormal];
-    [speedButton addTarget:self action:@selector(speedButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [bottomView addSubview:speedButton];
-    
     //空气质量指数
-    _airQualityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, edgeInsets.top, self.view.frame.size.width, 30)];
-    [_airQualityLabel setTextAlignment:NSTextAlignmentCenter];
+    _airQualityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, edgeInsets.top, self.view.frame.size.width, 40)];
     [_airQualityLabel setBackgroundColor:[UIColor clearColor]];
 	_airQualityLabel.numberOfLines = 0;
     [_airQualityLabel setTextColor:[UIColor blackColor]];
     [_airQualityLabel setFont:[UIFont systemFontOfSize:15.f]];
+	_airQualityLabel.textAlignment = NSTextAlignmentCenter;
+	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %@", NSLocalizedString(@"贝昂", nil), NSLocalizedString(@"室内PM2.5", nil), [_receivedData airQualityDisplayString] ?: @"良"];
     [bottomView addSubview:_airQualityLabel];
-    
+	
+	//风速
+	UIImage *image = [UIImage imageNamed:@"wind"];
+	viewFrame.origin.x = edgeInsets.left;
+	viewFrame.origin.y = edgeInsets.top + 20;
+	viewFrame.size = CGSizeMake(image.size.width, image.size.height);
+	UIButton *speedButton = [[UIButton alloc] initWithFrame:viewFrame];
+	[speedButton setBackgroundColor:[UIColor clearColor]];
+	[speedButton setImage:image forState:UIControlStateNormal];
+	[speedButton addTarget:self action:@selector(speedButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+	[bottomView addSubview:speedButton];
+	
     //定时任务
 	UIImage *timeImage = [UIImage imageNamed:@"time"];
     viewFrame.origin.x =  self.view.frame.size.width - timeImage.size.width - edgeInsets.left;
-    viewFrame.origin.y = edgeInsets.top;
+    viewFrame.origin.y = edgeInsets.top + 20;
     viewFrame.size = timeImage.size;
     UIButton *timerButton = [[UIButton alloc] initWithFrame:viewFrame];
     [timerButton setBackgroundColor:[UIColor clearColor]];
@@ -547,6 +563,12 @@
             });
         }
     });
+}
+
+- (void)share
+{
+	_shareViewController = [[BLShareViewController alloc] init];
+	[_shareViewController share];
 }
 
 #pragma mark - CLLocationManager Delegate

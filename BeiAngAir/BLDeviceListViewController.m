@@ -297,6 +297,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     BLDevice *device = [_devices objectAtIndex:indexPath.row];
 	
+//	BLDeviceControlViewController *controller = [[BLDeviceControlViewController alloc] init];
+//	controller.device = device;
+//	[self.navigationController pushViewController:controller animated:YES];
+//	return;
+	
     dispatch_async(_networkQueue, ^{
         [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
         //数据透传
