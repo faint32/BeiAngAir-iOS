@@ -10,6 +10,6 @@
 
 @interface BLShareViewController : UIViewController
 
-- (void)showActionSheetInView:(UIView *)view;
+- (void)share;
 
 @end
