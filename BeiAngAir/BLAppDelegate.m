@@ -13,10 +13,13 @@
 #import "JSONKit.h"
 #import "BLNetwork.h"
 #import "BLGuideViewController.h"
-#import "WXApi.h"
-#import <TencentOpenAPI/QQApiInterface.h>
 
-@interface BLAppDelegate () <QQApiInterfaceDelegate>
+//百度Share
+#import <Frontia/Frontia.h>
+
+#define APP_KEY @"SMT9pXGos5t0ZR7mMlcVMGlx"
+
+@interface BLAppDelegate ()
 
 @property (nonatomic, strong) BLNetwork *network;
 
@@ -48,9 +51,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //初始化Frontia
+    [Frontia initWithApiKey:APP_KEY];
+    
     [self initBLLicense];
-	
-	[WXApi registerApp:WEIXIN_APP_ID];
 	
 	//TODO:先注释掉，影响我听歌了
 	//加上代码后，如果你从音乐播放器切换到你的app，你会发现音乐播放器停止播放了。
@@ -70,13 +74,11 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-	[QQApiInterface handleOpenURL:url delegate:self];
 	return YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-	[QQApiInterface handleOpenURL:url delegate:self];
 	return YES;
 }
 

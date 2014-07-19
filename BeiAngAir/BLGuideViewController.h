@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Frontia/FrontiaAuthorizationDelegate.h>
 
-@interface BLGuideViewController : UIViewController
+@interface BLGuideViewController : UIViewController <UINavigationControllerDelegate>
 
 @end
