@@ -281,13 +281,13 @@
 	if (device.isRefresh) {
 		NSString *status = NSLocalizedString(@"设备已关闭", nil);
 		if (device.switchState == 1) {
-			status = device.sleepState == 1 ? NSLocalizedString(@"睡眠开", nil) : NSLocalizedString(@"睡眠关", nil);
+			status = NSLocalizedString(@"设备正在运行", nil);
 		}
 		
-		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n设备已运行%d小时%d分钟", status, device.hour, device.minute];
+		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n已运行%d小时%d分钟", status, device.hour, device.minute];
 		NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:statusAndrunTime];
 		if (device.hour >= 50) {
-			NSAttributedString *subString = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"  请清洗!", nil) attributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont systemFontOfSize:15]}];
+			NSAttributedString *subString = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" 请清洗!", nil) attributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont systemFontOfSize:14]}];
 			[attributedString appendAttributedString:subString];
 		}
 		cell.detailTextLabel.numberOfLines = 0;
@@ -328,7 +328,8 @@
         } else {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 [MMProgressHUD dismiss];
-                [self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];//TODO:
+				//TODO: 需要提示错误信息
+                //[self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];//TODO:
             });
         }
     });
