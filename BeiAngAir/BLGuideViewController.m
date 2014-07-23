@@ -9,6 +9,7 @@
 #import "BLGuideViewController.h"
 #import "BLDeviceListViewController.h"
 #import "BLShareViewController.h"
+#import "BLQRCodeViewController.h"
 
 @interface BLGuideViewController ()
 
@@ -21,7 +22,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.navigationController.navigationBarHidden = YES;
 
 	UIImage *image = [UIImage imageNamed:@"guide_content_bg"];
 	UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -70,6 +70,12 @@
 	[scrollView addSubview:helpButton];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	self.navigationController.navigationBarHidden = YES;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -89,7 +95,9 @@
 
 - (void)service
 {
-	//TODO:暂时不做
+	BLQRCodeViewController *controller = [[BLQRCodeViewController alloc] initWithNibName:nil bundle:nil];
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+	[self.navigationController presentModalViewController:navigationController animated:YES];
 }
 
 - (void)help

@@ -46,6 +46,7 @@
 		775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */; };
 		775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */; };
 		775EB2361973DF4600E4A0AB /* BLGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2351973DF4600E4A0AB /* BLGuideViewController.m */; };
+		77D9E319197FF3F2004AC675 /* BLQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E318197FF3F2004AC675 /* BLQRCodeViewController.m */; };
 		77F16DAA1977588B00564AAB /* CLLocation+NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */; };
 		77F16DAB1977588B00564AAB /* CLLocation+NSString.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D851977588B00564AAB /* CLLocation+NSString.m */; };
 		77F16DAC1977588B00564AAB /* IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D871977588B00564AAB /* IPAddress.m */; };
@@ -186,6 +187,8 @@
 		775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLSmartConfigViewController.m; path = BeiAngAir/BLSmartConfigViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB2341973DF4600E4A0AB /* BLGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLGuideViewController.h; path = BeiAngAir/BLGuideViewController.h; sourceTree = SOURCE_ROOT; };
 		775EB2351973DF4600E4A0AB /* BLGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLGuideViewController.m; path = BeiAngAir/BLGuideViewController.m; sourceTree = SOURCE_ROOT; };
+		77D9E317197FF3F2004AC675 /* BLQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLQRCodeViewController.h; path = BeiAngAir/BLQRCodeViewController.h; sourceTree = SOURCE_ROOT; };
+		77D9E318197FF3F2004AC675 /* BLQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLQRCodeViewController.m; path = BeiAngAir/BLQRCodeViewController.m; sourceTree = SOURCE_ROOT; };
 		77F16D821977588B00564AAB /* CLLocation+NSDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+NSDictionary.h"; sourceTree = "<group>"; };
 		77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+NSDictionary.m"; sourceTree = "<group>"; };
 		77F16D841977588B00564AAB /* CLLocation+NSString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+NSString.h"; sourceTree = "<group>"; };
@@ -475,6 +478,8 @@
 			children = (
 				775EB2341973DF4600E4A0AB /* BLGuideViewController.h */,
 				775EB2351973DF4600E4A0AB /* BLGuideViewController.m */,
+				77D9E317197FF3F2004AC675 /* BLQRCodeViewController.h */,
+				77D9E318197FF3F2004AC675 /* BLQRCodeViewController.m */,
 				775EB22A1973DA5B00E4A0AB /* BLSmartConfigViewController.h */,
 				775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */,
 				775EB2261973DA5B00E4A0AB /* BLDeviceListViewController.h */,
@@ -760,6 +765,7 @@
 				77F16E431977E36600564AAB /* BLZSProgressLayer.m in Sources */,
 				BAAE38C5194089EE002C97C8 /* SBJsonWriter.m in Sources */,
 				BAB38989193DA4AD00975805 /* MMDrawerVisualState.m in Sources */,
+				77D9E319197FF3F2004AC675 /* BLQRCodeViewController.m in Sources */,
 				BAB3898A193DA4AD00975805 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				BAAE38C3194089EE002C97C8 /* SBJsonTokeniser.m in Sources */,
 				BAB3898B193DA4AD00975805 /* UIViewController+MMDrawerController.m in Sources */,

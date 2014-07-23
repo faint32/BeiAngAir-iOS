@@ -56,7 +56,7 @@
     
     //底部的添加设备
 	CGRect viewFrame = CGRectZero;
-    UIButton *btnAddDevice = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-43, self.view.frame.size.width, 43)];
+    UIButton *btnAddDevice = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-49-43, self.view.frame.size.width, 43)];
     //button(ALL,Senior,Ordinary)显示数据
     //背景颜色
     btnAddDevice.backgroundColor = [UIColor whiteColor];
