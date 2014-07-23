@@ -141,14 +141,6 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	return device;
 }
 
-//- (BLAirQualityInfo *)airQualityInfo
-//{
-//	if (!_airQualityInfo) {
-//		_airQualityInfo = [[BLAirQualityInfo alloc] init];
-//	}
-//	return _airQualityInfo;
-//}
-
 - (BOOL)isBeiAngAirDevice
 {
 	return [self.type isEqualToString:[NSString stringWithFormat:@"%d", BROADLINK_BeiAngAir]];
