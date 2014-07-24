@@ -31,6 +31,7 @@
 //ZBUtilities
 #import "NSString+Hex.h"
 #import "UIColor+Hex.h"
+#import "UIViewController+HUD.h"
 
 //
 #define WEIXIN_APP_ID @"wx45d480ba2f3138c5"//BeiAng

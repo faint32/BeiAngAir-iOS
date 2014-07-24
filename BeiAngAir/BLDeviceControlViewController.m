@@ -228,9 +228,10 @@
 {
 	NSLog(@"refreshWeather: %@", _weather);
 	_weatherLabel.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", _weather.cityName, _weather.temperateStrings, _weather.pm25, _weather.airQualityString];
-	_weather.airQualityLevel = @"4";
 	if([_weather.airQualityLevel isEqualToString:@"4"]) {
 		self.view.backgroundColor = [UIColor colorAirPolluted];
+	} else {
+		self.view.backgroundColor = [UIColor greenColor];
 	}
 }
 
@@ -398,6 +399,7 @@
     //如果儿童锁按钮点击，那么提示信息
     if(_childLockButton.selected) {
         //提示信息
+		
         [self.view makeToast:NSLocalizedString(@"childMessage", nil) duration:0.8 position:@"bottom"];
         return;
     }

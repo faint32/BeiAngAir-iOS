@@ -47,6 +47,11 @@
 		775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */; };
 		775EB2361973DF4600E4A0AB /* BLGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2351973DF4600E4A0AB /* BLGuideViewController.m */; };
 		77D9E319197FF3F2004AC675 /* BLQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E318197FF3F2004AC675 /* BLQRCodeViewController.m */; };
+		77D9E32119809795004AC675 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 77D9E31D19809795004AC675 /* LICENSE */; };
+		77D9E32219809795004AC675 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E31F19809795004AC675 /* MBProgressHUD.m */; };
+		77D9E32319809795004AC675 /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 77D9E32019809795004AC675 /* README.mdown */; };
+		77D9E3281980981F004AC675 /* MBProgressHUD+Appearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E3251980981F004AC675 /* MBProgressHUD+Appearance.m */; };
+		77D9E3291980981F004AC675 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E3271980981F004AC675 /* UIViewController+HUD.m */; };
 		77F16DAA1977588B00564AAB /* CLLocation+NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */; };
 		77F16DAB1977588B00564AAB /* CLLocation+NSString.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D851977588B00564AAB /* CLLocation+NSString.m */; };
 		77F16DAC1977588B00564AAB /* IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D871977588B00564AAB /* IPAddress.m */; };
@@ -189,6 +194,14 @@
 		775EB2351973DF4600E4A0AB /* BLGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLGuideViewController.m; path = BeiAngAir/BLGuideViewController.m; sourceTree = SOURCE_ROOT; };
 		77D9E317197FF3F2004AC675 /* BLQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLQRCodeViewController.h; path = BeiAngAir/BLQRCodeViewController.h; sourceTree = SOURCE_ROOT; };
 		77D9E318197FF3F2004AC675 /* BLQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLQRCodeViewController.m; path = BeiAngAir/BLQRCodeViewController.m; sourceTree = SOURCE_ROOT; };
+		77D9E31D19809795004AC675 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		77D9E31E19809795004AC675 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		77D9E31F19809795004AC675 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		77D9E32019809795004AC675 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
+		77D9E3241980981F004AC675 /* MBProgressHUD+Appearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Appearance.h"; sourceTree = "<group>"; };
+		77D9E3251980981F004AC675 /* MBProgressHUD+Appearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Appearance.m"; sourceTree = "<group>"; };
+		77D9E3261980981F004AC675 /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HUD.h"; sourceTree = "<group>"; };
+		77D9E3271980981F004AC675 /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HUD.m"; sourceTree = "<group>"; };
 		77F16D821977588B00564AAB /* CLLocation+NSDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+NSDictionary.h"; sourceTree = "<group>"; };
 		77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+NSDictionary.m"; sourceTree = "<group>"; };
 		77F16D841977588B00564AAB /* CLLocation+NSString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+NSString.h"; sourceTree = "<group>"; };
@@ -450,6 +463,7 @@
 		2FAE511C18F7BBDA0068893E /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				77D9E31C19809795004AC675 /* MBProgressHUD */,
 				18F183AD197978E8009599DB /* BaiduShare */,
 				77F16E3D1977E36600564AAB /* BLZSIndicatorProgress */,
 				77F16D801977588B00564AAB /* ZBUtilities */,
@@ -551,9 +565,25 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		77D9E31C19809795004AC675 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				77D9E31D19809795004AC675 /* LICENSE */,
+				77D9E31E19809795004AC675 /* MBProgressHUD.h */,
+				77D9E31F19809795004AC675 /* MBProgressHUD.m */,
+				77D9E32019809795004AC675 /* README.mdown */,
+			);
+			name = MBProgressHUD;
+			path = ../../../../../Desktop/MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		77F16D801977588B00564AAB /* ZBUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				77D9E3241980981F004AC675 /* MBProgressHUD+Appearance.h */,
+				77D9E3251980981F004AC675 /* MBProgressHUD+Appearance.m */,
+				77D9E3261980981F004AC675 /* UIViewController+HUD.h */,
+				77D9E3271980981F004AC675 /* UIViewController+HUD.m */,
 				77F16D821977588B00564AAB /* CLLocation+NSDictionary.h */,
 				77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */,
 				77F16D841977588B00564AAB /* CLLocation+NSString.h */,
@@ -741,8 +771,10 @@
 				77F16DAD1977588B00564AAB /* LICENSE in Resources */,
 				2FAE502A18F78C470068893E /* InfoPlist.strings in Resources */,
 				2FAE513618F7C4B90068893E /* Localizable.strings in Resources */,
+				77D9E32119809795004AC675 /* LICENSE in Resources */,
 				2FAE503218F78C470068893E /* Images.xcassets in Resources */,
 				18F183C5197978E8009599DB /* FrontiaSource.bundle in Resources */,
+				77D9E32319809795004AC675 /* README.mdown in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -780,6 +812,7 @@
 				BAAE38BB194089EE002C97C8 /* SBJsonParser.m in Sources */,
 				BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */,
 				771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */,
+				77D9E32219809795004AC675 /* MBProgressHUD.m in Sources */,
 				BAFA3750194151D3001DB631 /* MMProgressHUDViewController.m in Sources */,
 				77F16DAC1977588B00564AAB /* IPAddress.m in Sources */,
 				771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */,
@@ -794,6 +827,7 @@
 				7700C715196E6A530001561F /* BeiAngReceivedData.m in Sources */,
 				775EB22D1973DA5B00E4A0AB /* BLDeviceControlViewController.m in Sources */,
 				7700C712196E6A350001561F /* BeiAngSendData.m in Sources */,
+				77D9E3291980981F004AC675 /* UIViewController+HUD.m in Sources */,
 				775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */,
 				BAFA3752194151D3001DB631 /* MMRadialProgressView.m in Sources */,
 				77F16DB51977588B00564AAB /* UIColor+Random.m in Sources */,
@@ -813,6 +847,7 @@
 				7700C709196E690F0001561F /* BLDevice.m in Sources */,
 				BAFA3751194151D3001DB631 /* MMProgressHUDWindow.m in Sources */,
 				BAAE38C0194089EE002C97C8 /* SBJsonStreamWriter.m in Sources */,
+				77D9E3281980981F004AC675 /* MBProgressHUD+Appearance.m in Sources */,
 				775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */,
 				BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */,
 				BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */,
@@ -962,6 +997,7 @@
 					"${SDK_DIR}/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "BeiAngAir/BeiAngAir-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/BroadLink",
