@@ -9,13 +9,11 @@
 #import "BLDeviceControlViewController.h"
 #import "GlobalDefine.h"
 #import "BLAppDelegate.h"
-#import "Toast+UIView.h"
 #import "BLFilterViewController.h"
 #import "JSONKit.h"
 #import "BLAboutViewController.h"
 #import "SBJson.h"
 #import "MMProgressHUD.h"
-#import "Toast+UIView.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
@@ -399,14 +397,13 @@
     //如果儿童锁按钮点击，那么提示信息
     if(_childLockButton.selected) {
         //提示信息
-		
-        [self.view makeToast:NSLocalizedString(@"childMessage", nil) duration:0.8 position:@"bottom"];
+		[self displayHUDTitle:nil message:NSLocalizedString(@"childMessage", nil) duration:1];
         return;
     }
     //如果自动按钮点击，那么提示信息
    else if(_handOrAutoButton.selected) {
         //提示信息
-        [self.view makeToast:NSLocalizedString(@"autoMessage", nil) duration:0.8 position:@"bottom"];
+	   [self displayHUDTitle:nil message:NSLocalizedString(@"autoMessage", nil) duration:1];
         return;
     } else {
           //弹出选择框
@@ -458,7 +455,7 @@
     } else {
         if(_childLockButton.selected) {
             if(button == _handOrAutoButton || button == _sleepButton) {
-                [self.view makeToast:NSLocalizedString(@"childMessage", nil) duration:0.8 position:@"bottom"];
+				[self displayHUDTitle:nil message:NSLocalizedString(@"childMessage", nil) duration:1];
                 return;
             }
         }
@@ -502,7 +499,7 @@
 		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[MMProgressHUD dismiss];
-				[self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
+				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:1];
 			});
 		}
 	});
@@ -561,7 +558,7 @@
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MMProgressHUD dismiss];
-                [self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
+				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:1];
             });
         }
     });

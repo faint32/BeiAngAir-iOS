@@ -9,7 +9,6 @@
 #import "BLFilterViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BLAppDelegate.h"
-#import "Toast+UIView.h"
 #import "MMProgressHUD.h"
 #import "iCarousel.h"
 #import "BLZSIndicatorProgress.h"
@@ -346,7 +345,7 @@
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MMProgressHUD dismiss];
-                [self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
+				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:1];
             });
         }
     });

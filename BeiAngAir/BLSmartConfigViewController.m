@@ -10,7 +10,6 @@
 #import "GlobalDefine.h"
 #import "BLNetwork.h"
 #import "JSONKit.h"
-#import "Toast+UIView.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 @interface BLSmartConfigViewController () <UITextFieldDelegate,UIAlertViewDelegate>

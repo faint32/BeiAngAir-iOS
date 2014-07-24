@@ -10,7 +10,6 @@
 #import "GlobalDefine.h"
 #import "BLSmartConfigViewController.h"
 #import "BLNetwork.h"
-#import "Toast+UIView.h"
 #import "BLDeviceControlViewController.h"
 #import "JSONKit.h"
 #import "BLDeviceEditViewController.h"
@@ -315,7 +314,7 @@
         NSData *response = [_networkAPI requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0) {
-            [MMProgressHUD dismiss];
+			[MMProgressHUD dismiss];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
                 BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
@@ -328,8 +327,7 @@
         } else {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 [MMProgressHUD dismiss];
-				//TODO: 需要提示错误信息
-                //[self.view makeToast:[[response objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];//TODO:
+				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:2];
             });
         }
     });

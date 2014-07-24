@@ -9,7 +9,6 @@
 #import "BLDeviceEditViewController.h"
 #import "BLAppDelegate.h"
 #import "GlobalDefine.h"
-#import "Toast+UIView.h"
 #import "UIViewController+MMDrawerController.h"
 #import "JSONKit.h"
 #import "BLNetwork.h"
@@ -279,7 +278,7 @@
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [button setSelected:![button isSelected]];
-                [self.view makeToast:[[responseData objectFromJSONData] objectForKey:@"msg"] duration:0.8f position:@"bottom"];
+				[self displayHUDTitle:nil message:[[responseData objectFromJSONData] objectForKey:@"msg"] duration:1];
             });
         }
     });
@@ -328,14 +327,14 @@
 			imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
 		}
 		else {
-			[self.view makeToast:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:TOAST_DURATION position:@"center"];
+			[self displayHUDTitle:nil message:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:1];
 		}
 		[self presentViewController:imagePicker animated:YES completion:nil];
 	} else if (buttonIndex == 1) {
 		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
 			imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 		} else {
-			[self.view makeToast:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:TOAST_DURATION position:@"center"];
+			[self displayHUDTitle:nil message:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:1];
 		}
 		[self presentViewController:imagePicker animated:YES completion:nil];
 	}
