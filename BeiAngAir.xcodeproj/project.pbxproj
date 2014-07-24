@@ -673,7 +673,7 @@
 				ORGANIZATIONNAME = BroadLink;
 				TargetAttributes = {
 					2FAE501B18F78C470068893E = {
-						DevelopmentTeam = 4WTE3VN3UV;
+						DevelopmentTeam = JHC5FJN4U9;
 					};
 				};
 			};

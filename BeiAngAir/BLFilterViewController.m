@@ -71,6 +71,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	self.view.backgroundColor = [UIColor whiteColor];
 	// Do any additional setup after loading the view.
     networkQueue = dispatch_queue_create("BLFilterViewController", DISPATCH_QUEUE_SERIAL);
     networkAPI = [[BLNetwork alloc] init];
