@@ -99,15 +99,6 @@
 		BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE517818F7D1340068893E /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE502F18F78C470068893E /* BLAppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB389B1193DA4AD00975805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE502B18F78C470068893E /* main.m */; };
-		BAFA374B194151D3001DB631 /* MMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA373B194151D3001DB631 /* MMHud.m */; };
-		BAFA374C194151D3001DB631 /* MMProgressHUD+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA373D194151D3001DB631 /* MMProgressHUD+Animations.m */; };
-		BAFA374D194151D3001DB631 /* MMProgressHUD+Class.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA373E194151D3001DB631 /* MMProgressHUD+Class.m */; };
-		BAFA374E194151D3001DB631 /* MMProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3740194151D3001DB631 /* MMProgressHUD.m */; };
-		BAFA374F194151D3001DB631 /* MMProgressHUDOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3742194151D3001DB631 /* MMProgressHUDOverlayView.m */; };
-		BAFA3750194151D3001DB631 /* MMProgressHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3744194151D3001DB631 /* MMProgressHUDViewController.m */; };
-		BAFA3751194151D3001DB631 /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3746194151D3001DB631 /* MMProgressHUDWindow.m */; };
-		BAFA3752194151D3001DB631 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA3748194151D3001DB631 /* MMRadialProgressView.m */; };
-		BAFA3753194151D3001DB631 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFA374A194151D3001DB631 /* MMVectorImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -281,23 +272,6 @@
 		BAB3896F193D75EE00975805 /* MMExampleDrawerVisualStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMExampleDrawerVisualStateManager.m; sourceTree = "<group>"; };
 		BAB38970193D75EE00975805 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
 		BAB38971193D75EE00975805 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
-		BAFA373A194151D3001DB631 /* MMHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMHud.h; sourceTree = "<group>"; };
-		BAFA373B194151D3001DB631 /* MMHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMHud.m; sourceTree = "<group>"; };
-		BAFA373C194151D3001DB631 /* MMProgressHUD+Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMProgressHUD+Animations.h"; sourceTree = "<group>"; };
-		BAFA373D194151D3001DB631 /* MMProgressHUD+Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MMProgressHUD+Animations.m"; sourceTree = "<group>"; };
-		BAFA373E194151D3001DB631 /* MMProgressHUD+Class.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MMProgressHUD+Class.m"; sourceTree = "<group>"; };
-		BAFA373F194151D3001DB631 /* MMProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUD.h; sourceTree = "<group>"; };
-		BAFA3740194151D3001DB631 /* MMProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUD.m; sourceTree = "<group>"; };
-		BAFA3741194151D3001DB631 /* MMProgressHUDOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUDOverlayView.h; sourceTree = "<group>"; };
-		BAFA3742194151D3001DB631 /* MMProgressHUDOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDOverlayView.m; sourceTree = "<group>"; };
-		BAFA3743194151D3001DB631 /* MMProgressHUDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUDViewController.h; sourceTree = "<group>"; };
-		BAFA3744194151D3001DB631 /* MMProgressHUDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDViewController.m; sourceTree = "<group>"; };
-		BAFA3745194151D3001DB631 /* MMProgressHUDWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUDWindow.h; sourceTree = "<group>"; };
-		BAFA3746194151D3001DB631 /* MMProgressHUDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDWindow.m; sourceTree = "<group>"; };
-		BAFA3747194151D3001DB631 /* MMRadialProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRadialProgressView.h; sourceTree = "<group>"; };
-		BAFA3748194151D3001DB631 /* MMRadialProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRadialProgressView.m; sourceTree = "<group>"; };
-		BAFA3749194151D3001DB631 /* MMVectorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMVectorImage.h; sourceTree = "<group>"; };
-		BAFA374A194151D3001DB631 /* MMVectorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVectorImage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -464,7 +438,6 @@
 				18F183AD197978E8009599DB /* BaiduShare */,
 				77F16E3D1977E36600564AAB /* BLZSIndicatorProgress */,
 				77F16D801977588B00564AAB /* ZBUtilities */,
-				BAFA3739194151D3001DB631 /* MMProgressHUD */,
 				BAAE38A0194089EE002C97C8 /* SBJson */,
 				BAB38967193D75EE00975805 /* MMDrawerController */,
 				2F40FD8118FBAA6300505B6E /* iCarousel */,
@@ -670,30 +643,6 @@
 			path = MMDrawerController;
 			sourceTree = "<group>";
 		};
-		BAFA3739194151D3001DB631 /* MMProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				BAFA373A194151D3001DB631 /* MMHud.h */,
-				BAFA373B194151D3001DB631 /* MMHud.m */,
-				BAFA373C194151D3001DB631 /* MMProgressHUD+Animations.h */,
-				BAFA373D194151D3001DB631 /* MMProgressHUD+Animations.m */,
-				BAFA373E194151D3001DB631 /* MMProgressHUD+Class.m */,
-				BAFA373F194151D3001DB631 /* MMProgressHUD.h */,
-				BAFA3740194151D3001DB631 /* MMProgressHUD.m */,
-				BAFA3741194151D3001DB631 /* MMProgressHUDOverlayView.h */,
-				BAFA3742194151D3001DB631 /* MMProgressHUDOverlayView.m */,
-				BAFA3743194151D3001DB631 /* MMProgressHUDViewController.h */,
-				BAFA3744194151D3001DB631 /* MMProgressHUDViewController.m */,
-				BAFA3745194151D3001DB631 /* MMProgressHUDWindow.h */,
-				BAFA3746194151D3001DB631 /* MMProgressHUDWindow.m */,
-				BAFA3747194151D3001DB631 /* MMRadialProgressView.h */,
-				BAFA3748194151D3001DB631 /* MMRadialProgressView.m */,
-				BAFA3749194151D3001DB631 /* MMVectorImage.h */,
-				BAFA374A194151D3001DB631 /* MMVectorImage.m */,
-			);
-			path = MMProgressHUD;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -799,39 +748,31 @@
 				BAAE38BA194089EE002C97C8 /* NSObject+SBJson.m in Sources */,
 				771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */,
 				77D9E32219809795004AC675 /* MBProgressHUD.m in Sources */,
-				BAFA3750194151D3001DB631 /* MMProgressHUDViewController.m in Sources */,
 				77F16DAC1977588B00564AAB /* IPAddress.m in Sources */,
 				771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */,
 				775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */,
 				7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */,
-				BAFA374F194151D3001DB631 /* MMProgressHUDOverlayView.m in Sources */,
 				77F16DB11977588B00564AAB /* NSString+Hex.m in Sources */,
 				77F16E10197792C000564AAB /* BLShareViewController.m in Sources */,
 				77F16E461977F87800564AAB /* Weather.m in Sources */,
 				77F16DB21977588B00564AAB /* NSString+ZBUtilites.m in Sources */,
-				BAFA374B194151D3001DB631 /* MMHud.m in Sources */,
 				7700C715196E6A530001561F /* BeiAngReceivedData.m in Sources */,
 				775EB22D1973DA5B00E4A0AB /* BLDeviceControlViewController.m in Sources */,
 				7700C712196E6A350001561F /* BeiAngSendData.m in Sources */,
 				77D9E3291980981F004AC675 /* UIViewController+HUD.m in Sources */,
 				775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */,
-				BAFA3752194151D3001DB631 /* MMRadialProgressView.m in Sources */,
 				77F16DB51977588B00564AAB /* UIColor+Random.m in Sources */,
 				77F16DBC1977588B00564AAB /* ZBTextValidate.m in Sources */,
 				BAAE38BF194089EE002C97C8 /* SBJsonStreamParserState.m in Sources */,
 				77F16DAB1977588B00564AAB /* CLLocation+NSString.m in Sources */,
 				77F16DBE1977588B00564AAB /* ZBViewController.m in Sources */,
-				BAFA374E194151D3001DB631 /* MMProgressHUD.m in Sources */,
 				775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */,
 				771F07EE196F975300B41955 /* UIColor+BeiAng.m in Sources */,
-				BAFA374C194151D3001DB631 /* MMProgressHUD+Animations.m in Sources */,
 				77F16DB61977588B00564AAB /* UIDevice+ZBUtilites.m in Sources */,
 				77F16DB01977588B00564AAB /* NSString+BundleExtensions.m in Sources */,
 				BAAE38BD194089EE002C97C8 /* SBJsonStreamParserAccumulator.m in Sources */,
-				BAFA3753194151D3001DB631 /* MMVectorImage.m in Sources */,
 				77F16DAA1977588B00564AAB /* CLLocation+NSDictionary.m in Sources */,
 				7700C709196E690F0001561F /* BLDevice.m in Sources */,
-				BAFA3751194151D3001DB631 /* MMProgressHUDWindow.m in Sources */,
 				BAAE38C0194089EE002C97C8 /* SBJsonStreamWriter.m in Sources */,
 				77D9E3281980981F004AC675 /* MBProgressHUD+Appearance.m in Sources */,
 				775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */,
@@ -839,7 +780,6 @@
 				BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */,
 				BAAE38BE194089EE002C97C8 /* SBJsonStreamParserAdapter.m in Sources */,
 				7700C720196E87F90001561F /* NSString+BeiAng.m in Sources */,
-				BAFA374D194151D3001DB631 /* MMProgressHUD+Class.m in Sources */,
 				BAB389B1193DA4AD00975805 /* main.m in Sources */,
 				77F16DAF1977588B00564AAB /* NSNumber+PrintableMeasurement.m in Sources */,
 				77F16E421977E36600564AAB /* BLZSIndicatorProgress.m in Sources */,

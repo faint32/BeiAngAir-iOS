@@ -13,7 +13,6 @@
 #import "JSONKit.h"
 #import "BLAboutViewController.h"
 #import "SBJson.h"
-#import "MMProgressHUD.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
@@ -64,8 +63,6 @@
     _networkAPI = [[BLNetwork alloc] init];
     _networkQueue = dispatch_queue_create("BLAirQualityViewCtrollerNetworkQueue", DISPATCH_QUEUE_SERIAL);
     _httpQueue = dispatch_queue_create("BLHttpQueue", DISPATCH_QUEUE_SERIAL);
-    [MMProgressHUD setDisplayStyle:MMProgressHUDDisplayStylePlain];
-    [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
     
     _locationManager = [[CLLocationManager alloc] init];
     [_locationManager setDelegate:self];
@@ -460,9 +457,10 @@
             }
         }
     }
-    
+	
+    [self displayHUDTitle:NSLocalizedString(@"加载中...", nil) message:nil];
     dispatch_async(_networkQueue, ^{
-        [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
+		
         BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
 		sendData.switchStatus = self.receivedData.switchStatus;
 		sendData.autoOrHand = self.receivedData.autoOrHand;
@@ -482,10 +480,10 @@
         NSData *response =[self sendDataCommon:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0) {
-            [MMProgressHUD dismiss];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
             self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
             dispatch_async(dispatch_get_main_queue(), ^{
+				[self hideHUD:YES];
                 if(button == _handOrAutoButton) {
 					[self deviceAutoOn:self.receivedData.autoOrHand];
 				} else if (button == _switchButton) {
@@ -498,7 +496,7 @@
 			});
 		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				[MMProgressHUD dismiss];
+				[self hideHUD:YES];
 				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:1];
 			});
 		}
@@ -540,8 +538,8 @@
     if (old == speed)
         return;
     old = speed;
+	[self displayHUDTitle:NSLocalizedString(@"加载中...", nil) message:nil];
     dispatch_async(_networkQueue, ^{
-        [MMProgressHUD showWithTitle:@"Network" status:@"Setting"];
         BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
         sendData.childLockState = self.receivedData.childLockState;
         sendData.switchStatus = self.receivedData.switchStatus;
@@ -552,12 +550,12 @@
         NSData *response =[self sendDataCommon:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0) {
-            [MMProgressHUD dismiss];
+			[self hideHUD:YES];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
             self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [MMProgressHUD dismiss];
+				[self hideHUD:YES];
 				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:1];
             });
         }

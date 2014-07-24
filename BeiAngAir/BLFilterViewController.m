@@ -9,7 +9,6 @@
 #import "BLFilterViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BLAppDelegate.h"
-#import "MMProgressHUD.h"
 #import "iCarousel.h"
 #import "BLZSIndicatorProgress.h"
 #import "BLNetwork.h"
@@ -323,14 +322,14 @@
     sendData.gearState = self.receivedData.gearState;
     
     //发送数据
+	[self displayHUDTitle:NSLocalizedString(@"加载中...", nil) message:nil];
     dispatch_async(networkQueue, ^{
-        [MMProgressHUD showWithTitle:NSLocalizedString(@"Network", nil) status:NSLocalizedString(@"Network", nil)];
         //数据透传
         NSData *response = [[NSData alloc] init];
         int code =[self sendDataCommon:sendData response:response];
         if (code == 0) {
-            [MMProgressHUD dismiss];
             dispatch_async(dispatch_get_main_queue(), ^{
+				[self hideHUD:YES];
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
                 self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
                 [_refreshInfoTimer invalidate];
@@ -344,7 +343,7 @@
             });
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [MMProgressHUD dismiss];
+				[self hideHUD:YES];
 				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:1];
             });
         }

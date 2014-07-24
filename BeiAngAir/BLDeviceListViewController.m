@@ -13,7 +13,6 @@
 #import "BLDeviceControlViewController.h"
 #import "JSONKit.h"
 #import "BLDeviceEditViewController.h"
-#import "MMProgressHUD.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
@@ -48,8 +47,6 @@
 	[self.refreshControl addTarget:self action:@selector(doInBackground) forControlEvents:UIControlEventValueChanged];
 	[self.tableView.tableHeaderView addSubview:self.refreshControl];
 	
-    [MMProgressHUD setDisplayStyle:MMProgressHUDDisplayStylePlain];
-    [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleFade];
 	//背景颜色
     [self.view setBackgroundColor:RGB(246.0f, 246.0f, 246.0f)];
     
@@ -305,17 +302,16 @@
 //	controller.device = device;
 //	[self.navigationController pushViewController:controller animated:YES];
 //	return;
-	
+	[self displayHUDTitle:NSLocalizedString(@"加载中...", nil) message:nil];
     dispatch_async(_networkQueue, ^{
-        [MMProgressHUD showWithTitle:@"Network" status:@"Getting"];
         //数据透传
 		NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:device.mac];
         NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0) {
-			[MMProgressHUD dismiss];
             dispatch_async(dispatch_get_main_queue(), ^{
+				[self hideHUD:YES];
                 NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
                 BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
 				NSLog(@"BeiAngReceivedDataInfo: %@", receivedData);
@@ -326,7 +322,7 @@
             });
         } else {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                [MMProgressHUD dismiss];
+				[self hideHUD:YES];
 				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:2];
             });
         }
