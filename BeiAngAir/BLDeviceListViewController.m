@@ -302,7 +302,8 @@
 //	controller.device = device;
 //	[self.navigationController pushViewController:controller animated:YES];
 //	return;
-	[self displayHUDTitle:NSLocalizedString(@"加载中...", nil) message:nil];
+	
+	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
     dispatch_async(_networkQueue, ^{
         //数据透传
 		NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:device.mac];
@@ -322,6 +323,7 @@
             });
         } else {
 			dispatch_async(dispatch_get_main_queue(), ^{
+				[self hideHUD:YES];
 				[self displayHUDTitle:NSLocalizedString(@"设备不可用", nil) message:nil duration:2];
 			});
         }

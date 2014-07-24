@@ -323,7 +323,7 @@
     sendData.gearState = self.receivedData.gearState;
     
     //发送数据
-	[self displayHUDTitle:NSLocalizedString(@"加载中...", nil) message:nil];
+	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
     dispatch_async(networkQueue, ^{
         //数据透传
         NSData *response = [[NSData alloc] init];
@@ -345,7 +345,7 @@
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
 				[self hideHUD:YES];
-				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:1];
+				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
             });
         }
     });

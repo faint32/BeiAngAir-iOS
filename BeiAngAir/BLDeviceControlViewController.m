@@ -117,7 +117,6 @@
     [_airQualityLabel setTextColor:[UIColor blackColor]];
     [_airQualityLabel setFont:[UIFont boldSystemFontOfSize:16]];
 	_airQualityLabel.textAlignment = NSTextAlignmentCenter;
-	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %@", NSLocalizedString(@"贝昂", nil), NSLocalizedString(@"室内PM2.5", nil), [_receivedData airQualityDisplayString] ?: @"良"];
     [bottomView addSubview:_airQualityLabel];
 	
 	//风速
@@ -218,7 +217,6 @@
     [bottomView addSubview:_leftTimerLabel];
 	
 	[self refreshDevice];
-	NSLog(@"data: %@", _receivedData);
 }
 
 - (void)refreshInsideAirQuality
@@ -226,7 +224,7 @@
 	if (!_switchButton.selected) {
 		return;
 	}
-
+	
 	if ([[_receivedData airQualityDisplayString] isEqualToString:@"优"]) {
 		[_switchButton setImage:[UIImage imageNamed:@"power_on_1"] forState:UIControlStateNormal];
 	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"良"]) {
@@ -238,6 +236,8 @@
 	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"严重"]) {
 		[_switchButton setImage:[UIImage imageNamed:@"power_on_5"] forState:UIControlStateNormal];
 	}
+	
+	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %d %@", NSLocalizedString(@"贝昂研发", nil), NSLocalizedString(@"室内PM2.5:", nil), [[_receivedData airQuality] integerValue] ,[_receivedData airQualityDisplayString] ?: @"良"];
 }
 
 - (void)refreshWeather
@@ -304,14 +304,27 @@
 	if (code == 0) {
 		dispatch_async(_networkQueue, ^{
 			NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-			BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-			NSLog(@"BeiAngReceivedDataInfo: %@", receivedData);
+			NSLog(@"array: %@", array);
+			_receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+			NSLog(@"BeiAngReceivedDataInfo: %@", _receivedData);
 			dispatch_async(dispatch_get_main_queue(), ^{
-				//[self performSelector:@selector(refreshDevice) withObject:nil afterDelay:3.0];
+				[self refreshButtons];
+				[self refreshInsideAirQuality];
+				[self performSelector:@selector(refreshDevice) withObject:nil afterDelay:3.0];
 			});
 		});
 	}
 }
+
+- (void)refreshButtons
+{
+	[self hideHUD:YES];
+	[self deviceAutoOn:self.receivedData.autoOrHand];
+	[self deviceChildLockOn:self.receivedData.childLockState];
+	[self deviceOn:self.receivedData.switchStatus];
+	[self deviceSleepOn:self.receivedData.sleepState];
+}
+
 //弹出视图
 -(void)popUpView:(UIButton *)button
 {
@@ -414,13 +427,13 @@
     //如果儿童锁按钮点击，那么提示信息
     if(_childLockButton.selected) {
         //提示信息
-		[self displayHUDTitle:nil message:NSLocalizedString(@"childMessage", nil) duration:1];
+		[self displayHUDTitle:NSLocalizedString(@"childMessage", nil) message:nil duration:1];
         return;
     }
     //如果自动按钮点击，那么提示信息
    else if(_handOrAutoButton.selected) {
         //提示信息
-	   [self displayHUDTitle:nil message:NSLocalizedString(@"autoMessage", nil) duration:1];
+	   [self displayHUDTitle:NSLocalizedString(@"autoMessage", nil) message:nil duration:1];
         return;
     } else {
           //弹出选择框
@@ -472,15 +485,14 @@
     } else {
         if(_childLockButton.selected) {
             if(button == _handOrAutoButton || button == _sleepButton) {
-				[self displayHUDTitle:nil message:NSLocalizedString(@"childMessage", nil) duration:1];
+				[self displayHUDTitle:NSLocalizedString(@"childMessage", nil) message:nil duration:1];
                 return;
             }
         }
     }
 	
-    [self displayHUDTitle:NSLocalizedString(@"加载中...", nil) message:nil];
+	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
     dispatch_async(_networkQueue, ^{
-		
         BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
 		sendData.switchStatus = self.receivedData.switchStatus;
 		sendData.autoOrHand = self.receivedData.autoOrHand;
@@ -500,24 +512,16 @@
         NSData *response =[self sendDataCommon:sendData];
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
         if (code == 0) {
+			[self hideHUD:YES];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-            self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-            dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-                if(button == _handOrAutoButton) {
-					[self deviceAutoOn:self.receivedData.autoOrHand];
-				} else if (button == _switchButton) {
-					[self deviceOn:self.receivedData.switchStatus];
-                } else if (button == _sleepButton) {
-					[self deviceSleepOn:self.receivedData.sleepState];
-                } else if (button == _childLockButton) {
-					[self deviceChildLockOn:self.receivedData.childLockState];
-                }
+            _receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self refreshButtons];
 			});
 		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self hideHUD:YES];
-				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:1];
+				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
 			});
 		}
 	});
@@ -558,7 +562,7 @@
     if (old == speed)
         return;
     old = speed;
-	[self displayHUDTitle:NSLocalizedString(@"加载中...", nil) message:nil];
+	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
     dispatch_async(_networkQueue, ^{
         BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
         sendData.childLockState = self.receivedData.childLockState;
@@ -572,11 +576,11 @@
         if (code == 0) {
 			[self hideHUD:YES];
             NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-            self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+            _receivedData = [[BeiAngReceivedData alloc] initWithData:array];
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
 				[self hideHUD:YES];
-				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:1];
+				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
             });
         }
     });

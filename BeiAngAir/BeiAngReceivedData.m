@@ -47,15 +47,27 @@
 	return self;
 }
 
+- (NSNumber *)airQuality
+{
+	//这个1500, 30,20是贝昂给的系数
+	NSInteger quality = _airQualityData * 256 + _airQualityDataB;
+	if (quality > 1500) {
+		return @(quality / 30);
+	} else {
+		return @(quality / 20);
+	}
+}
+
 - (NSString *)airQualityDisplayString
 {
-	if (self.airQualityData >= 200) {
+	//这个也是参照贝昂安卓的公式
+	if ([self airQuality].floatValue >= 200) {
 		return NSLocalizedString(@"严重", nil);
-	} else if (self.airQualityData >= 150) {
+	} else if ([self airQuality].floatValue >= 150) {
 		return NSLocalizedString(@"差", nil);
-	} else if (self.airQualityData >= 100) {
+	} else if ([self airQuality].floatValue >= 100) {
 		return NSLocalizedString(@"中", nil);
-	} else if (self.airQualityData >= 50) {
+	} else if ([self airQuality].floatValue >= 50) {
 		return NSLocalizedString(@"良", nil);
 	}
 	return NSLocalizedString(@"优", nil);

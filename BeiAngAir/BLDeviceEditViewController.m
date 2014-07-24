@@ -278,7 +278,7 @@
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [button setSelected:![button isSelected]];
-				[self displayHUDTitle:nil message:[[responseData objectFromJSONData] objectForKey:@"msg"] duration:1];
+				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
             });
         }
     });
@@ -327,14 +327,14 @@
 			imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
 		}
 		else {
-			[self displayHUDTitle:nil message:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:1];
+			[self displayHUDTitle:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) message:nil duration:1];
 		}
 		[self presentViewController:imagePicker animated:YES completion:nil];
 	} else if (buttonIndex == 1) {
 		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
 			imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 		} else {
-			[self displayHUDTitle:nil message:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) duration:1];
+			[self displayHUDTitle:NSLocalizedString(@"DeviceInfoOpenCameraFailed", nil) message:nil duration:1];
 		}
 		[self presentViewController:imagePicker animated:YES completion:nil];
 	}
