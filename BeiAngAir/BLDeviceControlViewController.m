@@ -218,13 +218,34 @@
     [bottomView addSubview:_leftTimerLabel];
 	
 	[self refreshDevice];
+	NSLog(@"data: %@", _receivedData);
+}
+
+- (void)refreshInsideAirQuality
+{
+	if (!_switchButton.selected) {
+		return;
+	}
+
+	if ([[_receivedData airQualityDisplayString] isEqualToString:@"优"]) {
+		[_switchButton setImage:[UIImage imageNamed:@"power_on_1"] forState:UIControlStateNormal];
+	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"良"]) {
+		[_switchButton setImage:[UIImage imageNamed:@"power_on_2"] forState:UIControlStateNormal];
+	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"中"]) {
+		[_switchButton setImage:[UIImage imageNamed:@"power_on_3"] forState:UIControlStateNormal];
+	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"差"]) {
+		[_switchButton setImage:[UIImage imageNamed:@"power_on_4"] forState:UIControlStateNormal];
+	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"严重"]) {
+		[_switchButton setImage:[UIImage imageNamed:@"power_on_5"] forState:UIControlStateNormal];
+	}
 }
 
 - (void)refreshWeather
 {
 	NSLog(@"refreshWeather: %@", _weather);
 	_weatherLabel.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", _weather.cityName, _weather.temperateStrings, _weather.pm25, _weather.airQualityString];
-	if([_weather.airQualityLevel isEqualToString:@"4"]) {
+	
+	if(_weather.airQualityLevel.floatValue >= 4) {
 		self.view.backgroundColor = [UIColor colorAirPolluted];
 	} else {
 		self.view.backgroundColor = [UIColor greenColor];
@@ -233,7 +254,7 @@
 
 - (void)deviceOn:(BOOL)on
 {
-	NSString *onOrOff = on ? @"power_on" : @"power_off";
+	NSString *onOrOff = on ? @"power_on_1" : @"power_off";
 	NSString *highlighted = on ? @"power_on_press" : @"power_off_press";
 	[_switchButton setImage:[UIImage imageNamed:onOrOff] forState:UIControlStateNormal];
 	[_switchButton setImage:[UIImage imageNamed:highlighted] forState:UIControlStateHighlighted];
@@ -285,8 +306,6 @@
 			NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
 			BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
 			NSLog(@"BeiAngReceivedDataInfo: %@", receivedData);
-			NSLog(@"airdisplay: %@", [receivedData airQualityDisplayString]);
-			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				//[self performSelector:@selector(refreshDevice) withObject:nil afterDelay:3.0];
 			});

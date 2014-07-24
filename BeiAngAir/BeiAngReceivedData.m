@@ -63,7 +63,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"< switchState: %d>", self.switchStatus];
+	return [NSString stringWithFormat:@"< switchState: %d, airQualityData: %d, airQualityDataB: %d >", self.switchStatus, _airQualityData, _airQualityDataB];
 }
 
 @end
