@@ -321,10 +321,9 @@
                 [self.navigationController pushViewController:controller animated:YES];
             });
         } else {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-				[self hideHUD:YES];
-				[self displayHUDTitle:nil message:[[response objectFromJSONData] objectForKey:@"msg"] duration:2];
-            });
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self displayHUDTitle:NSLocalizedString(@"设备不可用", nil) message:nil duration:2];
+			});
         }
     });
 }

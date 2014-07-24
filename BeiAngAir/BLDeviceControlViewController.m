@@ -71,7 +71,7 @@
     [_locationManager startUpdatingLocation];
 
 	self.view.backgroundColor = [UIColor greenColor];
-	UIEdgeInsets edgeInsets = UIEdgeInsetsMake(10, 20, 0, 20);
+	UIEdgeInsets edgeInsets = UIEdgeInsetsMake(20, 30, 0, 30);
 	
 	CGRect viewFrame = CGRectZero;
 	viewFrame.origin.x = 20;
@@ -115,7 +115,7 @@
     [_airQualityLabel setBackgroundColor:[UIColor clearColor]];
 	_airQualityLabel.numberOfLines = 0;
     [_airQualityLabel setTextColor:[UIColor blackColor]];
-    [_airQualityLabel setFont:[UIFont systemFontOfSize:15.f]];
+    [_airQualityLabel setFont:[UIFont boldSystemFontOfSize:16]];
 	_airQualityLabel.textAlignment = NSTextAlignmentCenter;
 	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %@", NSLocalizedString(@"贝昂", nil), NSLocalizedString(@"室内PM2.5", nil), [_receivedData airQualityDisplayString] ?: @"良"];
     [bottomView addSubview:_airQualityLabel];
@@ -157,10 +157,11 @@
 	CGSize titleSize = CGSizeZero;
 	buttonSize = CGSizeMake(47, 47 + 15);
 	viewFrame.origin.x = edgeInsets.left;
-	viewFrame.origin.y = CGRectGetMaxY(_switchButton.frame);
+	viewFrame.origin.y = CGRectGetMaxY(_switchButton.frame) - 5;
 	viewFrame.size = buttonSize;
 	UIFont *font = [UIFont systemFontOfSize:13];
 	
+	//自动/手动
     _handOrAutoButton  = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_handOrAutoButton setFrame:viewFrame];
 	_handOrAutoButton.titleLabel.font = font;
@@ -189,7 +190,7 @@
     [_sleepButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:_sleepButton];
 
-	viewFrame.origin.x = self.view.frame.size.width - buttonSize.width - edgeInsets.top;
+	viewFrame.origin.x = self.view.frame.size.width - buttonSize.width - edgeInsets.right;
 	viewFrame.origin.y = _handOrAutoButton.frame.origin.y;
 
     _childLockButton  = [UIButton buttonWithType:UIButtonTypeCustom];
