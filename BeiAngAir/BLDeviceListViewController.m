@@ -282,7 +282,7 @@
 		
 		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n已运行%d小时%d分钟", status, device.hour, device.minute];
 		NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:statusAndrunTime];
-		if (YES) {
+		if (device.hour >= 50) {
 			NSAttributedString *subString = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" 请清洗", nil) attributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont systemFontOfSize:13]}];
 			[attributedString appendAttributedString:subString];
 		}
