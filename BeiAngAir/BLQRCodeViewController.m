@@ -39,6 +39,12 @@
 	[self.view addSubview:imageView];
 	[imageView addGestureRecognizer:tapGestureRecognizer];
 	[self.view addGestureRecognizer:tapGestureRecognizer];
+	
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame) + 25, self.view.frame.size.width, 60)];
+	label.textAlignment = NSTextAlignmentCenter;
+	label.numberOfLines = 0;
+	label.text = NSLocalizedString(@"扫描二维码关注我们\n即可享受我们的微客服哦!", nil);
+	[self.view addSubview:label];
 }
 
 - (void)didReceiveMemoryWarning
