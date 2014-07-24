@@ -34,13 +34,11 @@
     //图标
     CGRect viewFrame = CGRectZero;
     UIImage *image = [UIImage imageNamed:@"home_logo"];
-	viewFrame.origin.y = 30;
+	viewFrame.origin.y = 100;
 	viewFrame.origin.x = (self.view.frame.size.width - image.size.width) / 2;
     viewFrame.size = image.size;
     UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:viewFrame];
     [logoImageView setImage:image];
-    [logoImageView.layer setCornerRadius:10.0f];
-    [logoImageView.layer setMasksToBounds:YES];
     [self.view addSubview:logoImageView];
     
     //服务电话

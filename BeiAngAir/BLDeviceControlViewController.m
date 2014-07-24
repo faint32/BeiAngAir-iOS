@@ -50,7 +50,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"home_logo"] style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonClick:)];
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Airdog", nil) style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonClick:)];
     }
     return self;
 }
