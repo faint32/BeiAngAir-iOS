@@ -246,36 +246,19 @@
 
 - (void)okButtonClicked:(UIButton *)button
 {
+	if (_nameTextField.text.length) {
+		_device.localName = _nameTextField.text;
+		[_device persistence];
+	}
     dispatch_async(networkQueue, ^{
-        NSString *name = [_nameTextField text];
-        [self.device setName:name];
         [self.device setLock:_lockButton.isSelected];
-		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:self.device.mac name:name lock:@(self.device.lock)];
+		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:@(self.device.lock)];
         NSData *requestData = [dictionary JSONData];
         NSData *responseData = [networkAPI requestDispatch:requestData];
-        NSLog(@"[[[responseData objectFromJSONData] = %d",[[[responseData objectFromJSONData] objectForKey:@"code"] intValue]);
-        if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0)
-        {
-			//TODO: 这里逻辑不太对，不需要把deviceArray存到appDelegate的变量里作为全局变量来使用
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                self.deviceInfo = deviceInfo;
-//                BLModuleInfomation *moduleInfomation = [[BLModuleInfomation alloc] init];
-//                moduleInfomation.info = self.deviceInfo;
-//                [sqlite insertOrUpdateModuleInfo:moduleInfomation];
-//                for (int i=0; i<appDelegate.deviceArray.count; i++)
-//                {
-//                    BLDeviceInfo *info = [appDelegate.deviceArray objectAtIndex:i];
-//                    if (info.mac == self.deviceInfo.mac)
-//                    {
-//                        [appDelegate.deviceArray replaceObjectAtIndex:i withObject:self.deviceInfo];
-//                        break;
-//                    }
-//                }
-//                [self dismissViewControllerAnimated:YES completion:nil];
-//            });
-        }
-        else
-        {
+//        NSLog(@"[[[responseData objectFromJSONData] = %d",[[[responseData objectFromJSONData] objectForKey:@"code"] intValue]);
+        if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
+			[self dismissViewControllerAnimated:YES completion:nil];
+        } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [button setSelected:![button isSelected]];
 				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];

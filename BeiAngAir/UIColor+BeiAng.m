@@ -12,7 +12,7 @@
 
 + (instancetype)themeBlue
 {
-	return [UIColor colorWithRed:1/255.0f green:178/255.0f blue:249/255.0f alpha:1.0f];
+	return [UIColor colorWithRed:108/255.0f green:179/255.0f blue:253/255.0f alpha:1.0f];
 }
 
 + (instancetype)colorAirPolluted

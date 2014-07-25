@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 BroadLink. All rights reserved.
 //
 
+#import "BLDevice.h"
+
 typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	BROADLINK_SP1 = 0,
 	BROADLINK_BeiAngAir = 13,
@@ -17,8 +19,7 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	BROADLINK_A1 = 10004
 };
 
-#import "BLDevice.h"
-
+#define kLocalName @"localName"
 #define kDevices @"devices"
 #define kMac @"mac"
 #define kType @"type"
@@ -62,6 +63,9 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	attributes[kTerminalID] = @(self.terminal_id);
 	attributes[kSubDevice] = @(self.sub_device);
 	attributes[kKey] = self.key ?: @"";
+	if (self.localName) {
+		attributes[kLocalName] = self.localName;
+	}
 	
 	NSArray *multiAttributes = [[NSUserDefaults standardUserDefaults] objectForKey:kDevices];
 	NSMutableArray *new = multiAttributes ? [NSMutableArray arrayWithArray:multiAttributes] : [NSMutableArray array];

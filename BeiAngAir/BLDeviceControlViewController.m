@@ -237,7 +237,7 @@
 		[_switchButton setImage:[UIImage imageNamed:@"power_on_5"] forState:UIControlStateNormal];
 	}
 	
-	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %d %@", NSLocalizedString(@"贝昂研发", nil), NSLocalizedString(@"室内PM2.5:", nil), [[_receivedData airQuality] integerValue] ,[_receivedData airQualityDisplayString] ?: @"良"];
+	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %d %@", _device.localName ?: _device.name, NSLocalizedString(@"室内PM2.5:", nil), [[_receivedData airQuality] integerValue] ,[_receivedData airQualityDisplayString] ?: @"良"];
 }
 
 - (void)refreshWeather

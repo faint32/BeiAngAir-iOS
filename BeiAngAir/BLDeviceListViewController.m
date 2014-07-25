@@ -225,7 +225,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80.0f;
+    return 60.0f;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -272,7 +272,7 @@
 	cell.imageView.tag = indexPath.row;
 	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editDeviceAvatar:)];
 	[cell.imageView addGestureRecognizer:tapGestureRecognizer];
-	cell.textLabel.text = device.name;
+	cell.textLabel.text = device.localName ?: device.name;
 
 	if (device.isRefresh) {
 		NSString *status = NSLocalizedString(@"设备已关闭", nil);

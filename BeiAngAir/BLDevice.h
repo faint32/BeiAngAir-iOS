@@ -10,6 +10,7 @@
 
 @interface BLDevice : NSObject
 
+@property (nonatomic, strong) NSString *localName;//用户修改的设备名称，只保存在app中，不上传到设备上
 @property (nonatomic, strong) NSString *mac;
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *name;
