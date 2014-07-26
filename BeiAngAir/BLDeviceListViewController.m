@@ -118,12 +118,13 @@
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
 		NSLog(@"objectFromJSONData: %@", [response objectFromJSONData]);
         if (code == 0) {
+			NSMutableArray *tmpDevices = [NSMutableArray array];
             NSArray *list = [[response objectFromJSONData] objectForKey:@"list"];
 			NSLog(@"prob count: %d", list.count);
             for (int i = 0; i < list.count; i++) {
-                BLDevice *device = [[BLDevice alloc] init];
-                NSDictionary *item = [list objectAtIndex:i];
-                [device setMac:[item objectForKey:@"mac"]];
+				NSDictionary *item = [list objectAtIndex:i];
+				BLDevice *device = [[BLDevice alloc] init];
+                [device setMac:item[@"mac"]];
                 [device setType:[item objectForKey:@"type"]];
                 [device setName:[item objectForKey:@"name"]];
                 [device setLock:[[item objectForKey:@"lock"] intValue]];
@@ -134,14 +135,14 @@
 				
 				if (![device hadPersistenced]) {
 					if ([device isBeiAngAirDevice]) {
+						device.lock = 1;//添加的设备要锁起来
 						[device persistence];
-						NSLog(@"persistence");
-						[_devices addObject:device];
-						
 					}
 				}
+				[tmpDevices addObject:device];
 				[self addDeviceInfo:device];
 			}
+			_devices = tmpDevices;
 
             dispatch_async(dispatch_get_main_queue(), ^{
 				[self.tableView reloadData];

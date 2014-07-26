@@ -76,18 +76,6 @@
     [titleLabel setFrame:viewFrame];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
 //    [headerView addSubview:titleLabel];//TODO: hide
-
-	//TODO:
-//    UIImage *image = [UIImage imageNamed:@"left"];
-//    viewFrame = CGRectZero;
-//    viewFrame.origin.x = 10.0f;
-//    viewFrame.size = image.size;
-//    viewFrame.origin.y = ((IsiOS7Later) ? 20.0f : 0.0f) + (44.0f - image.size.height) * 0.5f;
-//    UIButton *backButton = [[UIButton alloc] initWithFrame:viewFrame];
-//    [backButton setBackgroundColor:[UIColor clearColor]];
-//    [backButton setImage:image forState:UIControlStateNormal];
-//    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    [headerView addSubview:backButton];
 	
 	UIImage *image = [self.device avatar];
     viewFrame = headerView.frame;
@@ -161,15 +149,14 @@
     [lockView addSubview:lockLabel];
     viewFrame = lockView.frame;
     viewFrame.origin = CGPointZero;
-    image = [UIImage imageNamed:@"off"];
+    image = [UIImage imageNamed:@"unlocked"];
     _lockButton = [[UIButton alloc] initWithFrame:viewFrame];
     [_lockButton setBackgroundColor:[UIColor clearColor]];
     [_lockButton setImageEdgeInsets:UIEdgeInsetsMake((viewFrame.size.height - image.size.height) * 0.5f, viewFrame.size.width - image.size.width - 10.0f, (viewFrame.size.height - image.size.height) * 0.5f, 10.0f)];
     [_lockButton setImage:image forState:UIControlStateNormal];
-    image = [UIImage imageNamed:@"on"];
-    [_lockButton setImage:image forState:UIControlStateSelected];
+    [_lockButton setImage:[UIImage imageNamed:@"locked"] forState:UIControlStateSelected];
     [_lockButton addTarget:self action:@selector(lockButtonclicked:) forControlEvents:UIControlEventTouchUpInside];
-    [_lockButton setSelected:self.device.lock];
+    [_lockButton setSelected:self.device.lock == 1];
     [lockView addSubview:_lockButton];
     
     viewFrame = lockView.frame;
@@ -241,7 +228,32 @@
 
 - (void)lockButtonclicked:(UIButton *)button
 {
-    [button setSelected:![button isSelected]];
+	[self lockDevice:@(!button.selected)];
+}
+
+- (void)lockDevice:(NSNumber *)locked
+{
+	NSString *title = locked ? NSLocalizedString(@"锁定中...", nil) : NSLocalizedString(@"解锁中...", nil);
+	[self displayHUD:title];
+	dispatch_async(networkQueue, ^{
+		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:locked];
+        NSData *requestData = [dictionary JSONData];
+        NSData *responseData = [networkAPI requestDispatch:requestData];
+        if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self hideHUD:YES];
+				_lockButton.selected = locked.boolValue;
+				_lockButton.selected = locked.boolValue;
+				[self performSelector:@selector(lockDevice:) withObject:@(YES) afterDelay:120];//120秒后再锁定设备
+			});
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+				[self hideHUD:YES];
+				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
+            });
+        }
+    });
+
 }
 
 - (void)okButtonClicked:(UIButton *)button
@@ -251,16 +263,14 @@
 		[_device persistence];
 	}
     dispatch_async(networkQueue, ^{
-        [self.device setLock:_lockButton.isSelected];
-		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:@(self.device.lock)];
+		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:@(1)];//离开这个界面的时候把设备锁定
         NSData *requestData = [dictionary JSONData];
         NSData *responseData = [networkAPI requestDispatch:requestData];
-//        NSLog(@"[[[responseData objectFromJSONData] = %d",[[[responseData objectFromJSONData] objectForKey:@"code"] intValue]);
         if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
+			self.device.lock = 1;
 			[self dismissViewControllerAnimated:YES completion:nil];
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [button setSelected:![button isSelected]];
 				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
             });
         }
