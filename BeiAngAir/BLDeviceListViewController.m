@@ -24,6 +24,7 @@
 @property (nonatomic, strong) BLNetwork *networkAPI;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *devices;
+@property (nonatomic, strong) BeiAngReceivedData *receivedData;
 
 @end
 
@@ -118,7 +119,7 @@
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
 		NSLog(@"objectFromJSONData: %@", [response objectFromJSONData]);
         if (code == 0) {
-			NSMutableArray *tmpDevices = [NSMutableArray array];
+			//NSMutableArray *tmpDevices = [NSMutableArray array];
             NSArray *list = [[response objectFromJSONData] objectForKey:@"list"];
 			NSLog(@"prob count: %d", list.count);
             for (int i = 0; i < list.count; i++) {
@@ -139,10 +140,10 @@
 						[device persistence];
 					}
 				}
-				[tmpDevices addObject:device];
+				//[tmpDevices addObject:device];
 				[self addDeviceInfo:device];
 			}
-			_devices = tmpDevices;
+			//_devices = tmpDevices;
 
             dispatch_async(dispatch_get_main_queue(), ^{
 				[self.tableView reloadData];
@@ -181,11 +182,12 @@
 					int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
 					if (code == 0) {
 						NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
+						_receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+						device.switchState = _receivedData.switchStatus;
 						device.hour = [array[9] intValue];
 						device.minute = [array[10] intValue];
-						device.sleepState = [array[7] intValue];
+						device.sleepState = _receivedData.sleepState;
 						device.isRefresh = YES;
-						device.switchState = [array[4] intValue];
 						dispatch_async(dispatch_get_main_queue(), ^{
 							[self.tableView reloadData];
 						});
