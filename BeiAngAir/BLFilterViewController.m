@@ -42,22 +42,6 @@
 
 @implementation BLFilterViewController
 
-- (void)dealloc
-{
-    dispatch_release(networkQueue);
-    _buttonCancel = nil;
-    _buttonClose = nil;
-    _imageViewCancel = nil;
-    _imageViewClose = nil;
-    _selectedView = nil;
-    _lastSelectedButton = nil;
-    _labelCancel = nil;
-    _labelClose = nil;
-    _labelSelected = nil;
-    [_refreshInfoTimer invalidate];
-    _labelSelected = nil;
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

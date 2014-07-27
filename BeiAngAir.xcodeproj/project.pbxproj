@@ -673,7 +673,7 @@
 				ORGANIZATIONNAME = BroadLink;
 				TargetAttributes = {
 					2FAE501B18F78C470068893E = {
-						DevelopmentTeam = JHC5FJN4U9;
+						DevelopmentTeam = YQS26L7NNP;
 					};
 				};
 			};
@@ -922,7 +922,7 @@
 					"${SDK_DIR}/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "BeiAngAir/BeiAngAir-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/BroadLink",
@@ -960,7 +960,7 @@
 					"${SDK_DIR}/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "BeiAngAir/BeiAngAir-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/BroadLink",

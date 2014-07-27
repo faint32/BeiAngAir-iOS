@@ -28,11 +28,6 @@
 
 @implementation BLDeviceEditViewController
 
-- (void)dealloc
-{
-	dispatch_release(networkQueue);
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
