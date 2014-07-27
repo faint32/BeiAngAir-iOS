@@ -25,8 +25,8 @@
 
 @interface BLDeviceControlViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 
-@property (nonatomic, assign) dispatch_queue_t httpQueue;
-@property (nonatomic, assign) dispatch_queue_t networkQueue;
+@property (nonatomic, strong) dispatch_queue_t httpQueue;
+@property (nonatomic, strong) dispatch_queue_t networkQueue;
 @property (nonatomic, strong) BLNetwork *networkAPI;
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UILabel *airQualityLabel;

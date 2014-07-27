@@ -20,7 +20,7 @@
 
 @interface BLDeviceListViewController ()
 
-@property (nonatomic, assign) dispatch_queue_t networkQueue;
+@property (nonatomic, strong) dispatch_queue_t networkQueue;
 @property (nonatomic, strong) BLNetwork *networkAPI;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *devices;
