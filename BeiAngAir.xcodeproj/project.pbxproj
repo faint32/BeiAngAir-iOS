@@ -39,6 +39,7 @@
 		771F07EE196F975300B41955 /* UIColor+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07ED196F975300B41955 /* UIColor+BeiAng.m */; };
 		771F07F5196FABCF00B41955 /* Wifi.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F4196FABCF00B41955 /* Wifi.m */; };
 		771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */; };
+		773EE6621986028C00277F47 /* BLScheduleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 773EE6611986028C00277F47 /* BLScheduleManager.m */; };
 		775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */; };
 		775EB22D1973DA5B00E4A0AB /* BLDeviceControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21F1973DA5B00E4A0AB /* BLDeviceControlViewController.m */; };
 		775EB2301973DA5B00E4A0AB /* BLDeviceEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2251973DA5B00E4A0AB /* BLDeviceEditViewController.m */; };
@@ -166,6 +167,8 @@
 		771F07F4196FABCF00B41955 /* Wifi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wifi.m; sourceTree = "<group>"; };
 		771F07F6196FCFC800B41955 /* NSDictionary+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+BeiAng.h"; sourceTree = "<group>"; };
 		771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+BeiAng.m"; sourceTree = "<group>"; };
+		773EE6601986028C00277F47 /* BLScheduleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLScheduleManager.h; sourceTree = "<group>"; };
+		773EE6611986028C00277F47 /* BLScheduleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLScheduleManager.m; sourceTree = "<group>"; };
 		775EB21C1973DA5B00E4A0AB /* BLAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAboutViewController.h; path = BeiAngAir/BLAboutViewController.h; sourceTree = SOURCE_ROOT; };
 		775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAboutViewController.m; path = BeiAngAir/BLAboutViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB21E1973DA5B00E4A0AB /* BLDeviceControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceControlViewController.h; path = BeiAngAir/BLDeviceControlViewController.h; sourceTree = SOURCE_ROOT; };
@@ -406,9 +409,11 @@
 		2FAE502518F78C470068893E /* BeiAngAir */ = {
 			isa = PBXGroup;
 			children = (
+				2FAE513018F7C18E0068893E /* GlobalDefine.h */,
 				2FAE502E18F78C470068893E /* BLAppDelegate.h */,
 				2FAE502F18F78C470068893E /* BLAppDelegate.m */,
-				2FAE513018F7C18E0068893E /* GlobalDefine.h */,
+				773EE6601986028C00277F47 /* BLScheduleManager.h */,
+				773EE6611986028C00277F47 /* BLScheduleManager.m */,
 				7700C719196E86C90001561F /* Categories */,
 				7700C703196E67B10001561F /* Models */,
 				2FAE512518F7BDEB0068893E /* Controllers */,
@@ -774,6 +779,7 @@
 				7700C709196E690F0001561F /* BLDevice.m in Sources */,
 				BAAE38C0194089EE002C97C8 /* SBJsonStreamWriter.m in Sources */,
 				77D9E3281980981F004AC675 /* MBProgressHUD+Appearance.m in Sources */,
+				773EE6621986028C00277F47 /* BLScheduleManager.m in Sources */,
 				775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */,
 				BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */,
 				BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */,

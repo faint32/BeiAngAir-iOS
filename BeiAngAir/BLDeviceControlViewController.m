@@ -205,11 +205,12 @@
     [bottomView addSubview:_childLockButton];
 	
     viewFrame.origin.x =  0;
-    viewFrame.origin.y = bottomView.frame.size.height - 40;
+    viewFrame.origin.y = bottomView.frame.size.height - 20;
     viewFrame.size.width = self.view.frame.size.width;
     viewFrame.size.height = 20;
 	
     _leftTimerLabel = [[UILabel alloc] initWithFrame:viewFrame];
+	_leftTimerLabel.font = [UIFont systemFontOfSize:13];
     [_leftTimerLabel setBackgroundColor:[UIColor clearColor]];
     [_leftTimerLabel setTextColor:[UIColor blackColor]];
     [_leftTimerLabel setTextAlignment:NSTextAlignmentCenter];

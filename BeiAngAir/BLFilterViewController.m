@@ -13,6 +13,7 @@
 #import "BLZSIndicatorProgress.h"
 #import "BLNetwork.h"
 #import "JSONKit.h"
+#import "BLScheduleManager.h"
 
 @interface BLFilterViewController ()<iCarouselDataSource, iCarouselDelegate>
 {
@@ -255,95 +256,98 @@
 	} else {
         double second = iMinPickerFrom.currentItemIndex * 60 + iHourPickerFrom.currentItemIndex * 3600;
         NSLog(@"second = %f",second);
-         //插入数据库
+		
+		BOOL on = YES;
         BLTimerInfomation *timerInfomation = [[BLTimerInfomation alloc] init];
         timerInfomation.secondCount = second;//定时秒数
         //开机状态
         if(_lastSelectedButton == _buttonCancel) {
             //定时开机
             timerInfomation.switchState = 1;
+			on = YES;
         }
         else if (_lastSelectedButton == _buttonClose)
         {
             timerInfomation.switchState = 0;
+			on = NO;
         }
+		[[BLScheduleManager shared] scheduleOnOrOff:on afterDelay:second MAC:_device.mac];
+		
         //当前时间戳
         NSDate *datenow = [NSDate date];
         timerInfomation.secondSince = (long)[datenow timeIntervalSince1970];
         NSLog(@"timerInfomation.secondSince = %ld",timerInfomation.secondSince);
 		[timerInfomation persistence];
 
-        //定时任务
-        _refreshInfoTimer = [NSTimer  timerWithTimeInterval:second target:self selector:@selector(runTimer) userInfo:nil repeats:YES];
-        [[NSRunLoop  currentRunLoop] addTimer:_refreshInfoTimer forMode:NSDefaultRunLoopMode];
-        [_refreshInfoTimer fire];
+//        //定时任务
+//        _refreshInfoTimer = [NSTimer  timerWithTimeInterval:second target:self selector:@selector(runTimer) userInfo:nil repeats:NO];
+//        [[NSRunLoop  currentRunLoop] addTimer:_refreshInfoTimer forMode:NSDefaultRunLoopMode];
+//        [_refreshInfoTimer fire];
         //返回按钮
         [self returnButtonClick];
     }
 }
-
--(void)runTimer
-{
-    NSLog(@"_tmpTimerCount = %d",_tmpTimerCount);
-    if(_tmpTimerCount == 0) {
-        _tmpTimerCount ++;
-        return;
-    }
-    //实例
-    BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
-    //判断点击的按钮
-    if(_lastSelectedButton == _buttonCancel) {
-        //定时开机
-        NSLog(@"_buttonCancel");
-        sendData.switchStatus = 1;
-    } else if (_lastSelectedButton == _buttonClose) {
-        NSLog(@"_buttonClose");
-        sendData.switchStatus = 0;
-    }
-    //定时任务设置
-    sendData.childLockState = self.receivedData.childLockState;
-    [sendData setAutoOrHand:self.receivedData.autoOrHand];
-    sendData.sleepState = self.receivedData.sleepState;
-    sendData.gearState = self.receivedData.gearState;
-    
-    //发送数据
-	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
-    dispatch_async(networkQueue, ^{
-        //数据透传
-        NSData *response = [[NSData alloc] init];
-        int code =[self sendDataCommon:sendData response:response];
-        if (code == 0) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-                NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-                self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-                [_refreshInfoTimer invalidate];
-                _refreshInfoTimer = nil;
-                //更新数据库
-                BLTimerInfomation *timerInfomation = [[BLTimerInfomation alloc] init];
-                timerInfomation.switchState = _receivedData.switchStatus;
-                timerInfomation.secondSince = 0;
-                timerInfomation.secondCount = 0;//定时秒数
-				[timerInfomation persistence];
-            });
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
-            });
-        }
-    });
-}
-
-//发送数据
--(int)sendDataCommon:(BeiAngSendData *)sendInfo response:(NSData *)response
-{
-	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.device.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
-	NSData *sendData = [dictionary JSONData];
-    response = [networkAPI requestDispatch:sendData];
-    int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-    return code;
-}
+//
+//-(void)runTimer
+//{
+//    NSLog(@"_tmpTimerCount = %d",_tmpTimerCount);
+//    if(_tmpTimerCount == 0) {
+//        _tmpTimerCount ++;
+//        return;
+//    }
+//    //实例
+//    BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
+//    //判断点击的按钮
+//    if(_lastSelectedButton == _buttonCancel) {
+//        //定时开机
+//        NSLog(@"_buttonCancel");
+//        sendData.switchStatus = 1;
+//    } else if (_lastSelectedButton == _buttonClose) {
+//        NSLog(@"_buttonClose");
+//        sendData.switchStatus = 0;
+//    }
+//    //定时任务设置
+//    sendData.childLockState = self.receivedData.childLockState;
+//    [sendData setAutoOrHand:self.receivedData.autoOrHand];
+//    sendData.sleepState = self.receivedData.sleepState;
+//    sendData.gearState = self.receivedData.gearState;
+//    
+//    //发送数据
+//	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
+//    dispatch_async(networkQueue, ^{
+//        //数据透传
+//        NSData *response = [[NSData alloc] init];
+//        int code =[self sendDataCommon:sendData response:response];
+//        if (code == 0) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//				[self hideHUD:YES];
+//                NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
+//                self.receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+//                //更新数据库
+//                BLTimerInfomation *timerInfomation = [[BLTimerInfomation alloc] init];
+//                timerInfomation.switchState = _receivedData.switchStatus;
+//                timerInfomation.secondSince = 0;
+//                timerInfomation.secondCount = 0;//定时秒数
+//				[timerInfomation persistence];
+//            });
+//        } else {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//				[self hideHUD:YES];
+//				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
+//            });
+//        }
+//    });
+//}
+//
+////发送数据
+//-(int)sendDataCommon:(BeiAngSendData *)sendInfo response:(NSData *)response
+//{
+//	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.device.mac switchStatus:@(sendInfo.switchStatus) autoOrManual:@(sendInfo.autoOrHand) gearState:@(sendInfo.gearState) sleepState:@(sendInfo.sleepState) childLockState:@(sendInfo.childLockState)];
+//	NSData *sendData = [dictionary JSONData];
+//    response = [networkAPI requestDispatch:sendData];
+//    int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+//    return code;
+//}
 
 //返回按钮点击事件
 -(void)returnButtonClick

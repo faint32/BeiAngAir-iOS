@@ -118,7 +118,6 @@
         int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
 		NSLog(@"objectFromJSONData: %@", [response objectFromJSONData]);
         if (code == 0) {
-			//NSMutableArray *tmpDevices = [NSMutableArray array];
             NSArray *list = [[response objectFromJSONData] objectForKey:@"list"];
 			NSLog(@"prob count: %d", list.count);
             for (int i = 0; i < list.count; i++) {
@@ -137,12 +136,11 @@
 					if ([device isBeiAngAirDevice]) {
 						device.lock = 1;//添加的设备要锁起来
 						[device persistence];
+						[_devices addObject:device];
 					}
 				}
-				//[tmpDevices addObject:device];
 				[self addDeviceInfo:device];
 			}
-			//_devices = tmpDevices;
 
             dispatch_async(dispatch_get_main_queue(), ^{
 				[self.tableView reloadData];
@@ -352,6 +350,7 @@
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self.refreshControl endRefreshing];
 				[self.tableView reloadData];
+				[self performSelector:@selector(doInBackground) withObject:nil afterDelay:5];
 			});
         });
     });  

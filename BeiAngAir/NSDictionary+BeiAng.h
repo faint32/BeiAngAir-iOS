@@ -19,6 +19,7 @@
 + (instancetype)dictionaryDeviceDeleteWithMAC:(NSString *)MAC;
 + (instancetype)dictionaryDeviceAddWithMAC:(NSString *)MAC name:(NSString *)name type:(NSString *)type lock:(NSNumber *)lock password:(NSNumber *)password terminalID:(NSNumber *)terminalID subDevice:(NSNumber *)subDevice key:(NSString *)key;
 + (instancetype)dictionaryPassthroughWithMAC:(NSString *)MAC;
++ (instancetype)dictionaryPassthroughWithMAC:(NSString *)MAC switchStatus:(NSNumber *)switchStatus;
 + (instancetype)dictionaryPassthroughWithMAC:(NSString *)MAC switchStatus:(NSNumber *)switchStatus autoOrManual:(NSNumber *)autoOrManual gearState:(NSNumber *)gearState sleepState:(NSNumber *)sleepState childLockState:(NSNumber *)childLockState;
 
 @end

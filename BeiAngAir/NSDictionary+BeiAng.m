@@ -121,8 +121,27 @@
 	NSMutableArray *dataArray = [NSMutableArray array];
 	for (int i = 0; i <= 24; i++){
 		if(i == 0) [dataArray addObject:@(0xfe)];
-		else if(i == 1) [dataArray addObject:@(0x45)];
+		else if(i == 1) [dataArray addObject:@(0x45)];//查询
 		else if(i == 23) [dataArray addObject:@(0x00)];
+		else if(i == 24) [dataArray addObject:@(0xaa)];
+		else [dataArray addObject:@(0x00)];
+	}
+	dictionary[kData] = dataArray;
+	return dictionary;
+}
+
++ (instancetype)dictionaryPassthroughWithMAC:(NSString *)MAC switchStatus:(NSNumber *)switchStatus
+{
+	NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+	dictionary[kAPIID] = @(9000);
+	dictionary[kCommand] = @"passthrough";
+	dictionary[kMAC] = MAC;
+	dictionary[kFormat] = @"bytes";
+	NSMutableArray *dataArray = [NSMutableArray array];
+	for (int i = 0; i <= 24; i++) {
+		if(i == 0) [dataArray addObject:[NSNumber numberWithInt:0xfe]];
+		else if(i == 1) [dataArray addObject:@(0x41)];//app控制设备
+		else if(i == 4) [dataArray addObject:switchStatus];
 		else if(i == 24) [dataArray addObject:@(0xaa)];
 		else [dataArray addObject:@(0x00)];
 	}
