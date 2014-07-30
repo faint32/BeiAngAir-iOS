@@ -255,6 +255,7 @@
 {
 	if (_nameTextField.text.length) {
 		_device.localName = _nameTextField.text;
+		[_device remove];
 		[_device persistence];
 	}
     dispatch_async(networkQueue, ^{

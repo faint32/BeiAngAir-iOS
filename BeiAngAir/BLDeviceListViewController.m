@@ -90,11 +90,13 @@
 	_devices = [[BLDevice allDevices] mutableCopy];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doInBackground) name:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
+	
+	[self doInBackground];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	[self doInBackground];
+	
 }
 
 - (void)dealloc
@@ -144,7 +146,7 @@
 
             dispatch_async(dispatch_get_main_queue(), ^{
 				[self.tableView reloadData];
-				[self performSelector:@selector(getDeviceInfoList) withObject:nil afterDelay:2.0];
+				[self performSelector:@selector(getDeviceInfoList) withObject:nil afterDelay:3.0];
             });
 		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
@@ -158,39 +160,37 @@
 /*Refresh device list.*/
 - (void)getDeviceInfoList
 {
-	@synchronized(_devices) {
-		for (int i = 0; i < _devices.count; i++) {
-			BLDevice *device = _devices[i];
-			NSDictionary *dictionary = [NSDictionary dictionaryDeviceStateWithMAC:device.mac];
-			NSData *requestData = [dictionary JSONData];
-			NSData *responseData = [_networkAPI requestDispatch:requestData];
-			NSString *state = @"";
-			NSLog(@"DeviceStateWithMAC: %@", [responseData objectFromJSONData]);
-			if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
-				state = [[responseData objectFromJSONData] objectForKey:@"status"];
-			}
-			
-			if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
-				dispatch_async(_networkQueue, ^{
-					//数据透传
-					NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:device.mac];
-					NSData *sendData = [dictionary JSONData];
-					NSData *response = [_networkAPI requestDispatch:sendData];
-					int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-					if (code == 0) {
-						NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-						_receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-						device.switchState = _receivedData.switchStatus;
-						device.hour = [array[9] intValue];
-						device.minute = [array[10] intValue];
-						device.sleepState = _receivedData.sleepState;
-						device.isRefresh = YES;
-						dispatch_async(dispatch_get_main_queue(), ^{
-							[self.tableView reloadData];
-						});
-					}
-				});
-			}
+	for (int i = 0; i < _devices.count; i++) {
+		BLDevice *device = _devices[i];
+		NSDictionary *dictionary = [NSDictionary dictionaryDeviceStateWithMAC:device.mac];
+		NSData *requestData = [dictionary JSONData];
+		NSData *responseData = [_networkAPI requestDispatch:requestData];
+		NSString *state = @"";
+		NSLog(@"DeviceStateWithMAC: %@", [responseData objectFromJSONData]);
+		if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
+			state = [[responseData objectFromJSONData] objectForKey:@"status"];
+		}
+		
+		if ([state isEqualToString:@"LOCAL"] || [state isEqualToString:@"REMOTE"]) {
+			dispatch_async(_networkQueue, ^{
+				//数据透传
+				NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:device.mac];
+				NSData *sendData = [dictionary JSONData];
+				NSData *response = [_networkAPI requestDispatch:sendData];
+				int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+				if (code == 0) {
+					NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
+					_receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+					device.switchState = _receivedData.switchStatus;
+					device.hour = [array[9] intValue];
+					device.minute = [array[10] intValue];
+					device.sleepState = _receivedData.sleepState;
+					device.isRefresh = YES;
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self.tableView reloadData];
+					});
+				}
+			});
 		}
 	}
 }
@@ -198,11 +198,18 @@
 - (void)addDeviceInfo:(BLDevice *)info
 {
     dispatch_async(_networkQueue, ^{
+		NSLog(@"lock: %d", info.lock);
 		NSDictionary *dictionary = [NSDictionary dictionaryDeviceAddWithMAC:info.mac name:info.name type:info.type lock:@(info.lock) password:@(info.password) terminalID:@(info.terminal_id) subDevice:@(info.sub_device) key:info.key];
         NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
         if ([[[response objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
             NSLog(@"Add device:%@ success", info.mac);
+			
+			dispatch_async(_networkQueue, ^{//locak device
+				NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:info.mac name:info.name lock:@(1)];
+				NSData *sendData = [dictionary JSONData];
+				[_networkAPI requestDispatch:sendData];
+			});
         }
     });
 }
@@ -236,19 +243,19 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+		[self displayHUD:NSLocalizedString(@"正在删除", nil)];
         dispatch_async(_networkQueue, ^{
             BLDevice *device = _devices[indexPath.row];
 			NSDictionary *dictionary = [NSDictionary dictionaryDeviceDeleteWithMAC:device.mac];
             NSData *sendData = [dictionary JSONData];
             NSData *response = [_networkAPI requestDispatch:sendData];
             int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-            if (code == 0) {
-				[_devices removeObject:device];
-				[device remove];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [tableView reloadData];
-                });
-            }
+			[_devices removeObject:device];
+			[device remove];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self hideHUD:YES];
+				[tableView reloadData];
+			});
         });
     }
 }
@@ -349,7 +356,6 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self.refreshControl endRefreshing];
-				[self.tableView reloadData];
 				[self performSelector:@selector(doInBackground) withObject:nil afterDelay:5];
 			});
         });

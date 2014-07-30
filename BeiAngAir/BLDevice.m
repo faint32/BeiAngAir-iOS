@@ -142,6 +142,7 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	device.terminal_id = [attributes[kTerminalID] integerValue];
 	device.sub_device = [attributes[kSubDevice] integerValue];
 	device.key = attributes[kKey];
+	device.localName = attributes[kLocalName];
 	return device;
 }
 
@@ -162,7 +163,7 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<mac: %@, type: %@, name: %@, key: %@>", self.mac, self.type, self.name, self.key];
+	return [NSString stringWithFormat:@"<localname: %@, mac: %@, type: %@, name: %@, key: %@>", self.localName, self.mac, self.type, self.name, self.key];
 }
 
 @end
