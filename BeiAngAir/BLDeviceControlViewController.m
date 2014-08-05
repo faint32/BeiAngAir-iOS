@@ -22,6 +22,7 @@
 #import "BLNetwork.h"
 #import "Weather.h"
 #import "BLShareViewController.h"
+#import "BLScheduleManager.h"
 
 @interface BLDeviceControlViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 
@@ -218,6 +219,43 @@
     [bottomView addSubview:_leftTimerLabel];
 	
 	[self refreshDevice];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scheduleDeviceOver) name:[[BLScheduleManager shared] scheduleNotificationIdentity] object:nil];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //插入定时数据
+    BLTimerInfomation *timerInfomation = [BLTimerInfomation timerInfomation];
+    if(timerInfomation) {
+        //判断定时时间已经过去
+        NSDate *datenow = [NSDate date];
+        long currentSecond = (long)[datenow timeIntervalSince1970];
+        if(currentSecond >= (timerInfomation.secondSince + timerInfomation.secondCount))
+            return;
+		_leftTimerLabel.hidden = NO;
+		if(timerInfomation.switchState) {
+            [_leftTimerLabel setText:[NSString stringWithFormat:@"%ld%@%ld%@%@",timerInfomation.secondCount / 3600,NSLocalizedString(@"hour", nil),(timerInfomation.secondCount % 3600) / 60,NSLocalizedString(@"minute", nil),NSLocalizedString(@"open", nil)]];
+		} else {
+            [_leftTimerLabel setText:[NSString stringWithFormat:@"%ld%@%ld%@%@",timerInfomation.secondCount / 3600,NSLocalizedString(@"hour", nil),timerInfomation.secondCount / 60,NSLocalizedString(@"minute", nil),NSLocalizedString(@"close", nil)]];
+		}
+    }
+}
+
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:[[BLScheduleManager shared] scheduleNotificationIdentity] object:nil];
+}
+
+- (void)scheduleDeviceOver
+{
+	_leftTimerLabel.hidden = YES;
 }
 
 - (void)refreshInsideAirQuality
@@ -453,30 +491,6 @@
 {
     BLAboutViewController *aboutViewControl = [[BLAboutViewController alloc] init];
     [self.navigationController pushViewController:aboutViewControl animated:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    //插入定时数据
-    BLTimerInfomation *timerInfomation = [BLTimerInfomation timerInfomation];
-    if(timerInfomation) {
-        //判断定时时间已经过去
-        NSDate *datenow = [NSDate date];
-        long currentSecond = (long)[datenow timeIntervalSince1970];
-        if(currentSecond >= (timerInfomation.secondSince + timerInfomation.secondCount))
-            return;
-		if(timerInfomation.switchState) {
-            [_leftTimerLabel setText:[NSString stringWithFormat:@"%ld%@%ld%@%@",timerInfomation.secondCount / 3600,NSLocalizedString(@"hour", nil),(timerInfomation.secondCount % 3600) / 60,NSLocalizedString(@"minute", nil),NSLocalizedString(@"open", nil)]];
-		} else {
-            [_leftTimerLabel setText:[NSString stringWithFormat:@"%ld%@%ld%@%@",timerInfomation.secondCount / 3600,NSLocalizedString(@"hour", nil),timerInfomation.secondCount / 60,NSLocalizedString(@"minute", nil),NSLocalizedString(@"close", nil)]];
-		}
-    }
 }
 
 - (void)allButtonClicked:(UIButton *)button

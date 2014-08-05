@@ -25,6 +25,11 @@ static BLNetwork *_networkAPI;
 	return instance;
 }
 
+- (NSString *)scheduleNotificationIdentity
+{
+	return @"scheduleDeviceOver";
+}
+
 - (void)scheduleOnOrOff:(BOOL)onOrOff afterDelay:(NSTimeInterval)timeInterval MAC:(NSString *)MAC;
 {
 	_MAC = MAC;
@@ -40,6 +45,7 @@ static BLNetwork *_networkAPI;
 		NSData *response = [_networkAPI requestDispatch:sendData];
 		int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
 		if (code == 0) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:[self scheduleNotificationIdentity] object:nil];
 			NSLog(@"控制机器定时%@成功", [switchStatus boolValue] ? @"开启" : @"关闭");
 		}
 	});

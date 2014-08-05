@@ -12,6 +12,7 @@
 @interface BLScheduleManager : NSObject
 
 + (instancetype)shared;
+- (NSString *)scheduleNotificationIdentity;
 - (void)scheduleOnOrOff:(BOOL)onOrOff afterDelay:(NSTimeInterval)timeInterval MAC:(NSString *)MAC;
 
 @end
