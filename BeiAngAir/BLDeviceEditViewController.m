@@ -121,7 +121,7 @@
     [_nameTextField setPlaceholder:NSLocalizedString(@"DeviceInfoEditViewControllerNamePlaceholder", nil)];
     [_nameTextField setAutoresizesSubviews:YES];
     [_nameTextField setReturnKeyType:UIReturnKeyDone];
-    [_nameTextField setText:self.device.name];
+    [_nameTextField setText:[self.device displayName]];
     [_nameTextField addTarget:self action:@selector(keywindowHidden:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [nameView addSubview:_nameTextField];
     

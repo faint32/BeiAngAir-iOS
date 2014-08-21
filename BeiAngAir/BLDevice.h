@@ -36,5 +36,6 @@
 + (NSArray *)allDevices;
 - (BOOL)isBeiAngAirDevice;
 - (UIImage *)avatar;
+- (NSString *)displayName;
 
 @end

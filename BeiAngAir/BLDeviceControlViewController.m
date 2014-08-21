@@ -276,7 +276,7 @@
 		[_switchButton setImage:[UIImage imageNamed:@"power_on_5"] forState:UIControlStateNormal];
 	}
 	
-	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %d %@", _device.localName ?: _device.name, NSLocalizedString(@"室内PM2.5:", nil), [[_receivedData airQuality] integerValue] ,[_receivedData airQualityDisplayString] ?: @"良"];
+	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %d %@", [_device displayName], NSLocalizedString(@"室内PM2.5:", nil), [[_receivedData airQuality] integerValue] ,[_receivedData airQualityDisplayString] ?: @"良"];
 }
 
 - (void)refreshWeather
@@ -604,7 +604,7 @@
 - (void)share
 {
 	_shareViewController = [[BLShareViewController alloc] init];
-	[_shareViewController share];
+	[_shareViewController shareWithImage:[self.view captureIntoImage]];
 }
 
 #pragma mark - CLLocationManager Delegate

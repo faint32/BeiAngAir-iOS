@@ -10,6 +10,6 @@
 
 @interface BLShareViewController : UIViewController
 
-- (void)share;
+- (void)shareWithImage:(UIImage *)image;
 
 @end

@@ -27,6 +27,7 @@
 #import	"NSString+BeiAng.h"
 #import	"UIImage+BeiAng.h"
 #import "UIColor+BeiAng.h"
+#import	"UIView+BeiAng.h"
 
 //ZBUtilities
 #import "NSString+Hex.h"

@@ -90,14 +90,14 @@
 - (void)share:(id)sender
 {
 	_shareViewController = [[BLShareViewController alloc] initWithNibName:nil bundle:nil];
-	[_shareViewController share];
+	[_shareViewController shareWithImage:[self.view captureIntoImage]];
 }
 
 - (void)service
 {
 	BLQRCodeViewController *controller = [[BLQRCodeViewController alloc] initWithNibName:nil bundle:nil];
 	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-	[self.navigationController presentModalViewController:navigationController animated:YES];
+	[self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)help

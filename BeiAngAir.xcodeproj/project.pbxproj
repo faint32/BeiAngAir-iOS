@@ -47,6 +47,7 @@
 		775EB2321973DA5B00E4A0AB /* BLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2291973DA5B00E4A0AB /* BLFilterViewController.m */; };
 		775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */; };
 		775EB2361973DF4600E4A0AB /* BLGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2351973DF4600E4A0AB /* BLGuideViewController.m */; };
+		7763035719A590840051597C /* UIView+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 7763035619A590840051597C /* UIView+BeiAng.m */; };
 		77D9E319197FF3F2004AC675 /* BLQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E318197FF3F2004AC675 /* BLQRCodeViewController.m */; };
 		77D9E3281980981F004AC675 /* MBProgressHUD+Appearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E3251980981F004AC675 /* MBProgressHUD+Appearance.m */; };
 		77D9E3291980981F004AC675 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E3271980981F004AC675 /* UIViewController+HUD.m */; };
@@ -183,6 +184,8 @@
 		775EB22B1973DA5B00E4A0AB /* BLSmartConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLSmartConfigViewController.m; path = BeiAngAir/BLSmartConfigViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB2341973DF4600E4A0AB /* BLGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLGuideViewController.h; path = BeiAngAir/BLGuideViewController.h; sourceTree = SOURCE_ROOT; };
 		775EB2351973DF4600E4A0AB /* BLGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLGuideViewController.m; path = BeiAngAir/BLGuideViewController.m; sourceTree = SOURCE_ROOT; };
+		7763035519A590840051597C /* UIView+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+BeiAng.h"; sourceTree = "<group>"; };
+		7763035619A590840051597C /* UIView+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BeiAng.m"; sourceTree = "<group>"; };
 		77D9E317197FF3F2004AC675 /* BLQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLQRCodeViewController.h; path = BeiAngAir/BLQRCodeViewController.h; sourceTree = SOURCE_ROOT; };
 		77D9E318197FF3F2004AC675 /* BLQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLQRCodeViewController.m; path = BeiAngAir/BLQRCodeViewController.m; sourceTree = SOURCE_ROOT; };
 		77D9E3241980981F004AC675 /* MBProgressHUD+Appearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Appearance.h"; sourceTree = "<group>"; };
@@ -526,6 +529,8 @@
 				771F07EA196F897600B41955 /* UIImage+BeiAng.m */,
 				771F07EC196F975300B41955 /* UIColor+BeiAng.h */,
 				771F07ED196F975300B41955 /* UIColor+BeiAng.m */,
+				7763035519A590840051597C /* UIView+BeiAng.h */,
+				7763035619A590840051597C /* UIView+BeiAng.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -777,6 +782,7 @@
 				BAAE38BD194089EE002C97C8 /* SBJsonStreamParserAccumulator.m in Sources */,
 				77F16DAA1977588B00564AAB /* CLLocation+NSDictionary.m in Sources */,
 				7700C709196E690F0001561F /* BLDevice.m in Sources */,
+				7763035719A590840051597C /* UIView+BeiAng.m in Sources */,
 				BAAE38C0194089EE002C97C8 /* SBJsonStreamWriter.m in Sources */,
 				77D9E3281980981F004AC675 /* MBProgressHUD+Appearance.m in Sources */,
 				773EE6621986028C00277F47 /* BLScheduleManager.m in Sources */,

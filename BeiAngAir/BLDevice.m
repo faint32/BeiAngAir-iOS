@@ -161,6 +161,14 @@ typedef NS_ENUM(NSUInteger, BroadLinkProductType) {
 	return _isRefresh ? [UIImage imageNamed:@"device_icon"] : [UIImage imageNamed:@"device_icon_disabled"];
 }
 
+- (NSString *)displayName
+{
+	if (_localName.length) {
+		return _localName;
+	}
+	return _name;
+}
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<localname: %@, mac: %@, type: %@, name: %@, key: %@>", self.localName, self.mac, self.type, self.name, self.key];

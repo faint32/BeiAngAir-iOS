@@ -89,6 +89,11 @@
 	_networkQueue = dispatch_queue_create("BLDeviceListViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
 	_devices = [[BLDevice allDevices] mutableCopy];
 	
+	for (int i = 0; i < _devices.count; i++) {
+		BLDevice *device = _devices[i];
+		[self addDeviceInfo:device];
+	}
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doInBackground) name:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
 	
 	[self doInBackground];
@@ -198,13 +203,10 @@
 - (void)addDeviceInfo:(BLDevice *)info
 {
     dispatch_async(_networkQueue, ^{
-		NSLog(@"lock: %d", info.lock);
 		NSDictionary *dictionary = [NSDictionary dictionaryDeviceAddWithMAC:info.mac name:info.name type:info.type lock:@(info.lock) password:@(info.password) terminalID:@(info.terminal_id) subDevice:@(info.sub_device) key:info.key];
         NSData *sendData = [dictionary JSONData];
         NSData *response = [_networkAPI requestDispatch:sendData];
         if ([[[response objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
-            NSLog(@"Add device:%@ success", info.mac);
-			
 			dispatch_async(_networkQueue, ^{//locak device
 				NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:info.mac name:info.name lock:@(1)];
 				NSData *sendData = [dictionary JSONData];
@@ -250,8 +252,12 @@
             NSData *sendData = [dictionary JSONData];
             NSData *response = [_networkAPI requestDispatch:sendData];
             int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-			[_devices removeObject:device];
-			[device remove];
+			if (code == 0) {
+				[_devices removeObject:device];
+				[device remove];
+			} else {
+				[self displayHUDTitle:@"删除失败请重试" message:nil duration:1.0];
+			}
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self hideHUD:YES];
 				[tableView reloadData];
@@ -279,7 +285,7 @@
 	cell.imageView.tag = indexPath.row;
 	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editDeviceAvatar:)];
 	[cell.imageView addGestureRecognizer:tapGestureRecognizer];
-	cell.textLabel.text = device.localName ?: device.name;
+	cell.textLabel.text = [device displayName];
 
 	if (device.isRefresh) {
 		NSString *status = NSLocalizedString(@"设备已关闭", nil);
