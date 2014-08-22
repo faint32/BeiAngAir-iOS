@@ -15,7 +15,7 @@
 	CGRect screenRect = [[UIScreen mainScreen] bounds];
 	UIGraphicsBeginImageContext(screenRect.size);
 	CGContextRef context = UIGraphicsGetCurrentContext();
-	CGContextFillRect(context, screenRect);
+	//CGContextFillRect(context, screenRect);
 	[self.layer renderInContext:context];
 	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();

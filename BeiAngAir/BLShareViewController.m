@@ -66,11 +66,11 @@
 	};
 	
 	FrontiaShareContent *content = [[FrontiaShareContent alloc] init];
-	content.url = @"http://www.beiangtech.com";
+//	content.url = @"http://www.beiangtech.com";
 	content.title = @"贝昂空气净化器";
 	content.description = @"欢迎使用贝昂空气净化器，实时监控你的空气质量!";
-//	content.thumbImage = image;
-//	content.imageObj = UIImageJPEGRepresentation(image, 0.1);
+	content.isShareImageToApp = YES;
+	content.imageObj = UIImageJPEGRepresentation(image, 1);
 	
 	//    微信朋友，微信朋友圈，qq，qq空间，sina
 	NSArray *platforms = @[FRONTIA_SOCIAL_SHARE_PLATFORM_QQ,FRONTIA_SOCIAL_SHARE_PLATFORM_QQFRIEND,FRONTIA_SOCIAL_SHARE_PLATFORM_WEIXIN_SESSION,FRONTIA_SOCIAL_SHARE_PLATFORM_WEIXIN_TIMELINE,FRONTIA_SOCIAL_PLATFORM_SINAWEIBO];
