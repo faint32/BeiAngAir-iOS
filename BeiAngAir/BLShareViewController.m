@@ -46,8 +46,8 @@
 {
 	FrontiaShare *share = [Frontia getShare];
 	
-	[share registerQQAppId:@"1101505830" enableSSO:YES];
-	[share registerWeixinAppId:@"wx45d480ba2f3138c5"];
+	[share registerQQAppId:@"1102154446" enableSSO:YES];
+	[share registerWeixinAppId:@"wxc8f3dbe24ba8e504"];
 	[share registerSinaweiboAppId:@"166856911"];
 	
 	//授权取消回调函数
