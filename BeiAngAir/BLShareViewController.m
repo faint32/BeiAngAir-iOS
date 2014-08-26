@@ -48,7 +48,7 @@
 	
 	[share registerQQAppId:@"1102154446" enableSSO:YES];
 	[share registerWeixinAppId:@"wxc8f3dbe24ba8e504"];
-	[share registerSinaweiboAppId:@"166856911"];
+	[share registerSinaweiboAppId:@"2112656390"];
 	
 	//授权取消回调函数
 	FrontiaShareCancelCallback onCancel = ^(){
