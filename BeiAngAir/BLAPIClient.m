@@ -91,9 +91,10 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	return error;
 }
 
-- (NSDictionary *)commonParameters {
+- (NSDictionary *)addSystemParametersAndForceRequestParametersAsEmptyString:(BOOL)yesOrNo {
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 	parameters[@"id"] = @(++_apiRequestCount);
+	
 	NSInteger timestamp = (NSInteger)[[NSDate date] timeIntervalSince1970];
 	CocoaSecurityResult *md5 = [CocoaSecurity md5:[NSString stringWithFormat:@"%@%@%@", EASY_LINK_API_KEY, @(timestamp), EASY_LINK_API_SECRET]];
 	NSString *sign = md5.hexLower;
@@ -103,15 +104,16 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 							  @"key" : EASY_LINK_API_KEY,
 							  @"sign" : sign
 							  };
-	parameters[@"request"] = @{@"token" : [self token],
-							   @"user_id" : [self userID],
+	
+	parameters[@"request"] = @{@"token" : yesOrNo ? @"" : [self token],
+							   @"user_id" : yesOrNo ? @"" : [self userID],
 							   @"info" : @""
 							   };
 	return parameters;
 }
 
-- (void)registerAccount:(NSString *)account password:(NSString *)password withBlock:(void (^)(NSString *userID, NSError *error))block {
-	NSMutableDictionary *parameters = [[self commonParameters] mutableCopy];
+- (void)registerAccount:(NSString *)account password:(NSString *)password withBlock:(void (^)(NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersAndForceRequestParametersAsEmptyString:YES] mutableCopy];
 	parameters[@"method"] = @"register";
 	CocoaSecurityResult *md5 = [CocoaSecurity md5:password];
 	parameters[@"params"] = @{@"password" : md5.hexLower,
@@ -120,22 +122,21 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	[self POST:@"account" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		NSDictionary *result = [responseObject valueForKeyPath:@"result"];
 		NSError *error = [self handleResponse:responseObject];
-		NSString *userID = nil;
 		if (!error) {
 			[self saveUserID:result[@"data"][@"user_id"]];
 		}
 		if (block) {
-			block(userID, error);
+			block(error);
 		}
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		if (block) {
-			block(nil, error);
+			block(error);
 		}
 	}];
 }
 
-- (void)signinAccount:(NSString *)account password:(NSString *)password withBlock:(void (^)(NSString *userID, NSString *token, NSError *error))block {
-	NSMutableDictionary *parameters = [[self commonParameters] mutableCopy];
+- (void)signinAccount:(NSString *)account password:(NSString *)password withBlock:(void (^)(NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersAndForceRequestParametersAsEmptyString:YES] mutableCopy];
 	parameters[@"method"] = @"login";
 	parameters[@"params"] = @{@"password" : @"e10adc3949ba59abbe56e057f20f883e",
 							  @"user_name" : @"aric",
@@ -144,18 +145,16 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	[self POST:@"account" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		NSError *error = [self handleResponse:responseObject];
 		NSDictionary *result = [responseObject valueForKeyPath:@"result"];
-		NSString *userID = nil;
-		NSString *token = nil;
 		if (!error) {
 			[self saveUserID:result[@"data"][@"user_id"]];
 			[self saveToken:result[@"data"][@"token"]];
 		}
 		if (block) {
-			block(userID, token, error);
+			block(error);
 		}
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		if (block) {
-			block(nil, nil, error);
+			block(error);
 		}
 	}];
 }

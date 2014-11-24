@@ -8,6 +8,8 @@
 
 #import "BLSigninViewController.h"
 #import "BLSignupViewController.h"
+#import "BLAPIClient.h"
+#import "BLDeviceListViewController.h"
 
 @interface BLSigninViewController ()
 
@@ -84,6 +86,28 @@
 
 - (void)signin {
 	
+	_accountTextField.text = @"18662606288";
+	_passwordTextField.text = @"123456";
+	if (!_accountTextField.text.length) {
+		[self displayHUDTitle:@"错误" message:@"账号不能为空" duration:1];
+		return;
+	}
+	
+	if (!_passwordTextField.text.length) {
+		[self displayHUDTitle:@"错误" message:@"密码不能为空" duration:1];
+		return;
+	}
+	
+	[self displayHUD:@"登录中..."];
+	[[BLAPIClient shared] signinAccount:_accountTextField.text password:_passwordTextField.text withBlock:^(NSError *error) {
+		[self hideHUD:YES];
+		if (!error) {
+			BLDeviceListViewController *deviceListViewController = [[BLDeviceListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+			[self.navigationController pushViewController:deviceListViewController animated:YES];
+		} else {
+			[self displayHUDTitle:@"错误" message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]];
+		}
+	}];
 }
 
 - (void)cancel {

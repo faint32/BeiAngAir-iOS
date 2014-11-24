@@ -472,8 +472,7 @@ forHTTPHeaderField:(NSString *)field
             mutableRequest.URL = [NSURL URLWithString:[[mutableRequest.URL absoluteString] stringByAppendingFormat:mutableRequest.URL.query ? @"&%@" : @"?%@", query]];
         } else {
             if (![mutableRequest valueForHTTPHeaderField:@"Content-Type"]) {
-				[mutableRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-                //[mutableRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+                [mutableRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
             }
             [mutableRequest setHTTPBody:[query dataUsingEncoding:self.stringEncoding]];
         }

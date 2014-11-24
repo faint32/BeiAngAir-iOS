@@ -71,10 +71,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
 	
-//	[[BLAPIClient shared] signinAccount:@"18662606288" password:@"123456" withBlock:^(NSString *userID, NSString *token, NSError *error) {
-//		
-//	}];
-	
     return YES;
 }
 
