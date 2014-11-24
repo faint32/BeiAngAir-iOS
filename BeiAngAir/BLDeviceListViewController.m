@@ -17,6 +17,8 @@
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "MMExampleDrawerVisualStateManager.h"
+#import "BLAPIClient.h"
+#import "ELDevice.h"
 
 @interface BLDeviceListViewController ()
 
@@ -96,7 +98,19 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doInBackground) name:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
 	
-	[self doInBackground];
+//	[self doInBackground];
+	[[BLAPIClient shared] getBindWithBlock:^(NSArray *multiAttributes, NSError *error) {
+		if (!error) {
+			NSArray *devices = [ELDevice multiWithAttributesArray:multiAttributes];
+			for (int i = 0; i < devices.count; i++) {
+				ELDevice *device = devices[i];
+				NSLog(@"base64: %@", [device deviceName]);
+			}
+		} else {
+			NSLog(@"error: %@", error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]);
+		}
+	}];
+	
 }
 
 - (void)viewDidAppear:(BOOL)animated

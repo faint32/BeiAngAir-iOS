@@ -86,7 +86,7 @@
 
 - (void)signin {
 	
-	_accountTextField.text = @"18662606288";
+	_accountTextField.text = @"AricMr";
 	_passwordTextField.text = @"123456";
 	if (!_accountTextField.text.length) {
 		[self displayHUDTitle:@"错误" message:@"账号不能为空" duration:1];

@@ -91,13 +91,13 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	return error;
 }
 
-- (NSDictionary *)addSystemParametersAndForceRequestParametersAsEmptyString:(BOOL)yesOrNo {
+- (NSDictionary *)addSystemParametersRequestEmpty:(BOOL)empty signUserID:(BOOL)signIncludingUserID {
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 	parameters[@"id"] = @(++_apiRequestCount);
 	
 	NSInteger timestamp = (NSInteger)[[NSDate date] timeIntervalSince1970];
-	CocoaSecurityResult *md5 = [CocoaSecurity md5:[NSString stringWithFormat:@"%@%@%@", EASY_LINK_API_KEY, @(timestamp), EASY_LINK_API_SECRET]];
-	NSString *sign = md5.hexLower;
+	NSString *sign = nil;
+	sign = [self signWithTimestamp:timestamp signUserID:signIncludingUserID];
 	parameters[@"system"] = @{@"time" : [NSString stringWithFormat:@"%d", timestamp],
 							  @"jsonrpc" : @(2.0),
 							  @"version" : @(1.0),
@@ -105,15 +105,24 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 							  @"sign" : sign
 							  };
 	
-	parameters[@"request"] = @{@"token" : yesOrNo ? @"" : [self token],
-							   @"user_id" : yesOrNo ? @"" : [self userID],
-							   @"info" : @""
+	parameters[@"request"] = @{@"token" : empty ? @"" : [self token],
+							   @"user_id" : empty ? @"" : [self userID]
 							   };
 	return parameters;
 }
 
+- (NSString *)signWithTimestamp:(NSInteger)timestamp signUserID:(BOOL)signIncludingUserID {
+	NSMutableString *string = [NSMutableString stringWithFormat:@"%@%@%@", EASY_LINK_API_KEY, @(timestamp), EASY_LINK_API_SECRET];
+	if (signIncludingUserID) {
+		string = [NSMutableString stringWithFormat:@"%@%@%@%@%@", EASY_LINK_API_KEY, @(timestamp), [self userID], [self token], EASY_LINK_API_SECRET];
+//		[string appendString:userID];
+	}
+	CocoaSecurityResult *md5 = [CocoaSecurity md5:string];
+	return md5.hexLower;
+}
+
 - (void)registerAccount:(NSString *)account password:(NSString *)password withBlock:(void (^)(NSError *error))block {
-	NSMutableDictionary *parameters = [[self addSystemParametersAndForceRequestParametersAsEmptyString:YES] mutableCopy];
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:YES signUserID:NO] mutableCopy];
 	parameters[@"method"] = @"register";
 	CocoaSecurityResult *md5 = [CocoaSecurity md5:password];
 	parameters[@"params"] = @{@"password" : md5.hexLower,
@@ -136,10 +145,11 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 }
 
 - (void)signinAccount:(NSString *)account password:(NSString *)password withBlock:(void (^)(NSError *error))block {
-	NSMutableDictionary *parameters = [[self addSystemParametersAndForceRequestParametersAsEmptyString:YES] mutableCopy];
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:YES signUserID:NO] mutableCopy];
 	parameters[@"method"] = @"login";
-	parameters[@"params"] = @{@"password" : @"e10adc3949ba59abbe56e057f20f883e",
-							  @"user_name" : @"aric",
+	CocoaSecurityResult *md5 = [CocoaSecurity md5:password];
+	parameters[@"params"] = @{@"password" : md5.hexLower,
+							  @"user_name" : account,
 							  };
 	NSString *JSONString = [self dataTOJSONString:parameters];
 	[self POST:@"account" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -155,6 +165,28 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		if (block) {
 			block(error);
+		}
+	}];
+}
+
+- (void)getBindWithBlock:(void (^)(NSArray *multiAttributes, NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
+	parameters[@"method"] = @"getBind";
+	parameters[@"params"] = @{@"user_id" : [self userID]};
+	NSString *JSONString = [self dataTOJSONString:parameters];
+	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		NSError *error = [self handleResponse:responseObject];
+		NSDictionary *result = [responseObject valueForKeyPath:@"result"];
+		NSArray *multiAttributes = nil;
+		if (!error) {
+			multiAttributes = result[@"data"];
+		}
+		if (block) {
+			block(multiAttributes, error);
+		}
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		if (block) {
+			block(nil, error);
 		}
 	}];
 }

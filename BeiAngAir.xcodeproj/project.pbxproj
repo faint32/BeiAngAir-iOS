@@ -85,6 +85,7 @@
 		77D9E3311980A85A004AC675 /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 77D9E32E1980A85A004AC675 /* README.mdown */; };
 		77EEC15C1A232B98003F3FCA /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 77EEC15B1A232B98003F3FCA /* CocoaSecurity.m */; };
 		77EEC1601A232E45003F3FCA /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 77EEC15F1A232E45003F3FCA /* Base64.m */; };
+		77EEC1631A238013003F3FCA /* ELDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 77EEC1621A238013003F3FCA /* ELDevice.m */; };
 		77F16DAA1977588B00564AAB /* CLLocation+NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */; };
 		77F16DAB1977588B00564AAB /* CLLocation+NSString.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D851977588B00564AAB /* CLLocation+NSString.m */; };
 		77F16DAC1977588B00564AAB /* IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D871977588B00564AAB /* IPAddress.m */; };
@@ -293,6 +294,8 @@
 		77EEC15B1A232B98003F3FCA /* CocoaSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaSecurity.m; sourceTree = "<group>"; };
 		77EEC15E1A232E45003F3FCA /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		77EEC15F1A232E45003F3FCA /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		77EEC1611A238013003F3FCA /* ELDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELDevice.h; sourceTree = "<group>"; };
+		77EEC1621A238013003F3FCA /* ELDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELDevice.m; sourceTree = "<group>"; };
 		77F16D821977588B00564AAB /* CLLocation+NSDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+NSDictionary.h"; sourceTree = "<group>"; };
 		77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+NSDictionary.m"; sourceTree = "<group>"; };
 		77F16D841977588B00564AAB /* CLLocation+NSString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+NSString.h"; sourceTree = "<group>"; };
@@ -620,6 +623,8 @@
 				7700C711196E6A350001561F /* BeiAngSendData.m */,
 				7700C713196E6A530001561F /* BeiAngReceivedData.h */,
 				7700C714196E6A530001561F /* BeiAngReceivedData.m */,
+				77EEC1611A238013003F3FCA /* ELDevice.h */,
+				77EEC1621A238013003F3FCA /* ELDevice.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1008,6 +1013,7 @@
 				777500A21A22E2E7008C566D /* UIButton+AFNetworking.m in Sources */,
 				77F16DB41977588B00564AAB /* UIColor+Hex.m in Sources */,
 				777500561A22D487008C566D /* EASYLINK.m in Sources */,
+				77EEC1631A238013003F3FCA /* ELDevice.m in Sources */,
 				77F16E431977E36600564AAB /* BLZSProgressLayer.m in Sources */,
 				BAAE38C5194089EE002C97C8 /* SBJsonWriter.m in Sources */,
 				BAB38989193DA4AD00975805 /* MMDrawerVisualState.m in Sources */,

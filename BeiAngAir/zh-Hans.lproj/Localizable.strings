@@ -82,7 +82,7 @@
 "DeviceInfoEditViewControllerNumberLabel" = "机身编码:";
 "DeviceInfoEditViewControllerOKButton" = "确定";
 
-"DeviceListViewControllerTitle" = "设备管理";
+"DeviceListViewControllerTitle" = "设备列表";
 "DeviceListViewControllerAddText" = "添加设备";
 "DeviceListViewControllerAirQualityCloseText" = "未开启";
 "DeviceListViewControllerAirQualityLabel" = "空气";

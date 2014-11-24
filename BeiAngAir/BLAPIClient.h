@@ -18,4 +18,6 @@ extern NSString * const BL_ERROR_MESSAGE_IDENTIFIER;
 
 - (void)signinAccount:(NSString *)account password:(NSString *)password withBlock:(void (^)(NSError *error))block;
 
+- (void)getBindWithBlock:(void (^)(NSArray *multiAttributes, NSError *error))block;
+
 @end
