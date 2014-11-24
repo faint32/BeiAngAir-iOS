@@ -13,6 +13,7 @@
 #import "JSONKit.h"
 #import "BLNetwork.h"
 #import "BLGuideViewController.h"
+#import "BLAPIClient.h"
 
 //百度Share
 #import <Frontia/Frontia.h>
@@ -69,6 +70,11 @@
     [self.window setRootViewController:navigationController];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+	
+//	[[BLAPIClient shared] signinAccount:@"18662606288" password:@"123456" withBlock:^(NSString *userID, NSString *token, NSError *error) {
+//		
+//	}];
+	
     return YES;
 }
 

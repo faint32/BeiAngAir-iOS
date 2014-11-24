@@ -7,9 +7,9 @@
 //
 
 #import "BLGuideViewController.h"
-#import "BLDeviceListViewController.h"
 #import "BLShareViewController.h"
 #import "BLQRCodeViewController.h"
+#import "BLSigninViewController.h"
 
 @interface BLGuideViewController ()
 
@@ -19,8 +19,7 @@
 
 @implementation BLGuideViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
 	UIImage *image = [UIImage imageNamed:@"guide_content_bg"];
@@ -39,7 +38,7 @@
 	devicesButton.frame = CGRectMake(40, 90, image.size.width, image.size.height);
 	[devicesButton setImage:image forState:UIControlStateNormal];
 	[devicesButton setImage:imageHighlighted forState:UIControlStateHighlighted];
-	[devicesButton addTarget:self action:@selector(devices) forControlEvents:UIControlEventTouchUpInside];
+	[devicesButton addTarget:self action:@selector(signin) forControlEvents:UIControlEventTouchUpInside];
 	[scrollView addSubview:devicesButton];
 	
 	image = [UIImage imageNamed:@"guide_myshare"];
@@ -70,38 +69,32 @@
 	[scrollView addSubview:helpButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	self.navigationController.navigationBarHidden = YES;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)devices
-{
-	BLDeviceListViewController *controller = [[BLDeviceListViewController alloc] initWithStyle:UITableViewStyleGrouped];
-	[self.navigationController pushViewController:controller animated:YES];
+- (void)signin {
+	BLSigninViewController *signinViewController = [[BLSigninViewController alloc] initWithNibName:nil bundle:nil];
+	[self.navigationController pushViewController:signinViewController animated:YES];
 }
 
-- (void)share:(id)sender
-{
+- (void)share:(id)sender {
 	_shareViewController = [[BLShareViewController alloc] initWithNibName:nil bundle:nil];
 	[_shareViewController shareWithImage:[self.view captureIntoImage]];
 }
 
-- (void)service
-{
+- (void)service {
 	BLQRCodeViewController *controller = [[BLQRCodeViewController alloc] initWithNibName:nil bundle:nil];
 	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
 	[self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (void)help
-{
+- (void)help {
 	//TODO:安卓版功能为空
 }
 
