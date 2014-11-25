@@ -69,6 +69,9 @@
     [_locationManager setDelegate:self];
     [_locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [_locationManager setDistanceFilter:500.0f];
+	if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+		[_locationManager requestWhenInUseAuthorization];
+	}
     [_locationManager startUpdatingLocation];
 
 	self.view.backgroundColor = [UIColor greenColor];
@@ -120,6 +123,11 @@
 	_airQualityLabel.textAlignment = NSTextAlignmentCenter;
     [bottomView addSubview:_airQualityLabel];
 	
+	NSMutableString *insideAirQuality = [NSMutableString stringWithString:[_eldevice displayName]];
+	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayPM25]];
+	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayTVOC]];
+	_airQualityLabel.text = insideAirQuality;
+	
 	//风速
 	UIImage *image = [UIImage imageNamed:@"wind"];
 	viewFrame.origin.x = edgeInsets.left;
@@ -150,7 +158,8 @@
     _switchButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_switchButton setFrame:viewFrame];
 	[_switchButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceOn:self.receivedData.switchStatus];
+	[self deviceOn:[_eldevice isOn]];
+	//[self deviceOn:self.receivedData.switchStatus];
     [_switchButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:_switchButton];
 	
@@ -166,7 +175,8 @@
 	[_handOrAutoButton setFrame:viewFrame];
 	_handOrAutoButton.titleLabel.font = font;
 	[_handOrAutoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceAutoOn:self.receivedData.autoOrHand];
+	[self deviceAutoOn:[_eldevice isAutoOn]];
+//	[self deviceAutoOn:self.receivedData.autoOrHand];
 	[_handOrAutoButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _handOrAutoButton.titleLabel.frame.size;
 	[_handOrAutoButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -182,7 +192,8 @@
 	[_sleepButton setFrame:viewFrame];
 	_sleepButton.titleLabel.font = font;
 	[_sleepButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceSleepOn:self.receivedData.sleepState];
+	[self deviceSleepOn:[_eldevice isSleepOn]];
+//	[self deviceSleepOn:self.receivedData.sleepState];
 	[_sleepButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _sleepButton.titleLabel.frame.size;
 	[_sleepButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -197,7 +208,8 @@
 	[_childLockButton setFrame:viewFrame];
 	_childLockButton.titleLabel.font = font;
 	[_childLockButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceChildLockOn:self.receivedData.childLockState];
+	[self deviceChildLockOn:[_eldevice isChildLockOn]];
+//	[self deviceChildLockOn:self.receivedData.childLockState];
 	[_childLockButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _childLockButton.titleLabel.frame.size;
 	[_childLockButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -218,7 +230,7 @@
     [_leftTimerLabel setNumberOfLines:1];
     [bottomView addSubview:_leftTimerLabel];
 	
-	[self refreshDevice];
+	//[self refreshDevice];//TODO
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scheduleDeviceOver) name:[[BLScheduleManager shared] scheduleNotificationIdentity] object:nil];
 }
@@ -276,7 +288,7 @@
 		[_switchButton setImage:[UIImage imageNamed:@"power_on_5"] forState:UIControlStateNormal];
 	}
 	
-	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %d %@", [_device displayName], NSLocalizedString(@"室内PM2.5:", nil), [[_receivedData airQuality] integerValue] ,[_receivedData airQualityDisplayString] ?: @"良"];
+	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %d %@", [_eldevice displayName], NSLocalizedString(@"室内PM2.5:", nil), [[_receivedData airQuality] integerValue] ,[_receivedData airQualityDisplayString] ?: @"良"];
 }
 
 - (void)refreshWeather
@@ -348,7 +360,7 @@
 			NSLog(@"BeiAngReceivedDataInfo: %@", _receivedData);
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self refreshButtons];
-				[self refreshInsideAirQuality];
+				//[self refreshInsideAirQuality];//TODO:
 				[self performSelector:@selector(refreshDevice) withObject:nil afterDelay:3.0];
 			});
 		});
@@ -358,10 +370,17 @@
 - (void)refreshButtons
 {
 	[self hideHUD:YES];
-	[self deviceAutoOn:self.receivedData.autoOrHand];
-	[self deviceChildLockOn:self.receivedData.childLockState];
-	[self deviceOn:self.receivedData.switchStatus];
-	[self deviceSleepOn:self.receivedData.sleepState];
+	[self deviceAutoOn:[_eldevice isAutoOn]];
+//	[self deviceAutoOn:self.receivedData.autoOrHand];
+	
+	[self deviceChildLockOn:[_eldevice isChildLockOn]];
+//	[self deviceChildLockOn:self.receivedData.childLockState];
+
+	[self deviceOn:[_eldevice isOn]];
+//	[self deviceOn:self.receivedData.switchStatus];
+	
+	[self deviceSleepOn:[_eldevice isSleepOn]];
+//	[self deviceSleepOn:self.receivedData.sleepState];
 }
 
 //弹出视图
@@ -609,8 +628,7 @@
 
 #pragma mark - CLLocationManager Delegate
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 	_currentLocation = locations[0];
 	[[[CLGeocoder alloc] init] reverseGeocodeLocation:_currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
 		if (!error && placemarks.count) {
@@ -630,8 +648,11 @@
 	[manager stopUpdatingLocation];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+	NSLog(@"location manager error: %@", error);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
 	if (status == kCLAuthorizationStatusDenied) {
 		[manager stopUpdatingLocation];
 	} else {

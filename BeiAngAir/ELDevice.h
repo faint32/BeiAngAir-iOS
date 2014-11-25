@@ -16,7 +16,18 @@
 @property (nonatomic, strong) NSString *role;
 @property (nonatomic, strong) NSString *value;
 
-- (BOOL)online;
+- (BOOL)isOnline;
 - (NSString *)deviceName;
+- (UIImage *)avatar;
+- (NSString *)displayStatus;
+- (NSString *)displayName;
+- (NSNumber *)hours;
+- (NSNumber *)minutes;
+- (BOOL)isOn;
+- (BOOL)isAutoOn;
+- (BOOL)isSleepOn;
+- (BOOL)isChildLockOn;
+- (NSString *)displayTVOC;
+- (NSString *)displayPM25;
 
 @end

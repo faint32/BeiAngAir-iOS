@@ -19,14 +19,17 @@
 #import "MMExampleDrawerVisualStateManager.h"
 #import "BLAPIClient.h"
 #import "ELDevice.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface BLDeviceListViewController ()
 
-@property (nonatomic, strong) dispatch_queue_t networkQueue;
-@property (nonatomic, strong) BLNetwork *networkAPI;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *devices;
-@property (nonatomic, strong) BeiAngReceivedData *receivedData;
+@property (readwrite) dispatch_queue_t networkQueue;
+@property (readwrite) BLNetwork *networkAPI;
+@property (readwrite) UITableView *tableView;
+@property (readwrite) NSMutableArray *devices;
+@property (readwrite) BeiAngReceivedData *receivedData;
+
+@property (readwrite) NSArray *eldevices;
 
 @end
 
@@ -99,23 +102,20 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doInBackground) name:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
 	
 //	[self doInBackground];
-	[[BLAPIClient shared] getBindWithBlock:^(NSArray *multiAttributes, NSError *error) {
-		if (!error) {
-			NSArray *devices = [ELDevice multiWithAttributesArray:multiAttributes];
-			for (int i = 0; i < devices.count; i++) {
-				ELDevice *device = devices[i];
-				NSLog(@"base64: %@", [device deviceName]);
-			}
-		} else {
-			NSLog(@"error: %@", error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]);
-		}
-	}];
-	
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	
+	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
+	[[BLAPIClient shared] getBindWithBlock:^(NSArray *multiAttributes, NSError *error) {
+		[self hideHUD:YES];
+		if (!error) {
+			_eldevices = [ELDevice multiWithAttributesArray:multiAttributes];
+			[self.tableView reloadData];
+		} else {
+			NSLog(@"error: %@", error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]);
+		}
+	}];
 }
 
 - (void)dealloc
@@ -238,7 +238,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _devices.count;
+	return _eldevices.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -259,24 +259,24 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-		[self displayHUD:NSLocalizedString(@"正在删除", nil)];
-        dispatch_async(_networkQueue, ^{
-            BLDevice *device = _devices[indexPath.row];
-			NSDictionary *dictionary = [NSDictionary dictionaryDeviceDeleteWithMAC:device.mac];
-            NSData *sendData = [dictionary JSONData];
-            NSData *response = [_networkAPI requestDispatch:sendData];
-            int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-			if (code == 0) {
-				[_devices removeObject:device];
-				[device remove];
-			} else {
-				[self displayHUDTitle:@"删除失败请重试" message:nil duration:1.0];
-			}
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-				[tableView reloadData];
-			});
-        });
+//		[self displayHUD:NSLocalizedString(@"正在删除", nil)];
+//        dispatch_async(_networkQueue, ^{
+//            BLDevice *device = _devices[indexPath.row];
+//			NSDictionary *dictionary = [NSDictionary dictionaryDeviceDeleteWithMAC:device.mac];
+//            NSData *sendData = [dictionary JSONData];
+//            NSData *response = [_networkAPI requestDispatch:sendData];
+//            int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+//			if (code == 0) {
+//				[_devices removeObject:device];
+//				[device remove];
+//			} else {
+//				[self displayHUDTitle:@"删除失败请重试" message:nil duration:1.0];
+//			}
+//			dispatch_async(dispatch_get_main_queue(), ^{
+//				[self hideHUD:YES];
+//				[tableView reloadData];
+//			});
+//        });
     }
 }
 
@@ -286,14 +286,12 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-		cell.backgroundColor = [UIColor whiteColor];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
+	cell.backgroundColor = [UIColor whiteColor];
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	cell.detailTextLabel.numberOfLines = 0;
 	
-    //设备信息
-	NSLog(@"devices count: %d", _devices.count);
-	NSLog(@"devices : %@", _devices);
-	BLDevice *device = _devices[indexPath.row];
+	ELDevice *device = _eldevices[indexPath.row];
 	cell.imageView.image = [device avatar];
 	cell.imageView.userInteractionEnabled = YES;
 	cell.imageView.tag = indexPath.row;
@@ -301,21 +299,17 @@
 	[cell.imageView addGestureRecognizer:tapGestureRecognizer];
 	cell.textLabel.text = [device displayName];
 
-	if (device.isRefresh) {
-		NSString *status = NSLocalizedString(@"设备已关闭", nil);
-		if (device.switchState == 1) {
-			status = NSLocalizedString(@"设备正在运行", nil);
-		}
-		
-		NSString *statusAndrunTime = [NSString stringWithFormat:@"%@\n已运行%d小时%d分钟", status, device.hour, device.minute];
-		NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:statusAndrunTime];
-		if (device.hour >= 50) {
-			NSAttributedString *subString = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" 请清洗", nil) attributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont systemFontOfSize:13]}];
-			[attributedString appendAttributedString:subString];
-		}
-		cell.detailTextLabel.numberOfLines = 0;
-		cell.detailTextLabel.attributedText = attributedString;
+	NSMutableString *details = [NSMutableString stringWithString:[device displayStatus]];
+	if ([device hours] && [device minutes]) {
+		[details appendFormat:@"\n已运行%@小时%@分钟", [device hours], [device minutes]];
 	}
+	
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:details];
+	if ([[device hours] integerValue] >= 50) {
+		NSAttributedString *subString = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" 请清洗", nil) attributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont systemFontOfSize:13]}];
+		[attributedString appendAttributedString:subString];
+	}
+	cell.detailTextLabel.attributedText = attributedString;
     return cell;
 }
 
@@ -323,38 +317,43 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    BLDevice *device = [_devices objectAtIndex:indexPath.row];
+	ELDevice *device = _eldevices[indexPath.row];
 	
-//	BLDeviceControlViewController *controller = [[BLDeviceControlViewController alloc] init];
-//	controller.device = device;
-//	[self.navigationController pushViewController:controller animated:YES];
-//	return;
+	if ([device isOnline]) {
+		BLDeviceControlViewController *controller = [[BLDeviceControlViewController alloc] init];
+		controller.eldevice = device;
+		[self.navigationController pushViewController:controller animated:YES];
+		return;
+	} else {
+		[self displayHUDTitle:nil message:NSLocalizedString(@"设备不在线", nil) duration:1];
+		return;
+	}
 	
-	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
-    dispatch_async(_networkQueue, ^{
-        //数据透传
-		NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:device.mac];
-        NSData *sendData = [dictionary JSONData];
-        NSData *response = [_networkAPI requestDispatch:sendData];
-        int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-        if (code == 0) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-                NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-                BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-				NSLog(@"BeiAngReceivedDataInfo: %@", receivedData);
-                BLDeviceControlViewController *controller = [[BLDeviceControlViewController alloc] init];
-				controller.receivedData = receivedData;
-				controller.device = device;
-                [self.navigationController pushViewController:controller animated:YES];
-            });
-        } else {
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-				[self displayHUDTitle:NSLocalizedString(@"设备不可用", nil) message:nil duration:2];
-			});
-        }
-    });
+//	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
+//    dispatch_async(_networkQueue, ^{
+//        //数据透传
+//		NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:device.mac];
+//        NSData *sendData = [dictionary JSONData];
+//        NSData *response = [_networkAPI requestDispatch:sendData];
+//        int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+//        if (code == 0) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//				[self hideHUD:YES];
+//                NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
+//                BeiAngReceivedData *receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+//				NSLog(@"BeiAngReceivedDataInfo: %@", receivedData);
+//                BLDeviceControlViewController *controller = [[BLDeviceControlViewController alloc] init];
+//				controller.receivedData = receivedData;
+//				controller.device = device;
+//                [self.navigationController pushViewController:controller animated:YES];
+//            });
+//        } else {
+//			dispatch_async(dispatch_get_main_queue(), ^{
+//				[self hideHUD:YES];
+//				[self displayHUDTitle:NSLocalizedString(@"设备不可用", nil) message:nil duration:2];
+//			});
+//        }
+//    });
 }
 
 - (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
