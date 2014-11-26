@@ -72,7 +72,7 @@
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
 //    [headerView addSubview:titleLabel];//TODO: hide
 	
-	UIImage *image = [self.device avatar];
+	UIImage *image = [_eldevice avatar];
     viewFrame = headerView.frame;
     viewFrame.origin.y += viewFrame.size.height + 20.0f;
     viewFrame.origin.x = (self.view.frame.size.width - 62.5) * 0.5f;
@@ -121,7 +121,7 @@
     [_nameTextField setPlaceholder:NSLocalizedString(@"DeviceInfoEditViewControllerNamePlaceholder", nil)];
     [_nameTextField setAutoresizesSubviews:YES];
     [_nameTextField setReturnKeyType:UIReturnKeyDone];
-    [_nameTextField setText:[self.device displayName]];
+    [_nameTextField setText:_eldevice.nickname];
     [_nameTextField addTarget:self action:@selector(keywindowHidden:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [nameView addSubview:_nameTextField];
     
@@ -136,55 +136,60 @@
     viewFrame.origin.x = 3.0f;
     viewFrame.origin.y = 0.0f;
     viewFrame.size = CGSizeMake(80.0f, lockView.frame.size.height);
-    UILabel *lockLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    [lockLabel setBackgroundColor:[UIColor clearColor]];
-    [lockLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    [lockLabel setTextColor:RGB(0x99, 0x99, 0x99)];
-    [lockLabel setText:NSLocalizedString(@"DeviceInfoEditViewControllerLockLabel", nil)];
-    [lockView addSubview:lockLabel];
+	
+    UILabel *qrCodeLabel = [[UILabel alloc] initWithFrame:viewFrame];
+    [qrCodeLabel setBackgroundColor:[UIColor clearColor]];
+    [qrCodeLabel setFont:[UIFont systemFontOfSize:15.0f]];
+    [qrCodeLabel setTextColor:RGB(0x99, 0x99, 0x99)];
+    [qrCodeLabel setText:NSLocalizedString(@"二维码授权", nil)];
+	
+    [lockView addSubview:qrCodeLabel];
+	
+	
     viewFrame = lockView.frame;
     viewFrame.origin = CGPointZero;
     image = [UIImage imageNamed:@"unlocked"];
     _lockButton = [[UIButton alloc] initWithFrame:viewFrame];
+	_lockButton.hidden = YES;
     [_lockButton setBackgroundColor:[UIColor clearColor]];
     [_lockButton setImageEdgeInsets:UIEdgeInsetsMake((viewFrame.size.height - image.size.height) * 0.5f, viewFrame.size.width - image.size.width - 10.0f, (viewFrame.size.height - image.size.height) * 0.5f, 10.0f)];
     [_lockButton setImage:image forState:UIControlStateNormal];
     [_lockButton setImage:[UIImage imageNamed:@"locked"] forState:UIControlStateSelected];
-    [_lockButton addTarget:self action:@selector(lockButtonclicked:) forControlEvents:UIControlEventTouchUpInside];
-    [_lockButton setSelected:self.device.lock == 1];
+//    [_lockButton addTarget:self action:@selector(lockButtonclicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [_lockButton setSelected:self.device.lock == 1];//TODO
     [lockView addSubview:_lockButton];
     
     viewFrame = lockView.frame;
     viewFrame.origin.y += viewFrame.size.height + 20.0f;
-    UIView *macView = [[UIView alloc] initWithFrame:viewFrame];
-    [macView setBackgroundColor:[UIColor whiteColor]];
-    [macView.layer setBorderColor:RGB(0x99, 0x99, 0x99).CGColor];
-    [macView.layer setBorderWidth:1.0f];
-    [self.view addSubview:macView];
+    UIView *deviceIDView = [[UIView alloc] initWithFrame:viewFrame];
+    [deviceIDView setBackgroundColor:[UIColor whiteColor]];
+    [deviceIDView.layer setBorderColor:RGB(0x99, 0x99, 0x99).CGColor];
+    [deviceIDView.layer setBorderWidth:1.0f];
+    [self.view addSubview:deviceIDView];
     viewFrame = lockView.frame;
     viewFrame.origin.x = 3.0f;
     viewFrame.origin.y = 0.0f;
     viewFrame.size = CGSizeMake(80.0f, lockView.frame.size.height);
-    UILabel *macLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    [macLabel setBackgroundColor:[UIColor clearColor]];
-    [macLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    [macLabel setTextColor:RGB(0x99, 0x99, 0x99)];
-    [macLabel setText:NSLocalizedString(@"DeviceInfoEditViewControllerMacLabel", nil)];
-    [macView addSubview:macLabel];
-    viewFrame = macLabel.frame;
+    UILabel *deviceIDLabel = [[UILabel alloc] initWithFrame:viewFrame];
+    [deviceIDLabel setBackgroundColor:[UIColor clearColor]];
+    [deviceIDLabel setFont:[UIFont systemFontOfSize:15.0f]];
+    [deviceIDLabel setTextColor:RGB(0x99, 0x99, 0x99)];
+    [deviceIDLabel setText:NSLocalizedString(@"设备ID:", nil)];
+    [deviceIDView addSubview:deviceIDLabel];
+    viewFrame = deviceIDLabel.frame;
     viewFrame.origin.x += viewFrame.size.width + 5.0f;
-    viewFrame.size = CGSizeMake(macView.frame.size.width - 10.0f - viewFrame.origin.x, macView.frame.size.height);
-    UILabel *macValueLabel = [[UILabel alloc] initWithFrame:viewFrame];
-    [macValueLabel setBackgroundColor:[UIColor clearColor]];
-    [macValueLabel setTextColor:[UIColor blackColor]];
-    [macValueLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    [macValueLabel setText:self.device.mac];
-    [macView addSubview:macValueLabel];
+    viewFrame.size = CGSizeMake(deviceIDView.frame.size.width - 10.0f - viewFrame.origin.x, deviceIDView.frame.size.height);
+    UILabel *deviceIDValueLabel = [[UILabel alloc] initWithFrame:viewFrame];
+    [deviceIDValueLabel setBackgroundColor:[UIColor clearColor]];
+    [deviceIDValueLabel setTextColor:[UIColor blackColor]];
+    [deviceIDValueLabel setFont:[UIFont systemFontOfSize:15.0f]];
+    [deviceIDValueLabel setText:[NSString stringWithFormat:@"%@", _eldevice.ID]];
+    [deviceIDView addSubview:deviceIDValueLabel];
     
     //确定按钮
-    viewFrame.origin.x = 0;
+    viewFrame.origin.x = CGRectGetMinX(deviceIDView.frame);
     viewFrame.origin.y = 360;
-    viewFrame.size.width = self.view.bounds.size.width;
+    viewFrame.size.width = CGRectGetWidth(deviceIDView.frame);
 	viewFrame.size.height = 50;
 	UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	okButton.frame = viewFrame;
@@ -199,7 +204,6 @@
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 }
 
-//设备图标点击
 -(void)logoButtonClick
 {
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
@@ -213,7 +217,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)dismiss
@@ -221,56 +224,55 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)lockButtonclicked:(UIButton *)button
-{
-	[self lockDevice:@(!button.selected)];
-}
+//- (void)lockButtonclicked:(UIButton *)button
+//{
+//	[self lockDevice:@(!button.selected)];
+//}
 
-- (void)lockDevice:(NSNumber *)locked
-{
-	NSString *title = locked ? NSLocalizedString(@"锁定中...", nil) : NSLocalizedString(@"解锁中...", nil);
-	[self displayHUD:title];
-	dispatch_async(networkQueue, ^{
-		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:locked];
-        NSData *requestData = [dictionary JSONData];
-        NSData *responseData = [networkAPI requestDispatch:requestData];
-        if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-				_lockButton.selected = locked.boolValue;
-				_lockButton.selected = locked.boolValue;
-				[self performSelector:@selector(lockDevice:) withObject:@(YES) afterDelay:120];//120秒后再锁定设备
-			});
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
-            });
-        }
-    });
-
-}
+//- (void)lockDevice:(NSNumber *)locked
+//{
+//	NSString *title = locked ? NSLocalizedString(@"锁定中...", nil) : NSLocalizedString(@"解锁中...", nil);
+//	[self displayHUD:title];
+//	dispatch_async(networkQueue, ^{
+//		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:locked];
+//        NSData *requestData = [dictionary JSONData];
+//        NSData *responseData = [networkAPI requestDispatch:requestData];
+//        if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
+//			dispatch_async(dispatch_get_main_queue(), ^{
+//				[self hideHUD:YES];
+//				_lockButton.selected = locked.boolValue;
+//				_lockButton.selected = locked.boolValue;
+//				[self performSelector:@selector(lockDevice:) withObject:@(YES) afterDelay:120];//120秒后再锁定设备
+//			});
+//        } else {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//				[self hideHUD:YES];
+//				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
+//            });
+//        }
+//    });
+//}
 
 - (void)okButtonClicked:(UIButton *)button
 {
-	if (_nameTextField.text.length) {
-		_device.localName = _nameTextField.text;
-		[_device remove];
-		[_device persistence];
-	}
-    dispatch_async(networkQueue, ^{
-		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:@(1)];//离开这个界面的时候把设备锁定
-        NSData *requestData = [dictionary JSONData];
-        NSData *responseData = [networkAPI requestDispatch:requestData];
-        if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
-			self.device.lock = 1;
-			[self dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
-            });
-        }
-    });
+//	if (_nameTextField.text.length) {
+//		_device.localName = _nameTextField.text;
+//		[_device remove];
+//		[_device persistence];
+//	}
+//    dispatch_async(networkQueue, ^{
+//		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:@(1)];//离开这个界面的时候把设备锁定
+//        NSData *requestData = [dictionary JSONData];
+//        NSData *responseData = [networkAPI requestDispatch:requestData];
+//        if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
+//			self.device.lock = 1;
+//			[self dismissViewControllerAnimated:YES completion:nil];
+//        } else {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
+//            });
+//        }
+//    });
 }
 
 #pragma mark - UIImagePickerController Delegate
@@ -294,7 +296,7 @@
         }
         UIImage *image = [UIImage imageWithData:data];
         [_addButton setImage:image forState:UIControlStateNormal];
-		NSString *imagePath = [NSString deviceAvatarPathWithMAC:self.device.mac];
+		NSString *imagePath = [NSString deviceAvatarPathWithMAC:[NSString stringWithFormat:@"%@", _eldevice.ID]];
         [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
     }
 }

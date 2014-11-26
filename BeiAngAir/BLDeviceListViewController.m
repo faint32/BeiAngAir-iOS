@@ -363,11 +363,11 @@
 }
 
 - (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer {
-//    BLDevice *device = [_devices objectAtIndex:recognizer.view.tag];
-//    BLDeviceEditViewController *controller = [[BLDeviceEditViewController alloc] init];
-//	controller.device = device;
-//	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-//    [self presentViewController:navigationController animated:YES completion:nil];
+	ELDevice *device = _eldevices[recognizer.view.tag];
+    BLDeviceEditViewController *controller = [[BLDeviceEditViewController alloc] init];
+	controller.eldevice = device;
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 

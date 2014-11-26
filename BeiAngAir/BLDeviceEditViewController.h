@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ELDevice.h"
 
 @interface BLDeviceEditViewController : UIViewController
 
 @property (nonatomic, strong) BLDevice *device;
+@property (nonatomic, strong) ELDevice *eldevice;
 
 @end

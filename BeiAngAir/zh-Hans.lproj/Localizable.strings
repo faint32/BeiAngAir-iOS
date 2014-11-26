@@ -77,8 +77,6 @@
 "DeviceInfoEditViewControllerTitle" = "修改名称";
 "DeviceInfoEditViewControllerNameLabel" = "名称:";
 "DeviceInfoEditViewControllerNamePlaceholder" = "请输入设备名称";
-"DeviceInfoEditViewControllerLockLabel" = "锁定设备:";
-"DeviceInfoEditViewControllerMacLabel" = "Mac:";
 "DeviceInfoEditViewControllerNumberLabel" = "机身编码:";
 "DeviceInfoEditViewControllerOKButton" = "确定";
 
