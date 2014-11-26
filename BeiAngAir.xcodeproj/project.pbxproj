@@ -517,9 +517,9 @@
 		2FAE502518F78C470068893E /* BeiAngAir */ = {
 			isa = PBXGroup;
 			children = (
+				2FAE513018F7C18E0068893E /* GlobalDefine.h */,
 				777500A71A22E374008C566D /* BLAPIClient.h */,
 				777500A81A22E374008C566D /* BLAPIClient.m */,
-				2FAE513018F7C18E0068893E /* GlobalDefine.h */,
 				2FAE502E18F78C470068893E /* BLAppDelegate.h */,
 				2FAE502F18F78C470068893E /* BLAppDelegate.m */,
 				773EE6601986028C00277F47 /* BLScheduleManager.h */,

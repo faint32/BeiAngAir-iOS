@@ -10,6 +10,8 @@
 #import "BLShareViewController.h"
 #import "BLQRCodeViewController.h"
 #import "BLSigninViewController.h"
+#import "BLAPIClient.h"
+#import "BLDeviceListViewController.h"
 
 @interface BLGuideViewController ()
 
@@ -79,8 +81,13 @@
 }
 
 - (void)signin {
-	BLSigninViewController *signinViewController = [[BLSigninViewController alloc] initWithNibName:nil bundle:nil];
-	[self.navigationController pushViewController:signinViewController animated:YES];
+	if ([[BLAPIClient shared] isSessionValid]) {
+		BLDeviceListViewController *deviceListViewController = [[BLDeviceListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+		[self.navigationController pushViewController:deviceListViewController animated:YES];
+	} else {
+		BLSigninViewController *signinViewController = [[BLSigninViewController alloc] initWithNibName:nil bundle:nil];
+		[self.navigationController pushViewController:signinViewController animated:YES];
+	}
 }
 
 - (void)share:(id)sender {

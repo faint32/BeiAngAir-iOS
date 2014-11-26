@@ -27,7 +27,13 @@
 - (BOOL)isAutoOn;
 - (BOOL)isSleepOn;
 - (BOOL)isChildLockOn;
+- (NSInteger)windSpeed;
 - (NSString *)displayTVOC;
 - (NSString *)displayPM25;
+- (NSString *)commandOn:(BOOL)on;
+- (NSString *)commandAutoOn:(BOOL)on;
+- (NSString *)commandSleepOn:(BOOL)on;
+- (NSString *)commandChildLockOn:(BOOL)on;
+- (NSString *)commandWindSpeed:(NSInteger)speed;
 
 @end

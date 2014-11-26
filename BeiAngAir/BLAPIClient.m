@@ -34,10 +34,15 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 		_shared = [[BLAPIClient alloc] initWithBaseURL:url];
 		NSMutableSet *types = [_shared.responseSerializer.acceptableContentTypes mutableCopy];
 		[types addObject:@"text/plain"];
+		[types addObject:@"text/html"];
 		_shared.responseSerializer.acceptableContentTypes = types;
 		_shared.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
 	});
 	return _shared;
+}
+
+- (BOOL)isSessionValid {
+	return [self userID].length > 0;
 }
 
 - (void)saveUserID:(NSString *)userID {
@@ -77,7 +82,6 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 }
 
 - (NSError *)handleResponse:(id)responseObject {
-	NSLog(@"responseObject: %@", responseObject);
 	NSError *error = nil;
 	NSDictionary *result = [responseObject valueForKeyPath:@"result"];
 	NSInteger code = [result[@"code"] integerValue];
@@ -115,7 +119,6 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	NSMutableString *string = [NSMutableString stringWithFormat:@"%@%@%@", EASY_LINK_API_KEY, @(timestamp), EASY_LINK_API_SECRET];
 	if (signIncludingUserID) {
 		string = [NSMutableString stringWithFormat:@"%@%@%@%@%@", EASY_LINK_API_KEY, @(timestamp), [self userID], [self token], EASY_LINK_API_SECRET];
-//		[string appendString:userID];
 	}
 	CocoaSecurityResult *md5 = [CocoaSecurity md5:string];
 	return md5.hexLower;
@@ -128,19 +131,12 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	parameters[@"params"] = @{@"password" : md5.hexLower,
 							  @"user_name" : account,
 							  };
-	[self POST:@"account" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		NSDictionary *result = [responseObject valueForKeyPath:@"result"];
+	NSString *JSONString = [self dataTOJSONString:parameters];
+	[self POST:@"account" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		NSError *error = [self handleResponse:responseObject];
-		if (!error) {
-			[self saveUserID:result[@"data"][@"user_id"]];
-		}
-		if (block) {
-			block(error);
-		}
+		if (block) block(error);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		if (block) {
-			block(error);
-		}
+		if (block) block(error);
 	}];
 }
 
@@ -159,13 +155,9 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 			[self saveUserID:result[@"data"][@"user_id"]];
 			[self saveToken:result[@"data"][@"token"]];
 		}
-		if (block) {
-			block(error);
-		}
+		if (block) block(error);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		if (block) {
-			block(error);
-		}
+		if (block) block(error);
 	}];
 }
 
@@ -181,13 +173,49 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 		if (!error) {
 			multiAttributes = result[@"data"];
 		}
-		if (block) {
-			block(multiAttributes, error);
-		}
+		if (block) block(multiAttributes, error);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		if (block) {
-			block(nil, error);
+		if (block) block(nil, error);
+	}];
+}
+
+- (void)getDeviceStatus:(NSNumber *)deviceID withBlock:(void (^)(NSDictionary *attributes, NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
+	parameters[@"method"] = @"getDeviceStatus";
+	parameters[@"params"] = @{@"ndevice_id" : deviceID, @"ndevice_sn" : @""};
+							  
+	NSString *JSONString = [self dataTOJSONString:parameters];
+	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		NSError *error = [self handleResponse:responseObject];
+		NSDictionary *result = [responseObject valueForKeyPath:@"result"];
+		NSDictionary *attributes = nil;
+		if (!error) {
+			attributes = result[@"data"][0];
 		}
+		if (block) block(attributes, error);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		if (block) block(nil, error);
+	}];
+}
+
+- (void)command:(NSNumber *)deviceID value:(NSString *)value withBlock:(void (^)(NSString *value, NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
+	parameters[@"method"] = @"command";
+	parameters[@"params"] = @{@"ndevice_id" : deviceID, @"ndevice_sn" : @"", @"command" : value};
+	
+	NSString *JSONString = [self dataTOJSONString:parameters];
+	NSLog(@"json: %@", JSONString);
+	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		NSLog(@"response object: %@", responseObject);
+		NSError *error = [self handleResponse:responseObject];
+		NSDictionary *result = [responseObject valueForKeyPath:@"result"];
+		NSString *value = nil;
+		if (!error) {
+			value = result[@"data"][@"reply"];
+		}
+		if (block) block(value, error);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		if (block) block(nil, error);
 	}];
 }
 

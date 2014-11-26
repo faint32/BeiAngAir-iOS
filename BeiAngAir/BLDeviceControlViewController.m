@@ -23,25 +23,27 @@
 #import "Weather.h"
 #import "BLShareViewController.h"
 #import "BLScheduleManager.h"
+#import "BLAPIClient.h"
 
 @interface BLDeviceControlViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 
-@property (nonatomic, strong) dispatch_queue_t httpQueue;
-@property (nonatomic, strong) dispatch_queue_t networkQueue;
-@property (nonatomic, strong) BLNetwork *networkAPI;
-@property (nonatomic, strong) UIView *backView;
-@property (nonatomic, strong) UILabel *airQualityLabel;
-@property (nonatomic, strong) UIButton *switchButton;
-@property (nonatomic, strong) UIButton *handOrAutoButton;
-@property (nonatomic, strong) UIButton *childLockButton;
-@property (nonatomic, strong) UIButton *sleepButton;
-@property (nonatomic, strong) UILabel *weatherLabel;
-@property (nonatomic, strong) UILabel *leftTimerLabel;
-@property (nonatomic, strong) UIButton *shareButton;
-@property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, strong) CLLocation *currentLocation;
-@property (nonatomic, strong) Weather *weather;
-@property (nonatomic, strong) BLShareViewController *shareViewController;
+@property (readwrite) dispatch_queue_t httpQueue;
+@property (readwrite) dispatch_queue_t networkQueue;
+@property (readwrite) BLNetwork *networkAPI;
+@property (readwrite) UIView *backView;
+@property (readwrite) UILabel *airQualityLabel;
+@property (readwrite) UIButton *switchButton;
+@property (readwrite) UIButton *handOrAutoButton;
+@property (readwrite) UIButton *childLockButton;
+@property (readwrite) UIButton *sleepButton;
+@property (readwrite) UILabel *weatherLabel;
+@property (readwrite) UILabel *leftTimerLabel;
+@property (readwrite) UIButton *shareButton;
+@property (readwrite) CLLocationManager *locationManager;
+@property (readwrite) CLLocation *currentLocation;
+@property (readwrite) Weather *weather;
+@property (readwrite) BLShareViewController *shareViewController;
+@property (readwrite) NSTimer *timer;
 
 @end
 
@@ -115,22 +117,18 @@
     [self.view addSubview:bottomView];
     
     //空气质量指数
-    _airQualityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, edgeInsets.top, self.view.frame.size.width, 40)];
+    _airQualityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, edgeInsets.top, self.view.frame.size.width, 60)];
     [_airQualityLabel setBackgroundColor:[UIColor clearColor]];
 	_airQualityLabel.numberOfLines = 0;
     [_airQualityLabel setTextColor:[UIColor blackColor]];
     [_airQualityLabel setFont:[UIFont boldSystemFontOfSize:16]];
 	_airQualityLabel.textAlignment = NSTextAlignmentCenter;
     [bottomView addSubview:_airQualityLabel];
-	
-	NSMutableString *insideAirQuality = [NSMutableString stringWithString:[_eldevice displayName]];
-	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayPM25]];
-	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayTVOC]];
-	_airQualityLabel.text = insideAirQuality;
+	[self refreshInsideAirQuality];
 	
 	//风速
 	UIImage *image = [UIImage imageNamed:@"wind"];
-	viewFrame.origin.x = edgeInsets.left;
+	viewFrame.origin.x = edgeInsets.left - 10;
 	viewFrame.origin.y = edgeInsets.top + 20;
 	viewFrame.size = CGSizeMake(image.size.width, image.size.height);
 	UIButton *speedButton = [[UIButton alloc] initWithFrame:viewFrame];
@@ -141,13 +139,14 @@
 	
     //定时任务
 	UIImage *timeImage = [UIImage imageNamed:@"time"];
-    viewFrame.origin.x =  self.view.frame.size.width - timeImage.size.width - edgeInsets.left;
+    viewFrame.origin.x =  self.view.frame.size.width - timeImage.size.width - edgeInsets.left + 10;
     viewFrame.origin.y = edgeInsets.top + 20;
     viewFrame.size = timeImage.size;
     UIButton *timerButton = [[UIButton alloc] initWithFrame:viewFrame];
     [timerButton setBackgroundColor:[UIColor clearColor]];
     [timerButton setImage:timeImage forState:UIControlStateNormal];
     [timerButton addTarget:self action:@selector(timerButtonClick) forControlEvents:UIControlEventTouchUpInside];
+	timerButton.hidden = YES;
     [bottomView addSubview:timerButton];
 	
 	CGSize buttonSize = CGSizeMake(110, 110);
@@ -233,11 +232,23 @@
 	//[self refreshDevice];//TODO
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scheduleDeviceOver) name:[[BLScheduleManager shared] scheduleNotificationIdentity] object:nil];
+
+	_timer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(getDeviceStatus) userInfo:nil repeats:YES];
+	[_timer fire];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)getDeviceStatus {
+	[[BLAPIClient shared] getDeviceStatus:_eldevice.ID withBlock:^(NSDictionary *attributes, NSError *error) {
+		if (!error) {
+			_eldevice = [[ELDevice alloc] initWithAttributes:attributes];
+			[self refreshELDevice];
+		}
+	}];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -265,6 +276,11 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:[[BLScheduleManager shared] scheduleNotificationIdentity] object:nil];
 }
 
+- (void)refreshELDevice {
+	[self refreshButtons];
+	[self refreshInsideAirQuality];
+}
+
 - (void)scheduleDeviceOver
 {
 	_leftTimerLabel.hidden = YES;
@@ -272,29 +288,31 @@
 
 - (void)refreshInsideAirQuality
 {
-	if (!_switchButton.selected) {
-		return;
-	}
+	NSMutableString *insideAirQuality = [NSMutableString stringWithString:[_eldevice displayName]];
+	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayPM25]];
+	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayTVOC]];
+	_airQualityLabel.text = insideAirQuality;
 	
-	if ([[_receivedData airQualityDisplayString] isEqualToString:@"优"]) {
-		[_switchButton setImage:[UIImage imageNamed:@"power_on_1"] forState:UIControlStateNormal];
-	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"良"]) {
-		[_switchButton setImage:[UIImage imageNamed:@"power_on_2"] forState:UIControlStateNormal];
-	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"中"]) {
-		[_switchButton setImage:[UIImage imageNamed:@"power_on_3"] forState:UIControlStateNormal];
-	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"差"]) {
-		[_switchButton setImage:[UIImage imageNamed:@"power_on_4"] forState:UIControlStateNormal];
-	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"严重"]) {
-		[_switchButton setImage:[UIImage imageNamed:@"power_on_5"] forState:UIControlStateNormal];
-	}
+//	if (!_switchButton.selected) {
+//		return;
+//	}
 	
-	_airQualityLabel.text = [NSString stringWithFormat:@"%@\n%@ %d %@", [_eldevice displayName], NSLocalizedString(@"室内PM2.5:", nil), [[_receivedData airQuality] integerValue] ,[_receivedData airQualityDisplayString] ?: @"良"];
+//	if ([[_receivedData airQualityDisplayString] isEqualToString:@"优"]) {
+//		[_switchButton setImage:[UIImage imageNamed:@"power_on_1"] forState:UIControlStateNormal];
+//	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"良"]) {
+//		[_switchButton setImage:[UIImage imageNamed:@"power_on_2"] forState:UIControlStateNormal];
+//	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"中"]) {
+//		[_switchButton setImage:[UIImage imageNamed:@"power_on_3"] forState:UIControlStateNormal];
+//	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"差"]) {
+//		[_switchButton setImage:[UIImage imageNamed:@"power_on_4"] forState:UIControlStateNormal];
+//	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"严重"]) {
+//		[_switchButton setImage:[UIImage imageNamed:@"power_on_5"] forState:UIControlStateNormal];
+//	}
 }
 
 - (void)refreshWeather
 {
-	NSLog(@"refreshWeather: %@", _weather);
-	_weatherLabel.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ %@", _weather.cityName, _weather.temperateStrings, _weather.pm25, _weather.airQualityString];
+	_weatherLabel.text = [NSString stringWithFormat:@"%@ %@\n室外 PM:2.5 %@ug/m³ %@", _weather.cityName, _weather.temperateStrings, _weather.pm25, _weather.airQualityString];
 	
 	if(_weather.airQualityLevel.floatValue >= 4) {
 		self.view.backgroundColor = [UIColor colorAirPolluted];
@@ -378,6 +396,7 @@
 
 	[self deviceOn:[_eldevice isOn]];
 //	[self deviceOn:self.receivedData.switchStatus];
+	_airQualityLabel.hidden = ![_eldevice isOn];
 	
 	[self deviceSleepOn:[_eldevice isSleepOn]];
 //	[self deviceSleepOn:self.receivedData.sleepState];
@@ -403,62 +422,63 @@
     view.backgroundColor = [UIColor whiteColor];
     CGRect zeroRect = CGRectZero;
     //头部
-        zeroRect.origin.x = 0;
-        zeroRect.origin.y =20;
-        zeroRect.size.width = self.view.frame.size.width;
-        zeroRect.size.height = 30;
-        UILabel *label = [[UILabel alloc] initWithFrame:zeroRect];
-        label.backgroundColor = [UIColor clearColor];
-        [label setText:NSLocalizedString(@"speedSelection", nil)];
-        [label setTextAlignment:NSTextAlignmentCenter];
-        [label setTextColor:RGB(38, 154, 252)];
-        [label setBackgroundColor:[UIColor clearColor]];
-        [view addSubview:label];
-        
-        //加热
-        UIImage *image = [UIImage imageNamed:@"point3"];
-        UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(40, label.frame.size.height+label.frame.origin.y, self.view.frame.size.width - 80, 120)];
-        [slider setBackgroundColor:[UIColor clearColor]];
-        [slider setMaximumTrackTintColor:[UIColor grayColor]];
-        [slider setMinimumTrackTintColor:RGB(0x13, 0xb3, 0x5c)];
-        [slider setMaximumValue:3.0f];
-        [slider setMinimumValue:1.0f];
-        [slider setValue:self.receivedData.gearState];
-        image = [UIImage imageNamed:@"seekbar_btn"];
-        [slider setThumbImage:image forState:UIControlStateNormal];
-        [slider setTag:3];
-        [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventTouchUpInside];
-        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTapped:)];
-        [slider addGestureRecognizer:gr];
-        [view addSubview:slider];
-        
-        CATransition *animation = [CATransition animation];
-        animation.duration = 0.3f;   //时间间隔
-        animation.timingFunction = UIViewAnimationCurveEaseInOut;
-        animation.fillMode = kCAFillModeForwards;
-        animation.type = kCATransitionMoveIn;         //动画效果
-        animation.subtype = kCATransitionFromTop;   //动画方向
-        [view.layer addAnimation:animation forKey:@"animation"];
-        
-        //添加说明性文字
-        label = [[UILabel alloc] initWithFrame:CGRectMake(40, slider.frame.origin.y + 85, 70, 30)];
-        [label setText:[NSString stringWithFormat:@"1%@",NSLocalizedString(@"File", nil)]];
-        [label setBackgroundColor:[UIColor clearColor]];
-        [label setFont:[UIFont systemFontOfSize:13.f]];
-        [view addSubview:label];
-        //1档
-        label = [[UILabel alloc] initWithFrame:CGRectMake(150, label.frame.origin.y, 70, 30)];
-        [label setText:[NSString stringWithFormat:@"2%@",NSLocalizedString(@"File", nil)]];
-        [label setBackgroundColor:[UIColor clearColor]];
-        [label setFont:[UIFont systemFontOfSize:13.f]];
-        [view addSubview:label];
-        //2档
-        label = [[UILabel alloc] initWithFrame:CGRectMake(270, label.frame.origin.y, 70, 30)];
-        [label setText:[NSString stringWithFormat:@"3%@",NSLocalizedString(@"File", nil)]];
-        [label setBackgroundColor:[UIColor clearColor]];
-        [label setFont:[UIFont systemFontOfSize:13.f]];
-        [view addSubview:label];
-        [_backView addSubview:view];
+	zeroRect.origin.x = 0;
+	zeroRect.origin.y =20;
+	zeroRect.size.width = self.view.frame.size.width;
+	zeroRect.size.height = 30;
+	UILabel *label = [[UILabel alloc] initWithFrame:zeroRect];
+	label.backgroundColor = [UIColor clearColor];
+	[label setText:NSLocalizedString(@"speedSelection", nil)];
+	[label setTextAlignment:NSTextAlignmentCenter];
+	[label setTextColor:RGB(38, 154, 252)];
+	[label setBackgroundColor:[UIColor clearColor]];
+	[view addSubview:label];
+	
+	//加热
+	UIImage *image = [UIImage imageNamed:@"point3"];
+	UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(40, label.frame.size.height+label.frame.origin.y, self.view.frame.size.width - 80, 120)];
+	[slider setBackgroundColor:[UIColor clearColor]];
+	[slider setMaximumTrackTintColor:[UIColor grayColor]];
+	[slider setMinimumTrackTintColor:RGB(0x13, 0xb3, 0x5c)];
+	[slider setMaximumValue:3.0f];
+	[slider setMinimumValue:1.0f];
+	[slider setValue:[_eldevice windSpeed]];
+	//[slider setValue:self.receivedData.gearState];
+	image = [UIImage imageNamed:@"seekbar_btn"];
+	[slider setThumbImage:image forState:UIControlStateNormal];
+	[slider setTag:3];
+	[slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventTouchUpInside];
+	UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTapped:)];
+	[slider addGestureRecognizer:gr];
+	[view addSubview:slider];
+	
+	CATransition *animation = [CATransition animation];
+	animation.duration = 0.3f;   //时间间隔
+	animation.timingFunction = UIViewAnimationCurveEaseInOut;
+	animation.fillMode = kCAFillModeForwards;
+	animation.type = kCATransitionMoveIn;         //动画效果
+	animation.subtype = kCATransitionFromTop;   //动画方向
+	[view.layer addAnimation:animation forKey:@"animation"];
+	
+	//添加说明性文字
+	label = [[UILabel alloc] initWithFrame:CGRectMake(40, slider.frame.origin.y + 85, 70, 30)];
+	[label setText:[NSString stringWithFormat:@"1%@",NSLocalizedString(@"File", nil)]];
+	[label setBackgroundColor:[UIColor clearColor]];
+	[label setFont:[UIFont systemFontOfSize:13.f]];
+	[view addSubview:label];
+	//1档
+	label = [[UILabel alloc] initWithFrame:CGRectMake(150, label.frame.origin.y, 70, 30)];
+	[label setText:[NSString stringWithFormat:@"2%@",NSLocalizedString(@"File", nil)]];
+	[label setBackgroundColor:[UIColor clearColor]];
+	[label setFont:[UIFont systemFontOfSize:13.f]];
+	[view addSubview:label];
+	//2档
+	label = [[UILabel alloc] initWithFrame:CGRectMake(270, label.frame.origin.y, 70, 30)];
+	[label setText:[NSString stringWithFormat:@"3%@",NSLocalizedString(@"File", nil)]];
+	[label setBackgroundColor:[UIColor clearColor]];
+	[label setFont:[UIFont systemFontOfSize:13.f]];
+	[view addSubview:label];
+	[_backView addSubview:view];
 }
 
 //阴影点击
@@ -514,51 +534,91 @@
 
 - (void)allButtonClicked:(UIButton *)button
 {
-    if(!self.receivedData.switchStatus && button != _switchButton) {
-        return;
-    } else {
-        if(_childLockButton.selected) {
-            if(button == _handOrAutoButton || button == _sleepButton) {
-				[self displayHUDTitle:NSLocalizedString(@"childMessage", nil) message:nil duration:1];
-                return;
-            }
-        }
-    }
+	if (!_switchButton.selected && button != _switchButton) {
+		[self displayHUDTitle:nil message:@"设备已关机，不能进行其他操作" duration:1];
+		return;
+	}
 	
-	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
-    dispatch_async(_networkQueue, ^{
-        BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
-		sendData.switchStatus = self.receivedData.switchStatus;
-		sendData.autoOrHand = self.receivedData.autoOrHand;
-		sendData.sleepState = self.receivedData.sleepState;
-		sendData.childLockState = self.receivedData.childLockState;
-		sendData.gearState = self.receivedData.gearState;
-        if(button == _switchButton) {
-            [sendData setSwitchStatus:!button.selected];
-        } else if (button == _handOrAutoButton) {
-            [sendData setAutoOrHand:!button.selected];
-        } else if (button == _sleepButton) {
-            sendData.sleepState = !button.selected;
-        } else if(button == _childLockButton) {
-            sendData.childLockState = !button.selected;
-        }
-		
-        NSData *response =[self sendDataCommon:sendData];
-        int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-        if (code == 0) {
+	if (_childLockButton.selected && button != _childLockButton) {
+		[self displayHUDTitle:nil message:NSLocalizedString(@"childMessage", nil) duration:1];
+		return;
+	}
+	
+	NSString *base64 = nil;
+	if (button == _switchButton) {
+		base64 = [_eldevice commandOn:!button.selected];
+//		[self deviceOn:!button.selected];
+	} else if (button == _handOrAutoButton) {
+		base64 = [_eldevice commandAutoOn:!button.selected];
+//		[self deviceAutoOn:!button.selected];
+	} else if (button == _sleepButton) {
+		base64 = [_eldevice commandSleepOn:!button.selected];
+//		[self deviceSleepOn:!button.selected];
+	} else if (button == _childLockButton) {
+		base64 = [_eldevice commandChildLockOn:!button.selected];
+//		[self deviceChildLockOn:!button.selected];
+	}
+
+	if (base64) {
+//		[_timer invalidate];
+		[self displayHUD:NSLocalizedString(@"加载中...", nil)];
+		[[BLAPIClient shared] command:_eldevice.ID value:base64 withBlock:^(NSString *value, NSError *error) {
 			[self hideHUD:YES];
-            NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-            _receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self refreshButtons];
-			});
-		} else {
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
-			});
-		}
-	});
+//			_timer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(getDeviceStatus) userInfo:nil repeats:YES];
+//			[_timer fire];
+			if (!error) {
+			} else {
+				[self displayHUDTitle:@"错误" message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]];
+			}
+		}];
+	}
+	return;
+	
+//    if(!self.receivedData.switchStatus && button != _switchButton) {
+//        return;
+//    } else {
+//        if(_childLockButton.selected) {
+//            if(button == _handOrAutoButton || button == _sleepButton) {
+//				[self displayHUDTitle:NSLocalizedString(@"childMessage", nil) message:nil duration:1];
+//                return;
+//            }
+//        }
+//    }
+	
+//	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
+//    dispatch_async(_networkQueue, ^{
+//        BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
+//		sendData.switchStatus = self.receivedData.switchStatus;
+//		sendData.autoOrHand = self.receivedData.autoOrHand;
+//		sendData.sleepState = self.receivedData.sleepState;
+//		sendData.childLockState = self.receivedData.childLockState;
+//		sendData.gearState = self.receivedData.gearState;
+//        if(button == _switchButton) {
+//            [sendData setSwitchStatus:!button.selected];
+//        } else if (button == _handOrAutoButton) {
+//            [sendData setAutoOrHand:!button.selected];
+//        } else if (button == _sleepButton) {
+//            sendData.sleepState = !button.selected;
+//        } else if(button == _childLockButton) {
+//            sendData.childLockState = !button.selected;
+//        }
+//		
+//        NSData *response =[self sendDataCommon:sendData];
+//        int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+//        if (code == 0) {
+//			[self hideHUD:YES];
+//            NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
+//            _receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+//			dispatch_async(dispatch_get_main_queue(), ^{
+//				[self refreshButtons];
+//			});
+//		} else {
+//			dispatch_async(dispatch_get_main_queue(), ^{
+//				[self hideHUD:YES];
+//				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
+//			});
+//		}
+//	});
 }
 
 //发送数据
@@ -579,7 +639,7 @@
 
 - (void)sliderTapped:(UIGestureRecognizer *)g
 {
-    UISlider* s = (UISlider *)g.view;
+    UISlider *s = (UISlider *)g.view;
     if (s.highlighted)
         return; // tap on thumb, let slider deal with it
     CGPoint pt = [g locationInView: s];
@@ -597,27 +657,35 @@
         return;
     old = speed;
 	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
-    dispatch_async(_networkQueue, ^{
-        BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
-        sendData.childLockState = self.receivedData.childLockState;
-        sendData.switchStatus = self.receivedData.switchStatus;
-        [sendData setAutoOrHand:self.receivedData.autoOrHand];
-        sendData.sleepState = self.receivedData.sleepState;
-        sendData.gearState = speed;
-        //数据透传
-        NSData *response =[self sendDataCommon:sendData];
-        int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-        if (code == 0) {
-			[self hideHUD:YES];
-            NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-            _receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-				[self hideHUD:YES];
-				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
-            });
-        }
-    });
+	
+	NSLog(@"set wind speed: %d", speed);
+	
+	NSString *base64 = [_eldevice commandWindSpeed:speed];
+	[[BLAPIClient shared] command:_eldevice.ID value:base64 withBlock:^(NSString *value, NSError *error) {
+		
+	}];
+	
+//    dispatch_async(_networkQueue, ^{
+//        BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
+//        sendData.childLockState = self.receivedData.childLockState;
+//        sendData.switchStatus = self.receivedData.switchStatus;
+//        [sendData setAutoOrHand:self.receivedData.autoOrHand];
+//        sendData.sleepState = self.receivedData.sleepState;
+//        sendData.gearState = speed;
+//        //数据透传
+//        NSData *response =[self sendDataCommon:sendData];
+//        int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
+//        if (code == 0) {
+//			[self hideHUD:YES];
+//            NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
+//            _receivedData = [[BeiAngReceivedData alloc] initWithData:array];
+//        } else {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//				[self hideHUD:YES];
+//				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
+//            });
+//        }
+//    });
 }
 
 - (void)share

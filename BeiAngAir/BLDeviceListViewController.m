@@ -49,6 +49,8 @@
     [super viewDidLoad];
 	self.navigationController.navigationBarHidden = NO;
 	
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+	
 	self.refreshControl = [[UIRefreshControl alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100.0f)];
 	[self.refreshControl addTarget:self action:@selector(doInBackground) forControlEvents:UIControlEventValueChanged];
 	[self.tableView.tableHeaderView addSubview:self.refreshControl];
@@ -121,6 +123,10 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:BEIANG_NOTIFICATION_IDENTIFIER_ADDED_DEVICE object:nil];
+}
+
+- (void)back {
+	[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)addNewDevice
@@ -356,13 +362,12 @@
 //    });
 }
 
-- (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer
-{
-    BLDevice *device = [_devices objectAtIndex:recognizer.view.tag];
-    BLDeviceEditViewController *controller = [[BLDeviceEditViewController alloc] init];
-	controller.device = device;
-	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:navigationController animated:YES completion:nil];
+- (void)editDeviceAvatar:(UITapGestureRecognizer *)recognizer {
+//    BLDevice *device = [_devices objectAtIndex:recognizer.view.tag];
+//    BLDeviceEditViewController *controller = [[BLDeviceEditViewController alloc] init];
+//	controller.device = device;
+//	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+//    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 

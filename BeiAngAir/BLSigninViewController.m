@@ -25,30 +25,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.navigationController.navigationBarHidden = NO;
+	self.title = NSLocalizedString(@"登录", nil);
 	self.view.backgroundColor = [UIColor themeBlue];
 	
-	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignKeyboard)];
+	CGRect viewFrame = CGRectZero;
+	UIImage *image = [UIImage imageNamed:@"home_logo"];
+	viewFrame.origin.y = 20;
+	viewFrame.origin.x = (self.view.frame.size.width - image.size.width) / 2;
+	viewFrame.size = image.size;
+	UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:viewFrame];
+	[logoImageView setImage:image];
+	[self.view addSubview:logoImageView];
+	
+	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
 	[self.view addGestureRecognizer:tap];
 	
-	UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 30, 0, 30);
+	UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 30, 15, 30);
 
-	CGRect frame = CGRectMake(edgeInsets.left, 150, self.view.frame.size.width - edgeInsets.left - edgeInsets.right, 40);
+	CGRect frame = CGRectMake(edgeInsets.left, CGRectGetMaxY(logoImageView.frame), self.view.frame.size.width - edgeInsets.left - edgeInsets.right, 40);
 	_accountTextField = [[UITextField alloc] initWithFrame:frame];
 	_accountTextField.placeholder = @"请输入手机号/用户名";
 	_accountTextField.backgroundColor = [UIColor whiteColor];
+	_accountTextField.layer.cornerRadius = 4;
 	[self.view addSubview:_accountTextField];
 	
-	frame.origin.y = CGRectGetMaxY(_accountTextField.frame) + 15;
+	frame.origin.y = CGRectGetMaxY(_accountTextField.frame) + edgeInsets.bottom;
 	_passwordTextField = [[UITextField alloc] initWithFrame:frame];
 	_passwordTextField.placeholder = @"请输入密码";
+	_passwordTextField.layer.cornerRadius = 4;
 	_passwordTextField.backgroundColor = [UIColor whiteColor];
+	_passwordTextField.secureTextEntry = YES;
 	[self.view addSubview:_passwordTextField];
 	
-	frame.origin.y = CGRectGetMaxY(_passwordTextField.frame) + 30;
+	frame.origin.y = CGRectGetMaxY(_passwordTextField.frame) + edgeInsets.bottom;
 	frame.size.width = 120;
 	_signinButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	_signinButton.frame = frame;
+	_signinButton.layer.borderColor = [[UIColor blackColor] CGColor];
+	_signinButton.layer.borderWidth = 0.5;
+	_signinButton.layer.cornerRadius = 6;
 	_signinButton.backgroundColor = [UIColor whiteColor];
 	[_signinButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[_signinButton setTitle:@"登录" forState:UIControlStateNormal];
@@ -58,6 +73,9 @@
 	frame.origin.x = CGRectGetMaxX(_signinButton.frame) + 20;
 	_cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	_cancelButton.frame = frame;
+	_cancelButton.layer.borderColor = [[UIColor blackColor] CGColor];
+	_cancelButton.layer.borderWidth = 0.5;
+	_cancelButton.layer.cornerRadius = 6;
 	_cancelButton.backgroundColor = [UIColor whiteColor];
 	[_cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
@@ -65,7 +83,7 @@
 	[self.view addSubview:_cancelButton];
 	
 	frame.origin.x = edgeInsets.left;
-	frame.origin.y = CGRectGetMaxY(_cancelButton.frame) + 30;
+	frame.origin.y = CGRectGetMaxY(_cancelButton.frame) + edgeInsets.bottom;
 	frame.size.width = self.view.frame.size.width - edgeInsets.left - edgeInsets.right;
 	_signupLabel = [[UILabel alloc] initWithFrame:frame];
 	_signupLabel.text = @"没有账号?点击注册";
@@ -76,18 +94,19 @@
 	[self.view addSubview:_signupLabel];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	self.navigationController.navigationBarHidden = YES;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)resignKeyboard {
-	[self.view endEditing:YES];
-}
-
 - (void)signin {
-	
-	_accountTextField.text = @"AricMr";
-	_passwordTextField.text = @"123456";
+//TOTEST
+//	_accountTextField.text = @"AricMr";
+//	_passwordTextField.text = @"123456";
 	if (!_accountTextField.text.length) {
 		[self displayHUDTitle:@"错误" message:@"账号不能为空" duration:1];
 		return;
