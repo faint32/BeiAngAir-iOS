@@ -299,12 +299,12 @@
 //		NSLog(@"%i", c);
 //	}
 	
-	//uint8_t *buffer = new Byte[0x42 ,0x65 ,0x69 ,0x61 ,0x6e ,0x67 ,0x05 ,0xf5 ,0xe1 ,0x2e];
-	Byte buffer[] = {0x42 ,0x65 ,0x69 ,0x61 ,0x6e ,0x67 ,0x05 ,0xf5 ,0xe1 ,0x2e};
-	NSLog(@"buffer: %s", buffer);
-	NSData *data = [[NSData alloc] initWithBytes:buffer length:10];
-	NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-	NSLog(@"string: %@", string);
+//	uint8_t *buffer = new Byte[0x42 ,0x65 ,0x69 ,0x61 ,0x6e ,0x67 ,0x05 ,0xf5 ,0xe1 ,0x2e];
+//	Byte buffer[] = {0x42 ,0x65 ,0x69 ,0x61 ,0x6e ,0x67 ,0x05 ,0xf5 ,0xe1 ,0x2e};
+//	NSLog(@"buffer: %s", buffer);
+//	NSData *data = [[NSData alloc] initWithBytes:buffer length:10];
+//	NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+//	NSLog(@"string: %@", string);
 	
 //	NSString *hexUserID = [self hexStringFromString:userID];
 //	NSLog(@"userID: %@", userID);
@@ -313,7 +313,7 @@
 //	hexUserID = @"426569616e6705f5e12e";
 //	
 //	hexUserID = [NSString stringWithUTF8String:buffer];
-	[_easylinkConfig prepareEasyLinkV2:_ssidTextField.text password:_passwordTextField.text info:string];
+	[_easylinkConfig prepareEasyLinkV2:_ssidTextField.text password:_passwordTextField.text info:@"here bug"];
 	[self sendAction];
 }
 
