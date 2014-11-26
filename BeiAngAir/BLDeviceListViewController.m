@@ -306,8 +306,10 @@
 	cell.textLabel.text = [device displayName];
 
 	NSMutableString *details = [NSMutableString stringWithString:[device displayStatus]];
-	if ([device hours] && [device minutes]) {
-		[details appendFormat:@"\n已运行%@小时%@分钟", [device hours], [device minutes]];
+	if ([device isOnline]) {
+		if ([device hours] && [device minutes]) {
+			[details appendFormat:@"\n已运行%@小时%@分钟", [device hours], [device minutes]];
+		}
 	}
 	
 	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:details];

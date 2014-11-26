@@ -14,7 +14,7 @@ extern NSString * const BL_ERROR_MESSAGE_IDENTIFIER;
 
 + (instancetype)shared;
 - (BOOL)isSessionValid;
-
+- (NSString *)userID;
 - (void)registerAccount:(NSString *)account password:(NSString *)password withBlock:(void (^)(NSError *error))block;
 
 - (void)signinAccount:(NSString *)account password:(NSString *)password withBlock:(void (^)(NSError *error))block;

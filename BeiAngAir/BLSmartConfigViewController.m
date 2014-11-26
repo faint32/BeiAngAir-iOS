@@ -11,12 +11,21 @@
 #import "BLNetwork.h"
 #import "JSONKit.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
+#import "Reachability.h"
+#import "EASYLINK.h"
+#import "BLAPIClient.h"
+
+#define EASYLINK_V2 1
 
 @interface BLSmartConfigViewController () <UITextFieldDelegate,UIAlertViewDelegate>
 
-@property (nonatomic, strong) UITextField *ssidTextField;
-@property (nonatomic, strong) UITextField *passwordTextField;
-@property (nonatomic, strong) BLNetwork *configAPI;
+@property (readwrite) UITextField *ssidTextField;
+@property (readwrite) UITextField *passwordTextField;
+@property (readwrite) BLNetwork *configAPI;
+@property (readwrite) Reachability *wifiReachability;
+@property (readwrite) EASYLINK *easylinkConfig;
+@property (readwrite) NSTimer *sendInterval;
+@property (readwrite) NSThread *waitForAckThread;
 
 @end
 
@@ -174,7 +183,8 @@
 
 - (void)dismiss
 {
-    [self cancelConfig];
+	[self stopAction];
+	[_waitForAckThread cancel];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -218,17 +228,127 @@
 	[imageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
 	[waitingView addSubview:imageView];
 
+	
 	if (_ssidTextField.text.length && _passwordTextField.text.length) {
 		Wifi *wifi = [[Wifi alloc] init];
 		wifi.SSID = _ssidTextField.text;
 		wifi.password = _passwordTextField.text;
 		[wifi persistence];
-		[self startConfig];
+//		[self startConfig];
+		
+		_easylinkConfig = [[EASYLINK alloc] init];
+		[self startTransmitting:EASYLINK_V2];
 	}
 }
 
-- (void)startConfig
-{
+- (NSString *)hexStringFromString:(NSString *)string {
+	NSData *myD = [string dataUsingEncoding:NSUTF8StringEncoding];
+	Byte *bytes = (Byte *)[myD bytes];
+	//下面是Byte 转换为16进制。
+	NSString *hexStr = @"";
+	for(int i=0; i < [myD length]; i++) {
+		NSString *newHexStr = [NSString stringWithFormat:@"%x",bytes[i]&0xff];///16进制数
+		if([newHexStr length] == 1) {
+			hexStr = [NSString stringWithFormat:@"%@0%@",hexStr,newHexStr];
+		} else {
+			hexStr = [NSString stringWithFormat:@"%@%@",hexStr,newHexStr];
+		}
+	}
+	return hexStr;
+}
+
+- (NSString *)hexString:(NSString *)str {
+	NSString * hexStr = [NSString stringWithFormat:@"%@", [NSData dataWithBytes:[str cStringUsingEncoding:NSUTF8StringEncoding] length:strlen([str cStringUsingEncoding:NSUTF8StringEncoding])]];
+	for(NSString * toRemove in [NSArray arrayWithObjects:@"<", @">", @" ", nil]) {
+		hexStr = [hexStr stringByReplacingOccurrencesOfString:toRemove withString:@""];
+	}
+	return hexStr;
+}
+
+- (void)startTransmitting:(int)version {
+//	NetworkStatus netStatus = [_wifiReachability currentReachabilityStatus];
+//	if ( netStatus == NotReachable ){// No activity if no wifi
+//		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"WiFi not available. Please check your WiFi connection" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//		[alertView show];
+//		return;
+//	}
+	
+//	if([userInfoField.text length] > 0 && version == EASYLINK_V1) {
+//		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Custom information cannot be delivered by EasyLink V1" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//		[alertView show];
+//	}
+	
+	if (!_ssidTextField.text.length) {
+		[self displayHUDTitle:nil message:@"请填写WIFI名称" duration:1];
+		return;
+	}
+	
+	if (!_passwordTextField.text.length) {
+		[self displayHUDTitle:nil message:@"请填写密码" duration:1];
+		return;
+	}
+	
+	[self displayHUD:@"加载中..."];
+	[self.view endEditing:YES];
+//	NSString *userID = [[BLAPIClient shared] userID];
+//	NSString *beiangAddUserID = [NSString stringWithFormat:@"%@%@", @"Beiang", userID];
+//	NSData *data = [userID dataUsingEncoding:NSUTF8StringEncoding];
+//	uint8_t *dataBuffer = (uint8_t *)[data bytes];
+//	for (int i = 0; i < [userID lengthOfBytesUsingEncoding:NSUTF8StringEncoding]; i++) {
+//		uint8_t c = dataBuffer[i];
+//		NSLog(@"%i", c);
+//	}
+	
+	//uint8_t *buffer = new Byte[0x42 ,0x65 ,0x69 ,0x61 ,0x6e ,0x67 ,0x05 ,0xf5 ,0xe1 ,0x2e];
+	Byte buffer[] = {0x42 ,0x65 ,0x69 ,0x61 ,0x6e ,0x67 ,0x05 ,0xf5 ,0xe1 ,0x2e};
+	NSLog(@"buffer: %s", buffer);
+	NSData *data = [[NSData alloc] initWithBytes:buffer length:10];
+	NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+	NSLog(@"string: %@", string);
+	
+//	NSString *hexUserID = [self hexStringFromString:userID];
+//	NSLog(@"userID: %@", userID);
+//	NSLog(@"hex userID: %@", hexUserID);
+//	NSLog(@"hex string: %@", [self hexString:userID]);
+//	hexUserID = @"426569616e6705f5e12e";
+//	
+//	hexUserID = [NSString stringWithUTF8String:buffer];
+	[_easylinkConfig prepareEasyLinkV2:_ssidTextField.text password:_passwordTextField.text info:string];
+	[self sendAction];
+}
+
+- (void)stopTransmitting {
+	if(_sendInterval != nil){
+		[_sendInterval invalidate];
+		_sendInterval = nil;
+	}
+}
+
+- (void)sendAction {
+//	newModuleFound = NO;
+	[_easylinkConfig transmitSettings];
+	_waitForAckThread = [[NSThread alloc] initWithTarget:self selector:@selector(waitForAck:) object:nil];
+	[_waitForAckThread start];
+}
+
+-(void)stopAction {
+	[_easylinkConfig stopTransmitting];
+	[_waitForAckThread cancel];
+	_waitForAckThread= nil;
+}
+
+- (void)waitForAck:(id)sender {
+	while([_waitForAckThread isCancelled] == NO) {
+//		if (newModuleFound == YES ){
+			//[self stopAction];
+			//[self.navigationController popToRootViewControllerAnimated:YES];
+			//break;
+//		}
+		sleep(1);
+	}
+}
+
+- (void)startConfig {
 	[self.view endEditing:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSDictionary *dictionary = [NSDictionary dictionaryEashConfigWithSSID:_ssidTextField.text password:_passwordTextField.text];
