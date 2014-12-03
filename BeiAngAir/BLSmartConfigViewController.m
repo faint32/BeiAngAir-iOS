@@ -184,49 +184,48 @@
 - (void)dismiss
 {
 	[self stopAction];
-	[_waitForAckThread cancel];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)configButtonClicked
 {
-	CGRect viewFrame = CGRectZero;
-	viewFrame.origin.y = 80;
-	viewFrame.size.width = self.view.frame.size.width;
-	viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y;
-	UIView *waitingView = [[UIView alloc] initWithFrame:viewFrame];
-	[waitingView setBackgroundColor:[UIColor whiteColor]];
-	[self.view addSubview:waitingView];
-	viewFrame = waitingView.frame;
-	viewFrame.origin.x = 20.0f;
-	viewFrame.size.width -= 40.0f;
-	UILabel *configLabel = [[UILabel alloc] initWithFrame:viewFrame];
-	[configLabel setBackgroundColor:[UIColor clearColor]];
-	[configLabel setFont:[UIFont systemFontOfSize:15.0f]];
-	[configLabel setTextColor:[UIColor grayColor]];
-	[configLabel setText:NSLocalizedString(@"SmartConfigViewControllerConfigLabelText", nil)];
-	[configLabel setNumberOfLines:3];
-	viewFrame = [configLabel textRectForBounds:viewFrame limitedToNumberOfLines:3];
-	viewFrame.origin.x = (waitingView.frame.size.width - viewFrame.size.width) * 0.5f;
-	viewFrame.origin.y = (waitingView.frame.size.height - viewFrame.size.height) * 0.5f - 30.0f;
-	[configLabel setFrame:viewFrame];
-	[configLabel setTextAlignment:NSTextAlignmentCenter];
-	[waitingView addSubview:configLabel];
-	UIImage *image = [UIImage imageNamed:@"wait"];
-	viewFrame = configLabel.frame;
-	viewFrame.origin.y += viewFrame.size.height + 10.0f;
-	viewFrame.origin.x = (waitingView.frame.size.width - image.size.width) * 0.5f;
-	viewFrame.size = image.size;
-	UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewFrame];
-	[imageView setBackgroundColor:[UIColor clearColor]];
-	[imageView setImage:image];
-	CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];  
-	rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 ];  
-	rotationAnimation.duration = 2.0f;  
-	rotationAnimation.cumulative = YES;  
-	rotationAnimation.repeatCount = NSIntegerMax;  
-	[imageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
-	[waitingView addSubview:imageView];
+//	CGRect viewFrame = CGRectZero;
+//	viewFrame.origin.y = 80;
+//	viewFrame.size.width = self.view.frame.size.width;
+//	viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y;
+//	UIView *waitingView = [[UIView alloc] initWithFrame:viewFrame];
+//	[waitingView setBackgroundColor:[UIColor whiteColor]];
+//	[self.view addSubview:waitingView];
+//	viewFrame = waitingView.frame;
+//	viewFrame.origin.x = 20.0f;
+//	viewFrame.size.width -= 40.0f;
+//	UILabel *configLabel = [[UILabel alloc] initWithFrame:viewFrame];
+//	[configLabel setBackgroundColor:[UIColor clearColor]];
+//	[configLabel setFont:[UIFont systemFontOfSize:15.0f]];
+//	[configLabel setTextColor:[UIColor grayColor]];
+//	[configLabel setText:NSLocalizedString(@"SmartConfigViewControllerConfigLabelText", nil)];
+//	[configLabel setNumberOfLines:3];
+//	viewFrame = [configLabel textRectForBounds:viewFrame limitedToNumberOfLines:3];
+//	viewFrame.origin.x = (waitingView.frame.size.width - viewFrame.size.width) * 0.5f;
+//	viewFrame.origin.y = (waitingView.frame.size.height - viewFrame.size.height) * 0.5f - 30.0f;
+//	[configLabel setFrame:viewFrame];
+//	[configLabel setTextAlignment:NSTextAlignmentCenter];
+//	[waitingView addSubview:configLabel];
+//	UIImage *image = [UIImage imageNamed:@"wait"];
+//	viewFrame = configLabel.frame;
+//	viewFrame.origin.y += viewFrame.size.height + 10.0f;
+//	viewFrame.origin.x = (waitingView.frame.size.width - image.size.width) * 0.5f;
+//	viewFrame.size = image.size;
+//	UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewFrame];
+//	[imageView setBackgroundColor:[UIColor clearColor]];
+//	[imageView setImage:image];
+//	CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];  
+//	rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 ];  
+//	rotationAnimation.duration = 2.0f;  
+//	rotationAnimation.cumulative = YES;  
+//	rotationAnimation.repeatCount = NSIntegerMax;  
+//	[imageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+//	[waitingView addSubview:imageView];
 
 	
 	if (_ssidTextField.text.length && _passwordTextField.text.length) {
@@ -265,7 +264,7 @@
 		return;
 	}
 	
-	[self displayHUD:@"加载中..."];
+	[self displayHUD:@"绑定中，该过程可能持续一分钟"];
 	[self.view endEditing:YES];
 
 	NSNumber *dhcp = @(NO);
@@ -323,7 +322,6 @@
 }
 
 - (void)sendAction {
-//	newModuleFound = NO;
 	[_easylinkConfig transmitSettings];
 	_waitForAckThread = [[NSThread alloc] initWithTarget:self selector:@selector(waitForAck:) object:nil];
 	[_waitForAckThread start];
@@ -332,17 +330,40 @@
 -(void)stopAction {
 	[_easylinkConfig stopTransmitting];
 	[_waitForAckThread cancel];
-	_waitForAckThread= nil;
+	_waitForAckThread = nil;
 }
 
 - (void)waitForAck:(id)sender {
-	while([_waitForAckThread isCancelled] == NO) {
-//		if (newModuleFound == YES ){
-			//[self stopAction];
-			//[self.navigationController popToRootViewControllerAnimated:YES];
-			//break;
-//		}
-		sleep(1);
+	__block BOOL bindSuccess = NO;
+	__block NSInteger count = 0;
+	while(_waitForAckThread) {
+		count++;
+		if (count > 15) {//1分钟超时
+			[self hideHUD:YES];
+			[self displayHUDTitle:@"错误" message:@"访问超时，请重试" duration:3];
+			[self stopAction];
+			break;
+		}
+		[[BLAPIClient shared] getBindResultWithBlock:^(BOOL newDeviceFound, NSError *error) {
+			if (!error) {
+				bindSuccess = newDeviceFound;
+				if (newDeviceFound) {
+					[self hideHUD:YES];
+					[self stopAction];
+					NSLog(@"find new device");
+				}
+			} else {
+				[self hideHUD:YES];
+				[self displayHUDTitle:@"错误" message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER] duration:3];
+				[self stopAction];
+			}
+		}];
+		sleep(4);
+	}
+	
+	if (bindSuccess) {
+		[self displayHUDTitle:@"绑定成功" message:nil];
+		[self dismissViewControllerAnimated:YES completion:nil];
 	}
 }
 
@@ -366,8 +387,7 @@
     });
 }
 
-- (void)cancelConfig
-{
+- (void)cancelConfig {
 	NSDictionary *dictionary = [NSDictionary dictionaryCancelEashConfig];
 	NSData *requestData = [dictionary JSONData];
 	[_configAPI requestDispatch:requestData];

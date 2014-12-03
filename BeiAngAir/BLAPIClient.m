@@ -90,6 +90,13 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 		if (!message || [message isEqual:[NSNull null]]) {
 			message = NSLocalizedString(@"未知错误", nil);
 		}
+		if (code == 611) {
+			message = NSLocalizedString(@"该设备已和其它账号绑定", nil);
+		}
+		
+		if (code == 2102) {
+			message = NSLocalizedString(@"已绑定过该设备", nil);
+		}
 		error = [NSError errorWithDomain:BL_ERROR_DOMAIN code:1 userInfo:@{BL_ERROR_MESSAGE_IDENTIFIER : message}];
 	}
 	return error;
@@ -216,6 +223,30 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 		if (block) block(value, error);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		if (block) block(nil, error);
+	}];
+}
+
+- (void)getBindResultWithBlock:(void (^)(BOOL newDeviceFound, NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
+	parameters[@"method"] = @"getBindResult";
+	parameters[@"params"] = @{@"user_id" : [self userID], @"bind_code" : @"0"};//0 default
+	
+	NSString *JSONString = [self dataTOJSONString:parameters];
+	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		NSLog(@"response object: %@", responseObject);
+		BOOL newDeviceFound = NO;
+		NSError *error = [self handleResponse:responseObject];
+		NSDictionary *result = [responseObject valueForKeyPath:@"result"];
+		NSString *deviceID = nil;
+		if (!error) {
+			deviceID = result[@"data"][@"ndevice_id"];
+			if (deviceID.length) {
+				newDeviceFound = YES;
+			}
+		}
+		if (block) block(newDeviceFound, error);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		if (block) block(NO, error);
 	}];
 }
 
