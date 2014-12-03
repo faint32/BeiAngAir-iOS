@@ -339,7 +339,7 @@
 	while(_waitForAckThread) {
 		count++;
 		if (count > 15) {//1分钟超时
-			[self hideHUD:YES];
+			[self hideHUD:NO];
 			[self displayHUDTitle:@"错误" message:@"访问超时，请重试" duration:3];
 			[self stopAction];
 			break;
@@ -348,12 +348,12 @@
 			if (!error) {
 				bindSuccess = newDeviceFound;
 				if (newDeviceFound) {
-					[self hideHUD:YES];
+					[self hideHUD:NO];
 					[self stopAction];
 					NSLog(@"find new device");
 				}
 			} else {
-				[self hideHUD:YES];
+				[self hideHUD:NO];
 				[self displayHUDTitle:@"错误" message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER] duration:3];
 				[self stopAction];
 			}
