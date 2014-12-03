@@ -90,12 +90,10 @@
 		77F16DAA1977588B00564AAB /* CLLocation+NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D831977588B00564AAB /* CLLocation+NSDictionary.m */; };
 		77F16DAB1977588B00564AAB /* CLLocation+NSString.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D851977588B00564AAB /* CLLocation+NSString.m */; };
 		77F16DAC1977588B00564AAB /* IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D871977588B00564AAB /* IPAddress.m */; };
-		77F16DAD1977588B00564AAB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 77F16D881977588B00564AAB /* LICENSE */; };
 		77F16DAF1977588B00564AAB /* NSNumber+PrintableMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D8C1977588B00564AAB /* NSNumber+PrintableMeasurement.m */; };
 		77F16DB01977588B00564AAB /* NSString+BundleExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D8E1977588B00564AAB /* NSString+BundleExtensions.m */; };
 		77F16DB11977588B00564AAB /* NSString+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D901977588B00564AAB /* NSString+Hex.m */; };
 		77F16DB21977588B00564AAB /* NSString+ZBUtilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D921977588B00564AAB /* NSString+ZBUtilites.m */; };
-		77F16DB31977588B00564AAB /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D931977588B00564AAB /* README.md */; };
 		77F16DB41977588B00564AAB /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D951977588B00564AAB /* UIColor+Hex.m */; };
 		77F16DB51977588B00564AAB /* UIColor+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D971977588B00564AAB /* UIColor+Random.m */; };
 		77F16DB61977588B00564AAB /* UIDevice+ZBUtilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16D991977588B00564AAB /* UIDevice+ZBUtilites.m */; };
@@ -104,7 +102,6 @@
 		77F16DBA1977588B00564AAB /* ZBHorizontalScrollTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA11977588B00564AAB /* ZBHorizontalScrollTableViewCell.m */; };
 		77F16DBB1977588B00564AAB /* ZBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA31977588B00564AAB /* ZBModel.m */; };
 		77F16DBC1977588B00564AAB /* ZBTextValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA51977588B00564AAB /* ZBTextValidate.m */; };
-		77F16DBD1977588B00564AAB /* ZBUtilities.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 77F16DA61977588B00564AAB /* ZBUtilities.podspec */; };
 		77F16DBE1977588B00564AAB /* ZBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16DA81977588B00564AAB /* ZBViewController.m */; };
 		77F16E10197792C000564AAB /* BLShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F16E0F197792C000564AAB /* BLShareViewController.m */; };
 		77F16E301977A2A600564AAB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F16E2F1977A2A600564AAB /* CoreTelephony.framework */; };
@@ -304,7 +301,6 @@
 		77F16D851977588B00564AAB /* CLLocation+NSString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+NSString.m"; sourceTree = "<group>"; };
 		77F16D861977588B00564AAB /* IPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPAddress.h; sourceTree = "<group>"; };
 		77F16D871977588B00564AAB /* IPAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPAddress.m; sourceTree = "<group>"; };
-		77F16D881977588B00564AAB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		77F16D8B1977588B00564AAB /* NSNumber+PrintableMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+PrintableMeasurement.h"; sourceTree = "<group>"; };
 		77F16D8C1977588B00564AAB /* NSNumber+PrintableMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+PrintableMeasurement.m"; sourceTree = "<group>"; };
 		77F16D8D1977588B00564AAB /* NSString+BundleExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BundleExtensions.h"; sourceTree = "<group>"; };
@@ -313,7 +309,6 @@
 		77F16D901977588B00564AAB /* NSString+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hex.m"; sourceTree = "<group>"; };
 		77F16D911977588B00564AAB /* NSString+ZBUtilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ZBUtilites.h"; sourceTree = "<group>"; };
 		77F16D921977588B00564AAB /* NSString+ZBUtilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ZBUtilites.m"; sourceTree = "<group>"; };
-		77F16D931977588B00564AAB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		77F16D941977588B00564AAB /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		77F16D951977588B00564AAB /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		77F16D961977588B00564AAB /* UIColor+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Random.h"; sourceTree = "<group>"; };
@@ -330,7 +325,6 @@
 		77F16DA31977588B00564AAB /* ZBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBModel.m; sourceTree = "<group>"; };
 		77F16DA41977588B00564AAB /* ZBTextValidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBTextValidate.h; sourceTree = "<group>"; };
 		77F16DA51977588B00564AAB /* ZBTextValidate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBTextValidate.m; sourceTree = "<group>"; };
-		77F16DA61977588B00564AAB /* ZBUtilities.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ZBUtilities.podspec; sourceTree = "<group>"; };
 		77F16DA71977588B00564AAB /* ZBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBViewController.h; sourceTree = "<group>"; };
 		77F16DA81977588B00564AAB /* ZBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBViewController.m; sourceTree = "<group>"; };
 		77F16E0E197792C000564AAB /* BLShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLShareViewController.h; path = BeiAngAir/BLShareViewController.h; sourceTree = SOURCE_ROOT; };
@@ -829,7 +823,6 @@
 				77F16D851977588B00564AAB /* CLLocation+NSString.m */,
 				77F16D861977588B00564AAB /* IPAddress.h */,
 				77F16D871977588B00564AAB /* IPAddress.m */,
-				77F16D881977588B00564AAB /* LICENSE */,
 				77F16D8B1977588B00564AAB /* NSNumber+PrintableMeasurement.h */,
 				77F16D8C1977588B00564AAB /* NSNumber+PrintableMeasurement.m */,
 				77F16D8D1977588B00564AAB /* NSString+BundleExtensions.h */,
@@ -838,7 +831,6 @@
 				77F16D901977588B00564AAB /* NSString+Hex.m */,
 				77F16D911977588B00564AAB /* NSString+ZBUtilites.h */,
 				77F16D921977588B00564AAB /* NSString+ZBUtilites.m */,
-				77F16D931977588B00564AAB /* README.md */,
 				77F16D941977588B00564AAB /* UIColor+Hex.h */,
 				77F16D951977588B00564AAB /* UIColor+Hex.m */,
 				77F16D961977588B00564AAB /* UIColor+Random.h */,
@@ -855,7 +847,6 @@
 				77F16DA31977588B00564AAB /* ZBModel.m */,
 				77F16DA41977588B00564AAB /* ZBTextValidate.h */,
 				77F16DA51977588B00564AAB /* ZBTextValidate.m */,
-				77F16DA61977588B00564AAB /* ZBUtilities.podspec */,
 				77F16DA71977588B00564AAB /* ZBViewController.h */,
 				77F16DA81977588B00564AAB /* ZBViewController.m */,
 			);
@@ -981,9 +972,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F183C7197978E8009599DB /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
-				77F16DBD1977588B00564AAB /* ZBUtilities.podspec in Resources */,
 				BA8910291945906F00C16953 /* BeiAngAir-Info.plist in Resources */,
-				77F16DAD1977588B00564AAB /* LICENSE in Resources */,
 				7775005A1A22D487008C566D /* EasyLink-Info.plist in Resources */,
 				2FAE502A18F78C470068893E /* InfoPlist.strings in Resources */,
 				77D9E32F1980A85A004AC675 /* LICENSE in Resources */,
@@ -1037,7 +1026,6 @@
 				7775009A1A22E2E7008C566D /* AFSecurityPolicy.m in Sources */,
 				77F16DBA1977588B00564AAB /* ZBHorizontalScrollTableViewCell.m in Sources */,
 				77F16DBB1977588B00564AAB /* ZBModel.m in Sources */,
-				77F16DB31977588B00564AAB /* README.md in Sources */,
 				777500A91A22E374008C566D /* BLAPIClient.m in Sources */,
 				7775006B1A22D714008C566D /* BLSigninViewController.m in Sources */,
 				BAAE38C1194089EE002C97C8 /* SBJsonStreamWriterAccumulator.m in Sources */,

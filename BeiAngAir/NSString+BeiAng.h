@@ -14,5 +14,7 @@
 + (instancetype)deviceAvatarPathWithMAC:(NSString *)MAC;
 + (instancetype)phoneNumber;
 + (instancetype)webSiteAddress;
++ (instancetype)stringFromHexString:(NSString *)hexString;
++ (instancetype)hexStringFromString:(NSString *)string;
 
 @end

@@ -17,7 +17,7 @@
 
 #define EASYLINK_V2 1
 
-@interface BLSmartConfigViewController () <UITextFieldDelegate,UIAlertViewDelegate>
+@interface BLSmartConfigViewController () <UITextFieldDelegate,UIAlertViewDelegate, EasyLinkFTCDelegate>
 
 @property (readwrite) UITextField *ssidTextField;
 @property (readwrite) UITextField *passwordTextField;
@@ -237,32 +237,9 @@
 //		[self startConfig];
 		
 		_easylinkConfig = [[EASYLINK alloc] init];
+		_easylinkConfig.delegate = self;
 		[self startTransmitting:EASYLINK_V2];
 	}
-}
-
-- (NSString *)hexStringFromString:(NSString *)string {
-	NSData *myD = [string dataUsingEncoding:NSUTF8StringEncoding];
-	Byte *bytes = (Byte *)[myD bytes];
-	//下面是Byte 转换为16进制。
-	NSString *hexStr = @"";
-	for(int i=0; i < [myD length]; i++) {
-		NSString *newHexStr = [NSString stringWithFormat:@"%x",bytes[i]&0xff];///16进制数
-		if([newHexStr length] == 1) {
-			hexStr = [NSString stringWithFormat:@"%@0%@",hexStr,newHexStr];
-		} else {
-			hexStr = [NSString stringWithFormat:@"%@%@",hexStr,newHexStr];
-		}
-	}
-	return hexStr;
-}
-
-- (NSString *)hexString:(NSString *)str {
-	NSString * hexStr = [NSString stringWithFormat:@"%@", [NSData dataWithBytes:[str cStringUsingEncoding:NSUTF8StringEncoding] length:strlen([str cStringUsingEncoding:NSUTF8StringEncoding])]];
-	for(NSString * toRemove in [NSArray arrayWithObjects:@"<", @">", @" ", nil]) {
-		hexStr = [hexStr stringByReplacingOccurrencesOfString:toRemove withString:@""];
-	}
-	return hexStr;
 }
 
 - (void)startTransmitting:(int)version {
@@ -290,31 +267,52 @@
 	
 	[self displayHUD:@"加载中..."];
 	[self.view endEditing:YES];
-//	NSString *userID = [[BLAPIClient shared] userID];
-//	NSString *beiangAddUserID = [NSString stringWithFormat:@"%@%@", @"Beiang", userID];
-//	NSData *data = [userID dataUsingEncoding:NSUTF8StringEncoding];
-//	uint8_t *dataBuffer = (uint8_t *)[data bytes];
-//	for (int i = 0; i < [userID lengthOfBytesUsingEncoding:NSUTF8StringEncoding]; i++) {
-//		uint8_t c = dataBuffer[i];
-//		NSLog(@"%i", c);
-//	}
+
+	NSNumber *dhcp = @(NO);
+	NSString *ipString = @"";
+	NSString *netmaskString = @"";
+	NSString *gatewayString = @"";
+	NSString *dnsString = @"";
 	
-//	uint8_t *buffer = new Byte[0x42 ,0x65 ,0x69 ,0x61 ,0x6e ,0x67 ,0x05 ,0xf5 ,0xe1 ,0x2e];
-//	Byte buffer[] = {0x42 ,0x65 ,0x69 ,0x61 ,0x6e ,0x67 ,0x05 ,0xf5 ,0xe1 ,0x2e};
-//	NSLog(@"buffer: %s", buffer);
-//	NSData *data = [[NSData alloc] initWithBytes:buffer length:10];
-//	NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-//	NSLog(@"string: %@", string);
+	NSArray *wlanConfigArray = [NSArray arrayWithObjects:_ssidTextField.text, _passwordTextField.text, dhcp, ipString, netmaskString, gatewayString, dnsString, nil];
 	
-//	NSString *hexUserID = [self hexStringFromString:userID];
-//	NSLog(@"userID: %@", userID);
-//	NSLog(@"hex userID: %@", hexUserID);
-//	NSLog(@"hex string: %@", [self hexString:userID]);
-//	hexUserID = @"426569616e6705f5e12e";
-//	
-//	hexUserID = [NSString stringWithUTF8String:buffer];
-	[_easylinkConfig prepareEasyLinkV2:_ssidTextField.text password:_passwordTextField.text info:@"here bug"];
+	NSString *userID = [[BLAPIClient shared] userID];
+	NSString *hex = [NSString hexStringFromString:@"Beiang"];
+	NSData *data = [self hexToBytes:hex];
+	NSUInteger number = userID.integerValue;
+	NSMutableData *mutableData = [NSMutableData dataWithData:data];
+	NSData *userIDData = [self dataFromInt:number];
+	[mutableData appendData:userIDData];
+//	unsigned char bytes[] = { 0x42, 0x65, 0x69, 0x61, 0x6e, 0x67, 0x05, 0xf5, 0xe1, 0x2e};
+//	NSData *expectedData = [NSData dataWithBytes:bytes length:sizeof(bytes)];
+	NSLog(@"mutableData: %@", mutableData);
+	[_easylinkConfig prepareEasyLink_withFTC:wlanConfigArray info:mutableData version:EASYLINK_V2];
 	[self sendAction];
+}
+
+- (NSData *)dataFromInt:(int)num {
+	unsigned char * arr = (unsigned char *) malloc(sizeof(num) * sizeof(unsigned char));
+	for (int i = sizeof(num) - 1 ; i >= 0; i--) {
+		arr[i] = num & 0xFF;
+		num = num >> 8;
+	}
+	NSData *data = [NSData dataWithBytes:arr length:sizeof(num)];
+	free(arr);
+	return data;
+}
+
+- (NSData *)hexToBytes:(NSString *)string {
+	NSMutableData* data = [NSMutableData data];
+	int idx;
+	for (idx = 0; idx+2 <= string.length; idx+=2) {
+		NSRange range = NSMakeRange(idx, 2);
+		NSString* hexStr = [string substringWithRange:range];
+		NSScanner* scanner = [NSScanner scannerWithString:hexStr];
+		unsigned int intValue;
+		[scanner scanHexInt:&intValue];
+		[data appendBytes:&intValue length:1];
+	}
+	return data;
 }
 
 - (void)stopTransmitting {
@@ -422,6 +420,12 @@
     }
     [UIView commitAnimations];
     return YES;
+}
+
+#pragma mark - EasyLinkFTCDelegate
+
+- (void)onFoundByFTC:(NSNumber *)client currentConfig: (NSData *)config {
+	NSLog(@"config: %@", config);
 }
 
 @end
