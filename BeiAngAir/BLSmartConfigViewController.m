@@ -10,19 +10,15 @@
 #import "GlobalDefine.h"
 #import "BLNetwork.h"
 #import "JSONKit.h"
-#import <SystemConfiguration/CaptiveNetwork.h>
-#import "Reachability.h"
 #import "EASYLINK.h"
 #import "BLAPIClient.h"
 
 #define EASYLINK_V2 1
 
-@interface BLSmartConfigViewController () <UITextFieldDelegate,UIAlertViewDelegate, EasyLinkFTCDelegate>
+@interface BLSmartConfigViewController () <UITextFieldDelegate, UIAlertViewDelegate, EasyLinkFTCDelegate>
 
 @property (readwrite) UITextField *ssidTextField;
 @property (readwrite) UITextField *passwordTextField;
-@property (readwrite) BLNetwork *configAPI;
-@property (readwrite) Reachability *wifiReachability;
 @property (readwrite) EASYLINK *easylinkConfig;
 @property (readwrite) NSTimer *sendInterval;
 @property (readwrite) NSThread *waitForAckThread;
@@ -31,21 +27,12 @@
 
 @implementation BLSmartConfigViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-		self.title = NSLocalizedString(@"SmartConfigViewControllerTitle", nil);
-		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	self.title = NSLocalizedString(@"SmartConfigViewControllerTitle", nil);
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
 	self.view.backgroundColor = [UIColor whiteColor];
-    _configAPI = [[BLNetwork alloc] init];
 	
 	CGRect viewFrame = CGRectZero;
 	viewFrame.origin.y = 80;
@@ -166,7 +153,7 @@
 /*获取当前连接的wifi网络名称，如果未连接，则为nil*/
 - (NSString *)getCurrentWiFiSSID
 {
-	CFArrayRef ifs = CNCopySupportedInterfaces();       //得到支持的网络接口 eg. "en0", "en1"
+	CFArrayRef ifs = CNCopySupportedInterfaces();
 	if (ifs == NULL)
 		return nil;
 	CFDictionaryRef info = CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(ifs, 0));
@@ -189,51 +176,11 @@
 
 - (void)configButtonClicked
 {
-//	CGRect viewFrame = CGRectZero;
-//	viewFrame.origin.y = 80;
-//	viewFrame.size.width = self.view.frame.size.width;
-//	viewFrame.size.height = self.view.frame.size.height - viewFrame.origin.y;
-//	UIView *waitingView = [[UIView alloc] initWithFrame:viewFrame];
-//	[waitingView setBackgroundColor:[UIColor whiteColor]];
-//	[self.view addSubview:waitingView];
-//	viewFrame = waitingView.frame;
-//	viewFrame.origin.x = 20.0f;
-//	viewFrame.size.width -= 40.0f;
-//	UILabel *configLabel = [[UILabel alloc] initWithFrame:viewFrame];
-//	[configLabel setBackgroundColor:[UIColor clearColor]];
-//	[configLabel setFont:[UIFont systemFontOfSize:15.0f]];
-//	[configLabel setTextColor:[UIColor grayColor]];
-//	[configLabel setText:NSLocalizedString(@"SmartConfigViewControllerConfigLabelText", nil)];
-//	[configLabel setNumberOfLines:3];
-//	viewFrame = [configLabel textRectForBounds:viewFrame limitedToNumberOfLines:3];
-//	viewFrame.origin.x = (waitingView.frame.size.width - viewFrame.size.width) * 0.5f;
-//	viewFrame.origin.y = (waitingView.frame.size.height - viewFrame.size.height) * 0.5f - 30.0f;
-//	[configLabel setFrame:viewFrame];
-//	[configLabel setTextAlignment:NSTextAlignmentCenter];
-//	[waitingView addSubview:configLabel];
-//	UIImage *image = [UIImage imageNamed:@"wait"];
-//	viewFrame = configLabel.frame;
-//	viewFrame.origin.y += viewFrame.size.height + 10.0f;
-//	viewFrame.origin.x = (waitingView.frame.size.width - image.size.width) * 0.5f;
-//	viewFrame.size = image.size;
-//	UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewFrame];
-//	[imageView setBackgroundColor:[UIColor clearColor]];
-//	[imageView setImage:image];
-//	CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];  
-//	rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 ];  
-//	rotationAnimation.duration = 2.0f;  
-//	rotationAnimation.cumulative = YES;  
-//	rotationAnimation.repeatCount = NSIntegerMax;  
-//	[imageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
-//	[waitingView addSubview:imageView];
-
-	
 	if (_ssidTextField.text.length && _passwordTextField.text.length) {
 		Wifi *wifi = [[Wifi alloc] init];
 		wifi.SSID = _ssidTextField.text;
 		wifi.password = _passwordTextField.text;
 		[wifi persistence];
-//		[self startConfig];
 		
 		_easylinkConfig = [[EASYLINK alloc] init];
 		_easylinkConfig.delegate = self;
@@ -242,18 +189,6 @@
 }
 
 - (void)startTransmitting:(int)version {
-//	NetworkStatus netStatus = [_wifiReachability currentReachabilityStatus];
-//	if ( netStatus == NotReachable ){// No activity if no wifi
-//		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"WiFi not available. Please check your WiFi connection" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-//		[alertView show];
-//		return;
-//	}
-	
-//	if([userInfoField.text length] > 0 && version == EASYLINK_V1) {
-//		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Custom information cannot be delivered by EasyLink V1" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-//		[alertView show];
-//	}
-	
 	if (!_ssidTextField.text.length) {
 		[self displayHUDTitle:nil message:@"请填写WIFI名称" duration:1];
 		return;
@@ -284,7 +219,7 @@
 	[mutableData appendData:userIDData];
 //	unsigned char bytes[] = { 0x42, 0x65, 0x69, 0x61, 0x6e, 0x67, 0x05, 0xf5, 0xe1, 0x2e};
 //	NSData *expectedData = [NSData dataWithBytes:bytes length:sizeof(bytes)];
-	NSLog(@"mutableData: %@", mutableData);
+//	NSLog(@"mutableData: %@", mutableData);
 	[_easylinkConfig prepareEasyLink_withFTC:wlanConfigArray info:mutableData version:EASYLINK_V2];
 	[self sendAction];
 }
@@ -367,33 +302,7 @@
 	}
 }
 
-- (void)startConfig {
-	[self.view endEditing:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		NSDictionary *dictionary = [NSDictionary dictionaryEashConfigWithSSID:_ssidTextField.text password:_passwordTextField.text];
-        NSData *requestData = [dictionary JSONData];
-        NSData *responseData = [_configAPI requestDispatch:requestData];
-		NSLog(@"responseData: %@", [responseData objectFromJSONData]);
-		int code = [[[responseData objectFromJSONData] objectForKey:@"code"] intValue];
-		if (code == 0) {
-			dispatch_async(dispatch_get_main_queue(), ^{
-				UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"添加设备成功", nil) message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-				[alertView show];
-			});
-		} else {
-			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"设备添加失败，请重新尝试", nil) message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-			[alertView show];
-		}
-    });
-}
-
-- (void)cancelConfig {
-	NSDictionary *dictionary = [NSDictionary dictionaryCancelEashConfig];
-	NSData *requestData = [dictionary JSONData];
-	[_configAPI requestDispatch:requestData];
-}
-
-#pragma marks -- UIAlertViewDelegate --
+#pragma marks - UIAlertViewDelegate
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
