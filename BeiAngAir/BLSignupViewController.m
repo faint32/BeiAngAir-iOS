@@ -27,15 +27,6 @@
 	self.navigationController.navigationBarHidden = NO;
 	self.view.backgroundColor = [UIColor themeBlue];
 	
-//	CGRect viewFrame = CGRectZero;
-//	UIImage *image = [UIImage imageNamed:@"home_logo"];
-//	viewFrame.origin.y = 50;
-//	viewFrame.origin.x = (self.view.frame.size.width - image.size.width) / 2;
-//	viewFrame.size = image.size;
-//	UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:viewFrame];
-//	[logoImageView setImage:image];
-//	[self.view addSubview:logoImageView];
-	
 	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
 	[self.view addGestureRecognizer:tap];
 	
