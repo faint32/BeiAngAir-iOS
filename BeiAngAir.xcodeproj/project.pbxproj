@@ -32,7 +32,6 @@
 		2FAE51D418F8145B0068893E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAE51D318F8145B0068893E /* CoreText.framework */; };
 		7700C709196E690F0001561F /* BLDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C708196E690F0001561F /* BLDevice.m */; };
 		7700C70F196E69FA0001561F /* BLTimerInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C70E196E69FA0001561F /* BLTimerInfomation.m */; };
-		7700C712196E6A350001561F /* BeiAngSendData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C711196E6A350001561F /* BeiAngSendData.m */; };
 		7700C715196E6A530001561F /* BeiAngReceivedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C714196E6A530001561F /* BeiAngReceivedData.m */; };
 		7700C720196E87F90001561F /* NSString+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700C71F196E87F90001561F /* NSString+BeiAng.m */; };
 		771F07EB196F897600B41955 /* UIImage+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07EA196F897600B41955 /* UIImage+BeiAng.m */; };
@@ -184,8 +183,6 @@
 		7700C708196E690F0001561F /* BLDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLDevice.m; sourceTree = "<group>"; };
 		7700C70D196E69FA0001561F /* BLTimerInfomation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTimerInfomation.h; sourceTree = "<group>"; };
 		7700C70E196E69FA0001561F /* BLTimerInfomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTimerInfomation.m; sourceTree = "<group>"; };
-		7700C710196E6A350001561F /* BeiAngSendData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeiAngSendData.h; sourceTree = "<group>"; };
-		7700C711196E6A350001561F /* BeiAngSendData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeiAngSendData.m; sourceTree = "<group>"; };
 		7700C713196E6A530001561F /* BeiAngReceivedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeiAngReceivedData.h; sourceTree = "<group>"; };
 		7700C714196E6A530001561F /* BeiAngReceivedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeiAngReceivedData.m; sourceTree = "<group>"; };
 		7700C71E196E87F90001561F /* NSString+BeiAng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BeiAng.h"; sourceTree = "<group>"; };
@@ -617,8 +614,6 @@
 				7700C708196E690F0001561F /* BLDevice.m */,
 				7700C70D196E69FA0001561F /* BLTimerInfomation.h */,
 				7700C70E196E69FA0001561F /* BLTimerInfomation.m */,
-				7700C710196E6A350001561F /* BeiAngSendData.h */,
-				7700C711196E6A350001561F /* BeiAngSendData.m */,
 				7700C713196E6A530001561F /* BeiAngReceivedData.h */,
 				7700C714196E6A530001561F /* BeiAngReceivedData.m */,
 				77EEC1611A238013003F3FCA /* ELDevice.h */,
@@ -1045,7 +1040,6 @@
 				7700C715196E6A530001561F /* BeiAngReceivedData.m in Sources */,
 				777500981A22E2E7008C566D /* AFHTTPSessionManager.m in Sources */,
 				775EB22D1973DA5B00E4A0AB /* BLDeviceControlViewController.m in Sources */,
-				7700C712196E6A350001561F /* BeiAngSendData.m in Sources */,
 				77D9E3291980981F004AC675 /* UIViewController+HUD.m in Sources */,
 				7775009E1A22E2E7008C566D /* AFURLSessionManager.m in Sources */,
 				777500591A22D487008C566D /* Reachability.m in Sources */,
