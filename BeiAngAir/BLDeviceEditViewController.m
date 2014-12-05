@@ -12,11 +12,11 @@
 #import "UIViewController+MMDrawerController.h"
 #import "JSONKit.h"
 #import "BLNetwork.h"
+#import "BLAPIClient.h"
 
 #define TOAST_DURATION  0.8f
 
-@interface BLDeviceEditViewController () <UITextFieldDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
-{
+@interface BLDeviceEditViewController () <UITextFieldDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
     BLAppDelegate *appDelegate;
     BLNetwork *networkAPI;
     dispatch_queue_t networkQueue;
@@ -224,55 +224,20 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//- (void)lockButtonclicked:(UIButton *)button
-//{
-//	[self lockDevice:@(!button.selected)];
-//}
-
-//- (void)lockDevice:(NSNumber *)locked
-//{
-//	NSString *title = locked ? NSLocalizedString(@"锁定中...", nil) : NSLocalizedString(@"解锁中...", nil);
-//	[self displayHUD:title];
-//	dispatch_async(networkQueue, ^{
-//		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:locked];
-//        NSData *requestData = [dictionary JSONData];
-//        NSData *responseData = [networkAPI requestDispatch:requestData];
-//        if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
-//			dispatch_async(dispatch_get_main_queue(), ^{
-//				[self hideHUD:YES];
-//				_lockButton.selected = locked.boolValue;
-//				_lockButton.selected = locked.boolValue;
-//				[self performSelector:@selector(lockDevice:) withObject:@(YES) afterDelay:120];//120秒后再锁定设备
-//			});
-//        } else {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//				[self hideHUD:YES];
-//				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
-//            });
-//        }
-//    });
-//}
-
-- (void)okButtonClicked:(UIButton *)button
-{
-//	if (_nameTextField.text.length) {
-//		_device.localName = _nameTextField.text;
-//		[_device remove];
-//		[_device persistence];
-//	}
-//    dispatch_async(networkQueue, ^{
-//		NSDictionary *dictionary = [NSDictionary dictionaryDeviceUpdateWithMAC:_device.mac name:_device.name lock:@(1)];//离开这个界面的时候把设备锁定
-//        NSData *requestData = [dictionary JSONData];
-//        NSData *responseData = [networkAPI requestDispatch:requestData];
-//        if ([[[responseData objectFromJSONData] objectForKey:@"code"] intValue] == 0) {
-//			self.device.lock = 1;
-//			[self dismissViewControllerAnimated:YES completion:nil];
-//        } else {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//				[self displayHUDTitle:[[responseData objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
-//            });
-//        }
-//    });
+- (void)okButtonClicked:(UIButton *)button {
+	if (!_nameTextField.text.length) {
+		[self displayHUDTitle:nil message:@"设备名称不能为空"];
+	}
+	
+	if (![_nameTextField.text isEqualToString:_eldevice.nickname]) {
+		[[BLAPIClient shared] updateAuthorize:_eldevice.ID role:_eldevice.role nickename:_nameTextField.text withBlock:^(NSError *error) {
+			if (!error) {
+				[self displayHUDTitle:nil message:@"修改成功"];
+			} else {
+				[self displayHUDTitle:@"错误" message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]];
+			}
+		}];
+	}
 }
 
 #pragma mark - UIImagePickerController Delegate

@@ -250,4 +250,23 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}];
 }
 
+- (void)updateAuthorize:(NSNumber *)deviceID role:(NSString *)role nickename:(NSString *)nickname withBlock:(void (^)(NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
+	parameters[@"method"] = @"updateAuthorize";
+	parameters[@"params"] = @{@"ndevice_id" : deviceID,
+							  @"role" : role,
+							  @"nick_name" : nickname,
+							  @"user_id" : [self userID],
+							  };
+	
+	NSString *JSONString = [self dataTOJSONString:parameters];
+	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		NSLog(@"response object: %@", responseObject);
+		NSError *error = [self handleResponse:responseObject];
+		if (block) block(error);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		if (block) block(error);
+	}];
+}
+
 @end
