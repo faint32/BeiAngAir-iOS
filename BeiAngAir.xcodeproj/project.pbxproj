@@ -935,7 +935,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = BL;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = BroadLink;
 				TargetAttributes = {
 					2FAE501B18F78C470068893E = {
@@ -1149,7 +1149,7 @@
 					/Users/whxuan/BeiAngAir/BeiAngAir/,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "1A81F1C3-E254-4F71-A5E5-3C60E2DE8146";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
@@ -1200,7 +1200,6 @@
 		2FAE504918F78C470068893E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1239,7 +1238,6 @@
 		2FAE504A18F78C470068893E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

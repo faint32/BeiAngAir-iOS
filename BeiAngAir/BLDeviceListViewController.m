@@ -126,11 +126,36 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+	ELDevice *device = _devices[indexPath.row];
+	return [device isOnline];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+		ELDevice *device = _devices[indexPath.row];
+		NSLog(@"role: %@", device.role);
+		if ([device isOwner]) {
+			[[BLAPIClient shared] authorizeDevice:device.ID role:@"user" withBlock:^(NSError *error) {
+				[self hideHUD:YES];
+				if (!error) {
+					NSLog(@"授权成功");
+				} else {
+					NSLog(@"error: %@", error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]);
+				}
+			}];
+		} else {
+			[self displayHUD:@"解绑中..."];
+			[[BLAPIClient shared] unbindDevice:device.ID withBlock:^(NSError *error) {
+				if (!error) {
+					[self displayHUDTitle:nil message:@"解绑成功"];
+					_devices = nil;
+					[self.tableView reloadData];
+					[self refresh];
+				} else {
+					[self displayHUDTitle:nil message:@"解绑失败，请重新尝试"];
+				}
+			}];
+		}
     }
 }
 

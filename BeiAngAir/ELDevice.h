@@ -35,5 +35,6 @@
 - (NSString *)commandSleepOn:(BOOL)on;
 - (NSString *)commandChildLockOn:(BOOL)on;
 - (NSString *)commandWindSpeed:(NSInteger)speed;
+- (BOOL)isOwner;
 
 @end

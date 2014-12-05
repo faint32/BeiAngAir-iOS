@@ -293,6 +293,9 @@
 				[self stopAction];
 			}
 		}];
+		if (bindSuccess) {
+			break;
+		}
 		sleep(4);
 	}
 	

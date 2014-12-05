@@ -213,4 +213,8 @@ NSInteger const TVOCFlagIndex = 18;
 	return [self setValueFlag:speed atIndex:windSpeedFlagIndex];
 }
 
+- (BOOL)isOwner {
+	return ([_role isEqualToString:@"owner"] || [_role isEqualToString:@"admin"]);
+}
+
 @end
