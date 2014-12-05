@@ -135,24 +135,47 @@
 		ELDevice *device = _devices[indexPath.row];
 		NSLog(@"role: %@", device.role);
 		if ([device isOwner]) {
-			[[BLAPIClient shared] authorizeDevice:device.ID role:@"user" withBlock:^(NSError *error) {
-				[self hideHUD:YES];
+			[[BLAPIClient shared] getDeviceData:device.ID withBlock:^(BOOL validForReset, NSError *error) {
 				if (!error) {
-					NSLog(@"授权成功");
+					if (validForReset) {
+						[[BLAPIClient shared] resetDevice:device.ID withBlock:^(NSError *error) {
+							if (!error) {
+								[self displayHUDTitle:@"复位成功" message:@"该设备已与账号解绑"];
+								_devices = nil;
+								[self.tableView reloadData];
+								[self refresh];
+							} else {
+								[self displayHUDTitle:@"复位失败" message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]];
+								[self.tableView reloadData];
+							}
+						}];
+					} else {
+						[self displayHUDTitle:@"复位失败" message:@"该设备不支持复位"];
+						[self.tableView reloadData];
+					}
 				} else {
-					NSLog(@"error: %@", error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]);
+					[self displayHUDTitle:@"复位失败" message:@"请重新尝试"];
+					[self.tableView reloadData];
 				}
 			}];
+//			[[BLAPIClient shared] authorizeDevice:device.ID role:@"user" withBlock:^(NSError *error) {
+//				[self hideHUD:YES];
+//				if (!error) {
+//					NSLog(@"授权成功");
+//				} else {
+//					NSLog(@"error: %@", error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]);
+//				}
+//			}];
 		} else {
 			[self displayHUD:@"解绑中..."];
 			[[BLAPIClient shared] unbindDevice:device.ID withBlock:^(NSError *error) {
 				if (!error) {
-					[self displayHUDTitle:nil message:@"解绑成功"];
+					[self displayHUDTitle:@"解绑成功" message:@"设备已经解绑"];
 					_devices = nil;
 					[self.tableView reloadData];
 					[self refresh];
 				} else {
-					[self displayHUDTitle:nil message:@"解绑失败，请重新尝试"];
+					[self displayHUDTitle:@"解绑失败" message:@"请重新尝试"];
 				}
 			}];
 		}

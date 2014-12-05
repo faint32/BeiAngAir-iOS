@@ -10,6 +10,7 @@
 #import "BLAppDelegate.h"
 #import "BLGuideViewController.h"
 #import <Frontia/Frontia.h>
+#import "CocoaSecurity.h"
 
 @implementation BLAppDelegate
 
@@ -32,7 +33,6 @@
     [self.window setRootViewController:navigationController];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-	
     return YES;
 }
 

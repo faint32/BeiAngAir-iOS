@@ -26,5 +26,7 @@ extern NSString * const BL_ERROR_MESSAGE_IDENTIFIER;
 - (void)updateAuthorize:(NSNumber *)deviceID role:(NSString *)role nickename:(NSString *)nickname withBlock:(void (^)(NSError *error))block;
 - (void)unbindDevice:(NSNumber *)deviceID withBlock:(void (^)(NSError *error))block;
 - (void)authorizeDevice:(NSNumber *)deviceID role:(NSString *)role withBlock:(void (^)(NSError *error))block;
+- (void)getDeviceData:(NSNumber *)deviceID withBlock:(void (^)(BOOL validForReset, NSError *error))block;
+- (void)resetDevice:(NSNumber *)deviceID withBlock:(void (^)(NSError *error))block;
 
 @end

@@ -305,4 +305,52 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}];
 }
 
+- (void)getDeviceData:(NSNumber *)deviceID withBlock:(void (^)(BOOL validForReset, NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
+	parameters[@"method"] = @"getDeviceData";
+	parameters[@"params"] = @{@"ndevice_id" : deviceID,
+							  @"ndevice_sn" : @"",
+							  @"key" : @"beiang_firmware",
+							  };
+	
+	NSString *JSONString = [self dataTOJSONString:parameters];
+	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		//NSLog(@"response object: %@", responseObject);
+		NSError *error = [self handleResponse:responseObject];
+		BOOL validForReset = NO;
+		if (!error) {
+			NSDictionary *result = [responseObject valueForKeyPath:@"result"];
+			NSString *value = result[@"data"][@"value"];
+			if (value.length) {
+				CocoaSecurityDecoder *decoder = [[CocoaSecurityDecoder alloc] init];
+				NSData *data = [decoder base64:value];
+				NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingMutableContainers error:&error];
+				if (!error) {
+					if (JSON[@"versioncode"]) {
+						validForReset = YES;
+					}
+				}
+			}
+		}
+		if (block) block(validForReset, error);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		if (block) block(NO, error);
+	}];
+}
+
+- (void)resetDevice:(NSNumber *)deviceID withBlock:(void (^)(NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
+	parameters[@"method"] = @"resetDevice";
+	parameters[@"params"] = @{@"ndevice_id" : deviceID};
+	
+	NSString *JSONString = [self dataTOJSONString:parameters];
+	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		//NSLog(@"response object: %@", responseObject);
+		NSError *error = [self handleResponse:responseObject];
+		if (block) block(error);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		if (block) block(error);
+	}];
+}
+
 @end
