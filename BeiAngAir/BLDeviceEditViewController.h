@@ -11,7 +11,6 @@
 
 @interface BLDeviceEditViewController : UIViewController
 
-@property (nonatomic, strong) BLDevice *device;
 @property (nonatomic, strong) ELDevice *eldevice;
 
 @end

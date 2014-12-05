@@ -7,23 +7,19 @@
 //
 
 #import "BLDeviceEditViewController.h"
-#import "BLAppDelegate.h"
 #import "GlobalDefine.h"
 #import "UIViewController+MMDrawerController.h"
 #import "JSONKit.h"
-#import "BLNetwork.h"
 #import "BLAPIClient.h"
 
 #define TOAST_DURATION  0.8f
 
-@interface BLDeviceEditViewController () <UITextFieldDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
-    BLAppDelegate *appDelegate;
-    BLNetwork *networkAPI;
-    dispatch_queue_t networkQueue;
-}
+@interface BLDeviceEditViewController () <UITextFieldDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+
 @property (nonatomic, strong) UITextField *nameTextField;
 @property (nonatomic, strong) UIButton *lockButton;
 @property (nonatomic, strong) UIButton *addButton;
+
 @end
 
 @implementation BLDeviceEditViewController
@@ -43,10 +39,6 @@
     [super viewDidLoad];
 	
 	self.navigationController.navigationBarHidden = NO;
-    
-    appDelegate = (BLAppDelegate *)[[UIApplication sharedApplication] delegate];
-    networkAPI = [[BLNetwork alloc] init];
-    networkQueue = dispatch_queue_create("BLDeviceInfoEditViewControllerNetworkQueue", DISPATCH_QUEUE_SERIAL);
     
     [self.view setBackgroundColor:RGB(246.0f, 246.0f, 246.0f)];
     
@@ -155,8 +147,6 @@
     [_lockButton setImageEdgeInsets:UIEdgeInsetsMake((viewFrame.size.height - image.size.height) * 0.5f, viewFrame.size.width - image.size.width - 10.0f, (viewFrame.size.height - image.size.height) * 0.5f, 10.0f)];
     [_lockButton setImage:image forState:UIControlStateNormal];
     [_lockButton setImage:[UIImage imageNamed:@"locked"] forState:UIControlStateSelected];
-//    [_lockButton addTarget:self action:@selector(lockButtonclicked:) forControlEvents:UIControlEventTouchUpInside];
-//    [_lockButton setSelected:self.device.lock == 1];//TODO
     [lockView addSubview:_lockButton];
     
     viewFrame = lockView.frame;
