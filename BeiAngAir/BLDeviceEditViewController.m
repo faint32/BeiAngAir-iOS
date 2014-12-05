@@ -64,7 +64,7 @@
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
 //    [headerView addSubview:titleLabel];//TODO: hide
 	
-	UIImage *image = [_eldevice avatar];
+	UIImage *image = [_device avatar];
     viewFrame = headerView.frame;
     viewFrame.origin.y += viewFrame.size.height + 20.0f;
     viewFrame.origin.x = (self.view.frame.size.width - 62.5) * 0.5f;
@@ -113,7 +113,7 @@
     [_nameTextField setPlaceholder:NSLocalizedString(@"DeviceInfoEditViewControllerNamePlaceholder", nil)];
     [_nameTextField setAutoresizesSubviews:YES];
     [_nameTextField setReturnKeyType:UIReturnKeyDone];
-    [_nameTextField setText:_eldevice.nickname];
+    [_nameTextField setText:_device.nickname];
     [_nameTextField addTarget:self action:@selector(keywindowHidden:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [nameView addSubview:_nameTextField];
     
@@ -173,7 +173,7 @@
     [deviceIDValueLabel setBackgroundColor:[UIColor clearColor]];
     [deviceIDValueLabel setTextColor:[UIColor blackColor]];
     [deviceIDValueLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    [deviceIDValueLabel setText:[NSString stringWithFormat:@"%@", _eldevice.ID]];
+    [deviceIDValueLabel setText:[NSString stringWithFormat:@"%@", _device.ID]];
     [deviceIDView addSubview:deviceIDValueLabel];
     
     //确定按钮
@@ -219,8 +219,8 @@
 		[self displayHUDTitle:nil message:@"设备名称不能为空"];
 	}
 	
-	if (![_nameTextField.text isEqualToString:_eldevice.nickname]) {
-		[[BLAPIClient shared] updateAuthorize:_eldevice.ID role:_eldevice.role nickename:_nameTextField.text withBlock:^(NSError *error) {
+	if (![_nameTextField.text isEqualToString:_device.nickname]) {
+		[[BLAPIClient shared] updateAuthorize:_device.ID role:_device.role nickename:_nameTextField.text withBlock:^(NSError *error) {
 			if (!error) {
 				[self displayHUDTitle:nil message:@"修改成功"];
 			} else {
@@ -251,7 +251,7 @@
         }
         UIImage *image = [UIImage imageWithData:data];
         [_addButton setImage:image forState:UIControlStateNormal];
-		NSString *imagePath = [NSString deviceAvatarPathWithMAC:[NSString stringWithFormat:@"%@", _eldevice.ID]];
+		NSString *imagePath = [NSString deviceAvatarPathWithMAC:[NSString stringWithFormat:@"%@", _device.ID]];
         [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
     }
 }
