@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 BroadLink. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 #import "BLDeviceControlViewController.h"
 #import "GlobalDefine.h"
 #import "BLAppDelegate.h"
@@ -17,9 +19,6 @@
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "MMExampleDrawerVisualStateManager.h"
-#import <CoreLocation/CoreLocation.h>
-#import <MapKit/MapKit.h>
-#import "BLNetwork.h"
 #import "Weather.h"
 #import "BLShareViewController.h"
 #import "BLScheduleManager.h"
@@ -28,8 +27,6 @@
 @interface BLDeviceControlViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 
 @property (readwrite) dispatch_queue_t httpQueue;
-@property (readwrite) dispatch_queue_t networkQueue;
-@property (readwrite) BLNetwork *networkAPI;
 @property (readwrite) UIView *backView;
 @property (readwrite) UILabel *airQualityLabel;
 @property (readwrite) UIButton *switchButton;
@@ -63,9 +60,7 @@
     [super viewDidLoad];
 	
 	_weather = [[Weather alloc] init];
-    _networkAPI = [[BLNetwork alloc] init];
-    _networkQueue = dispatch_queue_create("BLAirQualityViewCtrollerNetworkQueue", DISPATCH_QUEUE_SERIAL);
-    _httpQueue = dispatch_queue_create("BLHttpQueue", DISPATCH_QUEUE_SERIAL);
+	_httpQueue = dispatch_queue_create("BLHttpQueue", DISPATCH_QUEUE_SERIAL);
     
     _locationManager = [[CLLocationManager alloc] init];
     [_locationManager setDelegate:self];
@@ -158,7 +153,6 @@
 	[_switchButton setFrame:viewFrame];
 	[_switchButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[self deviceOn:[_eldevice isOn]];
-	//[self deviceOn:self.receivedData.switchStatus];
     [_switchButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:_switchButton];
 	
@@ -175,7 +169,6 @@
 	_handOrAutoButton.titleLabel.font = font;
 	[_handOrAutoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[self deviceAutoOn:[_eldevice isAutoOn]];
-//	[self deviceAutoOn:self.receivedData.autoOrHand];
 	[_handOrAutoButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _handOrAutoButton.titleLabel.frame.size;
 	[_handOrAutoButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -192,7 +185,6 @@
 	_sleepButton.titleLabel.font = font;
 	[_sleepButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[self deviceSleepOn:[_eldevice isSleepOn]];
-//	[self deviceSleepOn:self.receivedData.sleepState];
 	[_sleepButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _sleepButton.titleLabel.frame.size;
 	[_sleepButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -208,7 +200,6 @@
 	_childLockButton.titleLabel.font = font;
 	[_childLockButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[self deviceChildLockOn:[_eldevice isChildLockOn]];
-//	[self deviceChildLockOn:self.receivedData.childLockState];
 	[_childLockButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _childLockButton.titleLabel.frame.size;
 	[_childLockButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -228,8 +219,6 @@
     [_leftTimerLabel setTextAlignment:NSTextAlignmentCenter];
     [_leftTimerLabel setNumberOfLines:1];
     [bottomView addSubview:_leftTimerLabel];
-	
-	//[self refreshDevice];//TODO
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scheduleDeviceOver) name:[[BLScheduleManager shared] scheduleNotificationIdentity] object:nil];
 
@@ -281,33 +270,15 @@
 	[self refreshInsideAirQuality];
 }
 
-- (void)scheduleDeviceOver
-{
+- (void)scheduleDeviceOver {
 	_leftTimerLabel.hidden = YES;
 }
 
-- (void)refreshInsideAirQuality
-{
+- (void)refreshInsideAirQuality {
 	NSMutableString *insideAirQuality = [NSMutableString stringWithString:[_eldevice displayName]];
 	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayPM25]];
 	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayTVOC]];
 	_airQualityLabel.text = insideAirQuality;
-	
-//	if (!_switchButton.selected) {
-//		return;
-//	}
-	
-//	if ([[_receivedData airQualityDisplayString] isEqualToString:@"优"]) {
-//		[_switchButton setImage:[UIImage imageNamed:@"power_on_1"] forState:UIControlStateNormal];
-//	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"良"]) {
-//		[_switchButton setImage:[UIImage imageNamed:@"power_on_2"] forState:UIControlStateNormal];
-//	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"中"]) {
-//		[_switchButton setImage:[UIImage imageNamed:@"power_on_3"] forState:UIControlStateNormal];
-//	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"差"]) {
-//		[_switchButton setImage:[UIImage imageNamed:@"power_on_4"] forState:UIControlStateNormal];
-//	} else if ([[_receivedData airQualityDisplayString] isEqualToString:@"严重"]) {
-//		[_switchButton setImage:[UIImage imageNamed:@"power_on_5"] forState:UIControlStateNormal];
-//	}
 }
 
 - (void)refreshWeather
@@ -363,48 +334,17 @@
 	[_childLockButton setTitle:title forState:UIControlStateNormal];
 }
 
-
-- (void)refreshDevice
-{
-	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:_device.mac];
-	NSData *sendData = [dictionary JSONData];
-	NSData *response = [_networkAPI requestDispatch:sendData];
-	int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-	if (code == 0) {
-		dispatch_async(_networkQueue, ^{
-			NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-			NSLog(@"array: %@", array);
-			_receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-			NSLog(@"BeiAngReceivedDataInfo: %@", _receivedData);
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self refreshButtons];
-				//[self refreshInsideAirQuality];//TODO:
-				[self performSelector:@selector(refreshDevice) withObject:nil afterDelay:3.0];
-			});
-		});
-	}
-}
-
-- (void)refreshButtons
-{
+- (void)refreshButtons {
 	[self hideHUD:YES];
 	[self deviceAutoOn:[_eldevice isAutoOn]];
-//	[self deviceAutoOn:self.receivedData.autoOrHand];
-	
 	[self deviceChildLockOn:[_eldevice isChildLockOn]];
-//	[self deviceChildLockOn:self.receivedData.childLockState];
-
 	[self deviceOn:[_eldevice isOn]];
-//	[self deviceOn:self.receivedData.switchStatus];
 	_airQualityLabel.hidden = ![_eldevice isOn];
-	
 	[self deviceSleepOn:[_eldevice isSleepOn]];
-//	[self deviceSleepOn:self.receivedData.sleepState];
 }
 
 //弹出视图
--(void)popUpView:(UIButton *)button
-{
+-(void)popUpView:(UIButton *)button {
     //背景
     [_backView setHidden:NO];
     _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -443,7 +383,6 @@
 	[slider setMaximumValue:3.0f];
 	[slider setMinimumValue:1.0f];
 	[slider setValue:[_eldevice windSpeed]];
-	//[slider setValue:self.receivedData.gearState];
 	image = [UIImage imageNamed:@"seekbar_btn"];
 	[slider setThumbImage:image forState:UIControlStateNormal];
 	[slider setTag:3];
@@ -494,8 +433,8 @@
 {
     //定时界面
     BLFilterViewController *filterInfoViewController = [[BLFilterViewController alloc] initWithNibName:nil bundle:nil];
-	filterInfoViewController.receivedData = self.receivedData;
-	filterInfoViewController.device = self.device;
+//	filterInfoViewController.receivedData = self.receivedData;
+//	filterInfoViewController.device = self.device;
     [self.navigationController pushViewController:filterInfoViewController animated:YES];
 }
 
@@ -547,16 +486,12 @@
 	NSString *base64 = nil;
 	if (button == _switchButton) {
 		base64 = [_eldevice commandOn:!button.selected];
-//		[self deviceOn:!button.selected];
 	} else if (button == _handOrAutoButton) {
 		base64 = [_eldevice commandAutoOn:!button.selected];
-//		[self deviceAutoOn:!button.selected];
 	} else if (button == _sleepButton) {
 		base64 = [_eldevice commandSleepOn:!button.selected];
-//		[self deviceSleepOn:!button.selected];
 	} else if (button == _childLockButton) {
 		base64 = [_eldevice commandChildLockOn:!button.selected];
-//		[self deviceChildLockOn:!button.selected];
 	}
 
 	if (base64) {
@@ -573,61 +508,6 @@
 		}];
 	}
 	return;
-	
-//    if(!self.receivedData.switchStatus && button != _switchButton) {
-//        return;
-//    } else {
-//        if(_childLockButton.selected) {
-//            if(button == _handOrAutoButton || button == _sleepButton) {
-//				[self displayHUDTitle:NSLocalizedString(@"childMessage", nil) message:nil duration:1];
-//                return;
-//            }
-//        }
-//    }
-	
-//	[self displayHUD:NSLocalizedString(@"加载中...", nil)];
-//    dispatch_async(_networkQueue, ^{
-//        BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
-//		sendData.switchStatus = self.receivedData.switchStatus;
-//		sendData.autoOrHand = self.receivedData.autoOrHand;
-//		sendData.sleepState = self.receivedData.sleepState;
-//		sendData.childLockState = self.receivedData.childLockState;
-//		sendData.gearState = self.receivedData.gearState;
-//        if(button == _switchButton) {
-//            [sendData setSwitchStatus:!button.selected];
-//        } else if (button == _handOrAutoButton) {
-//            [sendData setAutoOrHand:!button.selected];
-//        } else if (button == _sleepButton) {
-//            sendData.sleepState = !button.selected;
-//        } else if(button == _childLockButton) {
-//            sendData.childLockState = !button.selected;
-//        }
-//		
-//        NSData *response =[self sendDataCommon:sendData];
-//        int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-//        if (code == 0) {
-//			[self hideHUD:YES];
-//            NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-//            _receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-//			dispatch_async(dispatch_get_main_queue(), ^{
-//				[self refreshButtons];
-//			});
-//		} else {
-//			dispatch_async(dispatch_get_main_queue(), ^{
-//				[self hideHUD:YES];
-//				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
-//			});
-//		}
-//	});
-}
-
-//发送数据
--(NSData *)sendDataCommon:(BeiAngSendData *)sendData
-{
-	NSDictionary *dictionary = [NSDictionary dictionaryPassthroughWithMAC:self.device.mac switchStatus:@(sendData.switchStatus) autoOrManual:@(sendData.autoOrHand) gearState:@(sendData.gearState) sleepState:@(sendData.sleepState) childLockState:@(sendData.childLockState)];
-    NSData *send = [dictionary JSONData];
-    NSData *response = [_networkAPI requestDispatch:send];
-    return response;
 }
 
 - (void)sliderValueChanged:(UISlider *)slider
@@ -664,28 +544,6 @@
 	[[BLAPIClient shared] command:_eldevice.ID value:base64 withBlock:^(NSString *value, NSError *error) {
 		
 	}];
-	
-//    dispatch_async(_networkQueue, ^{
-//        BeiAngSendData *sendData = [[BeiAngSendData alloc] init];
-//        sendData.childLockState = self.receivedData.childLockState;
-//        sendData.switchStatus = self.receivedData.switchStatus;
-//        [sendData setAutoOrHand:self.receivedData.autoOrHand];
-//        sendData.sleepState = self.receivedData.sleepState;
-//        sendData.gearState = speed;
-//        //数据透传
-//        NSData *response =[self sendDataCommon:sendData];
-//        int code = [[[response objectFromJSONData] objectForKey:@"code"] intValue];
-//        if (code == 0) {
-//			[self hideHUD:YES];
-//            NSArray *array = [[response objectFromJSONData] objectForKey:@"data"];
-//            _receivedData = [[BeiAngReceivedData alloc] initWithData:array];
-//        } else {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//				[self hideHUD:YES];
-//				[self displayHUDTitle:[[response objectFromJSONData] objectForKey:@"msg"] message:nil duration:1];
-//            });
-//        }
-//    });
 }
 
 - (void)share

@@ -7,27 +7,12 @@
 //
 
 #import "BLAboutViewController.h"
-#import "UIViewController+MMDrawerController.h"
-#import "BLAppDelegate.h"
-
-@interface BLAboutViewController ()
-
-@end
 
 @implementation BLAboutViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-		self.title = NSLocalizedString(@"AboutTitle", nil);
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
+	self.title = NSLocalizedString(@"AboutTitle", nil);
 	
     [self.view setBackgroundColor:[UIColor themeBlue]];
 	
@@ -125,24 +110,20 @@
     [self.view addSubview:addressLabel];
 }
 
--(void)leftBtnClicked:(UIButton *)button
-{
+-(void)leftBtnClicked:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)call
-{
+- (void)call {
 	NSString *URLString = [NSString stringWithFormat:@"tel://%@", [NSString phoneNumber]];
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
 }
 						   
-- (void)openWebSite
-{
+- (void)openWebSite {
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString webSiteAddress]]];
 }
 

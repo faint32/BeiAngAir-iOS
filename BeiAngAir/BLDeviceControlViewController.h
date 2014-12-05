@@ -11,8 +11,6 @@
 
 @interface BLDeviceControlViewController : UIViewController
 
-@property (nonatomic, strong) BeiAngReceivedData *receivedData;
-@property (nonatomic, strong) BLDevice *device;
 @property (nonatomic, strong) ELDevice *eldevice;
 
 @end
