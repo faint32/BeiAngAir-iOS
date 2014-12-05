@@ -104,9 +104,11 @@
 }
 
 - (void)signin {
-//TOTEST
-//	_accountTextField.text = @"AricMr";
-//	_passwordTextField.text = @"123456";
+#warning hardcode account and password
+#ifdef DEBUG
+	_accountTextField.text = @"AricMr";
+	_passwordTextField.text = @"123456";
+#endif
 	if (!_accountTextField.text.length) {
 		[self displayHUDTitle:@"错误" message:@"账号不能为空" duration:1];
 		return;
