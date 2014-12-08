@@ -315,12 +315,13 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	
 	NSString *JSONString = [self dataTOJSONString:parameters];
 	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		//NSLog(@"response object: %@", responseObject);
+		NSLog(@"response object: %@", responseObject);
 		NSError *error = [self handleResponse:responseObject];
 		BOOL validForReset = NO;
 		if (!error) {
 			NSDictionary *result = [responseObject valueForKeyPath:@"result"];
 			NSString *value = result[@"data"][@"value"];
+//			value = @"eyJ2ZXJzaW9uY29kZSI6InRvdWNodWFuX3YyLjUiLCJyZWxlYXNlbm90ZSI6InRvdWNodWFuIiwidXBkYXRlYWN0aW9uIjoibm93IiwiaGFyZHdhcmVtb2RlbCI6IjIwMDEwIiwidXNlcmRlZmluZWQiOiJyZWxhc2UifQ==";
 			if (value.length) {
 				CocoaSecurityDecoder *decoder = [[CocoaSecurityDecoder alloc] init];
 				NSData *data = [decoder base64:value];
@@ -345,7 +346,7 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	
 	NSString *JSONString = [self dataTOJSONString:parameters];
 	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		//NSLog(@"response object: %@", responseObject);
+		NSLog(@"response object: %@", responseObject);
 		NSError *error = [self handleResponse:responseObject];
 		if (block) block(error);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {

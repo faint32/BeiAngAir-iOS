@@ -39,6 +39,10 @@
 		771F07F5196FABCF00B41955 /* Wifi.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F4196FABCF00B41955 /* Wifi.m */; };
 		771F07F8196FCFC800B41955 /* NSDictionary+BeiAng.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */; };
 		773EE6621986028C00277F47 /* BLScheduleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 773EE6611986028C00277F47 /* BLScheduleManager.m */; };
+		775E21971A359FE500CB4ACB /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 775E21961A359FE500CB4ACB /* libzbar.a */; };
+		775E219A1A35A2D800CB4ACB /* BLQRCodeScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775E21991A35A2D800CB4ACB /* BLQRCodeScanViewController.m */; };
+		775E219D1A35A88D00CB4ACB /* BLDeviceQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775E219C1A35A88D00CB4ACB /* BLDeviceQRCodeViewController.m */; };
+		775E219F1A35AF7600CB4ACB /* libqrencoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 775E219E1A35AF7600CB4ACB /* libqrencoder.a */; };
 		775EB22C1973DA5B00E4A0AB /* BLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */; };
 		775EB22D1973DA5B00E4A0AB /* BLDeviceControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB21F1973DA5B00E4A0AB /* BLDeviceControlViewController.m */; };
 		775EB2301973DA5B00E4A0AB /* BLDeviceEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775EB2251973DA5B00E4A0AB /* BLDeviceEditViewController.m */; };
@@ -197,6 +201,35 @@
 		771F07F7196FCFC800B41955 /* NSDictionary+BeiAng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+BeiAng.m"; sourceTree = "<group>"; };
 		773EE6601986028C00277F47 /* BLScheduleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLScheduleManager.h; sourceTree = "<group>"; };
 		773EE6611986028C00277F47 /* BLScheduleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLScheduleManager.m; sourceTree = "<group>"; };
+		775E21751A35935000CB4ACB /* DataMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMatrix.h; sourceTree = "<group>"; };
+		775E21781A35935000CB4ACB /* QR_Encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QR_Encode.h; sourceTree = "<group>"; };
+		775E217B1A35935000CB4ACB /* QREncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QREncoder.h; sourceTree = "<group>"; };
+		775E21821A359FE000CB4ACB /* Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decoder.h; sourceTree = "<group>"; };
+		775E21831A359FE000CB4ACB /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
+		775E21841A359FE000CB4ACB /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
+		775E21851A359FE000CB4ACB /* ImageScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageScanner.h; sourceTree = "<group>"; };
+		775E21861A359FE000CB4ACB /* Processor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processor.h; sourceTree = "<group>"; };
+		775E21871A359FE000CB4ACB /* Scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scanner.h; sourceTree = "<group>"; };
+		775E21881A359FE000CB4ACB /* Symbol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Symbol.h; sourceTree = "<group>"; };
+		775E21891A359FE000CB4ACB /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		775E218A1A359FE000CB4ACB /* Window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
+		775E218B1A359FE000CB4ACB /* zbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zbar.h; sourceTree = "<group>"; };
+		775E218C1A359FE000CB4ACB /* ZBarCameraSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarCameraSimulator.h; sourceTree = "<group>"; };
+		775E218D1A359FE000CB4ACB /* ZBarCaptureReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarCaptureReader.h; sourceTree = "<group>"; };
+		775E218E1A359FE000CB4ACB /* ZBarHelpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarHelpController.h; sourceTree = "<group>"; };
+		775E218F1A359FE000CB4ACB /* ZBarImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarImage.h; sourceTree = "<group>"; };
+		775E21901A359FE000CB4ACB /* ZBarImageScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarImageScanner.h; sourceTree = "<group>"; };
+		775E21911A359FE000CB4ACB /* ZBarReaderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarReaderController.h; sourceTree = "<group>"; };
+		775E21921A359FE000CB4ACB /* ZBarReaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarReaderView.h; sourceTree = "<group>"; };
+		775E21931A359FE000CB4ACB /* ZBarReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarReaderViewController.h; sourceTree = "<group>"; };
+		775E21941A359FE000CB4ACB /* ZBarSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarSDK.h; sourceTree = "<group>"; };
+		775E21951A359FE000CB4ACB /* ZBarSymbol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarSymbol.h; sourceTree = "<group>"; };
+		775E21961A359FE500CB4ACB /* libzbar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzbar.a; path = Submodules/ZBarSDK/libzbar.a; sourceTree = SOURCE_ROOT; };
+		775E21981A35A2D800CB4ACB /* BLQRCodeScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLQRCodeScanViewController.h; path = BeiAngAir/BLQRCodeScanViewController.h; sourceTree = SOURCE_ROOT; };
+		775E21991A35A2D800CB4ACB /* BLQRCodeScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLQRCodeScanViewController.m; path = BeiAngAir/BLQRCodeScanViewController.m; sourceTree = SOURCE_ROOT; };
+		775E219B1A35A88D00CB4ACB /* BLDeviceQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceQRCodeViewController.h; path = BeiAngAir/BLDeviceQRCodeViewController.h; sourceTree = SOURCE_ROOT; };
+		775E219C1A35A88D00CB4ACB /* BLDeviceQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLDeviceQRCodeViewController.m; path = BeiAngAir/BLDeviceQRCodeViewController.m; sourceTree = SOURCE_ROOT; };
+		775E219E1A35AF7600CB4ACB /* libqrencoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libqrencoder.a; sourceTree = "<group>"; };
 		775EB21C1973DA5B00E4A0AB /* BLAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAboutViewController.h; path = BeiAngAir/BLAboutViewController.h; sourceTree = SOURCE_ROOT; };
 		775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAboutViewController.m; path = BeiAngAir/BLAboutViewController.m; sourceTree = SOURCE_ROOT; };
 		775EB21E1973DA5B00E4A0AB /* BLDeviceControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLDeviceControlViewController.h; path = BeiAngAir/BLDeviceControlViewController.h; sourceTree = SOURCE_ROOT; };
@@ -378,8 +411,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FAE502218F78C470068893E /* CoreGraphics.framework in Frameworks */,
 				77B0F1CD1A24385000ACED9A /* CoreLocation.framework in Frameworks */,
 				18F183AC197976E9009599DB /* libstdc++.dylib in Frameworks */,
+				775E21971A359FE500CB4ACB /* libzbar.a in Frameworks */,
 				77F16E301977A2A600564AAB /* CoreTelephony.framework in Frameworks */,
 				18F183C8197978E8009599DB /* libWeiboSDK in Frameworks */,
 				18F183C4197978E8009599DB /* Frontia.framework in Frameworks */,
@@ -391,12 +426,12 @@
 				2F40FD6018FB93CB00505B6E /* CoreMedia.framework in Frameworks */,
 				2FAE51D418F8145B0068893E /* CoreText.framework in Frameworks */,
 				2FAE51C418F808DE0068893E /* SystemConfiguration.framework in Frameworks */,
+				775E219F1A35AF7600CB4ACB /* libqrencoder.a in Frameworks */,
 				2FAE51C218F808D80068893E /* libsqlite3.dylib in Frameworks */,
 				2FAE519718F7D32B0068893E /* libz.1.dylib in Frameworks */,
 				18F183C6197978E8009599DB /* TencentOpenAPI in Frameworks */,
 				2FAE519518F7D29F0068893E /* libxml2.dylib in Frameworks */,
 				7775005B1A22D487008C566D /* libFTC_DEBUG.a in Frameworks */,
-				2FAE502218F78C470068893E /* CoreGraphics.framework in Frameworks */,
 				18F183C9197978E8009599DB /* libWeChatSDK in Frameworks */,
 				2FAE502418F78C470068893E /* UIKit.framework in Frameworks */,
 				2FAE502018F78C470068893E /* Foundation.framework in Frameworks */,
@@ -567,6 +602,10 @@
 		2FAE512518F7BDEB0068893E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				775E219B1A35A88D00CB4ACB /* BLDeviceQRCodeViewController.h */,
+				775E219C1A35A88D00CB4ACB /* BLDeviceQRCodeViewController.m */,
+				775E21981A35A2D800CB4ACB /* BLQRCodeScanViewController.h */,
+				775E21991A35A2D800CB4ACB /* BLQRCodeScanViewController.m */,
 				777500691A22D714008C566D /* BLSigninViewController.h */,
 				7775006A1A22D714008C566D /* BLSigninViewController.m */,
 				7775006C1A22D998008C566D /* BLSignupViewController.h */,
@@ -637,6 +676,55 @@
 				7763035619A590840051597C /* UIView+BeiAng.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		775E21741A35935000CB4ACB /* QRCodeEncoderObjectiveCAtGithub */ = {
+			isa = PBXGroup;
+			children = (
+				775E219E1A35AF7600CB4ACB /* libqrencoder.a */,
+				775E21751A35935000CB4ACB /* DataMatrix.h */,
+				775E21781A35935000CB4ACB /* QR_Encode.h */,
+				775E217B1A35935000CB4ACB /* QREncoder.h */,
+			);
+			name = QRCodeEncoderObjectiveCAtGithub;
+			path = "QR-Code-Encoder-for-Objective-C/QRCodeEncoderObjectiveCAtGithub";
+			sourceTree = "<group>";
+		};
+		775E21801A359FE000CB4ACB /* ZBarSDK */ = {
+			isa = PBXGroup;
+			children = (
+				775E21961A359FE500CB4ACB /* libzbar.a */,
+				775E21811A359FE000CB4ACB /* zbar */,
+				775E218B1A359FE000CB4ACB /* zbar.h */,
+				775E218C1A359FE000CB4ACB /* ZBarCameraSimulator.h */,
+				775E218D1A359FE000CB4ACB /* ZBarCaptureReader.h */,
+				775E218E1A359FE000CB4ACB /* ZBarHelpController.h */,
+				775E218F1A359FE000CB4ACB /* ZBarImage.h */,
+				775E21901A359FE000CB4ACB /* ZBarImageScanner.h */,
+				775E21911A359FE000CB4ACB /* ZBarReaderController.h */,
+				775E21921A359FE000CB4ACB /* ZBarReaderView.h */,
+				775E21931A359FE000CB4ACB /* ZBarReaderViewController.h */,
+				775E21941A359FE000CB4ACB /* ZBarSDK.h */,
+				775E21951A359FE000CB4ACB /* ZBarSymbol.h */,
+			);
+			name = ZBarSDK;
+			path = ZBarSDK/Headers/ZBarSDK;
+			sourceTree = "<group>";
+		};
+		775E21811A359FE000CB4ACB /* zbar */ = {
+			isa = PBXGroup;
+			children = (
+				775E21821A359FE000CB4ACB /* Decoder.h */,
+				775E21831A359FE000CB4ACB /* Exception.h */,
+				775E21841A359FE000CB4ACB /* Image.h */,
+				775E21851A359FE000CB4ACB /* ImageScanner.h */,
+				775E21861A359FE000CB4ACB /* Processor.h */,
+				775E21871A359FE000CB4ACB /* Scanner.h */,
+				775E21881A359FE000CB4ACB /* Symbol.h */,
+				775E21891A359FE000CB4ACB /* Video.h */,
+				775E218A1A359FE000CB4ACB /* Window.h */,
+			);
+			path = zbar;
 			sourceTree = "<group>";
 		};
 		7775003F1A22D487008C566D /* EasyLink */ = {
@@ -717,6 +805,8 @@
 		7775006F1A22E2E7008C566D /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				775E21801A359FE000CB4ACB /* ZBarSDK */,
+				775E21741A35935000CB4ACB /* QRCodeEncoderObjectiveCAtGithub */,
 				77EEC15D1A232E45003F3FCA /* Base64 */,
 				77EEC1591A232B98003F3FCA /* CocoaSecurity */,
 				777500701A22E2E7008C566D /* AFNetworking */,
@@ -1055,6 +1145,7 @@
 				777500681A22D4C2008C566D /* PulsingHaloLayer.m in Sources */,
 				775EB2331973DA5B00E4A0AB /* BLSmartConfigViewController.m in Sources */,
 				777500A31A22E2E7008C566D /* UIImageView+AFNetworking.m in Sources */,
+				775E219A1A35A2D800CB4ACB /* BLQRCodeScanViewController.m in Sources */,
 				771F07EE196F975300B41955 /* UIColor+BeiAng.m in Sources */,
 				77F16DB61977588B00564AAB /* UIDevice+ZBUtilites.m in Sources */,
 				77F16DB01977588B00564AAB /* NSString+BundleExtensions.m in Sources */,
@@ -1068,6 +1159,7 @@
 				77D9E3281980981F004AC675 /* MBProgressHUD+Appearance.m in Sources */,
 				777500571A22D487008C566D /* EMWUtility.m in Sources */,
 				773EE6621986028C00277F47 /* BLScheduleManager.m in Sources */,
+				775E219D1A35A88D00CB4ACB /* BLDeviceQRCodeViewController.m in Sources */,
 				775EB2311973DA5B00E4A0AB /* BLDeviceListViewController.m in Sources */,
 				BAB389AE193DA4AD00975805 /* JSONKit.m in Sources */,
 				BAB389AF193DA4AD00975805 /* BLAppDelegate.m in Sources */,
@@ -1225,6 +1317,8 @@
 					"$(PROJECT_DIR)/BeiAngAir/3rd/BaiduShare/WB",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/BaiduShare/WX",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/EasyLink",
+					"$(PROJECT_DIR)/Submodules/ZBarSDK",
+					"$(PROJECT_DIR)/Submodules/QR-Code-Encoder-for-Objective-C/QRCodeEncoderObjectiveCAtGithub",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = " -ObjC";
@@ -1263,6 +1357,8 @@
 					"$(PROJECT_DIR)/BeiAngAir/3rd/BaiduShare/WB",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/BaiduShare/WX",
 					"$(PROJECT_DIR)/BeiAngAir/3rd/EasyLink",
+					"$(PROJECT_DIR)/Submodules/ZBarSDK",
+					"$(PROJECT_DIR)/Submodules/QR-Code-Encoder-for-Objective-C/QRCodeEncoderObjectiveCAtGithub",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = " -ObjC";

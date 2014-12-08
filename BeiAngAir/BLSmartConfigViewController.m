@@ -12,6 +12,7 @@
 #import "JSONKit.h"
 #import "EASYLINK.h"
 #import "BLAPIClient.h"
+#import "BLQRCodeScanViewController.h"
 
 #define EASYLINK_V2 1
 
@@ -149,7 +150,7 @@
 	viewFrame.size.height = 64;
 	UIButton *qrcodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	qrcodeButton.frame = viewFrame;
-	[qrcodeButton addTarget:self action:@selector(qrcode) forControlEvents:UIControlEventTouchUpInside];
+	[qrcodeButton addTarget:self action:@selector(qrcodeScan) forControlEvents:UIControlEventTouchUpInside];
 	[qrcodeButton setImage:[UIImage imageNamed:@"config_qr_code"] forState:UIControlStateNormal];
 	[self.view addSubview:qrcodeButton];
 	
@@ -182,8 +183,9 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)qrcode {
-	
+- (void)qrcodeScan {
+	BLQRCodeScanViewController *qrCodeScanViewController = [[BLQRCodeScanViewController alloc] initWithNibName:nil bundle:nil];
+	[self.navigationController pushViewController:qrCodeScanViewController animated:YES];
 }
 
 - (void)bindedDevices {

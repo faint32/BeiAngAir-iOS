@@ -11,6 +11,7 @@
 #import "UIViewController+MMDrawerController.h"
 #import "JSONKit.h"
 #import "BLAPIClient.h"
+#import "BLDeviceQRCodeViewController.h"
 
 #define TOAST_DURATION  0.8f
 
@@ -124,17 +125,21 @@
     [lockView.layer setBorderColor:RGB(0x99, 0x99, 0x99).CGColor];
     [lockView.layer setBorderWidth:1.0f];
     [self.view addSubview:lockView];
+	
     viewFrame = lockView.frame;
     viewFrame.origin.x = 3.0f;
     viewFrame.origin.y = 0.0f;
-    viewFrame.size = CGSizeMake(80.0f, lockView.frame.size.height);
-	
+	viewFrame.size.width = self.view.frame.size.width - 40;
+	viewFrame.size.height = lockView.frame.size.height;
     UILabel *qrCodeLabel = [[UILabel alloc] initWithFrame:viewFrame];
     [qrCodeLabel setBackgroundColor:[UIColor clearColor]];
     [qrCodeLabel setFont:[UIFont systemFontOfSize:15.0f]];
     [qrCodeLabel setTextColor:RGB(0x99, 0x99, 0x99)];
     [qrCodeLabel setText:NSLocalizedString(@"二维码授权", nil)];
+	qrCodeLabel.userInteractionEnabled = YES;
 	
+	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(qrcodeAuth)];
+	[qrCodeLabel addGestureRecognizer:tap];
     [lockView addSubview:qrCodeLabel];
 	
 	
@@ -187,6 +192,12 @@
     [okButton setTitle:NSLocalizedString(@"DeviceInfoEditViewControllerOKButton", nil) forState:UIControlStateNormal];
     [okButton addTarget:self action:@selector(okButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:okButton];
+}
+
+- (void)qrcodeAuth {
+	BLDeviceQRCodeViewController *deviceQRCodeViewController = [[BLDeviceQRCodeViewController alloc] initWithNibName:nil bundle:nil];
+	deviceQRCodeViewController.device = _device;
+	[self.navigationController pushViewController:deviceQRCodeViewController animated:YES];
 }
 
 - (void)keywindowHidden:(UITextField *)field

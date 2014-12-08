@@ -1,0 +1,6 @@
+[submodule "Submodules/QR-Code-Encoder-for-Objective-C"]
+	path = Submodules/QR-Code-Encoder-for-Objective-C
+	url = https://github.com/myang-git/QR-Code-Encoder-for-Objective-C
+[submodule "Submodules/ZBarSDK"]
+	path = Submodules/ZBarSDK
+	url = https://github.com/bmorton/ZBarSDK
