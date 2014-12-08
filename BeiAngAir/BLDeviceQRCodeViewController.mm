@@ -7,7 +7,7 @@
 //
 
 #import "BLDeviceQRCodeViewController.h"
-//#import "QREncoder.h"
+#import "QREncoder.h"
 
 @interface BLDeviceQRCodeViewController ()
 
@@ -29,13 +29,13 @@
 	label.text = @"扫描二维码添加设备";
 	[_scrollView addSubview:label];
 	
-//	CGFloat qrcodeWidth = 250;
-//	NSString *path = [NSString stringWithFormat:@"%@%@", @"http://www.airdog.cn/download?id=", _device.ID];
-//	DataMatrix *qrMatrix = [QREncoder encodeWithECLevel:QR_ECLEVEL_AUTO version:QR_VERSION_AUTO string:path];
-//	UIImage *qrcodeImage = [QREncoder renderDataMatrix:qrMatrix imageDimension:qrcodeWidth];
-//	UIImageView *qrcodeImageView = [[UIImageView alloc] initWithImage:qrcodeImage];
-//	qrcodeImageView.frame = CGRectMake((self.view.frame.size.width - qrcodeWidth) / 2, 50, qrcodeWidth, qrcodeWidth);
-//	[_scrollView addSubview:qrcodeImageView];
+	CGFloat qrcodeWidth = 250;
+	NSString *path = [NSString stringWithFormat:@"%@%@", @"http://www.airdog.cn/download?id=", _device.ID];
+	DataMatrix *qrMatrix = [QREncoder encodeWithECLevel:QR_ECLEVEL_AUTO version:QR_VERSION_AUTO string:path];
+	UIImage *qrcodeImage = [QREncoder renderDataMatrix:qrMatrix imageDimension:qrcodeWidth];
+	UIImageView *qrcodeImageView = [[UIImageView alloc] initWithImage:qrcodeImage];
+	qrcodeImageView.frame = CGRectMake((self.view.frame.size.width - qrcodeWidth) / 2, 50, qrcodeWidth, qrcodeWidth);
+	[_scrollView addSubview:qrcodeImageView];
 	
 	
 //	//the qrcode is square. now we make it 250 pixels wide
