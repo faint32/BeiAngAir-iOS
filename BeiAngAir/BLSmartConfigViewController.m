@@ -93,7 +93,6 @@
     [_passwordTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_passwordTextField setDelegate:self];
     [_passwordTextField setSecureTextEntry:YES];
-    [_passwordTextField becomeFirstResponder];
     //passwordText背景颜色
     _passwordTextField.background = image;
 	
@@ -142,11 +141,53 @@
 	
 	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
 	[self.view addGestureRecognizer:tapGestureRecognizer];
+	
+	
+	viewFrame.origin.x = 50;
+	viewFrame.origin.y = self.view.frame.size.height - 80;
+	viewFrame.size.width = 64;
+	viewFrame.size.height = 64;
+	UIButton *qrcodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	qrcodeButton.frame = viewFrame;
+	[qrcodeButton addTarget:self action:@selector(qrcode) forControlEvents:UIControlEventTouchUpInside];
+	[qrcodeButton setImage:[UIImage imageNamed:@"config_qr_code"] forState:UIControlStateNormal];
+	[self.view addSubview:qrcodeButton];
+	
+	viewFrame.origin.x = 210;
+	UIButton *bindedDevicesButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	bindedDevicesButton.frame = viewFrame;
+	[bindedDevicesButton addTarget:self action:@selector(bindedDevices) forControlEvents:UIControlEventTouchUpInside];
+	[bindedDevicesButton setImage:[UIImage imageNamed:@"config_bound"] forState:UIControlStateNormal];
+	[self.view addSubview:bindedDevicesButton];
+	
+	viewFrame.origin.x = 0;
+	viewFrame.origin.y = CGRectGetMaxY(qrcodeButton.frame);
+	viewFrame.size.width = self.view.frame.size.width / 2;
+	viewFrame.size.height = 20;
+	UILabel *qrcodeLabel = [[UILabel alloc] initWithFrame:viewFrame];
+	qrcodeLabel.text = @"扫描二维码";
+	qrcodeLabel.font = [UIFont systemFontOfSize:13];
+	qrcodeLabel.textAlignment = NSTextAlignmentCenter;
+	[self.view addSubview:qrcodeLabel];
+	
+	viewFrame.origin.x = self.view.frame.size.width / 2;
+	UILabel *bindedDevicesLable = [[UILabel alloc] initWithFrame:viewFrame];
+	bindedDevicesLable.text = @"已绑定设备";
+	bindedDevicesLable.font = [UIFont systemFontOfSize:13];
+	bindedDevicesLable.textAlignment = NSTextAlignmentCenter;
+	[self.view addSubview:bindedDevicesLable];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)qrcode {
+	
+}
+
+- (void)bindedDevices {
+	
 }
 
 /*获取当前连接的wifi网络名称，如果未连接，则为nil*/
