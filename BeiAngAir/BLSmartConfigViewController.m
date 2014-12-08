@@ -20,7 +20,6 @@
 @property (readwrite) UITextField *ssidTextField;
 @property (readwrite) UITextField *passwordTextField;
 @property (readwrite) EASYLINK *easylinkConfig;
-@property (readwrite) NSTimer *sendInterval;
 @property (readwrite) NSThread *waitForAckThread;
 
 @end
@@ -249,13 +248,6 @@
 	return data;
 }
 
-- (void)stopTransmitting {
-	if(_sendInterval != nil){
-		[_sendInterval invalidate];
-		_sendInterval = nil;
-	}
-}
-
 - (void)sendAction {
 	[_easylinkConfig transmitSettings];
 	_waitForAckThread = [[NSThread alloc] initWithTarget:self selector:@selector(waitForAck:) object:nil];
@@ -263,7 +255,6 @@
 }
 
 -(void)stopAction {
-	[_easylinkConfig stopTransmitting];
 	[_waitForAckThread cancel];
 	_waitForAckThread = nil;
 }
