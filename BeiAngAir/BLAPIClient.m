@@ -12,6 +12,7 @@
 NSString * const BL_ERROR_DOMAIN = @"BL_ERROR_DOMAIN";
 NSString * const BL_ERROR_MESSAGE_IDENTIFIER = @"BL_ERROR_MESSAGE_IDENTIFIER";
 NSString * const EASY_LINK_USER_ID_IDENTIFIER = @"EASY_LINK_USER_ID_IDENTIFIER";
+NSString * const EASY_LINK_USER_NAME_IDENTIFIER = @"EASY_LINK_USER_NAME_IDENTIFIER";
 NSString * const EASY_LINK_TOKEN_IDENTIFIER = @"EASY_LINK_TOKEN_IDENTIFIER";
 NSString * const EASY_LINK_API_KEY = @"34b9a684f1fd61194026d92b7cf2a11c";
 NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
@@ -41,6 +42,11 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	return _shared;
 }
 
+- (NSString	*)appVersion {
+	NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+	return [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+}
+
 - (BOOL)isSessionValid {
 	return [self userID].length > 0;
 }
@@ -52,9 +58,26 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}
 }
 
+- (void)saveUsername:(NSString *)username {
+	if (username) {
+		[[NSUserDefaults standardUserDefaults] setObject:username forKey:EASY_LINK_USER_NAME_IDENTIFIER];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+	}
+}
+
 - (NSString *)userID {
 	NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:EASY_LINK_USER_ID_IDENTIFIER];
 	return userID ?: @"";
+}
+
+- (NSString *)username {
+	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:EASY_LINK_USER_NAME_IDENTIFIER];
+	return username ?: @"";
+}
+
+- (void)logout {
+	[[NSUserDefaults standardUserDefaults] removeObjectForKey:EASY_LINK_USER_ID_IDENTIFIER];
+	[[NSUserDefaults standardUserDefaults] removeObjectForKey:EASY_LINK_USER_NAME_IDENTIFIER];
 }
 
 - (void)saveToken:(NSString *)token {
@@ -160,6 +183,7 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 		NSDictionary *result = [responseObject valueForKeyPath:@"result"];
 		if (!error) {
 			[self saveUserID:result[@"data"][@"user_id"]];
+			[self saveUsername:account];
 			[self saveToken:result[@"data"][@"token"]];
 		}
 		if (block) block(error);
@@ -349,6 +373,23 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		NSLog(@"response object: %@", responseObject);
 		NSError *error = [self handleResponse:responseObject];
+		if (block) block(error);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		if (block) block(error);
+	}];
+}
+
+- (void)logoutWithBlock:(void (^)(NSError *error))block {
+	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
+	parameters[@"method"] = @"logout";
+	parameters[@"params"] = @{};
+	
+	NSString *JSONString = [self dataTOJSONString:parameters];
+	NSLog(@"logout: %@", JSONString);
+	[self POST:@"account" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		NSLog(@"logout response object: %@", responseObject);
+		NSError *error = [self handleResponse:responseObject];
+		[self logout];
 		if (block) block(error);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		if (block) block(error);

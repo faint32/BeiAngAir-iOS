@@ -13,6 +13,7 @@ extern NSString * const BL_ERROR_MESSAGE_IDENTIFIER;
 @interface BLAPIClient : AFHTTPRequestOperationManager
 
 + (instancetype)shared;
+- (NSString	*)appVersion;
 - (BOOL)isSessionValid;
 - (NSString *)username;
 - (NSString *)userID;
@@ -29,5 +30,6 @@ extern NSString * const BL_ERROR_MESSAGE_IDENTIFIER;
 - (void)authorizeDevice:(NSString *)deviceID role:(NSString *)role withBlock:(void (^)(NSError *error))block;
 - (void)getDeviceData:(NSString *)deviceID withBlock:(void (^)(BOOL validForReset, NSError *error))block;
 - (void)resetDevice:(NSString *)deviceID withBlock:(void (^)(NSError *error))block;
+- (void)logoutWithBlock:(void (^)(NSError *error))block;
 
 @end

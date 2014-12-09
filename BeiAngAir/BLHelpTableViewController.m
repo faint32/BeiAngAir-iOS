@@ -9,9 +9,10 @@
 #import "BLHelpTableViewController.h"
 #import "UITableViewCell+ZBUtilities.h"
 #import "BLAboutViewController.h"
+#import "BLAPIClient.h"
 
 const CGFloat heightOfHeader = 20;
-const CGFloat heightOfCell = 35;
+const CGFloat heightOfCell = 45;
 const NSString *sectionHeaderTitle = @"sectionHeaderTitle";
 const NSString *sectionTitle = @"sectionTitle";
 const NSString *sectionSelector = @"sectionSelector";
@@ -50,7 +51,17 @@ const NSString *sectionSelector = @"sectionSelector";
 }
 
 - (void)signout {
-	NSLog(@"signout");
+	if (![[BLAPIClient shared] isSessionValid]) return;
+	[self displayHUD:@"注销中..."];
+	[[BLAPIClient shared] logoutWithBlock:^(NSError *error) {
+		[self hideHUD:YES];
+		if (!error) {
+			[self displayHUDTitle:nil message:@"注销成功" duration:1];
+			[self.tableView reloadData];
+		} else {
+			[self displayHUDTitle:nil message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]];
+		}
+	}];
 }
 
 - (void)about {
@@ -92,21 +103,29 @@ const NSString *sectionSelector = @"sectionSelector";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[UITableViewCell identifier]];
-	if (!cell) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[UITableViewCell identifier]];
-	}
+	UITableViewCell	*cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[UITableViewCell identifier]];
 	NSDictionary *dictionary = _data[indexPath.section];
 	cell.textLabel.text = dictionary[sectionTitle];
-	
-	UILabel *label = nil;
+
+	NSString *info = nil;
 	if (indexPath.section == 0) {
-		label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width - 15, heightOfCell)];
-#warning TODO
+		if ([[BLAPIClient shared] isSessionValid]) {
+			info = [NSString stringWithFormat:@"当前用户:%@", [[BLAPIClient shared] username]];
+		} else {
+			info = @"尚未登录";
+		}
 	} else if (indexPath.section == 1) {
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	} else {
-		
+		info = [NSString stringWithFormat:@"当前版本:%@", [[BLAPIClient shared] appVersion]];
+	}
+	
+	if (info) {
+		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width - 15, heightOfCell)];
+		label.textAlignment = NSTextAlignmentRight;
+		label.text = info;
+		label.font = [UIFont systemFontOfSize:13];
+		[cell addSubview:label];
 	}
     return cell;
 }
