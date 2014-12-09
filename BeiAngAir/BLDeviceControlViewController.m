@@ -24,6 +24,8 @@
 #import "BLScheduleManager.h"
 #import "BLAPIClient.h"
 
+NSTimeInterval const scheduleRefreshInterval = 4;
+
 @interface BLDeviceControlViewController () <UIScrollViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 
 @property (readwrite) dispatch_queue_t httpQueue;
@@ -152,7 +154,7 @@
     _switchButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_switchButton setFrame:viewFrame];
 	[_switchButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceOn:[_eldevice isOn]];
+	[self deviceOn:[_device isOn]];
     [_switchButton addTarget:self action:@selector(allButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:_switchButton];
 	
@@ -168,7 +170,7 @@
 	[_handOrAutoButton setFrame:viewFrame];
 	_handOrAutoButton.titleLabel.font = font;
 	[_handOrAutoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceAutoOn:[_eldevice isAutoOn]];
+	[self deviceAutoOn:[_device isAutoOn]];
 	[_handOrAutoButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _handOrAutoButton.titleLabel.frame.size;
 	[_handOrAutoButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -184,7 +186,7 @@
 	[_sleepButton setFrame:viewFrame];
 	_sleepButton.titleLabel.font = font;
 	[_sleepButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceSleepOn:[_eldevice isSleepOn]];
+	[self deviceSleepOn:[_device isSleepOn]];
 	[_sleepButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _sleepButton.titleLabel.frame.size;
 	[_sleepButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -199,7 +201,7 @@
 	[_childLockButton setFrame:viewFrame];
 	_childLockButton.titleLabel.font = font;
 	[_childLockButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self deviceChildLockOn:[_eldevice isChildLockOn]];
+	[self deviceChildLockOn:[_device isChildLockOn]];
 	[_childLockButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonSize.width, - buttonSize.height, 0)];
 	titleSize = _childLockButton.titleLabel.frame.size;
 	[_childLockButton setImageEdgeInsets:UIEdgeInsetsMake(-titleSize.height, 0, 0, -titleSize.width)];
@@ -222,7 +224,7 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scheduleDeviceOver) name:[[BLScheduleManager shared] scheduleNotificationIdentity] object:nil];
 
-	_timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getDeviceStatus) userInfo:nil repeats:YES];
+	_timer = [NSTimer scheduledTimerWithTimeInterval:scheduleRefreshInterval target:self selector:@selector(getDeviceStatus) userInfo:nil repeats:YES];
 	[_timer fire];
 }
 
@@ -232,9 +234,9 @@
 }
 
 - (void)getDeviceStatus {
-	[[BLAPIClient shared] getDeviceStatus:_eldevice.ID withBlock:^(NSDictionary *attributes, NSError *error) {
+	[[BLAPIClient shared] getDeviceStatus:_device.ID withBlock:^(NSDictionary *attributes, NSError *error) {
 		if (!error) {
-			_eldevice = [[ELDevice alloc] initWithAttributes:attributes];
+			_device = [[ELDevice alloc] initWithAttributes:attributes];
 			[self refreshELDevice];
 		}
 	}];
@@ -275,9 +277,9 @@
 }
 
 - (void)refreshInsideAirQuality {
-	NSMutableString *insideAirQuality = [NSMutableString stringWithString:[_eldevice displayName]];
-	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayPM25]];
-	[insideAirQuality appendFormat:@"\n%@", [_eldevice displayTVOC]];
+	NSMutableString *insideAirQuality = [NSMutableString stringWithString:[_device displayName]];
+	[insideAirQuality appendFormat:@"\n%@", [_device displayPM25]];
+	[insideAirQuality appendFormat:@"\n%@", [_device displayTVOC]];
 	_airQualityLabel.text = insideAirQuality;
 }
 
@@ -336,11 +338,11 @@
 
 - (void)refreshButtons {
 	[self hideHUD:YES];
-	[self deviceAutoOn:[_eldevice isAutoOn]];
-	[self deviceChildLockOn:[_eldevice isChildLockOn]];
-	[self deviceOn:[_eldevice isOn]];
-	_airQualityLabel.hidden = ![_eldevice isOn];
-	[self deviceSleepOn:[_eldevice isSleepOn]];
+	[self deviceAutoOn:[_device isAutoOn]];
+	[self deviceChildLockOn:[_device isChildLockOn]];
+	[self deviceOn:[_device isOn]];
+	_airQualityLabel.hidden = ![_device isOn];
+	[self deviceSleepOn:[_device isSleepOn]];
 }
 
 //弹出视图
@@ -382,7 +384,7 @@
 	[slider setMinimumTrackTintColor:RGB(0x13, 0xb3, 0x5c)];
 	[slider setMaximumValue:3.0f];
 	[slider setMinimumValue:1.0f];
-	[slider setValue:[_eldevice windSpeed]];
+	[slider setValue:[_device windSpeed]];
 	image = [UIImage imageNamed:@"seekbar_btn"];
 	[slider setThumbImage:image forState:UIControlStateNormal];
 	[slider setTag:3];
@@ -485,23 +487,22 @@
 	
 	NSString *base64 = nil;
 	if (button == _switchButton) {
-		base64 = [_eldevice commandOn:!button.selected];
+		base64 = [_device commandOn:!button.selected];
 	} else if (button == _handOrAutoButton) {
-		base64 = [_eldevice commandAutoOn:!button.selected];
+		base64 = [_device commandAutoOn:!button.selected];
 	} else if (button == _sleepButton) {
-		base64 = [_eldevice commandSleepOn:!button.selected];
+		base64 = [_device commandSleepOn:!button.selected];
 	} else if (button == _childLockButton) {
-		base64 = [_eldevice commandChildLockOn:!button.selected];
+		base64 = [_device commandChildLockOn:!button.selected];
 	}
 
 	if (base64) {
-//		[_timer invalidate];
 		[self displayHUD:NSLocalizedString(@"加载中...", nil)];
-		[[BLAPIClient shared] command:_eldevice.ID value:base64 withBlock:^(NSString *value, NSError *error) {
+		[[BLAPIClient shared] command:_device.ID value:base64 withBlock:^(NSString *value, NSError *error) {
 			[self hideHUD:YES];
-//			_timer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(getDeviceStatus) userInfo:nil repeats:YES];
-//			[_timer fire];
 			if (!error) {
+				_device.value = value;
+				[self refreshButtons];
 			} else {
 				[self displayHUDTitle:@"错误" message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]];
 			}
@@ -540,8 +541,8 @@
 	
 	NSLog(@"set wind speed: %d", speed);
 	
-	NSString *base64 = [_eldevice commandWindSpeed:speed];
-	[[BLAPIClient shared] command:_eldevice.ID value:base64 withBlock:^(NSString *value, NSError *error) {
+	NSString *base64 = [_device commandWindSpeed:speed];
+	[[BLAPIClient shared] command:_device.ID value:base64 withBlock:^(NSString *value, NSError *error) {
 		
 	}];
 }
