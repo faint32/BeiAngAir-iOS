@@ -389,7 +389,9 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	[self POST:@"account" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		NSLog(@"logout response object: %@", responseObject);
 		NSError *error = [self handleResponse:responseObject];
-		[self logout];
+		if (!error) {
+			[self logout];
+		}
 		if (block) block(error);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		if (block) block(error);
