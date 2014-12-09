@@ -189,7 +189,8 @@
 }
 
 - (void)bindedDevices {
-	
+	[self displayHUDTitle:nil message:@"加载中..." duration:4];
+	[self performSelector:@selector(dismiss) withObject:nil afterDelay:4];
 }
 
 /*获取当前连接的wifi网络名称，如果未连接，则为nil*/

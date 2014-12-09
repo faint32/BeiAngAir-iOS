@@ -28,7 +28,7 @@ NSInteger const TVOCFlagIndex = 18;
 			_status = [NSString stringWithFormat:@"%@", attributes[@"devicestatus"]];
 		}
 		if (attributes[@"ndevice_id"]) {
-			_ID = attributes[@"ndevice_id"];
+			_ID = [NSString stringWithFormat:@"%@", attributes[@"ndevice_id"]];
 		}
 		if (attributes[@"nick_name"]) {
 			_nickname = [NSString stringWithString:attributes[@"nick_name"]];
@@ -54,6 +54,10 @@ NSInteger const TVOCFlagIndex = 18;
 		}
 	}
 	return self;
+}
+
+- (NSString *)description {
+	return [NSString stringWithFormat:@"<id:%@, value:%@>", _ID, _value];
 }
 
 - (BOOL)isOnline {

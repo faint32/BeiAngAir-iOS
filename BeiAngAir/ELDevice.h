@@ -11,7 +11,7 @@
 @interface ELDevice : ZBModel
 
 @property (nonatomic, strong) NSString *status;
-@property (nonatomic, strong) NSNumber *ID;
+@property (nonatomic, strong) NSString *ID;
 @property (nonatomic, strong) NSString *nickname;
 @property (nonatomic, strong) NSString *role;
 @property (nonatomic, strong) NSString *value;

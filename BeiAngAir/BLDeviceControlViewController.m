@@ -222,7 +222,7 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scheduleDeviceOver) name:[[BLScheduleManager shared] scheduleNotificationIdentity] object:nil];
 
-	_timer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(getDeviceStatus) userInfo:nil repeats:YES];
+	_timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getDeviceStatus) userInfo:nil repeats:YES];
 	[_timer fire];
 }
 

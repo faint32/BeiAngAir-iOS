@@ -186,7 +186,7 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}];
 }
 
-- (void)getDeviceStatus:(NSNumber *)deviceID withBlock:(void (^)(NSDictionary *attributes, NSError *error))block {
+- (void)getDeviceStatus:(NSString *)deviceID withBlock:(void (^)(NSDictionary *attributes, NSError *error))block {
 	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
 	parameters[@"method"] = @"getDeviceStatus";
 	parameters[@"params"] = @{@"ndevice_id" : deviceID, @"ndevice_sn" : @""};
@@ -205,7 +205,7 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}];
 }
 
-- (void)command:(NSNumber *)deviceID value:(NSString *)value withBlock:(void (^)(NSString *value, NSError *error))block {
+- (void)command:(NSString *)deviceID value:(NSString *)value withBlock:(void (^)(NSString *value, NSError *error))block {
 	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
 	parameters[@"method"] = @"command";
 	parameters[@"params"] = @{@"ndevice_id" : deviceID, @"ndevice_sn" : @"", @"command" : value};
@@ -250,7 +250,7 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}];
 }
 
-- (void)updateAuthorize:(NSNumber *)deviceID role:(NSString *)role nickename:(NSString *)nickname withBlock:(void (^)(NSError *error))block {
+- (void)updateAuthorize:(NSString *)deviceID role:(NSString *)role nickename:(NSString *)nickname withBlock:(void (^)(NSError *error))block {
 	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
 	parameters[@"method"] = @"updateAuthorize";
 	parameters[@"params"] = @{@"ndevice_id" : deviceID,
@@ -269,7 +269,7 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}];
 }
 
-- (void)unbindDevice:(NSNumber *)deviceID withBlock:(void (^)(NSError *error))block {
+- (void)unbindDevice:(NSString *)deviceID withBlock:(void (^)(NSError *error))block {
 	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
 	parameters[@"method"] = @"unbind";
 	parameters[@"params"] = @{@"ndevice_id" : deviceID,
@@ -285,17 +285,18 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}];
 }
 
-- (void)authorizeDevice:(NSNumber *)deviceID role:(NSString *)role withBlock:(void (^)(NSError *error))block {	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
+- (void)authorizeDevice:(NSString *)deviceID role:(NSString *)role withBlock:(void (^)(NSError *error))block {	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
 	parameters[@"method"] = @"authorize";
 	parameters[@"params"] = @{@"ndevice_id" : deviceID,
 							  @"role" : role,
-							  @"code" : @(0),
+							  @"code" : @"0",
 							  @"ndevice_sn" : @"",
-							  @"nick_name" : @"",
-							  @"device_info" : @"",
+							  @"nick_name" : @"贝昂",
+							  @"device_info" : @"贝昂",
 							  };
 	
 	NSString *JSONString = [self dataTOJSONString:parameters];
+	NSLog(@"auth: %@", JSONString);
 	[self POST:@"homer" parameters:JSONString success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		NSLog(@"response object: %@", responseObject);
 		NSError *error = [self handleResponse:responseObject];
@@ -305,7 +306,7 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}];
 }
 
-- (void)getDeviceData:(NSNumber *)deviceID withBlock:(void (^)(BOOL validForReset, NSError *error))block {
+- (void)getDeviceData:(NSString *)deviceID withBlock:(void (^)(BOOL validForReset, NSError *error))block {
 	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
 	parameters[@"method"] = @"getDeviceData";
 	parameters[@"params"] = @{@"ndevice_id" : deviceID,
@@ -339,7 +340,7 @@ NSString * const EASY_LINK_API_SECRET = @"dc52bdb7601eafb7fa580e000f8d293f";
 	}];
 }
 
-- (void)resetDevice:(NSNumber *)deviceID withBlock:(void (^)(NSError *error))block {
+- (void)resetDevice:(NSString *)deviceID withBlock:(void (^)(NSError *error))block {
 	NSMutableDictionary *parameters = [[self addSystemParametersRequestEmpty:NO signUserID:YES] mutableCopy];
 	parameters[@"method"] = @"resetDevice";
 	parameters[@"params"] = @{@"ndevice_id" : deviceID};

@@ -10,4 +10,6 @@
 
 @interface BLQRCodeScanViewController : UIViewController
 
+@property (nonatomic, strong) UIViewController *devicesViewController;
+
 @end

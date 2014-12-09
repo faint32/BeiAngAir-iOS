@@ -37,8 +37,7 @@
 
 #pragma mark - ZBarReaderViewDelegate
 
-- (void)readerView:(ZBarReaderView *)readerView didReadSymbols:(ZBarSymbolSet *)symbols fromImage:(UIImage *)image
-{
+- (void)readerView:(ZBarReaderView *)readerView didReadSymbols:(ZBarSymbolSet *)symbols fromImage:(UIImage *)image {
 	NSString *deviceID = nil;
 	for (ZBarSymbol *symbol in symbols) {
 		NSString *path = symbol.data;
@@ -53,12 +52,12 @@
 		}
 	}
 	if (deviceID.length) {
-		[[BLAPIClient shared] authorizeDevice:@([deviceID integerValue]) role:@"user" withBlock:^(NSError *error) {
+		[[BLAPIClient shared] authorizeDevice:deviceID role:@"user" withBlock:^(NSError *error) {
 			[self hideHUD:YES];
 			if (!error) {
 				NSLog(@"授权成功");
 				[self displayHUDTitle:nil message:@"添加成功"];
-				[self.navigationController popViewControllerAnimated:YES];
+				[self dismissViewControllerAnimated:YES completion:nil];
 			} else {
 				NSLog(@"error: %@", error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]);
 			}

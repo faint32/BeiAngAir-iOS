@@ -12,6 +12,7 @@
 #import "BLSigninViewController.h"
 #import "BLAPIClient.h"
 #import "BLDeviceListViewController.h"
+#import "BLHelpTableViewController.h"
 
 @interface BLGuideViewController ()
 
@@ -102,7 +103,9 @@
 }
 
 - (void)help {
-	//TODO:安卓版功能为空
+	BLHelpTableViewController *helpViewController = [[BLHelpTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:helpViewController];
+	[self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 
 @end

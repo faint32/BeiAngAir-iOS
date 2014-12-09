@@ -83,6 +83,8 @@
 		777500A61A22E2E7008C566D /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 777500951A22E2E7008C566D /* UIWebView+AFNetworking.m */; };
 		777500A91A22E374008C566D /* BLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 777500A81A22E374008C566D /* BLAPIClient.m */; };
 		77B0F1CD1A24385000ACED9A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B0F1CC1A24385000ACED9A /* CoreLocation.framework */; };
+		77D385631A36ACB700F6EA46 /* BLHelpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D385621A36ACB700F6EA46 /* BLHelpTableViewController.m */; };
+		77D385661A36AD4F00F6EA46 /* UITableViewCell+ZBUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D385651A36AD4F00F6EA46 /* UITableViewCell+ZBUtilities.m */; };
 		77D9E319197FF3F2004AC675 /* BLQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E318197FF3F2004AC675 /* BLQRCodeViewController.m */; };
 		77D9E3281980981F004AC675 /* MBProgressHUD+Appearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E3251980981F004AC675 /* MBProgressHUD+Appearance.m */; };
 		77D9E3291980981F004AC675 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9E3271980981F004AC675 /* UIViewController+HUD.m */; };
@@ -315,6 +317,10 @@
 		777500A71A22E374008C566D /* BLAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLAPIClient.h; sourceTree = "<group>"; };
 		777500A81A22E374008C566D /* BLAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLAPIClient.m; sourceTree = "<group>"; };
 		77B0F1CC1A24385000ACED9A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		77D385611A36ACB700F6EA46 /* BLHelpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLHelpTableViewController.h; path = BeiAngAir/BLHelpTableViewController.h; sourceTree = SOURCE_ROOT; };
+		77D385621A36ACB700F6EA46 /* BLHelpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLHelpTableViewController.m; path = BeiAngAir/BLHelpTableViewController.m; sourceTree = SOURCE_ROOT; };
+		77D385641A36AD4F00F6EA46 /* UITableViewCell+ZBUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+ZBUtilities.h"; sourceTree = "<group>"; };
+		77D385651A36AD4F00F6EA46 /* UITableViewCell+ZBUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+ZBUtilities.m"; sourceTree = "<group>"; };
 		77D9E317197FF3F2004AC675 /* BLQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLQRCodeViewController.h; path = BeiAngAir/BLQRCodeViewController.h; sourceTree = SOURCE_ROOT; };
 		77D9E318197FF3F2004AC675 /* BLQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLQRCodeViewController.m; path = BeiAngAir/BLQRCodeViewController.m; sourceTree = SOURCE_ROOT; };
 		77D9E3241980981F004AC675 /* MBProgressHUD+Appearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Appearance.h"; sourceTree = "<group>"; };
@@ -633,6 +639,8 @@
 				775EB21D1973DA5B00E4A0AB /* BLAboutViewController.m */,
 				77F16E0E197792C000564AAB /* BLShareViewController.h */,
 				77F16E0F197792C000564AAB /* BLShareViewController.m */,
+				77D385611A36ACB700F6EA46 /* BLHelpTableViewController.h */,
+				77D385621A36ACB700F6EA46 /* BLHelpTableViewController.m */,
 			);
 			name = Controllers;
 			path = ViewController;
@@ -907,6 +915,8 @@
 		77F16D801977588B00564AAB /* ZBUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				77D385641A36AD4F00F6EA46 /* UITableViewCell+ZBUtilities.h */,
+				77D385651A36AD4F00F6EA46 /* UITableViewCell+ZBUtilities.m */,
 				77D9E3241980981F004AC675 /* MBProgressHUD+Appearance.h */,
 				77D9E3251980981F004AC675 /* MBProgressHUD+Appearance.m */,
 				77D9E3261980981F004AC675 /* UIViewController+HUD.h */,
@@ -1094,6 +1104,7 @@
 				775EB2361973DF4600E4A0AB /* BLGuideViewController.m in Sources */,
 				777500A01A22E2E7008C566D /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				BAAE38BC194089EE002C97C8 /* SBJsonStreamParser.m in Sources */,
+				77D385631A36ACB700F6EA46 /* BLHelpTableViewController.m in Sources */,
 				BAB38987193DA4AD00975805 /* MMDrawerBarButtonItem.m in Sources */,
 				777500A11A22E2E7008C566D /* UIAlertView+AFNetworking.m in Sources */,
 				7775009C1A22E2E7008C566D /* AFURLRequestSerialization.m in Sources */,
@@ -1111,6 +1122,7 @@
 				7775006E1A22D998008C566D /* BLSignupViewController.m in Sources */,
 				BAAE38C3194089EE002C97C8 /* SBJsonTokeniser.m in Sources */,
 				7775009D1A22E2E7008C566D /* AFURLResponseSerialization.m in Sources */,
+				77D385661A36AD4F00F6EA46 /* UITableViewCell+ZBUtilities.m in Sources */,
 				77EEC1601A232E45003F3FCA /* Base64.m in Sources */,
 				777500A41A22E2E7008C566D /* UIProgressView+AFNetworking.m in Sources */,
 				BAB3898B193DA4AD00975805 /* UIViewController+MMDrawerController.m in Sources */,

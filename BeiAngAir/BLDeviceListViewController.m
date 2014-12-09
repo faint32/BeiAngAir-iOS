@@ -14,7 +14,7 @@
 #import "BLAPIClient.h"
 #import "ELDevice.h"
 
-@interface BLDeviceListViewController ()
+@interface BLDeviceListViewController () <UIAlertViewDelegate>
 
 @property (readwrite) NSArray *devices;
 
@@ -87,6 +87,7 @@
 		[self.refreshControl endRefreshing];
 		if (!error) {
 			_devices = [ELDevice multiWithAttributesArray:multiAttributes];
+			NSLog(@"devices: %@", _devices);
 			[self.tableView reloadData];
 		} else {
 			NSLog(@"error: %@", error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]);
@@ -132,53 +133,9 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-		ELDevice *device = _devices[indexPath.row];
-		NSLog(@"role: %@", device.role);
-		if ([device isOwner]) {
-			[[BLAPIClient shared] getDeviceData:device.ID withBlock:^(BOOL validForReset, NSError *error) {
-				if (!error) {
-					if (validForReset) {
-						[[BLAPIClient shared] resetDevice:device.ID withBlock:^(NSError *error) {
-							if (!error) {
-								[self displayHUDTitle:@"复位成功" message:@"该设备已与账号解绑"];
-								_devices = nil;
-								[self.tableView reloadData];
-								[self refresh];
-							} else {
-								[self displayHUDTitle:@"复位失败" message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]];
-								[self.tableView reloadData];
-							}
-						}];
-					} else {
-						[self displayHUDTitle:@"复位失败" message:@"该设备不支持复位"];
-						[self.tableView reloadData];
-					}
-				} else {
-					[self displayHUDTitle:@"复位失败" message:@"请重新尝试"];
-					[self.tableView reloadData];
-				}
-			}];
-//			[[BLAPIClient shared] authorizeDevice:device.ID role:@"user" withBlock:^(NSError *error) {
-//				[self hideHUD:YES];
-//				if (!error) {
-//					NSLog(@"授权成功");
-//				} else {
-//					NSLog(@"error: %@", error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]);
-//				}
-//			}];
-		} else {
-			[self displayHUD:@"解绑中..."];
-			[[BLAPIClient shared] unbindDevice:device.ID withBlock:^(NSError *error) {
-				if (!error) {
-					[self displayHUDTitle:@"解绑成功" message:@"设备已经解绑"];
-					_devices = nil;
-					[self.tableView reloadData];
-					[self refresh];
-				} else {
-					[self displayHUDTitle:@"解绑失败" message:@"请重新尝试"];
-				}
-			}];
-		}
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"删除设备" message:@"确定要删除吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+		alert.tag = indexPath.row;
+		[alert show];
     }
 }
 
@@ -227,5 +184,52 @@
 		[self displayHUDTitle:nil message:NSLocalizedString(@"设备不在线", nil) duration:1];
 	}
 }
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if (buttonIndex != alertView.cancelButtonIndex) {
+		ELDevice *device = _devices[alertView.tag];
+		NSLog(@"role: %@", device.role);
+		if ([device isOwner]) {
+			[[BLAPIClient shared] getDeviceData:device.ID withBlock:^(BOOL validForReset, NSError *error) {
+				if (!error) {
+					if (validForReset) {
+						[[BLAPIClient shared] resetDevice:device.ID withBlock:^(NSError *error) {
+							if (!error) {
+								[self displayHUDTitle:@"复位成功" message:@"该设备已与账号解绑"];
+								_devices = nil;
+								[self.tableView reloadData];
+								[self refresh];
+							} else {
+								[self displayHUDTitle:@"复位失败" message:error.userInfo[BL_ERROR_MESSAGE_IDENTIFIER]];
+								[self.tableView reloadData];
+							}
+						}];
+					} else {
+						[self displayHUDTitle:@"复位失败" message:@"该设备不支持复位"];
+						[self.tableView reloadData];
+					}
+				} else {
+					[self displayHUDTitle:@"复位失败" message:@"请重新尝试"];
+					[self.tableView reloadData];
+				}
+			}];
+		} else {
+			[self displayHUD:@"解绑中..."];
+			[[BLAPIClient shared] unbindDevice:device.ID withBlock:^(NSError *error) {
+				if (!error) {
+					[self displayHUDTitle:@"解绑成功" message:@"设备已经解绑"];
+					_devices = nil;
+					[self.tableView reloadData];
+					[self refresh];
+				} else {
+					[self displayHUDTitle:@"解绑失败" message:@"请重新尝试"];
+				}
+			}];
+		}
+	}
+}
+
 
 @end
